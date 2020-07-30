@@ -14,14 +14,26 @@ int obtain_full_line(int fd, abs_struct *base)
         if (str[0] == '\n')
             break;
     }
+    base->parseString = ft_split(base->string, ' ');
     return (0);
 }
 
+
 int execute (abs_struct *base)
 {   
-    if (base->string == "exit")
-        return (1);
-    return (0);
+    pid_t pid;
+
+    pid = fork();
+    if (pid > 0)
+        wait(&pid);
+    else if (pid == 0)
+    {
+        ft_printf("child\n");
+        //child_process(base);
+    }
+    else
+        ft_printf(" Error en la creacion de subproceso\n");
+    return (1);
 }
 
 int main(int argc, char **argv)
@@ -39,8 +51,7 @@ int main(int argc, char **argv)
     {
         ft_printf("--->");
         obtain_full_line(fd, base);
-        if (execute(base) == 1)
-            base->exceptionNum = 0;
+        base->exceptionNum = execute(base);
     }
     (void)argc;
     (void)argv;

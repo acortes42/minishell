@@ -18,7 +18,7 @@
 typedef struct      abs_struct
 {
     char    *string;
-    char    *parseString;
+    char    **parseString;
     int     exceptionNum;
     int     num_args;
 }                   abs_struct;    
