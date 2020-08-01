@@ -10,6 +10,7 @@
 # include <string.h>
 # include <ctype.h>
 # include <stdarg.h>
+# include <signal.h>
 
 
 #define BUFFER_SIZE 1024
@@ -19,6 +20,7 @@ typedef struct      abs_struct
 {
     char    *string;
     char    **parseString;
+    char    **valid_str;
     int     exceptionNum;
     int     num_args;
 }                   abs_struct;    
@@ -32,5 +34,6 @@ int		get_next_line(int fd, char **line);
 int     ft_printf(const char *arr, ...);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	**ft_split(char const *s, char c);
+int     echo(abs_struct *base);
 #endif
 
