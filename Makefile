@@ -1,4 +1,4 @@
-OBJS = minishell.c echo.c utils/ft_split.c utils/get_next_line.c utils/get_next_line_utils.c \
+OBJS = minishell.c echo.c cd.c utils/ft_split.c utils/get_next_line.c utils/get_next_line_utils.c \
 		printf/ft_all_values_to_start.c printf/ft_super_function.c printf/ft_x.c printf/ft_big_x.c  printf/ft_c.c printf/ft_d.c printf/ft_i.c \
 		printf/ft_my_args.c printf/ft_new_me.c printf/ft_p.c printf/ft_printf.c printf/ft_rest.c printf/ft_restart_values.c printf/ft_s.c \
 		printf/ft_u.c printf/ft_write_and_sum.c printf/ft_convert_to_hex.c printf/ft_functions1.c printf/ft_functions2.c printf/ft_functions3.c

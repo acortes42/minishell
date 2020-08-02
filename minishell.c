@@ -1,5 +1,17 @@
 #include "minishell.h"
 
+int obtain_env(abs_struct *base)
+{
+    char    env[512];
+
+    getcwd(env, sizeof(env));
+    //base->env sigue teniendo demasiado espacio, pero es mas facil asi de momento.
+    base->env = ft_strdup(".");
+    base->env = ft_strjoin(base->env, env);
+    ft_printf("%s", base->env);
+    return (1);
+}
+
 int obtain_full_line(int fd, abs_struct *base)
 {
     char        str[1];
@@ -23,7 +35,7 @@ int execute (abs_struct *base)
 {   
     pid_t   pid;
 
-    base->valid_str = ft_split("echo exit", ' ');
+    base->valid_str = ft_split("echo exit pwd cd ", ' ');
     pid = fork();
     if (pid > 0)
         wait(&pid);
@@ -31,8 +43,12 @@ int execute (abs_struct *base)
     {
         if (strcmp(base->parseString[0], base->valid_str[0]) == 0)
             echo(base);
-        else if (strcmp(base->string, base->valid_str[1]) == 0)
+        else if (strcmp(base->string, base->valid_str[1]) == 0) 
             kill(pid, SIGKILL);
+        else if (strcmp(base->string, base->valid_str[2]) == 0)
+            ft_printf("%s\n", base->env);
+        else if (strcmp(base->parseString[0], base->valid_str[3]) == 0)
+            cd(base);
         else
             ft_printf("Error en los argumentos\n");
     }
@@ -53,6 +69,7 @@ int main(int argc, char **argv)
     exceptionNum = 1;
     if (!(base = (abs_struct*)calloc(1, sizeof(abs_struct))))
 	  	return (-1);
+    obtain_env(base);
     while (exceptionNum == 1)
     {
         ft_printf("--->");

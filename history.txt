@@ -1,89 +1,189 @@
-asdf
-ad
-c
-echo hekko
-exit
-adsf
-d
-a
-exit
+ls
+pwd
+cd 
+cd
+cd ./home
+pwd
+cd
+cd
+cd
+adf
+cd
+ls
+pwd
+cd /home/anon
+pwd
+pwd
+cd ./home
+pwd
+pwd
+cd
+cd hello
+cd ./adf
+cd adf
+cd adsfjasdjf
+cd adf
+cd asdfkadsf
+cd ./
+pwd
+cd /home
+cd ./anon
+pwd
+pwd
+pwd
+cd /home/anon
+cd /home
+cd ./home
+pwd
+pwd
+pwd
+/home/anon
+cd home anon
+cd home/anon
+cd ./home/anon
+pwd
+pwd
 make test
-ads
-echo 
-echo adf
-"echo"
-[A[B
-"echo" ad
+cd adsf
+cd ./home
+pwd
+cd ./home
+pwd
+pwd
+cd adf
+cd ./
+pwd
+cd ./home
+pwd
+cd ./home/anon/Escritorio/minishell/printf
+pwd
 make test
-adsf
-echo
-echo hasdof
-exit
-echo asdf
-ads
-echo asdf
-dfa
-exit
-exit
-exit
+cd ..
+cd
+cd adsf
+cd ..
+pwd
+asfd
+cd 
+cda asdf
+cd adfa
+cd ..
+pwd
+pwd
+cd ..
+pwd
+cd ..
+pwd
+cd ..
+cd ..
+pwd
+cd ..
+pwd
+pwd
+cd adf
+cd ..
+pwd
+cd ..
+pwd
+cd ..
 asdf
-adf
-exit
-exit adfnadf a jbodfb a
-exit
-adf
-adf  a df a
-exit
-exit asdfa f 
-adf
-asdf ad  ad
-fa
-exit
-exit asfdf as 
-exit asdf as d
-adf
-exit
-exit asdf
-asdf
-exit ad f
-adf
-exit esarfda
-exit adfa a s a
-adf
-exit adddd
-ada7
-aadfs
-exit esfsda 
-asdf
-exit eaf
-exit sadf
-exit dadfa
-adf
-exit afd 
-exit adf
-adfs
-sdaf
-adf
-asdf adfs
-exit adsf
-exit asdf
-exit asdf
-echo hello
-echo adf asd
-echo aefasdf a da
-echo asdf ads
-echo adsf a dskfbba ba 
-exit
-exit asfd
-exit
-exit
-echo asdfn
-adf
-echo adsf
-echo adf
-heafdn
-echo ad ksfj ab dfa
-exit ajfdba 
-exit asdfadf
-exit
-exit
+pwd
+pwd
+echo afda
+cd ./home/anon
+pwd
+cd ./home/anon/Escritorio
+mkdir
+ls
+cd ..
+pwd
+cd ..
+cd ..
+cd ..
+pwd
+cd ..
+pwd
+make test
+cd ..
+cd ..
+cd ..
+pwd
+cd ..
+cd ..
+pwd
+cd ..
+cd ..
+cd ..
+cd ..
+pwd
+cd ..
+pwd
+cd ..
+pwd
+asd
+cd ./home
+pwd
+cd ./home
+pwd
+
+pwd
+cd ./home/anon
+pwd
+cd ./home
+pwd
+cd ./home
+pwd
+cd ./home/anon
+pwd
+cd ./home/anon/Escritorio/minishell
+pwd
+cd ./home
+cd ..
+pwd
+cd ..
+pwd
+cd ..
+pwd
+cd ..
+pwd
+cd ..
+cd ..
+cd ..
+cd ..
+cd ..
+cd ..
+cd ..
+cd ..
+ls
+pwd
+cd ..
+pwd
+cd ..
+pwd
+cd ..
+pwd
+cd ..
+pwd
+cd ..
+pwd
+cd ..
+pwd
+pwd
+cd ..
+pwd
+ped
+pwd
+pwd
+cd ..
+pwd
+cd ..
+cd ..
+pwd
+cd ..
+pwd
+cd .
+cd ./
+pwd
+cd home
+cd ./home
+pwd
