@@ -1,0 +1,139 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+CFLAGS	Makefile	/^CFLAGS = -Wall -Wextra -Werror$/;"	m	language:Make
+COMP	Makefile	/^COMP =	${OBJS:.c=.o}$/;"	m	language:Make
+FT_PRINTF_H	ft_printf.h	14;"	d	language:C++
+Makefile	Makefile	1;"	F	language:Make
+NAME	Makefile	/^NAME = libftprintf.a$/;"	m	language:Make
+OBJS	Makefile	/^OBJS =	ft_all_values_to_start.c ft_super_function.c ft_x.c ft_big_x.c  ft_c.c ft_d.c ft_i.c \\$/;"	m	language:Make
+base	ft_printf.c	/^	t_struct	*base;$/;"	l	language:C
+copy	ft_printf.h	/^	char		*copy;$/;"	m	language:C++	struct:s_struct
+count	ft_convert_to_hex.c	/^	int count;$/;"	l	language:C
+count	ft_x.c	/^	int count;$/;"	l	language:C
+cpy	ft_convert_to_hex.c	/^	unsigned long int	cpy;$/;"	l	language:C
+flags	ft_printf.h	/^	int			flags;$/;"	m	language:C++	struct:s_struct
+ft_25_line_norm	ft_p.c	/^void	ft_25_line_norm(t_struct *base)$/;"	f	language:C
+ft_all_values_to_start	ft_all_values_to_start.c	/^void	ft_all_values_to_start(t_struct *base)$/;"	f	language:C
+ft_all_values_to_start.c	ft_all_values_to_start.c	1;"	F	language:C
+ft_atoi	ft_functions1.c	/^int		ft_atoi(const char *j)$/;"	f	language:C
+ft_big_x	ft_big_x.c	/^void	ft_big_x(t_struct *base)$/;"	f	language:C
+ft_big_x.c	ft_big_x.c	1;"	F	language:C
+ft_bzero	ft_functions1.c	/^void	ft_bzero(void *str, size_t n)$/;"	f	language:C
+ft_c	ft_c.c	/^void	ft_c(t_struct *base)$/;"	f	language:C
+ft_c.c	ft_c.c	1;"	F	language:C
+ft_calloc	ft_functions1.c	/^void	*ft_calloc(size_t count, size_t size)$/;"	f	language:C
+ft_convert_to_hex	ft_convert_to_hex.c	/^char	*ft_convert_to_hex(unsigned long int x)$/;"	f	language:C
+ft_convert_to_hex.c	ft_convert_to_hex.c	1;"	F	language:C
+ft_d	ft_d.c	/^void	ft_d(t_struct *base)$/;"	f	language:C
+ft_d.c	ft_d.c	1;"	F	language:C
+ft_free	ft_x.c	/^void	ft_free(t_struct *base, int x)$/;"	f	language:C
+ft_functions1.c	ft_functions1.c	1;"	F	language:C
+ft_functions2.c	ft_functions2.c	1;"	F	language:C
+ft_functions3.c	ft_functions3.c	1;"	F	language:C
+ft_i	ft_i.c	/^void	ft_i(t_struct *base)$/;"	f	language:C
+ft_i.c	ft_i.c	1;"	F	language:C
+ft_isalpha	ft_convert_to_hex.c	/^int		ft_isalpha(int c)$/;"	f	language:C
+ft_isdigit	ft_convert_to_hex.c	/^int		ft_isdigit(int c)$/;"	f	language:C
+ft_itoa	ft_functions3.c	/^char	*ft_itoa(int nb)$/;"	f	language:C
+ft_itoa2	ft_u.c	/^char	*ft_itoa2(unsigned int nb)$/;"	f	language:C
+ft_my_args	ft_my_args.c	/^void	ft_my_args(t_struct *base)$/;"	f	language:C
+ft_my_args.c	ft_my_args.c	1;"	F	language:C
+ft_new_me	ft_new_me.c	/^void	ft_new_me(t_struct *base, char c)$/;"	f	language:C
+ft_new_me.c	ft_new_me.c	1;"	F	language:C
+ft_p	ft_p.c	/^void	ft_p(t_struct *base)$/;"	f	language:C
+ft_p.c	ft_p.c	1;"	F	language:C
+ft_precision	ft_i.c	/^void	ft_precision(t_struct *base)$/;"	f	language:C
+ft_precision_p	ft_p.c	/^void	ft_precision_p(t_struct *base)$/;"	f	language:C
+ft_printf	ft_printf.c	/^int	ft_printf(const char *arr, ...)$/;"	f	language:C
+ft_printf.c	ft_printf.c	1;"	F	language:C
+ft_printf.h	ft_printf.h	1;"	F	language:C++
+ft_put	ft_i.c	/^void	ft_put(t_struct *base)$/;"	f	language:C
+ft_put2	ft_i.c	/^void	ft_put2(t_struct *base)$/;"	f	language:C
+ft_put_p	ft_p.c	/^void	ft_put_p(t_struct *base)$/;"	f	language:C
+ft_putchar_fd	ft_functions3.c	/^void	ft_putchar_fd(char c)$/;"	f	language:C
+ft_putnbr_fd	ft_functions3.c	/^void	ft_putnbr_fd(int n)$/;"	f	language:C
+ft_putstr_fd	ft_functions3.c	/^void	ft_putstr_fd(char *s)$/;"	f	language:C
+ft_rest	ft_rest.c	/^void	ft_rest(t_struct *base)$/;"	f	language:C
+ft_rest.c	ft_rest.c	1;"	F	language:C
+ft_restart_values	ft_restart_values.c	/^void	ft_restart_values(t_struct *base)$/;"	f	language:C
+ft_restart_values.c	ft_restart_values.c	1;"	F	language:C
+ft_s	ft_s.c	/^void	ft_s(t_struct *base)$/;"	f	language:C
+ft_s.c	ft_s.c	1;"	F	language:C
+ft_second_trick	ft_write_and_sum.c	/^void	ft_second_trick(t_struct *base, char *str, int n)$/;"	f	language:C
+ft_strchr	ft_functions1.c	/^char	*ft_strchr(const char *str, int c)$/;"	f	language:C
+ft_strdup	ft_functions2.c	/^char	*ft_strdup(const char *s)$/;"	f	language:C
+ft_strlcpy	ft_functions1.c	/^size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)$/;"	f	language:C
+ft_strlen	ft_functions2.c	/^size_t	ft_strlen(const char *s)$/;"	f	language:C
+ft_strlowcase	ft_x.c	/^char	*ft_strlowcase(char *str)$/;"	f	language:C
+ft_strndup	ft_functions2.c	/^char	*ft_strndup(const char *s, int n)$/;"	f	language:C
+ft_strupcase	ft_convert_to_hex.c	/^char	*ft_strupcase(char *str)$/;"	f	language:C
+ft_super_function	ft_super_function.c	/^int	ft_super_function(t_struct *base)$/;"	f	language:C
+ft_super_function.c	ft_super_function.c	1;"	F	language:C
+ft_toupper	ft_functions2.c	/^int		ft_toupper(int c)$/;"	f	language:C
+ft_trick	ft_write_and_sum.c	/^int		ft_trick(t_struct *base)$/;"	f	language:C
+ft_u	ft_u.c	/^void	ft_u(t_struct *base)$/;"	f	language:C
+ft_u.c	ft_u.c	1;"	F	language:C
+ft_validate	ft_write_and_sum.c	/^int		ft_validate(char c)$/;"	f	language:C
+ft_width	ft_i.c	/^void	ft_width(t_struct *base)$/;"	f	language:C
+ft_width_p	ft_convert_to_hex.c	/^void	ft_width_p(t_struct *base)$/;"	f	language:C
+ft_write_and_sum	ft_write_and_sum.c	/^int		ft_write_and_sum(t_struct *base)$/;"	f	language:C
+ft_write_and_sum.c	ft_write_and_sum.c	1;"	F	language:C
+ft_x	ft_x.c	/^void	ft_x(t_struct *base)$/;"	f	language:C
+ft_x.c	ft_x.c	1;"	F	language:C
+i	ft_convert_to_hex.c	/^	int i;$/;"	l	language:C
+i	ft_functions1.c	/^	int		i;$/;"	l	language:C
+i	ft_functions1.c	/^	long int i[3];$/;"	l	language:C
+i	ft_functions1.c	/^	size_t			i;$/;"	l	language:C
+i	ft_functions1.c	/^	size_t i;$/;"	l	language:C
+i	ft_functions2.c	/^	int		i;$/;"	l	language:C
+i	ft_functions3.c	/^	int i;$/;"	l	language:C
+i	ft_functions3.c	/^	long int	i;$/;"	l	language:C
+i	ft_i.c	/^	int i;$/;"	l	language:C
+i	ft_printf.h	/^	int			i;$/;"	m	language:C++	struct:s_struct
+i	ft_u.c	/^	long int	i;$/;"	l	language:C
+i	ft_write_and_sum.c	/^	int		i;$/;"	l	language:C
+len	ft_convert_to_hex.c	/^	int					len;$/;"	l	language:C
+len	ft_functions3.c	/^	int		len;$/;"	l	language:C
+len	ft_functions3.c	/^int		len(long nb)$/;"	f	language:C
+len	ft_printf.h	/^	int			len;$/;"	m	language:C++	struct:s_struct
+n	ft_c.c	/^	int		n;$/;"	l	language:C
+n	ft_convert_to_hex.c	/^	int n;$/;"	l	language:C
+n	ft_functions2.c	/^	size_t	n;$/;"	l	language:C
+n	ft_functions3.c	/^	long int	n;$/;"	l	language:C
+n	ft_i.c	/^	int n;$/;"	l	language:C
+n	ft_p.c	/^	int n;$/;"	l	language:C
+n	ft_p.c	/^	unsigned long int	n;$/;"	l	language:C
+n	ft_printf.c	/^	int			n;$/;"	l	language:C
+n	ft_printf.h	/^	int			n;$/;"	m	language:C++	struct:s_struct
+n	ft_u.c	/^	long int	n;$/;"	l	language:C
+n	ft_write_and_sum.c	/^	int		n;$/;"	l	language:C
+n	ft_write_and_sum.c	/^	int n;$/;"	l	language:C
+play_the_numbers	ft_write_and_sum.c	/^void	play_the_numbers(t_struct *base, char *str, int n, int i)$/;"	f	language:C
+precision	ft_printf.h	/^	int			precision;$/;"	m	language:C++	struct:s_struct
+s_struct	ft_printf.h	/^typedef struct	s_struct$/;"	s	language:C++
+start_precision	ft_printf.h	/^	int			start_precision;$/;"	m	language:C++	struct:s_struct
+str	ft_convert_to_hex.c	/^	char				*str;$/;"	l	language:C
+str	ft_functions1.c	/^	void *str;$/;"	l	language:C
+str	ft_functions2.c	/^	char	*str;$/;"	l	language:C
+str	ft_functions3.c	/^	char		*str;$/;"	l	language:C
+str	ft_u.c	/^	char		*str;$/;"	l	language:C
+str	ft_write_and_sum.c	/^	char	*str;$/;"	l	language:C
+str2	ft_functions1.c	/^	char	str2;$/;"	l	language:C
+t_struct	ft_printf.h	/^}				t_struct;$/;"	t	language:C++	typeref:struct:s_struct
+take_arg	ft_printf.h	/^	int			take_arg;$/;"	m	language:C++	struct:s_struct
+take_second_arg	ft_printf.h	/^	int			take_second_arg;$/;"	m	language:C++	struct:s_struct
+total_return	ft_printf.h	/^	int			total_return;$/;"	m	language:C++	struct:s_struct
+tramp	ft_p.c	/^void	tramp(t_struct *base)$/;"	f	language:C
+va_lues	ft_printf.h	/^	va_list		va_lues;$/;"	m	language:C++	struct:s_struct
+width	ft_printf.h	/^	int			width;$/;"	m	language:C++	struct:s_struct
+x	ft_big_x.c	/^	unsigned int x;$/;"	l	language:C
+x	ft_c.c	/^	char	x;$/;"	l	language:C
+x	ft_functions1.c	/^	char	*x;$/;"	l	language:C
+x	ft_functions1.c	/^	unsigned char	*x;$/;"	l	language:C
+x	ft_functions3.c	/^	int x;$/;"	l	language:C
+x	ft_printf.h	/^	char		*x;$/;"	m	language:C++	struct:s_struct
+x	ft_x.c	/^	unsigned int x;$/;"	l	language:C
