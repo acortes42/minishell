@@ -187,3 +187,209 @@ pwd
 cd home
 cd ./home
 pwd
+pwd
+pwd
+pwd
+pwd
+cd ..
+pwd
+cd ..
+cd ..
+cd ..
+pwd
+cd ./home/anon/Escritorio
+pwd
+cd /home
+cd ./home
+pwd
+cd..
+cd ..
+pwd
+cd ..
+ls
+cd ./home/anon/Escritorio
+ppwd
+pwd
+cd ..
+pwd
+cd ..
+pwd
+cd ..
+pwd
+cd ..
+pwd
+cd ..
+pwd
+cd ..
+pwd
+cd ..
+cd ..
+pwd
+cd ..
+pwd
+pwd
+pwd
+pwd
+pwd
+cd ..
+pwd
+pwd
+cd ..
+cd ..
+pwd
+cd ..
+cd ..
+pwd
+cd ..
+pwd
+pwd
+cd ..
+pwd
+cd ..
+cd ..
+cd ..
+cd ..
+pwd
+pwd
+cd ..
+pwd
+cd ..
+pwd
+cd /home
+pwd
+cd /home/anon
+
+c
+c
+C
+asdf
+dsa
+echo hello
+af
+adf
+adfs
+sadf
+d
+a
+exit
+adsf
+d
+sf
+exit
+
+
+
+C
+
+exit
+
+
+
+exit
+
+
+
+exit
+
+
+
+exit
+
+exit
+
+exit
+asdf
+fda
+ds
+adsf
+asd
+adf
+asdf
+as
+adff
+asf
+
+
+
+
+exit
+
+
+
+exit
+
+
+asdfn
+make test
+
+exit
+adsf
+s
+aad
+sd
+fork
+asd
+d
+s
+a
+d
+s
+sdf
+asdf
+exit
+asd
+ds
+s
+dsa
+history
+adf
+asdf
+asd
+history
+history
+asdf
+asdf
+history
+asdf
+asdf
+history
+history
+
+make test
+history
+ls
+close
+exit
+ls
+cd ..
+ASDF
+DF
+cd ..
+history
+cd ..
+history
+cd ..
+history
+history
+history
+cd ..
+pwd
+history
+ls
+pwd
+pwd
+cd ..
+pwd
+cd ..
+asd
+echo asd
+cd ..
+pwd
+cd ..
+pwd
+cd srcs
+pwd
+pwd
+exit
+pwd
+exit

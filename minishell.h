@@ -1,6 +1,8 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# define BUFFER_SIZE 1024
+
 # include <stdio.h>
 # include <string.h>
 # include <fcntl.h>
@@ -14,9 +16,6 @@
 # include <limits.h>
 
 
-#define BUFFER_SIZE 1024
-
-
 typedef struct      abs_struct
 {
     char    *env;
@@ -28,17 +27,18 @@ typedef struct      abs_struct
 
 }                   abs_struct;    
 
-
 char	*ft_strdup(const char *s1);
 size_t	ft_strlen(const char *s);
 char	*ft_strchr(char *str, int c);
 char	*ft_strcdup(const char *s1, int c);
 int		get_next_line(int fd, char **line);
 int     ft_printf(const char *arr, ...);
-int     obtain_env(abs_struct *base);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	**ft_split(char const *s, char c);
 int     cd(abs_struct *base);
 int     echo(abs_struct *base);
+int     ft_history(abs_struct *base);
+int     ft_pwd(abs_struct *base);
+void    handle_sigint(int sig);
 #endif
 
