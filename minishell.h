@@ -25,7 +25,6 @@ typedef struct      abs_struct
     int     exceptionNum;
     int     num_args;
     int     lines_envp;
-
 }                   abs_struct;    
 
 char	*ft_strdup(const char *s1);

@@ -5,7 +5,7 @@ PRINT = printf/ft_all_values_to_start.c printf/ft_super_function.c printf/ft_x.c
 GETNEXT = utils/ft_split.c utils/get_next_line.c utils/get_next_line_utils.c
 
 OBJS =  srcs/minishell.c srcs/echo.c srcs/cd.c srcs/history.c srcs/signals.c srcs/pwd.c \
-		srcs/env.c ${PRINT} ${GETNEXT}
+		srcs/env.c srcs/setenv.c ${PRINT} ${GETNEXT}
 		
 CFLAGS = -Wall -Wextra -Werror
 COMP = ${OBJS: .c =.o}
