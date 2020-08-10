@@ -18,12 +18,13 @@
 
 typedef struct      abs_struct
 {
-    char    *env;
+    char    **env;
     char    *string;
     char    **parseString;
     char    **valid_str;
     int     exceptionNum;
     int     num_args;
+    int     lines_envp;
 
 }                   abs_struct;    
 
@@ -39,6 +40,11 @@ int     cd(abs_struct *base);
 int     echo(abs_struct *base);
 int     ft_history(abs_struct *base);
 int     ft_pwd(abs_struct *base);
+int     ft_copy_env(abs_struct *base, char **envp);
+int     ft_env(abs_struct *base);
+int     ft_setenv(abs_struct *base);
+int     ft_unsetenv(abs_struct *base);
+int     ft_help(abs_struct *base);
 void    handle_sigint(int sig);
 #endif
 

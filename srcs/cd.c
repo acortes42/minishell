@@ -5,7 +5,7 @@ int cd(abs_struct *base)
     char    cwd[PATH_MAX];
     char    *str;
 
-    ft_printf("%s\n", base->parseString[1]);
+   // ft_printf("%s\n", base->parseString[1]);
     if (base->parseString[1][0] == '/')
     {
         if (chdir(base->parseString[1]) == 0)

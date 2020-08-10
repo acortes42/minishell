@@ -19,13 +19,13 @@ int obtain_full_line(int fd, abs_struct *base)
     return (0);
 }
 
-int execute (abs_struct *base)
+int execute (abs_struct *base, char **envp)
 {   
     pid_t   pid;
 
     //manejar el ctrl+c para los bonus, cerrando todos los subprocesos de minishell
     //signal(SIGINT, handle_sigint);
-    base->valid_str = ft_split("echo exit pwd cd history", ' ');
+    base->valid_str = ft_split("echo exit pwd cd history help env setenv", ' ');
     pid = fork();
     if (pid > 0)
         wait(&pid);
@@ -41,6 +41,14 @@ int execute (abs_struct *base)
             cd(base);
         else if (strcmp(base->parseString[0], base->valid_str[4]) == 0)
             ft_history(base);
+        else if (strcmp(base->parseString[0], base->valid_str[5]) == 0)
+            ft_help(base);
+        else if (strcmp(base->parseString[0], base->valid_str[6]) == 0)
+            ft_env(base);
+        else if (strcmp(base->parseString[0], base->valid_str[7]) == 0)
+            ft_setenv(base);
+        else if (strcmp(base->parseString[0], base->valid_str[8]) == 0)
+            ft_unsetenv(base);
         else
             ft_printf("Error en los argumentos\n");
     }
@@ -50,7 +58,7 @@ int execute (abs_struct *base)
 }
 
 
-int main(int argc, char **argv)
+int main(int argc, char **argv, char **envp)
 {
     int         fd;
     int         exceptionNum;
@@ -60,13 +68,14 @@ int main(int argc, char **argv)
     ft_printf("             |||------------------------------||| \n\n\n");
 
     exceptionNum = 1;
-    if (!(base = (abs_struct*)calloc(1, sizeof(abs_struct))))
+    if (!(base = malloc(sizeof(abs_struct) * 1)))
 	  	return (-1);
+    ft_copy_env(base, envp);
     while (exceptionNum == 1)
     {
         ft_printf("--->");
         obtain_full_line(fd, base);
-        execute(base);         
+        execute(base, envp);         
     }
     (void)argc;
     (void)argv;
