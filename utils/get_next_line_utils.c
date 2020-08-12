@@ -22,27 +22,6 @@ size_t	ft_strlen(const char *s)
 	return (n);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
-{
-	int		total;
-	char	*str;
-	int		n;
-
-	if (!(s1 && s2))
-		return (NULL);
-	total = ft_strlen(s2) + ft_strlen(s1) + 1;
-	str = malloc(total * sizeof(char));
-	if (!(str))
-		return (NULL);
-	n = 0;
-	while (*s1)
-		str[n++] = *s1++;
-	while (*s2)
-		str[n++] = *s2++;
-	str[n] = '\0';
-	return (str);
-}
-
 char	*ft_strdup(const char *s1)
 {
 	int		x;
@@ -54,6 +33,29 @@ char	*ft_strdup(const char *s1)
 		return (NULL);
 	while (x-- > 0)
 		str[x] = s1[x];
+	return (str);
+}
+
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	int		total;
+	char	*str;
+	int		n;
+
+	if (!(s1 && s2))
+		return (NULL);
+	if (!s1)
+		s1 = ft_strdup("");
+	total = ft_strlen(s2) + ft_strlen(s1) + 1;
+	str = malloc(total * sizeof(char));
+	if (!(str))
+		return (NULL);
+	n = 0;
+	while (*s1)
+		str[n++] = *s1++;
+	while (*s2)
+		str[n++] = *s2++;
+	str[n] = '\0';
 	return (str);
 }
 

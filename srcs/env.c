@@ -37,6 +37,7 @@ int ft_unsetenv(abs_struct *base)
     x = 0;
     while (base->env[x])
         x++;
-    base->env[x - 1] == NULL;
+    free(base->env[x - 1]);
+    base->env = malloc(sizeof(char*) * (--base->lines_envp));
     return (1);
 }

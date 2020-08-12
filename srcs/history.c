@@ -1,6 +1,6 @@
 #include "../minishell.h"
 
-int ft_history(abs_struct *base)
+int ft_history()
 {
     int     fd;
     int     num;

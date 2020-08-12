@@ -14,6 +14,7 @@
 # include <stdarg.h>
 # include <signal.h>
 # include <limits.h>
+# include <sys/wait.h>   
 
 
 typedef struct      abs_struct
@@ -37,8 +38,8 @@ char	*ft_strjoin(char const *s1, char const *s2);
 char	**ft_split(char const *s, char c);
 int     cd(abs_struct *base);
 int     echo(abs_struct *base);
-int     ft_history(abs_struct *base);
-int     ft_pwd(abs_struct *base);
+int     ft_history();
+int     ft_pwd();
 int     ft_copy_env(abs_struct *base, char **envp);
 int     ft_env(abs_struct *base);
 int     ft_setenv(abs_struct *base);

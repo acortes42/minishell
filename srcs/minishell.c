@@ -1,8 +1,9 @@
 #include "../minishell.h"
 
-int obtain_full_line(int fd, abs_struct *base)
+int obtain_full_line(abs_struct *base)
 {
     char        str[1];
+    int         fd;
 
     str[strlen(str)] = '\0';
     base->string = ft_strdup("");
@@ -19,13 +20,13 @@ int obtain_full_line(int fd, abs_struct *base)
     return (0);
 }
 
-int execute (abs_struct *base, char **envp)
+int execute (abs_struct *base)
 {   
     pid_t   pid;
 
     //manejar el ctrl+c para los bonus, cerrando todos los subprocesos de minishell
     //signal(SIGINT, handle_sigint);
-    base->valid_str = ft_split("echo exit pwd cd history help env setenv", ' ');
+    base->valid_str = ft_split("echo exit pwd cd history help env setenv unsetenv", ' ');
     pid = fork();
     if (pid > 0)
         wait(&pid);
@@ -36,11 +37,11 @@ int execute (abs_struct *base, char **envp)
         else if (strcmp(base->string, base->valid_str[1]) == 0 ) 
             kill(pid, SIGKILL);
         else if (strcmp(base->string, base->valid_str[2]) == 0)
-            ft_pwd(base);
+            ft_pwd();
         else if (strcmp(base->parseString[0], base->valid_str[3]) == 0)
             cd(base);
         else if (strcmp(base->parseString[0], base->valid_str[4]) == 0)
-            ft_history(base);
+            ft_history();
         else if (strcmp(base->parseString[0], base->valid_str[5]) == 0)
             ft_help(base);
         else if (strcmp(base->parseString[0], base->valid_str[6]) == 0)
@@ -60,7 +61,6 @@ int execute (abs_struct *base, char **envp)
 
 int main(int argc, char **argv, char **envp)
 {
-    int         fd;
     int         exceptionNum;
     abs_struct  *base;
 
@@ -74,8 +74,8 @@ int main(int argc, char **argv, char **envp)
     while (exceptionNum == 1)
     {
         ft_printf("--->");
-        obtain_full_line(fd, base);
-        execute(base, envp);         
+        obtain_full_line(base);
+        execute(base);         
     }
     (void)argc;
     (void)argv;

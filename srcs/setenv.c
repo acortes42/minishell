@@ -7,7 +7,6 @@ int ft_find_and_compare(char *env, char c, char *cmp)
 {
     char    *aux;
     int     x;
-    int     y;
 
     x = 0;
     while(env[x] != c)
@@ -44,7 +43,7 @@ int ft_seach(abs_struct *base)
     return (0);
 }
 
-int ft_add_line(char **text)
+int ft_add_line(char **text, abs_struct *base)
 {
     char    **aux;
     int     x;
@@ -52,6 +51,7 @@ int ft_add_line(char **text)
     x = 0;
     while (text[x])
         x++;
+    ft_printf("text -- %s\n", text[x - 1]);
     aux = malloc(sizeof(char*) * (x + 1));
     x = 0;
     while (text[x])
@@ -59,14 +59,19 @@ int ft_add_line(char **text)
         aux[x] = ft_strdup(text[x]);
         x++;
     }
-    text = malloc(sizeof(aux));
-    ft_printf("%d", x);
+    ft_printf("aux antes -- %s\n", aux[x - 1]);
+    aux[x] = ft_strdup(base->parseString[1]);
+    aux[x] = ft_strjoin(base->env[base->lines_envp + x], "=");
+    aux[x] = ft_strjoin(base->env[base->lines_envp + x], base->parseString[2]);
+    ft_printf("aux -- %s\n", aux[x]);
+    text = malloc(sizeof(char*) * (x + 1) );
     x = 0;
     while (aux[x])
     {
         text[x] = ft_strdup(aux[x]);
         x++;
     }
+    ft_printf("%s\n", aux[x]);
     free(aux);
     return (x);
 }
@@ -77,14 +82,7 @@ int ft_setenv(abs_struct *base)
     {
         if (ft_seach(base) == 0)
         {
-            static int  x;
-
-            ft_printf("%d\n", x);
-            ft_add_line(base->env);
-            base->env[base->lines_envp + x] = ft_strdup(base->parseString[1]);
-            base->env[base->lines_envp + x] = ft_strjoin(base->env[base->lines_envp + x], "=");
-            base->env[base->lines_envp + x] = ft_strjoin(base->env[base->lines_envp + x], base->parseString[2]);
-            x++;
+            ft_add_line(base->env, base);
             return (1);
         }
     }
