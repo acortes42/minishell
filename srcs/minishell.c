@@ -20,13 +20,21 @@ int obtain_full_line(abs_struct *base)
     return (0);
 }
 
+void clearScreen()
+{
+
+    ft_printf("%s", "\033[?1049h\033[H");
+    ft_printf("             |||           MINISHELL          ||| \n");
+    ft_printf("             |||------------------------------||| \n\n\n");
+}
+
 int execute (abs_struct *base)
 {   
     pid_t   pid;
 
     //manejar el ctrl+c para los bonus, cerrando todos los subprocesos de minishell
     //signal(SIGINT, handle_sigint);
-    base->valid_str = ft_split("echo exit pwd cd history help env setenv unsetenv", ' ');
+    base->valid_str = ft_split("echo exit pwd cd history help env setenv unsetenv clear", ' ');
     pid = fork();
     if (pid > 0)
         wait(&pid);
@@ -50,6 +58,8 @@ int execute (abs_struct *base)
             ft_setenv(base);
         else if (strcmp(base->parseString[0], base->valid_str[8]) == 0)
             ft_unsetenv(base);
+        else if (strcmp(base->parseString[0], base->valid_str[9]) == 0)
+            clearScreen();
         else
             ft_printf("Error en los argumentos\n");
     }

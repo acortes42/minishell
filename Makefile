@@ -25,7 +25,7 @@ fclean: clean
 	@rm -f *.a
 	
 test:	${OBJS} minishell.h
-	@gcc ${CFLAGS} ${OBJS} && ./a.out
+	@gcc ${OBJS} && ./a.out
 
 debug:	${OBJS} minishell.h
 	@gcc -g ${CFLAGS} ${OBJS}

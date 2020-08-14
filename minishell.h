@@ -43,6 +43,7 @@ int     ft_pwd();
 int     ft_copy_env(abs_struct *base, char **envp);
 int     ft_env(abs_struct *base);
 int     ft_setenv(abs_struct *base);
+int     ft_find_and_compare(char *env, char c, char *cmp);
 int     ft_unsetenv(abs_struct *base);
 int     ft_help(abs_struct *base);
 void    handle_sigint(int sig);

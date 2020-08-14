@@ -10,7 +10,7 @@ int ft_copy_env(abs_struct *base, char **envp)
     while(envp[base->lines_envp])
         base->lines_envp++;
     ft_printf("%d\n", base->lines_envp);
-    base->env = malloc(sizeof(char*) * base->lines_envp + 1);
+    base->env = malloc(sizeof(char*) * (base->lines_envp - 1));
     while(envp[x])
     {
         base->env[x] = ft_strdup(envp[x]);
@@ -29,15 +29,37 @@ int ft_env(abs_struct *base)
     return (1);
 }
 
-// lo de bajo es nada
 int ft_unsetenv(abs_struct *base)
 {
-    int x;
+    int     x;
+    int     y;
+    char    **aux;
 
+    if(!base->parseString[1] || base->parseString[2])
+        return (ft_printf("Error con los argumentos\n"));
     x = 0;
-    while (base->env[x])
+    y = 0;
+    aux = malloc(sizeof(char*) * (base->lines_envp));
+    while (x < base->lines_envp)
+    {
+        aux[x] = ft_strdup(base->env[x]);
         x++;
-    free(base->env[x - 1]);
-    base->env = malloc(sizeof(char*) * (--base->lines_envp));
+    }
+    base->env = malloc(sizeof(char*) * (base->lines_envp - 1));
+    x = 0;
+    while (x < base->lines_envp)
+    {
+        if (ft_find_and_compare(aux[x], '=', base->parseString[1]) != 1)
+        {
+            base->env[y] = ft_strdup(aux[x]);
+            y++;
+        }
+        x++;
+    }
+    if (x > y && base->lines_envp > 0)
+        base->lines_envp--;
+    else
+        ft_printf("No se encontro la variable de entorno descrita\n");
+    free(aux);
     return (1);
 }
