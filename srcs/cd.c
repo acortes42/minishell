@@ -5,16 +5,15 @@ int cd(abs_struct *base)
     char    cwd[PATH_MAX];
     char    *str;
 
-   // ft_printf("%s\n", base->parseString[1]);
     if (base->parseString[1][0] == '/')
     {
         if (chdir(base->parseString[1]) == 0)
         {
-            ft_printf("Directorio valido\n");
+            ft_putstr("Directorio valido\n");
             chdir(base->parseString[1]);
         }
         else
-            ft_printf("Error a la asignacción de directorio\n");
+            ft_putstr("Error a la asignacción de directorio\n");
     }
     else if (strcmp(base->parseString[1], "..") == 0)
     {
@@ -28,12 +27,12 @@ int cd(abs_struct *base)
             str = ft_strjoin(str, "/");
             str = ft_strjoin(str, base->parseString[1]);
             if (chdir(str) == 0)
-                ft_printf("Directorio valido\n");
+                ft_putstr("Directorio valido\n");
             else
-                ft_printf("Fallo al acceder al directorio\n");
+                ft_putstr("Fallo al acceder al directorio\n");
         }
         else
-            ft_printf("Directorio no valido\n");
+            ft_putstr("Directorio no valido\n");
     }
     return (1);
 }
