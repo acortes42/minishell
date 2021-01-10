@@ -9,7 +9,7 @@ char		*ft_build_home(void)
 	cwd = getcwd(0, 0);
 	if (!cwd)
 		return (0);
-	path_sep = ft_strchr(cwd + 1, '/');
+	path_sep = strchr(cwd + 1, '/');
 	home = calloc(path_sep - cwd + 1, sizeof(char));
 	if (home)
 		memcpy(home, cwd, path_sep - cwd);
@@ -26,7 +26,7 @@ char		*ft_build_home_slash_ended(void)
 	cwd = getcwd(0, 0);
 	if (!cwd)
 		return (0);
-	path_sep = ft_strchr(cwd + 1, '/');
+	path_sep = strchr(cwd + 1, '/');
 	home = calloc(path_sep - cwd + 2, sizeof(char));
 	if (home)
 		memcpy(home, cwd, path_sep - cwd + 1);

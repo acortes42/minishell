@@ -8,7 +8,7 @@ static void		print_test_result(const char *test, int res)
 		res_str = "OK";
 	else
 		res_str = "Failed";
-	ft_printf("%50s : %s\n", test, res_str);
+	printf("%50s : %s\n", test, res_str);
 }
 
 int				main(int argc, char **argv, char **env)

@@ -15,5 +15,6 @@
 int vertical_line(abs_struct *base)
 {
 	//Do some work if necesary. This is the proposit of your existence.
+	(void)base;
 	return (1);
 }
