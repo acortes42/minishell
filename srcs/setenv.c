@@ -13,7 +13,7 @@ int ft_find_and_compare(char *env, char c, char *cmp)
         x++;
     aux = malloc(sizeof(char) * x);
     strncpy(aux, env, x);
-    if (strcmp(aux, cmp) == 0)
+    if (ft_strcmp(aux, cmp) == 0)
     {
         free(aux);
         return (1);
@@ -80,6 +80,6 @@ int ft_setenv(abs_struct *base)
             ft_add_line(base);
         return (1);
     }
-    ft_printf("Error en los argumentos\n");
+    ft_putstr("Error en los argumentos\n");
     return (0);
 }

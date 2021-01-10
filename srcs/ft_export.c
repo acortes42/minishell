@@ -1,33 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/26 16:59:34 by acortes-          #+#    #+#             */
-/*   Updated: 2020/01/23 18:16:17 by acortes-         ###   ########.fr       */
+/*   Created: 2021/01/08 14:55:18 by acortes-          #+#    #+#             */
+/*   Updated: 2021/01/08 14:59:50 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "../minishell.h"
 
-int	ft_printf(const char *arr, ...)
+int		ft_export(abs_struct *base)
 {
-	t_struct	*base;
-	int			n;
-
-	if (!(base = (t_struct*)ft_calloc(1, sizeof(t_struct))))
-		return (-1);
-	base->copy = (char*)arr;
-	ft_all_values_to_start(base);
-	if (arr)
-	{
-		va_start(base->va_lues, arr);
-		base->len = ft_super_function(base);
-		va_end(base->va_lues);
-	}
-	n = base->total_return;
-	free(base);
-	return (n);
+	//Similar to env but not equal.
+	return (1);
 }

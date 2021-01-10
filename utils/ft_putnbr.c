@@ -1,38 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_functions2.c                                    :+:      :+:    :+:   */
+/*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/10 21:01:23 by acortes-          #+#    #+#             */
-/*   Updated: 2020/01/23 18:58:30 by acortes-         ###   ########.fr       */
+/*   Created: 2021/01/08 11:05:57 by acortes-          #+#    #+#             */
+/*   Updated: 2021/01/08 11:08:13 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "../minishell.h"
 
-char	*ft_strndup(const char *s, int n)
+void	ft_putnbr(int n)
 {
-	int		i;
-	char	*str;
+	int x;
 
-	i = 0;
-	if (n == 0)
-		return ("");
-	while (s[i] != '\0' && i < n - 1)
-		i++;
-	i += 1;
-	if (!(str = (char*)ft_calloc(i + 1, sizeof(char))))
-		return (NULL);
-	while (i-- > 0)
-		str[i] = s[i];
-	return (str);
-}
-
-int		ft_toupper(int c)
-{
-	if (c >= 97 && c <= 122)
-		return (c - 32);
-	return (c);
+	x = 0;
+	if (n == -2147483648)
+	{
+		write(1, "-", 1);
+		write(1, "2147483648", 10);
+		return ;
+	}
+	if (n < 0)
+	{
+		write(1, "-", 1);
+		ft_putnbr(n * (-1));
+	}
+	else
+	{
+		if (n >= 10)
+			ft_putnbr((n / 10));
+		x = (n % 10) + '0';
+		write(1, &x, 1);
+	}
 }

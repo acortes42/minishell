@@ -26,6 +26,8 @@ typedef struct      abs_struct
     int     exceptionNum;
     int     num_args;
     int     lines_envp;
+    int     actual_argument;
+    int     flag;
 }                   abs_struct;    
 
 char	*ft_strdup(const char *s1);
@@ -33,9 +35,11 @@ size_t	ft_strlen(const char *s);
 char	*ft_strchr(char *str, int c);
 char	*ft_strcdup(const char *s1, int c);
 int		get_next_line(int fd, char **line);
-int     ft_printf(const char *arr, ...);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	**ft_split(char const *s, char c);
+void	ft_putstr(char *s);
+void	ft_putnbr(int n);
+int		ft_strcmp(const char *s1, const char *s2);
 int     cd(abs_struct *base);
 int     echo(abs_struct *base);
 int     ft_history();
@@ -46,6 +50,7 @@ int     ft_setenv(abs_struct *base);
 int     ft_find_and_compare(char *env, char c, char *cmp);
 int     ft_unsetenv(abs_struct *base);
 int     ft_help(abs_struct *base);
+int     vertical_line(abs_struct *base); 
 void    handle_sigint(int sig);
 #endif
 

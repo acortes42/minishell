@@ -10,7 +10,13 @@ int ft_history()
     line = malloc(sizeof((char**)line) * 1);
     fd = open("history.txt", O_RDWR);
     while(get_next_line(fd, line) > 0)
-        ft_printf("  %d - %s\n", num++, *line);
+    {
+        ft_putstr("  ");
+        ft_putnbr(num++);
+        ft_putstr(" - ");
+        ft_putstr(*line);
+        ft_putstr("\n");
+    }
     close(fd);
     return (1);
 }

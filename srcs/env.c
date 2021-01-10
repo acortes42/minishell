@@ -9,7 +9,7 @@ int ft_copy_env(abs_struct *base, char **envp)
 
     while(envp[base->lines_envp])
         base->lines_envp++;
-    ft_printf("%d\n", base->lines_envp);
+    ft_putnbr(base->lines_envp);
     base->env = malloc(sizeof(char*) * (base->lines_envp - 1));
     while(envp[x])
     {
@@ -25,7 +25,7 @@ int ft_env(abs_struct *base)
 
     x = 0;
     while(base->env[x])
-        ft_printf("%s\n", base->env[x++]);
+        ft_putstr(base->env[x++]);
     return (1);
 }
 
@@ -36,7 +36,10 @@ int ft_unsetenv(abs_struct *base)
     char    **aux;
 
     if(!base->parseString[1] || base->parseString[2])
-        return (ft_printf("Error con los argumentos\n"));
+    {
+        ft_putstr("Error con los argumentos\n");
+        return (-1);
+    }
     x = 0;
     y = 0;
     aux = malloc(sizeof(char*) * (base->lines_envp));
@@ -59,7 +62,7 @@ int ft_unsetenv(abs_struct *base)
     if (x > y && base->lines_envp > 0)
         base->lines_envp--;
     else
-        ft_printf("No se encontro la variable de entorno descrita\n");
+        ft_putstr("No se encontro la variable de entorno descrita\n");
     free(aux);
     return (1);
 }

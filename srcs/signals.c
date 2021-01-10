@@ -7,7 +7,7 @@ void handle_sigint(int sig)
     pid = getpid();
     if (sig == 2 && pid == 0)
     {
-        ft_printf("hey");
+        ft_putstr("hey");
         kill(pid, SIGKILL);
     }
     return;
