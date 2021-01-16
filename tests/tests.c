@@ -20,6 +20,10 @@ int				main(int argc, char **argv, char **env)
 
 	// Tests
 	res = test_history();
-	print_test_result("Test", test_history());
+	print_test_result("History", test_history());
+	if (res)
+		return (res);
+	res = test_echo();
+	print_test_result("echo", test_echo());
 	return (res);
 }
