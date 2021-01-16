@@ -1,0 +1,24 @@
+cd res/tests/scripts;
+echo "Exporting TEST_EXPORT variable"
+export TEST_EXPORT=42
+echo "Exported TEST_EXPORT. Checking..."
+./test_export.sh
+echo
+echo
+
+echo "Executing unset without variable. Nothing must be done"
+unset
+echo "Executed unset but no variable specified. TEST_EXPORT must still be there."
+./test_export.sh
+echo
+echo
+
+echo "Executing unset TEST_EXPORT. Variable must disapear"
+unset TEST_EXPORT
+echo "Executed unset TEST_export"
+./test_export.sh
+echo
+echo
+
+echo "Executing unset on an undefined variable. Nothing must happen"
+unset UNDEFINED_VARIABLE

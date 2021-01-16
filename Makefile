@@ -66,11 +66,44 @@ ${TESTS_UT}: debug ${OBJS_UNIT_TESTS}
 	${CC} ${CFLAGS_UNIT_TESTS} -o minishell_check ${OBJS_UNIT_TESTS} ${OBJS_WITHOUT_MAIN} ${LDFLAGS_UNIT_TESTS}
 	./minishell_check > res/tests/outputs_ut/output 2> res/tests/outputs_ut/output_errors
 	
-${TESTS_IT}: test_echo
+${TESTS_IT}: 
+	${MAKE} test_echo
+	${MAKE} test_cd_pwd
+	${MAKE} test_export_env
 
 test_echo: ${NAME}
-	(timeout --preserve-status 3 ./minishell <res/tests/inputs/test_echo > res/tests/outputs/test_echo_minishell); echo $? > res/tests/outputs/test_echo_minishell_output_code
-	(timeout --preserve-status 3 /bin/bash <res/tests/inputs/test_echo > res/tests/outputs/test_echo_bash); echo $? > res/tests/outputs/test_echo_bash_output_code
-	diff res/tests/outputs/test_echo_bash res/tests/outputs/test_echo_minishell 
-	diff res/tests/outputs/test_echo_bash_output_code res/tests/outputs/test_echo_minishell_output_code
-	rm res/tests/outputs/test_echo*
+	(timeout --preserve-status 3 ./minishell <res/tests/inputs/test_echo > res/tests/outputs_it/test_echo_minishell); echo $? > res/tests/outputs_it/test_echo_minishell_output_code
+	(timeout --preserve-status 3 /bin/bash <res/tests/inputs/test_echo > res/tests/outputs_it/test_echo_bash); echo $? > res/tests/outputs_it/test_echo_bash_output_code
+	diff res/tests/outputs_it/test_echo_bash res/tests/outputs_it/test_echo_minishell 
+	diff res/tests/outputs_it/test_echo_bash_output_code res/tests/outputs_it/test_echo_minishell_output_code
+	rm res/tests/outputs_it/test_echo*
+
+test_cd_pwd: ${NAME}
+	(timeout --preserve-status 3 ./minishell <res/tests/inputs/test_cd > res/tests/outputs_it/test_cd_minishell); echo $? > res/tests/outputs_it/test_cd_minishell_output_code
+	(timeout --preserve-status 3 /bin/bash <res/tests/inputs/test_cd > res/tests/outputs_it/test_cd_bash); echo $? > res/tests/outputs_it/test_cd_bash_output_code
+	diff res/tests/outputs_it/test_cd_bash res/tests/outputs_it/test_cd_minishell 
+	diff res/tests/outputs_it/test_cd_bash_output_code res/tests/outputs_it/test_cd_minishell_output_code
+	rm res/tests/outputs_it/test_cd*
+
+test_export_env: ${NAME}
+	(timeout --preserve-status 3 ./minishell <res/tests/inputs/test_export_env > res/tests/outputs_it/test_export_env_minishell); echo $? > res/tests/outputs_it/test_export_env_minishell_output_code
+	(timeout --preserve-status 3 /bin/bash <res/tests/inputs/test_export_env > res/tests/outputs_it/test_export_env_bash); echo $? > res/tests/outputs_it/test_export_env_bash_output_code
+	diff res/tests/outputs_it/test_export_env_bash res/tests/outputs_it/test_export_env_minishell 
+	diff res/tests/outputs_it/test_export_env_bash_output_code res/tests/outputs_it/test_export_env_minishell_output_code
+	rm res/tests/outputs_it/test_export_env*
+
+test_unset: ${NAME}
+	(timeout --preserve-status 3 ./minishell <res/tests/inputs/test_unset > res/tests/outputs_it/test_unset_minishell); echo $? > res/tests/outputs_it/test_unset_minishell_output_code
+	(timeout --preserve-status 3 /bin/bash <res/tests/inputs/test_unset > res/tests/outputs_it/test_unset_bash); echo $? > res/tests/outputs_it/test_unset_bash_output_code
+	diff res/tests/outputs_it/test_unset_bash res/tests/outputs_it/test_unset_minishell 
+	diff res/tests/outputs_it/test_unset_bash_output_code res/tests/outputs_it/test_unset_minishell_output_code
+	rm res/tests/outputs_it/test_unset*
+
+test_exit: ${NAME}
+	(timeout --preserve-status 3 ./minishell <res/tests/inputs/test_exit -9 > res/tests/outputs_it/test_exit_minishell); echo $? > res/tests/outputs_it/test_exit_minishell_output_code
+	(timeout --preserve-status 3 /bin/bash <res/tests/inputs/test_exit > res/tests/outputs_it/test_exit_bash); echo $? > res/tests/outputs_it/test_exit_bash_output_code
+	diff res/tests/outputs_it/test_exit_bash res/tests/outputs_it/test_exit_minishell 
+	diff res/tests/outputs_it/test_exit_bash_output_code res/tests/outputs_it/test_exit_minishell_output_code
+	rm res/tests/outputs_it/test_exit*
+
+

@@ -1,0 +1,32 @@
+echo "Check https://www.gnu.org/software/bash/manual/html_node/Exit-Status.html#Exit-Status to see tests"
+echo "Executing script sending kill signal. Expected return code 128 + 9 -> 137"
+res/tests/scripts/test_exit_by_signals.sh -SIGKILL
+echo $?
+echo
+echo
+
+echo "Executing non existing script. Expected return code 127"
+res/tests/scripts/executing_non_existing_script.sh
+echo $?
+echo
+echo
+
+echo "Executing script non executable. Expected return code 126"
+touch res/tests/scripts/test_exit_non_executable.sh
+res/tests/scripts/test_exit_non_executable.sh
+echo $?
+echo
+echo
+rm res/tests/scripts/test_exit_non_executable.sh
+
+echo "Executing that exits with a 256 code"
+res/tests/scripts/test_exit.sh 256
+echo $?
+echo
+echo
+
+echo "Executing that exits with a -1 code"
+res/tests/scripts/test_exit.sh -1
+echo $?
+echo
+echo
