@@ -70,6 +70,10 @@ ${TESTS_IT}:
 	${MAKE} test_echo
 	${MAKE} test_cd_pwd
 	${MAKE} test_export_env
+	${MAKE} test_unset
+	${MAKE} test_exit
+	${MAKE} test_semicolon
+	${MAKE} test_quotes
 
 test_echo: ${NAME}
 	(timeout --preserve-status 3 ./minishell <res/tests/inputs/test_echo > res/tests/outputs_it/test_echo_minishell); echo $? > res/tests/outputs_it/test_echo_minishell_output_code
@@ -105,5 +109,19 @@ test_exit: ${NAME}
 	diff res/tests/outputs_it/test_exit_bash res/tests/outputs_it/test_exit_minishell 
 	diff res/tests/outputs_it/test_exit_bash_output_code res/tests/outputs_it/test_exit_minishell_output_code
 	rm res/tests/outputs_it/test_exit*
+
+test_semicolon: ${NAME}
+	(timeout --preserve-status 3 ./minishell <res/tests/inputs/test_semicolon -9 > res/tests/outputs_it/test_semicolon_minishell); echo $? > res/tests/outputs_it/test_semicolon_minishell_output_code
+	(timeout --preserve-status 3 /bin/bash <res/tests/inputs/test_semicolon > res/tests/outputs_it/test_semicolon_bash); echo $? > res/tests/outputs_it/test_semicolon_bash_output_code
+	diff res/tests/outputs_it/test_semicolon_bash res/tests/outputs_it/test_semicolon_minishell 
+	diff res/tests/outputs_it/test_semicolon_bash_output_code res/tests/outputs_it/test_semicolon_minishell_output_code
+	rm res/tests/outputs_it/test_semicolon*
+
+test_quotes: ${NAME}
+	(timeout --preserve-status 3 ./minishell <res/tests/inputs/test_quotes -9 > res/tests/outputs_it/test_quotes_minishell); echo $? > res/tests/outputs_it/test_quotes_minishell_output_code
+	(timeout --preserve-status 3 /bin/bash <res/tests/inputs/test_quotes > res/tests/outputs_it/test_quotes_bash); echo $? > res/tests/outputs_it/test_quotes_bash_output_code
+	diff res/tests/outputs_it/test_quotes_bash res/tests/outputs_it/test_quotes_minishell 
+	diff res/tests/outputs_it/test_quotes_bash_output_code res/tests/outputs_it/test_quotes_minishell_output_code
+	rm res/tests/outputs_it/test_quotes*
 
 

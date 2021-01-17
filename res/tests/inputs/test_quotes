@@ -1,0 +1,20 @@
+export      TEST_EXPORT=42
+echo		"Double quotes"
+echo		"	\$ sample: $TEST_EXPORT"
+echo		"	\` sample: `echo $TEST_EXPORT`"
+echo		"	\\ samples: \$ \` \\"
+echo        "	Special parameters. IFS value: $IFS."
+echo        "		Number of params: $#."
+echo        "		Exit status of previous command: $?."
+echo		"		Current options flag: $-"
+# This command cannot be executed automatically as it returns a dynamic id
+#echo		"		Process ID of the shell: $$"
+#echo		"		Name of the shell: $0"
+echo		"	brace expansion: a{b,c,d}e"
+echo		"	brace expansion 2: {a..z..2}"
+echo		"	brace expansion 3: {0..9..1}"
+echo
+echo        'Single quotes printing same examples than with double quotes'
+echo		'Double quotes \$ samples: $TEST_EXPORT'
+echo        'Double quotes backslash samples: \$ \` \\'
+
