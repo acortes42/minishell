@@ -20,7 +20,7 @@
 typedef struct      abs_struct
 {
     char    **env;
-    char    *string;
+    char    string[1024];
     char    **parseString;
     char    **valid_str;
     int     exceptionNum;

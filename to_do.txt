@@ -1,11 +1,9 @@
 1. ctrl-C, ctrl-D y ctrl-\ no integradas aún.
 2. Mejorar el funcionamiento de " | "
 3. Correcta implementación de export
-4. Problema en el funcionamiento de "Obtain_full_line". 
-	Rompe el programa cuando la orden tiene cierta longitud
+4. Usar un ejecutable con el path absoluto o relativo
 5. Implementación de redirecciones. ("<", ">", ">>")
 6.Comprobar/introducir el correcto funcionamiento de las variables de entorno
 7.Se debe implementar "$?"
-8. Comprobar el correcto funcinamiento de "" y ''
 9. Corregir el problema con cd y chdir
 10. Mejoras si es posible en la estructura basica del codigo en caso de que la lógica general fallara
