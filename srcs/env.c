@@ -9,7 +9,6 @@ int ft_copy_env(abs_struct *base, char **envp)
 
     while(envp[base->lines_envp])
         base->lines_envp++;
-    ft_putnbr(base->lines_envp);
     base->env = malloc(sizeof(char*) * (base->lines_envp - 1));
     while(envp[x])
     {

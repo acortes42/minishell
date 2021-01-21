@@ -39,8 +39,6 @@ int execute (abs_struct *base)
 {   
     pid_t   pid;
 
-    //manejar el ctrl+c para los bonus, cerrando todos los subprocesos de minishell
-    //signal(SIGINT, handle_sigint);
     base->valid_str = ft_split("exit echo pwd cd history help env setenv unsetenv clear |", ' ');
     pid = fork();
 
@@ -109,6 +107,7 @@ int main(int argc, char **argv, char **envp)
     int         exceptionNum;
     abs_struct  *base;
 
+    signal(SIGINT, handle_sigint);
     exceptionNum = 1;
     clearScreen();
     if (!(base = malloc(sizeof(abs_struct) * 1)))
