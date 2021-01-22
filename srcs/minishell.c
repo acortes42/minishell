@@ -39,7 +39,7 @@ int execute (abs_struct *base)
 {   
     pid_t   pid;
 
-    base->valid_str = ft_split("exit echo pwd cd history help env setenv unsetenv clear |", ' ');
+    base->valid_str = ft_split("exit echo pwd cd history help env setenv unsetenv clear export", ' ');
     pid = fork();
 
     if (pid > 0)
@@ -53,18 +53,24 @@ int execute (abs_struct *base)
         while (base->actual_argument <= base->num_args)
         {
             if (ft_strcmp(base->string, base->valid_str[0]) == 0 ) 
-                kill(pid, SIGKILL);
+                kill(pid, SIGINT);
             else if (ft_strcmp(base->parseString[base->actual_argument], base->valid_str[1]) == 0)
                 echo(base);
             else if (ft_strcmp(base->parseString[base->actual_argument], base->valid_str[2]) == 0)
+            {
                 ft_pwd();
+                base->error  = 0;
+            }
             else if (ft_strcmp(base->parseString[base->actual_argument], base->valid_str[3]) == 0)
             {    
                  cd(base);
                  base->actual_argument += 1;
             }
             else if (ft_strcmp(base->parseString[base->actual_argument], base->valid_str[4]) == 0)
+            {
                 ft_history();
+                base->error  = 0;
+            }
             else if (ft_strcmp(base->parseString[base->actual_argument], base->valid_str[5]) == 0)
                 ft_help(base);
             else if (ft_strcmp(base->parseString[base->actual_argument], base->valid_str[6]) == 0)
@@ -75,12 +81,16 @@ int execute (abs_struct *base)
                 ft_unsetenv(base);
             else if (ft_strcmp(base->parseString[base->actual_argument], base->valid_str[9]) == 0)
                 clearScreen();
-           /* else if (ft_strcmp(base->parseString[base->actual_argument], base->valid_str[10]) == 0)
-                ft_export(base); */
-            else if (ft_strcmp(base->parseString[base->actual_argument], base->valid_str[11]) == 0 && base->actual_argument != 0)
-                vertical_line(base);
+            else if (ft_strcmp(base->parseString[base->actual_argument], base->valid_str[10]) == 0)
+                ft_export(base);
+            else if ((base->parseString[base->actual_argument][0] == '.' && base->parseString[base->actual_argument][1] == '/')
+                    || base->parseString[base->actual_argument][0] == '/')
+                ft_launch(base);
             else
+            {
                 ft_putstr("Error en los argumentos\n");
+                base->error = 1;
+            }
             base->actual_argument++;
 
             // manejo de ; |
@@ -115,6 +125,7 @@ int main(int argc, char **argv, char **envp)
     ft_copy_env(base, envp);
     base->actual_argument = 0;
     base->flag = 0;
+    base->error = 0;
     while (exceptionNum == 1)
     {
         ft_putstr("--->");

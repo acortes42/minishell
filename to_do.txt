@@ -1,9 +1,9 @@
 1. ctrl-D no integrada aún.
 2. Mejorar el funcionamiento de " | "
 3. Correcta implementación de export
-4. Usar un ejecutable con el path absoluto o relativo
 5. Implementación de redirecciones. ("<", ">", ">>")
 6.Comprobar/introducir el correcto funcionamiento de las variables de entorno
-7.Se debe implementar "$?"
 8. Corregir el problema con cd y chdir
 9. Mejoras si es posible en la estructura basica del codigo en caso de que la lógica general fallara
+10. Empezar a solucionar leaks
+11. $? funciona pero...¿igual deberia ir diferente?

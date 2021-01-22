@@ -28,6 +28,7 @@ typedef struct      abs_struct
     int     lines_envp;
     int     actual_argument;
     int     flag;
+    int     error;
 }                   abs_struct;    
 
 char	*ft_strdup(const char *s1);
@@ -44,6 +45,8 @@ int     cd(abs_struct *base);
 int     echo(abs_struct *base);
 int     ft_history();
 int     ft_pwd();
+int     ft_launch(abs_struct *base);
+int		ft_export(abs_struct *base);
 int     ft_copy_env(abs_struct *base, char **envp);
 int     ft_env(abs_struct *base);
 int     ft_setenv(abs_struct *base);

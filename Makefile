@@ -2,7 +2,7 @@ UTILS = utils/ft_putnbr.c utils/ft_putstr.c utils/ft_split.c utils/get_next_line
 		utils/get_next_line_utils.c utils/ft_strcmp.c
 
 OBJS =  srcs/minishell.c srcs/echo.c srcs/cd.c srcs/history.c srcs/signals.c srcs/pwd.c \
-		srcs/env.c srcs/setenv.c srcs/vertical_line.c  ${UTILS}
+		srcs/env.c srcs/setenv.c srcs/vertical_line.c srcs/ft_launch.c srcs/ft_export.c ${UTILS}
 		
 CFLAGS = -Wall -Wextra -Werror
 COMP = ${OBJS: .c =.o}

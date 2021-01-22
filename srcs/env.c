@@ -24,7 +24,11 @@ int ft_env(abs_struct *base)
 
     x = 0;
     while(base->env[x])
+    {
         ft_putstr(base->env[x++]);
+        ft_putstr("\n");
+        base->error = 0;
+    }
     return (1);
 }
 
@@ -59,9 +63,15 @@ int ft_unsetenv(abs_struct *base)
         x++;
     }
     if (x > y && base->lines_envp > 0)
+    {
         base->lines_envp--;
+        base->error = 0;
+    }
     else
+    {
         ft_putstr("No se encontro la variable de entorno descrita\n");
+        base->error  = 1;
+    }
     free(aux);
     return (1);
 }
