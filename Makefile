@@ -74,6 +74,7 @@ ${TESTS_IT}:
 	${MAKE} test_exit
 	${MAKE} test_semicolon
 	${MAKE} test_quotes
+	${MAKE} test_redirections
 
 test_echo: ${NAME}
 	(timeout --preserve-status 3 ./minishell <res/tests/inputs/test_echo > res/tests/outputs_it/test_echo_minishell); echo $? > res/tests/outputs_it/test_echo_minishell_output_code
@@ -123,5 +124,13 @@ test_quotes: ${NAME}
 	diff res/tests/outputs_it/test_quotes_bash res/tests/outputs_it/test_quotes_minishell 
 	diff res/tests/outputs_it/test_quotes_bash_output_code res/tests/outputs_it/test_quotes_minishell_output_code
 	rm res/tests/outputs_it/test_quotes*
+
+
+test_redirections: ${NAME}
+	(timeout --preserve-status 3 ./minishell <res/tests/inputs/test_redirections -9 > res/tests/outputs_it/test_redirections_minishell); echo $? > res/tests/outputs_it/test_redirections_minishell_output_code
+	(timeout --preserve-status 3 /bin/bash <res/tests/inputs/test_redirections > res/tests/outputs_it/test_redirections_bash); echo $? > res/tests/outputs_it/test_redirections_bash_output_code
+	diff res/tests/outputs_it/test_redirections_bash res/tests/outputs_it/test_redirections_minishell 
+	diff res/tests/outputs_it/test_redirections_bash_output_code res/tests/outputs_it/test_redirections_minishell_output_code
+	rm res/tests/outputs_it/test_redirections*
 
 
