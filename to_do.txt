@@ -1,5 +1,5 @@
 1. ctrl-D no integrada aún.
-2. Mejorar el funcionamiento de " | "
+2. Mejorar el funcionamiento de " | " (deberiamos guardar que aparece por salida estandar para modificar luego)
 3. Correcta implementación de export
 5. Implementación de redirecciones. ("<", ">", ">>")
 6.Comprobar/introducir el correcto funcionamiento de las variables de entorno

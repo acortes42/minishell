@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/23 16:04:16 by acortes-          #+#    #+#             */
+/*   Updated: 2021/01/23 16:04:18 by acortes-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 int ft_copy_env(abs_struct *base, char **envp)
@@ -40,7 +52,7 @@ int ft_unsetenv(abs_struct *base)
 
     if(!base->parseString[1] || base->parseString[2])
     {
-        ft_putstr("Error con los argumentos\n");
+        ft_putstr("\e[0mError con los argumentos\n");
         return (-1);
     }
     x = 0;
@@ -69,7 +81,7 @@ int ft_unsetenv(abs_struct *base)
     }
     else
     {
-        ft_putstr("No se encontro la variable de entorno descrita\n");
+        ft_putstr("\e[0mNo se encontro la variable de entorno descrita\n");
         base->error  = 1;
     }
     free(aux);
