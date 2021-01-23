@@ -1,0 +1,3 @@
+cd res/tests/scripts;
+export TEST_EXPORT=42
+./test_export.sh

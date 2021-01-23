@@ -1,0 +1,1 @@
+echo		"Executing several commands";echo "Second command. No spaces between command and comma"      ;     echo "Executing command separated by spaces"			;					echo			"Executing command separated by tabs";			pwd  ;	 echo "Multiple commands executed"
