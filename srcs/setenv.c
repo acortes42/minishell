@@ -81,5 +81,6 @@ int ft_setenv(abs_struct *base)
         return (1);
     }
     ft_putstr("Error en los argumentos\n");
+    base->error  = 0;
     return (0);
 }

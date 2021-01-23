@@ -1,38 +1,25 @@
 #include "../minishell.h"
 
-char *addChar(char *s1, char c)
-{
-    char    *str;
-    int     total;
-    int     n;
-
-    n = 0;
-    total = ft_strlen(s1) + 1;
-    str = malloc(sizeof(char) * total);
-    while (*s1)
-		str[n++] = *s1++;
-    str[n++] = c;
-    str[n] = '\0';
-    return (str);
-}
-
-// Mejorar ese horror de algoritmo que esta abajo. Da muchos errores.
-
 int obtain_full_line(abs_struct *base)
 {
     char        c;
     int         fd;
+    int         i;
 
-    base->string = ft_strdup("");
     fd = open("history.txt", O_RDWR | O_APPEND);
+    i = 0;
     while (read(0, &c, sizeof(char)) > 0)
     {
         write(fd, &c, 1);
         if (c == '\n')
             break;
         if (c != '\"' && c != '\'')
-            base->string = addChar(base->string, c);
+        {
+            base->string[i] = c;
+            i++;
+        }
     }
+    base->string[i] = '\0';
     close(fd);
     base->parseString = ft_split(base->string, ' ');
     return (0);
@@ -51,31 +38,39 @@ void clearScreen()
 int execute (abs_struct *base)
 {   
     pid_t   pid;
-    int     num_arguments;
 
-    //manejar el ctrl+c para los bonus, cerrando todos los subprocesos de minishell
-    //signal(SIGINT, handle_sigint);
-    base->valid_str = ft_split("exit echo pwd cd history help env setenv unsetenv clear |", ' ');
+    base->valid_str = ft_split("exit echo pwd cd history help env setenv unsetenv clear export", ' ');
     pid = fork();
-    num_arguments = 0;
-    while (base->parseString[num_arguments])
-        num_arguments++;
+
     if (pid > 0)
         wait(&pid);
     else if (pid == 0)
     {
-        while (base->actual_argument <= num_arguments)
+        base->num_args = 0;
+        while (base->parseString[base->num_args])
+            base->num_args++;
+        base->actual_argument = 0;
+        while (base->actual_argument <= base->num_args)
         {
             if (ft_strcmp(base->string, base->valid_str[0]) == 0 ) 
-                kill(pid, SIGKILL);
+                kill(pid, SIGINT);
             else if (ft_strcmp(base->parseString[base->actual_argument], base->valid_str[1]) == 0)
                 echo(base);
             else if (ft_strcmp(base->parseString[base->actual_argument], base->valid_str[2]) == 0)
+            {
                 ft_pwd();
+                base->error  = 0;
+            }
             else if (ft_strcmp(base->parseString[base->actual_argument], base->valid_str[3]) == 0)
-                cd(base);
+            {    
+                 cd(base);
+                 base->actual_argument += 1;
+            }
             else if (ft_strcmp(base->parseString[base->actual_argument], base->valid_str[4]) == 0)
+            {
                 ft_history();
+                base->error  = 0;
+            }
             else if (ft_strcmp(base->parseString[base->actual_argument], base->valid_str[5]) == 0)
                 ft_help(base);
             else if (ft_strcmp(base->parseString[base->actual_argument], base->valid_str[6]) == 0)
@@ -86,13 +81,29 @@ int execute (abs_struct *base)
                 ft_unsetenv(base);
             else if (ft_strcmp(base->parseString[base->actual_argument], base->valid_str[9]) == 0)
                 clearScreen();
-           /* else if (ft_strcmp(base->parseString[base->actual_argument], base->valid_str[10]) == 0)
+            else if (ft_strcmp(base->parseString[base->actual_argument], base->valid_str[10]) == 0)
                 ft_export(base);
-            else if (ft_strcmp(base->parseString[base->actual_argument], base->valid_str[11]) == 0 && base->actual_argument != 0)
-                vertical_line(base);*/
+            else if ((base->parseString[base->actual_argument][0] == '.' && base->parseString[base->actual_argument][1] == '/')
+                    || base->parseString[base->actual_argument][0] == '/')
+                ft_launch(base);
             else
+            {
                 ft_putstr("Error en los argumentos\n");
+                base->error = 1;
+            }
             base->actual_argument++;
+
+            // manejo de ; |
+            if (ft_strcmp(base->parseString[base->actual_argument],  ";") == 0)
+                base->actual_argument++;
+            else if (ft_strcmp(base->parseString[base->actual_argument],  "|") == 0)
+            {
+                // pensar en equipo como gestionar esto
+                base->actual_argument++;
+            }
+            else
+                break;
+            
         }
     }
     else
@@ -106,6 +117,7 @@ int main(int argc, char **argv, char **envp)
     int         exceptionNum;
     abs_struct  *base;
 
+    signal(SIGINT, handle_sigint);
     exceptionNum = 1;
     clearScreen();
     if (!(base = malloc(sizeof(abs_struct) * 1)))
@@ -113,6 +125,7 @@ int main(int argc, char **argv, char **envp)
     ft_copy_env(base, envp);
     base->actual_argument = 0;
     base->flag = 0;
+    base->error = 0;
     while (exceptionNum == 1)
     {
         ft_putstr("--->");

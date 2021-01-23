@@ -2,13 +2,15 @@
 
 void handle_sigint(int sig) 
 { 
-    pid_t pid;
-
-    pid = getpid();
-    if (sig == 2 && pid == 0)
+    if (sig == 2)
     {
-        ft_putstr("hey");
-        kill(pid, SIGKILL);
+        ft_putstr("\n    Esto ha terminado con ctrl+c    \n");
+        exit(0);
     }
+   /* else if (sig == 3)
+    {
+        ft_putstr("\n    Esto ha terminado con ctlr+/    \n");
+        exit(0);
+    }*/
     return;
 } 
