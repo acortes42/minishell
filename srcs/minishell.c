@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/23 13:33:03 by acortes-          #+#    #+#             */
+/*   Updated: 2021/01/23 16:28:03 by acortes-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 int obtain_full_line(abs_struct *base)
@@ -27,12 +39,12 @@ int obtain_full_line(abs_struct *base)
 
 void clearScreen()
 {
-    ft_putstr("\033[2J\033[1;1H");
-    ft_putstr("             |||------------------------------||| \n");
+    ft_putstr("\e[0m\033[2J\033[1;1H");
+    ft_putstr("\e[92m             |||------------------------------||| \n");
     ft_putstr("             |||------------------------------||| \n");
     ft_putstr("             |||------------------------------||| \n");
     ft_putstr("             |||           MINISHELL          ||| \n");
-    ft_putstr("             |||------------------------------||| \n\n\n");
+    ft_putstr("             |||------------------------------||| \e[0m\n\n\n");
 }
 
 int execute (abs_struct *base)
@@ -52,6 +64,7 @@ int execute (abs_struct *base)
         base->actual_argument = 0;
         while (base->actual_argument <= base->num_args)
         {
+            ft_putstr("\e[0m");
             if (ft_strcmp(base->string, base->valid_str[0]) == 0 ) 
                 kill(pid, SIGINT);
             else if (ft_strcmp(base->parseString[base->actual_argument], base->valid_str[1]) == 0)
@@ -107,7 +120,7 @@ int execute (abs_struct *base)
         }
     }
     else
-        ft_putstr(" Error en la creacion de subproceso\n");
+        ft_putstr("\e[0mError en la creacion de subproceso\n");
     return (1);
 }
 
@@ -128,7 +141,7 @@ int main(int argc, char **argv, char **envp)
     base->error = 0;
     while (exceptionNum == 1)
     {
-        ft_putstr("--->");
+        ft_putstr("\e[92m--->");
         obtain_full_line(base);
         execute(base);         
     }

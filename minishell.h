@@ -12,6 +12,7 @@
 # include <string.h>
 # include <ctype.h>
 # include <stdarg.h>
+# include <errno.h>
 # include <signal.h>
 # include <limits.h>
 # include <sys/wait.h>   

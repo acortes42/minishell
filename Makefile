@@ -41,6 +41,7 @@ library: ${OBJS}
 
 clean:
 	@rm -f  *.o
+	@rm -f  srcs/*.o
 	@rm -rdf SourceFiles
 	${RM} ${OBJS_UNIT_TESTS} ${OBJS_WITHOUT_MAIN}
 	${RM} -r ${TESTS_IT_OUTPUTS}/* ${TESTS_UT_OUTPUTS}/*

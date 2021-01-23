@@ -6,7 +6,7 @@
 /*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 14:06:46 by acortes-          #+#    #+#             */
-/*   Updated: 2021/01/23 13:18:28 by acortes-         ###   ########.fr       */
+/*   Updated: 2021/01/23 16:05:03 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,6 @@ int vertical_line(abs_struct *base)
 	int silence_warnings;
 
 	silence_warnings = base->actual_argument;
-	ft_putstr("Esta es una line vertical\n");
+	ft_putstr("\e[0mEsta es una line vertical\n");
 	return (silence_warnings);
 }

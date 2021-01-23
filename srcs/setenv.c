@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   setenv.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/23 16:04:45 by acortes-          #+#    #+#             */
+/*   Updated: 2021/01/23 16:04:45 by acortes-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 
@@ -80,7 +92,7 @@ int ft_setenv(abs_struct *base)
             ft_add_line(base);
         return (1);
     }
-    ft_putstr("Error en los argumentos\n");
+    ft_putstr("\e[0mError en los argumentos\n");
     base->error  = 0;
     return (0);
 }
