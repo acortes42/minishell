@@ -1,0 +1,7 @@
+adfb
+clear
+history
+cd
+pwd
+cd ..
+pwd
