@@ -1,18 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_export.c                                        :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vsempere <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/08 14:55:18 by acortes-          #+#    #+#             */
-/*   Updated: 2021/01/23 13:18:52 by acortes-         ###   ########.fr       */
+/*   Created: 2019/11/17 14:31:26 by vsempere          #+#    #+#             */
+/*   Updated: 2019/11/17 14:31:30 by vsempere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		ft_export(abs_struct *base)
+size_t			ft_strlcpy(char *dst, const char *src, size_t size)
 {
-	return (ft_setenv(base));
+	size_t i;
+
+	i = 0;
+	if (!src)
+		return (0);
+	if (size != 0)
+	{
+		while (src[i] && i < size - 1)
+		{
+			dst[i] = src[i];
+			i++;
+		}
+		dst[i] = '\0';
+	}
+	while (src[i])
+	{
+		i++;
+	}
+	return (i);
 }

@@ -10,89 +10,75 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
-
+// TODO: modificar el nombre de fichero por ft_setenv.c
 // Problema al solo aceptar dos introducciones con setenv
-
-int ft_find_and_compare(char *env, char c, char *cmp)
-{
-    char    *aux;
-    int     x;
-
-    x = 0;
-    while(env[x] != c)
-        x++;
-    aux = malloc(sizeof(char) * x);
-    strncpy(aux, env, x);
-    if (ft_strcmp(aux, cmp) == 0)
-    {
-        free(aux);
-        return (1);
-    }
-    free(aux);
-    return (0);
-}
-
-int ft_seach(abs_struct *base)
-{
-    int x;
-
-    x = 0;
-    while (x < base->lines_envp)
-    {
-        if (ft_find_and_compare(base->env[x], '=', base->parseString[1]) == 1)
-        {
-            free(base->env[x]);
-            base->env[x] = ft_strdup(base->parseString[1]);
-            base->env[x] = ft_strjoin(base->env[x], "=");
-            base->env[x] = ft_strjoin(base->env[x], base->parseString[2]);
-            return (1);
-        }
-        x++;
-    }
-    return (0);
-}
 
 /*Existe un problema al crear al crear más memoria y copiar lo necesario*/
 
-int ft_add_line(abs_struct *base)
+static int		ft_add_line(char ***envp, int *elems, char *env_value)
 {
-    char    **aux;
-    int     x;
+    char		**aux;
+    int			x;
 
+	if (!env_value || !ft_strchr(env_value, '='))
+		return (1);
     x = 0;
-    aux = malloc(sizeof(char*) * (base->lines_envp));
-    while (x < base->lines_envp)
+    if (!(aux = malloc(sizeof(char *) * (*elems + 2))))
+		return (0);
+    while (x < *elems)
     {
-        aux[x] = ft_strdup(base->env[x]);
+        *(aux + x) = *((*envp) + x);
         x++;
     }
-    aux[x] = ft_strdup(base->parseString[1]);
-    aux[x] = ft_strjoin(aux[x], "=");
-    aux[x] = ft_strjoin(aux[x], base->parseString[2]);
-    base->env = malloc(sizeof(char*) * (base->lines_envp));
-    x = 0;
-    while (x <= base->lines_envp)
-    {
-        base->env[x] = ft_strdup(aux[x]);
-        x++;
-    }
-    base->lines_envp++;
-    free(aux);
+    *(aux + x) = ft_strdup(env_value);
+	(*elems)++;
+	aux[*elems] = NULL;
+	if (*envp)
+		free(*envp);
+	*envp = aux;
     return (1);
 }
 
-int ft_setenv(abs_struct *base)
-{
 
-    if (base->parseString[1] && base->parseString[2] && !base->parseString[3])
+static int	ft_search_env(char **env, char *key)
+{
+	int		pos;
+	char	**tmp;
+	size_t	key_len;
+
+	key_len = ft_strlen(key);
+	pos = 0;
+	tmp = env;
+    while (key_len && tmp && *tmp)
     {
-        if (ft_seach(base) == 0)
-            ft_add_line(base);
-        return (1);
+		if (ft_strlen(*tmp) > key_len && 
+			!ft_memcmp(*tmp, key, key_len) && *((*tmp) + key_len) == '=')
+             return (pos);
+        tmp++;
+		pos++;
+    }
+    return (0);
+}
+
+int			ft_setenv(abs_struct *base)
+{
+	int		ret;
+	char	**key_value;
+
+	key_value = ft_split(base->parseString[base->actual_argument + 1], '=');
+    if (key_value)
+    {
+        if (ft_search_env(base->env, key_value[0]))
+			ft_unsetenv(base);
+		if (!(ret = ft_add_line(&base->env, &base->lines_envp,
+			base->parseString[base->actual_argument + 1])))
+		    ft_putstr("\e[0mNo se añadió el argumento\n");
+		free(key_value);
+		return (ret);
     }
     ft_putstr("\e[0mError en los argumentos\n");
-    base->error  = 0;
+	base->error = 0;
     return (0);
 }

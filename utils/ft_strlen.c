@@ -1,18 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_export.c                                        :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vsempere <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/08 14:55:18 by acortes-          #+#    #+#             */
-/*   Updated: 2021/01/23 13:18:52 by acortes-         ###   ########.fr       */
+/*   Created: 2019/11/17 14:32:00 by vsempere          #+#    #+#             */
+/*   Updated: 2019/11/17 14:32:03 by vsempere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		ft_export(abs_struct *base)
+size_t		ft_strlen(const char *s)
 {
-	return (ft_setenv(base));
+	size_t	i;
+
+	i = 0;
+	while (s[i] != 0)
+		i++;
+	return (i);
 }

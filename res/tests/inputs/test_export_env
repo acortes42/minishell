@@ -1,3 +1,6 @@
 cd res/tests/scripts;
 export TEST_EXPORT=42
 ./test_export.sh
+echo "Checking INTERNAL_VARIABLE is not defined."
+env | grep INTERNAL_VARIABLE
+echo "Nothing must be written before this line."

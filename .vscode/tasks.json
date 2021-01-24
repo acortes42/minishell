@@ -6,7 +6,6 @@
             "label": "minishellBuildToDebug",
             "command": "make",
             "args": [
-                "fclean",
                 "debug"
             ],
             "options": {

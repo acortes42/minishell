@@ -10,17 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
-size_t	ft_strlen(const char *s)
-{
-	size_t	n;
-
-	n = 0;
-	while (s[n] != '\0')
-		n++;
-	return (n);
-}
 
 char	*ft_strdup(const char *s1)
 {

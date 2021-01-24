@@ -1,4 +1,8 @@
 # minishell
+## Debug
+### VSCode
+Debug child thread of a fork. Set follow-fork-mode to child in the Debug console tab using the next command:
+* -exec set follow-fork-mode child
 ## Docs
 ### Ctrl-d
 https://www.gnu.org/software/bash/manual/html_node/Bash-Variables.html#index-IGNOREEOF
