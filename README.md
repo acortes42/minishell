@@ -1,5 +1,9 @@
 # minishell
 ## Docs
+### Ctrl-d
+https://www.gnu.org/software/bash/manual/html_node/Bash-Variables.html#index-IGNOREEOF
+
+IGNOREEOF if not set by default 
 ### Redirections
 https://www.gnu.org/software/bash/manual/html_node/Redirections.html
 https://tldp.org/LDP/abs/html/io-redirection.html

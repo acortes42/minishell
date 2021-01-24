@@ -6,7 +6,7 @@ SRCS_WITHOUT_MAIN	=  srcs/echo.c srcs/cd.c srcs/history.c \
 	srcs/ft_launch.c srcs/ft_export.c ${UTILS}
 SRCS 				=  srcs/minishell.c ${SRCS_WITHOUT_MAIN}
 		
-CFLAGS				= -Wall -Wextra -Werror -I .
+CFLAGS				= -Wall -Wextra -Werror -I . -g  #-fsanitize=address
 CFLAGS_DEBUG		= ${CFLAGS} -g -fsanitize=address
 OBJS				= ${SRCS:.c=.o}
 NAME				= minishell
@@ -134,4 +134,18 @@ test_redirections: ${NAME}
 	diff res/tests/outputs_it/test_redirections_bash_output_code res/tests/outputs_it/test_redirections_minishell_output_code
 	rm res/tests/outputs_it/test_redirections*
 
+
+test_signals: ${NAME}
+	(timeout --preserve-status 3 ./minishell <res/tests/inputs/test_signals -9 > res/tests/outputs_it/test_signals_minishell); echo $? > res/tests/outputs_it/test_signals_minishell_output_code
+	(timeout --preserve-status 3 /bin/bash <res/tests/inputs/test_signals > res/tests/outputs_it/test_signals_bash); echo $? > res/tests/outputs_it/test_signals_bash_output_code
+	diff res/tests/outputs_it/test_signals_bash res/tests/outputs_it/test_signals_minishell 
+	diff res/tests/outputs_it/test_signals_bash_output_code res/tests/outputs_it/test_signals_minishell_output_code
+	rm res/tests/outputs_it/test_signals*
+
+test_ctrl_d: ${NAME}
+	(timeout --preserve-status 3 ./minishell <res/tests/inputs/test_ctrl_d -9 > res/tests/outputs_it/test_ctrl_d_minishell 2> res/tests/outputs_it/test_ctrl_d_minishell_error); echo $? > res/tests/outputs_it/test_ctrl_d_minishell_output_code
+	(timeout --preserve-status 3 /bin/bash <res/tests/inputs/test_ctrl_d > res/tests/outputs_it/test_ctrl_d_bash 2> res/tests/outputs_it/test_ctrl_d_bash_error); echo $? > res/tests/outputs_it/test_ctrl_d_bash_output_code
+	diff res/tests/outputs_it/test_ctrl_d_bash res/tests/outputs_it/test_ctrl_d_minishell 
+	diff res/tests/outputs_it/test_ctrl_d_bash_output_code res/tests/outputs_it/test_ctrl_d_minishell_output_code
+	rm res/tests/outputs_it/test_ctrl_d*
 

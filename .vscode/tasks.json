@@ -1,0 +1,25 @@
+{
+    "tasks": [
+        {
+            
+            "type": "shell",
+            "label": "minishellBuildToDebug",
+            "command": "make",
+            "args": [
+                "fclean",
+                "debug"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ],
+    "version": "2.0.0"
+}
