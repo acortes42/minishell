@@ -1,6 +1,6 @@
 1. ctrl-D no integrada aún.
 2. Mejorar el funcionamiento de " | " (deberiamos guardar que aparece por salida estandar para modificar luego)
-3. Correcta implementación de export
+3. Correcta implementación de export (pendiete de hablar cambio en estructura de datos)
 5. Implementación de redirecciones. ("<", ">", ">>")
 6.Comprobar/introducir el correcto funcionamiento de las variables de entorno
 8. Corregir el problema con cd y chdir
