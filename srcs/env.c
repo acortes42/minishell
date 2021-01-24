@@ -54,6 +54,7 @@ int			ft_unsetenv(abs_struct *base)
 		ft_array_release(key_value);
 		return (1);
 	}
+	ft_array_release(key_value);
 	if (!(it_new = malloc(sizeof(char *) * base->lines_envp)))
 	{
         ft_putstr("\e[0mError de memoria\n");

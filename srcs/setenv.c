@@ -30,6 +30,7 @@ static int		ft_add_line(char ***envp, int *elems, char *env_value)
     while (x < *elems)
     {
         *(aux + x) = *((*envp) + x);
+		*((*envp) + x) = 0;
         x++;
     }
     *(aux + x) = ft_strdup(env_value);
@@ -75,7 +76,7 @@ int			ft_setenv(abs_struct *base)
 		if (!(ret = ft_add_line(&base->env, &base->lines_envp,
 			base->parseString[base->actual_argument + 1])))
 		    ft_putstr("\e[0mNo se añadió el argumento\n");
-		free(key_value);
+		ft_array_release(key_value);
 		return (ret);
     }
     ft_putstr("\e[0mError en los argumentos\n");

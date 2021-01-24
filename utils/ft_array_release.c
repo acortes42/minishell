@@ -7,12 +7,11 @@ void			ft_array_release(char **envp)
 	if (!envp)
 		return ;
 	tmp = envp;
-	while (tmp)
+	while (tmp && *tmp)
 	{
-		if (*tmp)
-			free(*tmp);
+		free(*tmp);
 		tmp++;
 	}
-	free(tmp);
+	free(envp);
 }
 

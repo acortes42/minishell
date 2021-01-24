@@ -62,5 +62,5 @@ void			ft_array_release(char **envp);
 size_t			ft_array_len(char **envp);
 char			*ft_getenv(char **env, char *key);
 size_t			ft_strlen(const char *s);
-
+void			*ft_memset(void *b, int c, size_t len);
 #endif
