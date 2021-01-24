@@ -123,7 +123,8 @@ int execute (abs_struct *base)
 			else
 				break;
 		}
-		exit(1);
+		// TODO: Este exit debería ser el valor de retorno de la operación el que devuelve $?...
+		exit(0);
     }
 	else
 		ft_putstr("\e[0mError en la creacion de subproceso\n");
