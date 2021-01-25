@@ -1,18 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_export.c                                        :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vsempere <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/08 14:55:18 by acortes-          #+#    #+#             */
-/*   Updated: 2021/01/23 13:18:52 by acortes-         ###   ########.fr       */
+/*   Created: 2019/11/17 14:29:04 by vsempere          #+#    #+#             */
+/*   Updated: 2019/11/17 14:29:09 by vsempere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		ft_export(abs_struct *base)
+void				*ft_memset(void *b, int c, size_t len)
 {
-	return (ft_setenv(base));
+	size_t			i;
+	unsigned char	*uc;
+
+	uc = (unsigned char *)b;
+	i = 0;
+	while (len > 0 && i < len)
+	{
+		uc[i] = ((unsigned char)c);
+		i++;
+	}
+	return (b);
 }

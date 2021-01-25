@@ -1,0 +1,82 @@
+echo    "Test redirections"
+echo    'Test 001 - ls -lR > res/tests/outputs_it/test_redirections_001'
+ls -lR > res/tests/outputs_it/test_redirections_001
+cat res/tests/outputs_it/test_redirections_001
+echo    ""
+echo    ""
+
+echo    'Test 002 - ls -lR 1>res/tests/outputs_it/test_redirections_002'
+ls -lR 1>res/tests/outputs_it/test_redirections_002
+cat res/tests/outputs_it/test_redirections_002
+echo    ""
+echo    ""
+
+echo    'Test 003 - echo "Appending data to file" 1>>res/tests/outputs_it/test_redirections_003'
+echo "Appending data to file" 1>>res/tests/outputs_it/test_redirections_003
+cat res/tests/outputs_it/test_redirections_003
+echo    ""
+echo    ""
+
+echo    'Test 004 - echo "Appending data to file" 1>>res/tests/outputs_it/test_redirections_004'
+echo "Appending data to file" 1>>res/tests/outputs_it/test_redirections_004
+cat res/tests/outputs_it/test_redirections_004
+echo    ""
+echo    ""
+
+echo    'Test 005 - `42 error` 2>&1 1>res/tests/outputs_it/test_redirections_005'
+`42 error` 2>&1 1>res/tests/outputs_it/test_redirections_005
+cat res/tests/outputs_it/test_redirections_005
+echo    ""
+echo    ""
+
+echo    'Test 006 - `42 error` 2>&1 1>res/tests/outputs_it/test_redirections_006'
+`42 error` 1>res/tests/outputs_it/test_redirections_006 2>&1
+cat res/tests/outputs_it/test_redirections_006
+echo    ""
+echo    ""
+
+echo    'Test 007 - writting one line at a time into a file'
+export LOGFILE=res/tests/outputs_it/test_redirections_007
+echo "This statement is sent to the log file, \"$LOGFILE\"." 1>$LOGFILE
+echo "This statement is appended to \"$LOGFILE\"." 1>>$LOGFILE
+echo "This statement is also appended to \"$LOGFILE\"." 1>>$LOGFILE
+echo "This statement is echoed to stdout, and will not appear in \"$LOGFILE\"."
+cat $LOGFILE
+echo    ""
+echo    ""
+
+echo	'Test 008 - Writting errors one line at a time into a file
+ERRORFILE=res/tests/outputs_it/test_redirections_008
+bad_command1 2>$ERRORFILE
+bad_command2 2>>$ERRORFILE
+bad_command3
+cat $ERRORFILE
+echo	""
+echo	""
+
+echo	'Test 009 - grep "Test 009" <res/tests/inputs/test_redirections'
+grep "Test 009" <res/tests/inputs/test_redirections
+echo 	""
+echo	""
+
+echo	'Test 010 - '
+echo	'	echo 1234567890 > res/tests/outputs_it/test_redirections_010	# Write string to "res/tests/outputs_it/test_redirections_010".'
+echo	'	exec 3<> res/tests/outputs_it/test_redirections_010				# Open "res/tests/outputs_it/test_redirections_010" and assign fd 3 to it.'
+echo	'	read -n 4 <&3													# Read only 4 characters.'
+echo	'	echo -n . >&3													# Write a decimal point there.'
+echo	'	exec 3>&-														# Close fd 3.'
+echo	'	cat res/tests/outputs_it/test_redirections_010														# ==> 1234.67890'
+echo 1234567890 > res/tests/outputs_it/test_redirections_010
+exec 3<> res/tests/outputs_it/test_redirections_010         
+read -n 4 <&3         
+echo -n . >&3         
+exec 3>&-             
+cat res/tests/outputs_it/test_redirections_010              
+echo	""
+echo	""
+
+echo	'Test 011 - cat res/tests/inputs/test_redirections | sort | uniq > res/tests/outputs_it/test_redirections_011'
+cat res/tests/inputs/test_redirections | sort | uniq > res/tests/outputs_it/test_redirections_011
+cat res/tests/outputs_it/test_redirections_011
+echo	""
+echo	""

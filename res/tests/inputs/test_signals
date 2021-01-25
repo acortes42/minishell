@@ -1,0 +1,9 @@
+echo 'Testing ctrl-c'
+sleep 100000 &
+kill -SIGINT $!
+echo $?
+
+echo 'Testing ctrl-\'
+sleep 100000 &
+kill -SIGQUIT $!
+echo $?
