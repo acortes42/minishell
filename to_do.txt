@@ -13,3 +13,6 @@
 15. ¿Textos en inglés?
 16. Revisar el exit. Estamos enviando un kill pero podemos usar exit
 17. Eliminar valid_str? Al final está hardcoded los códigos numerícos y reducen la legibilidad
+18. Expandir ~ en el export. Por ejemplo: export HOME=~/42 en mi caso el ~ se tiene que expandir al valor actual de HOME que inicialmente es /home/visv
+19. Tenemos que controlar que si pulsamos enter cuando están las comillas abiertas, nos siga pidiendo datos de entrada hasta llegar a las comillas?
+20. Tratar la \ en el cd? En bash una barra invertida se interpreta como un salto de línea para concatenar líneas

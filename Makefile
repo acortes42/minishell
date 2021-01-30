@@ -2,9 +2,10 @@ UTILS 				= utils/ft_putnbr.c utils/ft_putstr.c utils/ft_split.c \
 	utils/get_next_line.c utils/get_next_line_utils.c utils/ft_strcmp.c \
 	utils/ft_strlcpy.c utils/ft_memcmp.c utils/ft_array_dup.c \
 	utils/ft_array_release.c utils/ft_array_len.c utils/ft_strlen.c \
-	utils/ft_memset.c
+	utils/ft_memset.c utils/ft_isempty.c utils/ft_isspace.c \
+	utils/ft_strnlen.c utils/ft_strlcat.c utils/ft_get_absolute_path.c 
 
-SRCS_WITHOUT_MAIN	=  srcs/echo.c srcs/cd.c srcs/history.c \
+SRCS_WITHOUT_MAIN	=  srcs/clearScreen.c srcs/ft_execute_command.c srcs/echo.c srcs/cd.c srcs/history.c \
 	srcs/signals.c srcs/pwd.c srcs/env.c srcs/setenv.c srcs/vertical_line.c \
 	srcs/ft_launch.c srcs/ft_export.c srcs/ft_getenv.c ${UTILS}
 SRCS 				=  srcs/minishell.c ${SRCS_WITHOUT_MAIN}
