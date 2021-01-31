@@ -62,6 +62,7 @@ size_t			ft_strlcat(char *dst, const char *src, size_t size);
 size_t			ft_strlcpy(char *dst, const char *src, size_t size);
 size_t			ft_strnlen(const char *s, size_t max);
 int				ft_memcmp(const void *s1, const void *s2, size_t n);
+void			*ft_memcpy(void *dest, const void *src, size_t n);
 char			**ft_array_dup(char **envp);
 void			ft_array_release(char **envp);
 size_t			ft_array_len(char **envp);
@@ -70,5 +71,5 @@ size_t			ft_strlen(const char *s);
 void			*ft_memset(void *b, int c, size_t len);
 int				ft_isempty(const char *s);
 int				ft_isspace(int s);
-
+void			ft_release_base(abs_struct *base);
 #endif

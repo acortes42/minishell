@@ -3,7 +3,6 @@
 3. Correcta implementación de export (pendiete de hablar cambio en estructura de datos)
 5. Implementación de redirecciones. ("<", ">", ">>")
 6.Comprobar/introducir el correcto funcionamiento de las variables de entorno
-8. Corregir el problema con cd y chdir
 9. Mejoras si es posible en la estructura basica del codigo en caso de que la lógica general fallara
 10. Empezar a solucionar leaks
 11. $? funciona pero...¿igual deberia ir diferente?
@@ -16,3 +15,5 @@
 18. Expandir ~ en el export. Por ejemplo: export HOME=~/42 en mi caso el ~ se tiene que expandir al valor actual de HOME que inicialmente es /home/visv
 19. Tenemos que controlar que si pulsamos enter cuando están las comillas abiertas, nos siga pidiendo datos de entrada hasta llegar a las comillas?
 20. Tratar la \ en el cd? En bash una barra invertida se interpreta como un salto de línea para concatenar líneas
+21. Tratar los caracteres de borrado. Si escribimos un comando, borramos para corregir y reescribimos, ..., nosotros lo que ejecutaremos no es el resultado que ve el usuario por pantalla sino todo el comando entero escrito incluyendo los caracteres de borrado, ...
+22. Tratar las comillas en los comandos?

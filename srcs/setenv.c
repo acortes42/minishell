@@ -16,13 +16,44 @@
 // Problema al solo aceptar dos introducciones con setenv
 
 /*Existe un problema al crear al crear más memoria y copiar lo necesario*/
+static char		*expand_env_value(char **envp, char *env_value)
+{
+	char		*value;
+	char		*home;
+	char		*expanded;
+	size_t		offset;
+
+	if (!env_value)
+		return (0);
+	value = ft_strchr(env_value, '=');
+	if (!value)
+		return (0);
+	value++;
+	home = (!ft_memcmp(value, "~/", 2) ? ft_getenv(envp, "HOME") : 0);
+	if (home)
+		home = home + 5;
+	if (!(expanded = malloc(sizeof(char) * ((value - env_value) +
+		ft_strlen(home) + ft_strlen(value)  + (home ? 0 : 1)))))
+		return (0);
+	offset = value - env_value;
+	ft_memcpy(expanded, env_value, offset);
+	if(home)
+		ft_memcpy((expanded + offset), home, ft_strlen(home));
+	offset += ft_strlen(home);
+	ft_memcpy(expanded + offset, value + (home ? 1 : 0),
+		ft_strlen(value) + (home ? -1 : 0));
+	*(expanded + offset + ft_strlen(value) + (home ? -1 : 0)) = 0;
+	return (expanded);
+}
 
 static int		ft_add_line(char ***envp, int *elems, char *env_value)
 {
+	char		*expanded_value;
     char		**aux;
     int			x;
 
-	if (!env_value || !ft_strchr(env_value, '='))
+	expanded_value = expand_env_value(*envp, env_value);
+	if (!expanded_value)
 		return (1);
     x = 0;
     if (!(aux = malloc(sizeof(char *) * (*elems + 2))))
@@ -33,7 +64,7 @@ static int		ft_add_line(char ***envp, int *elems, char *env_value)
 		*((*envp) + x) = 0;
         x++;
     }
-    *(aux + x) = ft_strdup(env_value);
+    *(aux + x) = expanded_value;
 	(*elems)++;
 	aux[*elems] = NULL;
 	if (*envp)

@@ -10,8 +10,11 @@ int				ft_execute_command(abs_struct *base)
 	{
 		ft_putstr("\e[0m");
 		if (ft_strcmp(base->string, base->valid_str[0]) == 0 )
+		{
+			ft_release_base(base);
 			exit(0);
 			//kill(pid, SIGINT);
+		}
 		else if (ft_strcmp(base->parseString[base->actual_argument], base->valid_str[1]) == 0)
 			echo(base);
 		else if (ft_strcmp(base->parseString[base->actual_argument], base->valid_str[2]) == 0)
