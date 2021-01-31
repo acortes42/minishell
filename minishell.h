@@ -30,6 +30,7 @@ typedef struct      abs_struct
 	int     actual_argument;
 	int     flag;
 	int     error;
+	int		ctrl_d_times;
 }                   abs_struct;    
 
 char			*ft_strdup(const char *s1);
@@ -51,11 +52,13 @@ int				ft_export(abs_struct *base);
 int    			ft_copy_env(abs_struct *base, char **envp);
 int    			ft_env(abs_struct *base);
 int    			ft_setenv(abs_struct *base);
+void			ft_exit_minishell(abs_struct *base);
 int    			ft_unsetenv(abs_struct *base);
 int    			ft_help(abs_struct *base);
 int    			vertical_line(abs_struct *base); 
 void			handle_sigint(int sig);
 int				ft_execute_command(abs_struct *base);
+void			ft_execute_ctrl_d(abs_struct *base);
 void			clearScreen();
 
 size_t			ft_strlcat(char *dst, const char *src, size_t size);
@@ -72,4 +75,7 @@ void			*ft_memset(void *b, int c, size_t len);
 int				ft_isempty(const char *s);
 int				ft_isspace(int s);
 void			ft_release_base(abs_struct *base);
+int				ft_atoi(const char *nptr);
+int				ft_isdigit(int c);
+
 #endif
