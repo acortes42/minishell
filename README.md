@@ -4,6 +4,8 @@
 Debug child thread of a fork. Set follow-fork-mode to child in the Debug console tab using the next command:
 * -exec set follow-fork-mode child
 ## Docs
+### Minishell implementation
+https://www.gnu.org/software/libc/manual/html_node/Implementing-a-Shell.html
 ### Ctrl-d
 https://www.gnu.org/software/bash/manual/html_node/Bash-Variables.html#index-IGNOREEOF
 
