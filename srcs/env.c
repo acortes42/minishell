@@ -64,7 +64,9 @@ int			ft_unsetenv(abs_struct *base)
 	j = 0;
 	while (base->env && *(base->env + i))
 	{
-		if (*(base->env + i) != env)
+		if (*(base->env + i) == env)
+			free(env);
+		else
 		{
 			*(it_new + j) = *(base->env + i);
 			j++;

@@ -10,65 +10,40 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
-/*
-    Parece que llega donde tiene que llegar pero falla con el chdir
-*/
-
-int cd(abs_struct *base)
+static void		print_file_doesnt_exist(char *file)
 {
-    char    cwd[PATH_MAX];
-    char    *str;
+	ft_putstr("\e[0mcd: ");
+	if (file)
+		ft_putstr(file);
+	ft_putstr(": File or dir doesn't exist\n");
+}
 
-    if (base->num_args == base->actual_argument + 1)
-    {
-        chdir("/");
-        base->error = 0;
-    }
-    else if (base->parseString[base->actual_argument + 1][0] == '/')
-    {
-        if (chdir(base->parseString[1]) == 0)
-        {
-            ft_putstr("\e[0mBusqueda de directorio correcta\n");
-            chdir(base->parseString[1]);
-            base->error = 0;
-        }
-        else
-        {
-            ft_putstr("\e[0mError a la asignación de directorio\n");
-            base->error = 1;
-        }
-    }
-    else if (strcmp(base->parseString[base->actual_argument + 1], "..") == 0)
-    {
-        chdir("..");
-        ft_putstr("\e[0mTira hacia atrás\n");
-        base->error = 0;
-    }
-    else
-    {
-        if (getcwd(cwd, sizeof(cwd)) != NULL)
-        {
-            str = strdup(getcwd(cwd, sizeof(cwd)));
-            str = ft_strjoin(str, "/");
-            str = ft_strjoin(str, base->parseString[base->actual_argument + 1]);
-            if (chdir(str) == 0)
-            {
-                ft_putstr("\e[0mDirectorio valido\n");
-                base->error = 0;
-            }
-            else
-            {
-                ft_putstr("\e[0mFallo al acceder al directorio\n");
-                base->error  = 1;
-            }
-        }
-        else
-        {
-            ft_putstr("\e[0mDirectorio no valido\n");
-            base->error  = 1;
-        }
-    }
-    return (1);
+int				cd(abs_struct *base)
+{
+	char		*home;
+
+	base->error = (base->num_args > 2 ? 1 : 0);
+	if (base->error)
+		ft_putstr("\e[0mcd: Too many arguments\n");
+    else if (base->num_args > 1 && !ft_isempty(base->parseString[base->actual_argument + 1]))
+		home = ft_get_absolute_path(base, 
+			base->parseString[base->actual_argument + 1]);
+	else
+	{
+		base->error = !(home = ft_getenv(base->env, "HOME"));
+		if (home)
+			home = ft_get_absolute_path(base, home + 5);
+		else
+	        ft_putstr("\e[0mcd: HOME not defined\n");
+	}
+	if (!base->error)
+	{
+		base->error = chdir(home);
+		if (base->error)
+			print_file_doesnt_exist(home);
+		free(home);
+	}
+    return (!base->error);
 }

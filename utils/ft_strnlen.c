@@ -12,12 +12,12 @@
 
 #include "minishell.h"
 
-size_t		ft_strlen(const char *s)
+size_t			ft_strnlen(const char *s, size_t max)
 {
-	size_t	i;
+	size_t		i;
 
 	i = 0;
-	while (s && s[i] != 0)
+	while (s[i] && i < max)
 		i++;
 	return (i);
 }
