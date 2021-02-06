@@ -26,17 +26,9 @@ int ft_pwd()
    return (1);
 }
 
-int     ft_help(abs_struct *base)
+int     ft_help()
 {
-    int x;
-
-    x = 0;
     ft_putstr("\e[0mLos comandos disponibles són los siguientes:\n\n");
-    while(*base->valid_str && x < 10)
-    {
-        ft_putstr(*base->valid_str++);
-        ft_putstr("\n");
-        x++;
-    }
+	ft_putstr("exit\necho\npwd\ncd\nhistory\nhelp\nenv\nsetenv\nunsetenv\nclear\nexport\n");
     return(1);
 }

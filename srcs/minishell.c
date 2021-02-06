@@ -59,30 +59,19 @@ int execute (abs_struct *base)
 
 int main(int argc, char **argv, char **envp)
 {
-	int         exceptionNum;
-	abs_struct  *base;
+	int         minishell_ready;
+	abs_struct  base;
 
-	signal(SIGINT, handle_sigint);
-	exceptionNum = 1;
-	clearScreen();
-	if (!(base = malloc(sizeof(abs_struct))))
-	  	return (-1);
-	ft_memset(base, 0, sizeof(abs_struct));
-	// TODO: eliminar el valid_str? Creo que solo aporta confusion a la hora de entender los else if y puntos de error si no encajan los indices
-	base->valid_str = ft_split("exit echo pwd cd history help env setenv unsetenv clear export", ' ');
-	ft_copy_env(base, envp);
-	base->actual_argument = 0;
-	base->flag = 0;
-	base->error = 0;
-	while (exceptionNum == 1)
-	{
-		ft_putstr("\e[92m--->");
-		obtain_full_line(base);
-		ft_execute_command(base);
-	}
-	// TODO: Release base struct
-	ft_release_base(base);
 	(void)argc;
 	(void)argv;
+	minishell_ready = ft_init_minishell(&base, envp);
+	if (minishell_ready)
+		clearScreen();
+	while (minishell_ready)
+	{
+		ft_putstr("\e[92m--->");
+		obtain_full_line(&base);
+		ft_execute_command(&base);
+	}
 	return (0);
 }
