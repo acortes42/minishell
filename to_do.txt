@@ -1,5 +1,4 @@
 2. Mejorar el funcionamiento de " | " (deberiamos guardar que aparece por salida estandar para modificar luego)
-3. Correcta implementación de export (pendiete de hablar cambio en estructura de datos)
 5. Implementación de redirecciones. ("<", ">", ">>")
 6.Comprobar/introducir el correcto funcionamiento de las variables de entorno
 9. Mejoras si es posible en la estructura basica del codigo en caso de que la lógica general fallara
@@ -17,3 +16,4 @@
 21. Tratar los caracteres de borrado. Si escribimos un comando, borramos para corregir y reescribimos, ..., nosotros lo que ejecutaremos no es el resultado que ve el usuario por pantalla sino todo el comando entero escrito incluyendo los caracteres de borrado, ...
 22. Tratar las comillas en los comandos?
 23. Imprimir path en promp?
+24. Ctrl + d ha dejado de funcionar. Seguramente esté ejecutando el exit dentro del fork y entonces mata al hijo y no al minishell

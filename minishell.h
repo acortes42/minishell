@@ -31,7 +31,6 @@ typedef struct s_process
 {
   struct s_process *next;       /* next process in pipeline */
   char **argv;                /* for exec */
-  char **envp;					
   pid_t pid;                  /* process ID */
   char completed;             /* true if process has completed */
   char stopped;               /* true if process has stopped */
@@ -91,26 +90,28 @@ int    			ft_help();
 int    			vertical_line(abs_struct *base); 
 void			handle_sigint(int sig);
 int				ft_execute_command(abs_struct *base);
-void			ft_execute_ctrl_d(abs_struct *base);
+int				ft_execute_ctrl_d(abs_struct *base);
 int				ft_init_minishell(abs_struct *base, char **envp);
 void			clearScreen();
+void		    ft_show_prompt(abs_struct *base);
 
-t_job			*ft_free_job (t_job *j);
+t_job			*ft_free_job(t_job *j);
 void			ft_putstr_fd(char *s, int fd);
-int				ft_job_is_completed (t_job *j);
-void			ft_continue_job (t_job *j, int foreground);
-void			ft_wait_for_job (t_job *j);
-int				ft_job_is_stopped (t_job *j);
-void			ft_format_job_info (t_job *j, const char *status);
-void			ft_do_job_notification (t_job *j);
-void			ft_mark_job_as_running (t_job *j);
-void			ft_update_status (abs_struct *base);
-int				ft_mark_process_status (t_job *j, pid_t pid, int status);
+int				ft_job_is_completed(t_job *j);
+int				ft_job_is_stopped(t_job *j);
+void			ft_format_job_info(t_job *j, const char *status);
+void			ft_do_job_notification(t_job *j);
+void			ft_mark_job_as_running(t_job *j);
+void			ft_update_status(abs_struct *base);
 
-void			ft_put_job_in_foreground (t_job *j, int cont);
-void			ft_put_job_in_background (t_job *j, int cont);
-void			ft_launch_job (abs_struct *base, t_job *j, int foreground);
-void            ft_launch_process (t_job *j, t_process *p, t_files_fd files_fd, int foreground);
+t_job			*ft_build_job(abs_struct *base);
+t_process		*ft_build_processes(char *expanded_cmd);
+void			ft_launch_job(abs_struct *base, t_job *j);
+void            ft_launch_process(abs_struct *base, t_process *p, t_files_fd files_fd);
+int         	ft_execute_builtin(abs_struct *base, t_process *p);
+
+void			ft_release_base(abs_struct *base);
+void			ft_release_jobs(t_job *job);
 
 size_t			ft_strlcat(char *dst, const char *src, size_t size);
 size_t			ft_strlcpy(char *dst, const char *src, size_t size);
@@ -125,7 +126,6 @@ size_t			ft_strlen(const char *s);
 void			*ft_memset(void *b, int c, size_t len);
 int				ft_isempty(const char *s);
 int				ft_isspace(int s);
-void			ft_release_base(abs_struct *base);
 int				ft_atoi(const char *nptr);
 char			*ft_itoa(int n2);
 int				ft_isdigit(int c);

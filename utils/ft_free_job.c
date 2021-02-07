@@ -10,13 +10,11 @@ static t_process	*ft_free_process(t_process *p)
 	p->next = 0;
 	if (p->argv)
 		ft_array_release(p->argv);
-	if (p->envp)
-		ft_array_release(p->envp);
 	free(p);
 	return (p_next);
 }
 
-t_job				*ft_free_job (t_job *j)
+t_job				*ft_free_job(t_job *j)
 {
 	t_job			*j_next;
 	t_process		*p;

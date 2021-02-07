@@ -23,18 +23,13 @@ int obtain_full_line(abs_struct *base)
 	while (read(0, &c, sizeof(char)) > 0)
 	{
 		write(fd, &c, 1);
+		base->string[i] = c;
+		i++;
 		if (c == '\n')
 			break;
-		if (c != '\"' && c != '\'')
-		{
-			base->string[i] = c;
-			i++;
-		}
 	}
 	base->string[i] = '\0';
 	close(fd);
-	ft_array_release(base->parseString);
-	base->parseString = ft_split(base->string, ' ');
 	return (0);
 }
 
@@ -61,6 +56,7 @@ int main(int argc, char **argv, char **envp)
 {
 	int         minishell_ready;
 	abs_struct  base;
+	t_job		*job;
 
 	(void)argc;
 	(void)argv;
@@ -69,9 +65,15 @@ int main(int argc, char **argv, char **envp)
 		clearScreen();
 	while (minishell_ready)
 	{
-		ft_putstr("\e[92m--->");
+		ft_show_prompt(&base);
 		obtain_full_line(&base);
-		ft_execute_command(&base);
+		job = ft_build_job(&base);
+		base.first_job = job;
+		ft_launch_job(&base, job);
+		ft_release_jobs(job);
+		base.first_job = 0;
+		base.num_args = 0;
+		base.parseString = 0;
 	}
 	return (0);
 }

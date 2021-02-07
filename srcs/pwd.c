@@ -14,15 +14,16 @@
 
 int ft_pwd()
 {
-   char cwd[PATH_MAX];
+   char *cwd;
    
-   if (getcwd(cwd, sizeof(cwd)) != NULL)
+   if ((cwd = getcwd(0, 0)))
    {
        ft_putstr(cwd);
        ft_putstr("\n");
+	   free(cwd);
    }
    else 
-       perror("getcwd() error");
+       ft_putstr_fd("getcwd() error", STDERR_FILENO);
    return (1);
 }
 

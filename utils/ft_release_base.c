@@ -2,16 +2,13 @@
 
 void		ft_release_base(abs_struct *base)
 {
-	t_job	*j;
-	t_job	*j_next;
-
 	if (!base)
 		return ;
 	ft_array_release(base->env);
-	ft_array_release(base->parseString);
-	j = base->first_job;
-	while ((j_next = ft_free_job(j))) 
-		j = j_next;
+	// Este se libera al liberar el job
+	base->parseString = 0;
+	ft_release_jobs(base->first_job);
+	base->first_job = 0;
 	return ;
 }
 

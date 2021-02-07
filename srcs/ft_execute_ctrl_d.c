@@ -32,7 +32,7 @@ static int	determine_ctrl_d_times(abs_struct *base)
 	} 
 }
 
-void		ft_execute_ctrl_d(abs_struct *base)
+int			ft_execute_ctrl_d(abs_struct *base)
 {
 	int		ctrl_d_times;
 	
@@ -44,4 +44,5 @@ void		ft_execute_ctrl_d(abs_struct *base)
 		ft_exit_minishell(base, 0);
 	}
 	ft_putstr("\e[0mUse <<exit>> to close shell\n");
+	return (1);
 }
