@@ -10,7 +10,7 @@ UTILS 				= utils/ft_putnbr.c utils/ft_putstr.c utils/ft_split.c \
 	utils/ft_job_is_stopped.c utils/ft_job_is_completed.c \
 	utils/ft_do_job_notification.c utils/ft_mark_job_as_running.c \
 	utils/ft_putstr_fd.c utils/ft_free_job.c \
-	utils/ft_itoa.c utils/ft_calloc.c \
+	utils/ft_itoa.c utils/ft_calloc.c utils/ft_build_jobs.c \
 	utils/ft_bzero.c utils/ft_execute_builtin.c utils/ft_build_job.c \
 	utils/ft_build_processes.c utils/ft_release_jobs.c
 	

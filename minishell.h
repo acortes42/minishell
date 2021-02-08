@@ -104,7 +104,8 @@ void			ft_do_job_notification(t_job *j);
 void			ft_mark_job_as_running(t_job *j);
 void			ft_update_status(abs_struct *base);
 
-t_job			*ft_build_job(abs_struct *base);
+t_job			*ft_build_job(char *command);
+t_job			*ft_build_jobs(char *command);
 t_process		*ft_build_processes(char *expanded_cmd);
 void			ft_launch_job(abs_struct *base, t_job *j);
 void            ft_launch_process(abs_struct *base, t_process *p, t_files_fd files_fd);
