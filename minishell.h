@@ -16,21 +16,53 @@
 # include <signal.h>
 # include <limits.h>
 # include <sys/wait.h>   
+# include <sys/types.h>
 
+typedef struct s_files_fd
+{
+	int infile;
+    int outfile;
+	int errfile;
+	int pipes[2];
+}				t_files_fd;
+
+/* A process is a single process.  */
+typedef struct s_process
+{
+  struct s_process *next;       /* next process in pipeline */
+  char **argv;                /* for exec */
+  pid_t pid;                  /* process ID */
+  char completed;             /* true if process has completed */
+  char stopped;               /* true if process has stopped */
+  int status;                 /* reported status value */
+} t_process;
+
+
+/* A job is a pipeline of processes.  */
+
+typedef struct s_job
+{
+  struct s_job *next;           /* next active job */
+  char *command;              /* command line, used for messages */
+  t_process *first_process;     /* list of processes in this job */
+  pid_t pgid;                 /* process group ID */
+  char notified;              /* true if user told about stopped job */
+  //struct termios tmodes;      /* saved terminal modes */
+  int stdin, stdout, stderr;  /* standard i/o channels */
+} t_job;
 
 typedef struct      abs_struct
 {
 	char    **env;
 	char    string[1024];
 	char    **parseString;
-	char    **valid_str;
-	int     exceptionNum;
 	int     num_args;
 	int     lines_envp;
 	int     actual_argument;
 	int     flag;
 	int     error;
 	int		ctrl_d_times;
+	t_job	*first_job;
 }                   abs_struct;    
 
 char			*ft_strdup(const char *s1);
@@ -52,14 +84,35 @@ int				ft_export(abs_struct *base);
 int    			ft_copy_env(abs_struct *base, char **envp);
 int    			ft_env(abs_struct *base);
 int    			ft_setenv(abs_struct *base);
-void			ft_exit_minishell(abs_struct *base);
+void			ft_exit_minishell(abs_struct *base, int exit_code);
 int    			ft_unsetenv(abs_struct *base);
-int    			ft_help(abs_struct *base);
+int    			ft_help();
 int    			vertical_line(abs_struct *base); 
 void			handle_sigint(int sig);
 int				ft_execute_command(abs_struct *base);
-void			ft_execute_ctrl_d(abs_struct *base);
+int				ft_execute_ctrl_d(abs_struct *base);
+int				ft_init_minishell(abs_struct *base, char **envp);
 void			clearScreen();
+void		    ft_show_prompt(abs_struct *base);
+
+t_job			*ft_free_job(t_job *j);
+void			ft_putstr_fd(char *s, int fd);
+int				ft_job_is_completed(t_job *j);
+int				ft_job_is_stopped(t_job *j);
+void			ft_format_job_info(t_job *j, const char *status);
+void			ft_do_job_notification(t_job *j);
+void			ft_mark_job_as_running(t_job *j);
+void			ft_update_status(abs_struct *base);
+
+t_job			*ft_build_job(char *command);
+t_job			*ft_build_jobs(char *command);
+t_process		*ft_build_processes(char *expanded_cmd);
+void			ft_launch_job(abs_struct *base, t_job *j);
+void            ft_launch_process(abs_struct *base, t_process *p, t_files_fd files_fd);
+int         	ft_execute_builtin(abs_struct *base, t_process *p);
+
+void			ft_release_base(abs_struct *base);
+void			ft_release_jobs(t_job *job);
 
 size_t			ft_strlcat(char *dst, const char *src, size_t size);
 size_t			ft_strlcpy(char *dst, const char *src, size_t size);
@@ -74,8 +127,10 @@ size_t			ft_strlen(const char *s);
 void			*ft_memset(void *b, int c, size_t len);
 int				ft_isempty(const char *s);
 int				ft_isspace(int s);
-void			ft_release_base(abs_struct *base);
 int				ft_atoi(const char *nptr);
+char			*ft_itoa(int n2);
 int				ft_isdigit(int c);
+void			*ft_calloc(size_t nmemb, size_t size);
+void			ft_bzero(void *s, size_t n);
 
 #endif

@@ -1,7 +1,7 @@
 #include "minishell.h"
 
-void		ft_exit_minishell(abs_struct *base)
+void		ft_exit_minishell(abs_struct *base, int exit_code)
 {
 	ft_release_base(base);
-	exit(0);
+	exit(exit_code);
 }

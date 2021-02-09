@@ -14,33 +14,33 @@ int				ft_execute_command(abs_struct *base)
 			ft_execute_ctrl_d(base);
 			break ;
 		}
-		else if (ft_strcmp(base->string, base->valid_str[0]) == 0 )
-			ft_exit_minishell(base);
-		else if (ft_strcmp(base->parseString[base->actual_argument], base->valid_str[1]) == 0)
+		else if (!ft_strcmp(base->string, "exit"))
+			ft_exit_minishell(base, 0);
+		else if (!ft_strcmp(base->parseString[base->actual_argument], "echo"))
 			echo(base);
-		else if (ft_strcmp(base->parseString[base->actual_argument], base->valid_str[2]) == 0)
+		else if (!ft_strcmp(base->parseString[base->actual_argument], "pwd"))
 		{
 			ft_pwd();
 			base->error  = 0;
 		}
-		else if (ft_strcmp(base->parseString[base->actual_argument], base->valid_str[3]) == 0)
+		else if (!ft_strcmp(base->parseString[base->actual_argument], "cd"))
 			cd(base);
-		else if (ft_strcmp(base->parseString[base->actual_argument], base->valid_str[4]) == 0)
+		else if (!ft_strcmp(base->parseString[base->actual_argument], "history"))
 		{
 			ft_history();
 			base->error  = 0;
 		}
-		else if (ft_strcmp(base->parseString[base->actual_argument], base->valid_str[5]) == 0)
+		else if (!ft_strcmp(base->parseString[base->actual_argument], "help"))
 			ft_help(base);
-		else if (ft_strcmp(base->parseString[base->actual_argument], base->valid_str[6]) == 0)
+		else if (!ft_strcmp(base->parseString[base->actual_argument], "env"))
 			ft_env(base);
-		else if (ft_strcmp(base->parseString[base->actual_argument], base->valid_str[7]) == 0)
+		else if (!ft_strcmp(base->parseString[base->actual_argument], "setenv"))
 			ft_setenv(base);
-		else if (ft_strcmp(base->parseString[base->actual_argument], base->valid_str[8]) == 0)
+		else if (!ft_strcmp(base->parseString[base->actual_argument], "unsetenv"))
 			ft_unsetenv(base);
-		else if (ft_strcmp(base->parseString[base->actual_argument], base->valid_str[9]) == 0)
+		else if (!ft_strcmp(base->parseString[base->actual_argument], "clear"))
 			clearScreen();
-		else if (ft_strcmp(base->parseString[base->actual_argument], base->valid_str[10]) == 0)
+		else if (!ft_strcmp(base->parseString[base->actual_argument], "export"))
 			ft_export(base);
 		else if ((base->parseString[base->actual_argument][0] == '.' && base->parseString[base->actual_argument][1] == '/')
 				|| base->parseString[base->actual_argument][0] == '/')

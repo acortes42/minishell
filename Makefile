@@ -5,13 +5,21 @@ UTILS 				= utils/ft_putnbr.c utils/ft_putstr.c utils/ft_split.c \
 	utils/ft_memset.c utils/ft_isempty.c utils/ft_isspace.c \
 	utils/ft_strnlen.c utils/ft_strlcat.c utils/ft_get_absolute_path.c \
 	utils/ft_memcpy.c utils/ft_release_base.c utils/ft_isdigit.c \
-	utils/ft_atoi.c
+	utils/ft_atoi.c utils/ft_launch_process.c utils/ft_launch_job.c \
+	utils/ft_format_job_info.c  \
+	utils/ft_job_is_stopped.c utils/ft_job_is_completed.c \
+	utils/ft_do_job_notification.c utils/ft_mark_job_as_running.c \
+	utils/ft_putstr_fd.c utils/ft_free_job.c \
+	utils/ft_itoa.c utils/ft_calloc.c utils/ft_build_jobs.c \
+	utils/ft_bzero.c utils/ft_execute_builtin.c utils/ft_build_job.c \
+	utils/ft_build_processes.c utils/ft_release_jobs.c
+	
 
 SRCS_WITHOUT_MAIN	=  srcs/ft_exit_minishell.c srcs/clearScreen.c \
 	srcs/ft_execute_command.c srcs/ft_execute_ctrl_d.c srcs/echo.c srcs/cd.c \
 	srcs/history.c srcs/signals.c srcs/pwd.c srcs/env.c srcs/setenv.c \
 	srcs/vertical_line.c srcs/ft_launch.c srcs/ft_export.c srcs/ft_getenv.c \
-	${UTILS}
+	srcs/ft_init_minishell.c srcs/ft_show_prompt.c ${UTILS}
 SRCS 				=  srcs/minishell.c ${SRCS_WITHOUT_MAIN}
 		
 CFLAGS				= -Wall -Wextra -Werror -I . -g -fsanitize=address

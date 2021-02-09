@@ -23,18 +23,13 @@ int obtain_full_line(abs_struct *base)
 	while (read(0, &c, sizeof(char)) > 0)
 	{
 		write(fd, &c, 1);
+		base->string[i] = c;
+		i++;
 		if (c == '\n')
 			break;
-		if (c != '\"' && c != '\'')
-		{
-			base->string[i] = c;
-			i++;
-		}
 	}
 	base->string[i] = '\0';
 	close(fd);
-	ft_array_release(base->parseString);
-	base->parseString = ft_split(base->string, ' ');
 	return (0);
 }
 
@@ -57,32 +52,36 @@ int execute (abs_struct *base)
 	return (1);
 }
 
+static void		launch_jobs(abs_struct *base)
+{
+	t_job		*job;
+
+	job = ft_build_jobs(base->string);
+	while (job) {
+		base->first_job = job;
+		ft_launch_job(base, job);
+		job = ft_free_job(job);
+	}
+
+}
 int main(int argc, char **argv, char **envp)
 {
-	int         exceptionNum;
-	abs_struct  *base;
+	int         minishell_ready;
+	abs_struct  base;
 
-	signal(SIGINT, handle_sigint);
-	exceptionNum = 1;
-	clearScreen();
-	if (!(base = malloc(sizeof(abs_struct))))
-	  	return (-1);
-	ft_memset(base, 0, sizeof(abs_struct));
-	// TODO: eliminar el valid_str? Creo que solo aporta confusion a la hora de entender los else if y puntos de error si no encajan los indices
-	base->valid_str = ft_split("exit echo pwd cd history help env setenv unsetenv clear export", ' ');
-	ft_copy_env(base, envp);
-	base->actual_argument = 0;
-	base->flag = 0;
-	base->error = 0;
-	while (exceptionNum == 1)
-	{
-		ft_putstr("\e[92m--->");
-		obtain_full_line(base);
-		ft_execute_command(base);
-	}
-	// TODO: Release base struct
-	ft_release_base(base);
 	(void)argc;
 	(void)argv;
+	minishell_ready = ft_init_minishell(&base, envp);
+	if (minishell_ready)
+		clearScreen();
+	while (minishell_ready)
+	{
+		ft_show_prompt(&base);
+		obtain_full_line(&base);
+		launch_jobs(&base);
+		base.first_job = 0;
+		base.num_args = 0;
+		base.parseString = 0;
+	}
 	return (0);
 }
