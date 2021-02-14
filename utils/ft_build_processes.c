@@ -1,20 +1,5 @@
 #include "minishell.h"
 
-static char			*ft_trim(char *str)
-{
-	char			*i;
-
-	if (!str)
-		return (str);
-	i = str + ft_strlen(str) - 1;
-	while (i >= str && ft_isspace(*i))
-	{
-		*i = '\0';
-		i--;
-	}
-	return (str);
-}
-
 static char			**ft_extract_fields(char *expanded_cmd)
 {
 	char			**fields;
@@ -63,11 +48,7 @@ t_process			*ft_build_process(char *expanded_cmd)
 	// TODO: Pendiente añadir parseo rediccciones para 
 	if (!(proc = ft_calloc(1, sizeof(t_process))))
 		return (0);
-	process_len = 0;
-	while (fields && *(fields + process_len) &&
-		(**(fields + process_len) != ';' ||
-		**(fields + process_len) != '\0'))
-		process_len++;
+	process_len = ft_array_len(fields);
 	if (!(proc->argv = ft_calloc(process_len + 1, sizeof(char *))))
 	{
 		free(proc);

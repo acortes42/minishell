@@ -17,6 +17,8 @@
 # include <limits.h>
 # include <sys/wait.h>   
 # include <sys/types.h>
+# include <sys/stat.h>
+
 
 typedef struct s_files_fd
 {
@@ -95,7 +97,7 @@ int				ft_init_minishell(abs_struct *base, char **envp);
 void			clearScreen();
 void		    ft_show_prompt(abs_struct *base);
 
-t_job			*ft_free_job(t_job *j);
+t_job			*ft_release_job(t_job *j);
 void			ft_putstr_fd(char *s, int fd);
 int				ft_job_is_completed(t_job *j);
 int				ft_job_is_stopped(t_job *j);
@@ -115,6 +117,7 @@ void			ft_release_base(abs_struct *base);
 void			ft_release_jobs(t_job *job);
 
 size_t			ft_strlcat(char *dst, const char *src, size_t size);
+char			*ft_strlcat_paths(char *prefix_path, const char *relative_path);
 size_t			ft_strlcpy(char *dst, const char *src, size_t size);
 size_t			ft_strnlen(const char *s, size_t max);
 int				ft_memcmp(const void *s1, const void *s2, size_t n);
@@ -124,6 +127,7 @@ void			ft_array_release(char **envp);
 size_t			ft_array_len(char **envp);
 char			*ft_getenv(char **env, char *key);
 size_t			ft_strlen(const char *s);
+int				ft_strncmp(const char *s1, const char *s2, size_t n);
 void			*ft_memset(void *b, int c, size_t len);
 int				ft_isempty(const char *s);
 int				ft_isspace(int s);
@@ -132,5 +136,8 @@ char			*ft_itoa(int n2);
 int				ft_isdigit(int c);
 void			*ft_calloc(size_t nmemb, size_t size);
 void			ft_bzero(void *s, size_t n);
+char			*ft_trim(char *str);
+char			*ft_split_shell(char **str);
+char			*ft_split_shell_by(char **str, int separator);
 
 #endif

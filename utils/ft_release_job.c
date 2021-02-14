@@ -14,7 +14,7 @@ static t_process	*ft_free_process(t_process *p)
 	return (p_next);
 }
 
-t_job				*ft_free_job(t_job *j)
+t_job				*ft_release_job(t_job *j)
 {
 	t_job			*j_next;
 	t_process		*p;

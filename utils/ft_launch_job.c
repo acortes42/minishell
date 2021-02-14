@@ -24,13 +24,13 @@ static void		ft_fork_child(abs_struct *base, t_process *p, t_files_fd fds)
 	if (p->argv && !ft_strcmp(*p->argv, "exit"))
 		ft_exit_minishell(base, 0);
 	/* Fork the child processes.  */
-	//pid = fork ();
-	pid = 0;
+	pid = fork();
+	//pid = 0;
 	if (pid == 0)
 	{
 		/* This is the child process.  */
 		ft_launch_process(base, p, fds);
-		//exit(p->status);
+		exit(p->status);
 	}
 	else if (pid < 0)
 	{

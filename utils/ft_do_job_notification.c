@@ -21,7 +21,7 @@ ft_do_job_notification (t_job *first_job)
           jlast->next = jnext;
         else
           first_job = jnext;
-        ft_free_job (j);
+        ft_release_job (j);
       }
 
       /* Notify the user about stopped jobs,
