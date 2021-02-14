@@ -106,15 +106,19 @@ void			ft_do_job_notification(t_job *j);
 void			ft_mark_job_as_running(t_job *j);
 void			ft_update_status(abs_struct *base);
 
-t_job			*ft_build_job(char *command);
 t_job			*ft_build_jobs(char *command);
+t_job			*ft_build_job(char *command);
 t_process		*ft_build_processes(char *expanded_cmd);
+t_process		*ft_build_ctrl_d_process(void);
+t_process		*ft_build_process(char *expanded_cmd);
+
 void			ft_launch_job(abs_struct *base, t_job *j);
 void            ft_launch_process(abs_struct *base, t_process *p, t_files_fd files_fd);
 int         	ft_execute_builtin(abs_struct *base, t_process *p);
 
 void			ft_release_base(abs_struct *base);
 void			ft_release_jobs(t_job *job);
+t_process		*ft_release_process(t_process *p);
 
 size_t			ft_strlcat(char *dst, const char *src, size_t size);
 char			*ft_strlcat_paths(char *prefix_path, const char *relative_path);
@@ -122,6 +126,7 @@ size_t			ft_strlcpy(char *dst, const char *src, size_t size);
 size_t			ft_strnlen(const char *s, size_t max);
 int				ft_memcmp(const void *s1, const void *s2, size_t n);
 void			*ft_memcpy(void *dest, const void *src, size_t n);
+int				ft_array_add(char ***array, int *array_len, char *value);
 char			**ft_array_dup(char **envp);
 void			ft_array_release(char **envp);
 size_t			ft_array_len(char **envp);

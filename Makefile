@@ -12,7 +12,8 @@ UTILS 				= utils/ft_putnbr.c utils/ft_putstr.c utils/ft_split.c \
 	utils/ft_putstr_fd.c utils/ft_release_jobs.c utils/ft_release_job.c \
 	utils/ft_itoa.c utils/ft_calloc.c utils/ft_build_jobs.c \
 	utils/ft_bzero.c utils/ft_execute_builtin.c utils/ft_build_job.c \
-	utils/ft_build_processes.c utils/ft_trim.c utils/ft_split_shell.c
+	utils/ft_build_processes.c utils/ft_build_process.c utils/ft_trim.c \
+	utils/ft_split_shell.c utils/ft_release_process.c utils/ft_array_add.c
 	
 
 SRCS_WITHOUT_MAIN	=  srcs/ft_exit_minishell.c srcs/clearScreen.c \

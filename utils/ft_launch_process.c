@@ -70,6 +70,8 @@ static void		ft_execute_shell_command_using_path(abs_struct *base,
 
 static void		prepare_process(t_files_fd files_fd)
 {
+	char		*tmp;
+
 	/* Set the handling for job control signals back to the default.  */
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
@@ -80,16 +82,31 @@ static void		prepare_process(t_files_fd files_fd)
 	/* Set the standard input/output channels of the new process.  */
 	if (files_fd.infile != STDIN_FILENO)
 	{
+		ft_putstr("Dup2 infile ");
+		tmp = ft_itoa(files_fd.infile);
+		ft_putstr(tmp);
+		ft_putstr("\n");
+		free(tmp);
 		dup2(files_fd.infile, STDIN_FILENO);
 		close(files_fd.infile);
 	}
 	if (files_fd.outfile != STDOUT_FILENO)
 	{
+		ft_putstr("Dup2 outfile ");
+		tmp = ft_itoa(files_fd.outfile);
+		ft_putstr(tmp);
+		ft_putstr("\n");
+		free(tmp);
 		dup2(files_fd.outfile, STDOUT_FILENO);
 		close(files_fd.outfile);
 	}
 	if (files_fd.errfile != STDERR_FILENO)
 	{
+		ft_putstr("Dup2 errfile ");
+		tmp = ft_itoa(files_fd.errfile);
+		ft_putstr(tmp);
+		ft_putstr("\n");
+		free(tmp);
 		dup2(files_fd.errfile, STDERR_FILENO);
 		close(files_fd.errfile);
 	}
