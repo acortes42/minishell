@@ -14,7 +14,7 @@ static char		*ft_get_cwd(abs_struct *base)
 	return (cwd);
 }
 
-void    		ft_show_prompt(abs_struct *base)
+static void		ft_show_prompt_cwd(abs_struct *base)
 {
 	char		*cwd;
 	char		*tmp;
@@ -37,8 +37,34 @@ void    		ft_show_prompt(abs_struct *base)
 		cwd = tmp;
 		cwd[0] = '~';
 	}
-	ft_putstr("\e[92m");
+	ft_putstr(ANSI_COLOR_BLUE);
 	ft_putstr(cwd);
-    ft_putstr("$");
+    ft_putstr(ANSI_COLOR_RESET);
 	free(cwd);
+}
+
+static void		ft_show_prompt_user(abs_struct *base)
+{
+	char		*str;
+	size_t		len;
+
+	str = ft_getenv(base->env, "USER");
+	ft_putstr(ANSI_COLOR_GREEN);
+	ft_putstr(str + 5);
+	str = ft_getenv(base->env, "SESSION_MANAGER");
+	if (str)
+	{
+		ft_putstr("@");
+		len = ft_strchr(str, ':') - str - 16;
+		ft_putnstr(str + 16, len);
+	} 
+	ft_putstr(ANSI_COLOR_RESET);
+}
+
+void    		ft_show_prompt(abs_struct *base)
+{
+	ft_show_prompt_user(base);
+	ft_putstr(":");
+	ft_show_prompt_cwd(base);
+	ft_putstr("$ ");
 }

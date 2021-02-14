@@ -2,6 +2,13 @@
 # define MINISHELL_H
 
 # define BUFFER_SIZE 1024
+# define ANSI_COLOR_RED     "\x1b[31m"
+# define ANSI_COLOR_GREEN   "\x1b[32m"
+# define ANSI_COLOR_YELLOW  "\x1b[33m"
+# define ANSI_COLOR_BLUE    "\x1b[34m"
+# define ANSI_COLOR_MAGENTA "\x1b[35m"
+# define ANSI_COLOR_CYAN    "\x1b[36m"
+# define ANSI_COLOR_RESET   "\x1b[0m"
 
 # include <stdio.h>
 # include <string.h>
@@ -74,6 +81,7 @@ int				get_next_line(int fd, char **line);
 char			*ft_strjoin(char const *s1, char const *s2);
 char			**ft_split(char const *s, char c);
 void			ft_putstr(char *s);
+void			ft_putnstr(char *s, size_t len);
 void			ft_putnbr(int n);
 int				ft_strcmp(const char *s1, const char *s2);
 int    			cd(abs_struct *base);

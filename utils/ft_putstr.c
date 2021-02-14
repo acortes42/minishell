@@ -12,14 +12,28 @@
 
 #include "../minishell.h"
 
-void	ft_putstr(char *s)
+void		ft_putstr(char *s)
 {
-	int i;
+	int		i;
 
 	i = 0;
 	if (!(s))
 		return ;
 	while (s[i])
+	{
+		write(1, &s[i], 1);
+		i++;
+	}
+}
+
+void		ft_putnstr(char *s, size_t len)
+{
+	size_t	i;
+
+	i = 0;
+	if (!(s))
+		return ;
+	while (s[i] && i < len)
 	{
 		write(1, &s[i], 1);
 		i++;
