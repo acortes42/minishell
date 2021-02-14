@@ -20,6 +20,7 @@ t_process			*ft_build_processes(char *expanded_cmd)
 			last_proc->next = ft_build_process(proc_cmd);
 			last_proc = last_proc->next;
 		}
+		free(proc_cmd);
 	}
 	return (procs);
 }
