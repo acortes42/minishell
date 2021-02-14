@@ -1,4 +1,7 @@
 5. Implementación de redirecciones. ("<", ">", ">>")
+    * He dejado 2 TODOS:
+    ** ft_launch_process.c:ft_execute_absolute_shell_command -> Eliminar de los argumentos que se reciben, las redirecciones que están en p->argv
+    ** ft_launch_process.c:prepare_process -> Hacer los dups correspondientes en base a las redirecciones que están en p->argv
 6.Comprobar/introducir el correcto funcionamiento de las variables de entorno
 9. Mejoras si es posible en la estructura basica del codigo en caso de que la lógica general fallara
 10. Empezar a solucionar leaks:  compilar con flag -fsanitize=address para anotar los leaks que puedan salir al desarrollar
