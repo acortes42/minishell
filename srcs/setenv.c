@@ -6,7 +6,7 @@
 /*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/23 16:04:45 by acortes-          #+#    #+#             */
-/*   Updated: 2021/01/23 16:04:45 by acortes-         ###   ########.fr       */
+/*   Updated: 2021/02/15 17:46:29 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int			ft_setenv(abs_struct *base)
     if (key_value)
     {
         if (ft_search_env(base->env, key_value[0]))
-			ft_unsetenv(base);
+			ft_unset(base);
 		if (!(ret = ft_add_line(&base->env, &base->lines_envp,
 			base->parseString[base->actual_argument + 1])))
 		    ft_putstr("\e[0mNo se añadió el argumento\n");

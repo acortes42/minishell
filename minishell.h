@@ -95,7 +95,7 @@ int    			ft_copy_env(abs_struct *base, char **envp);
 int    			ft_env(abs_struct *base);
 int    			ft_setenv(abs_struct *base);
 void			ft_exit_minishell(abs_struct *base, int exit_code);
-int    			ft_unsetenv(abs_struct *base);
+int    			ft_unset(abs_struct *base);
 int    			ft_help();
 int    			vertical_line(abs_struct *base); 
 void			handle_sigint(int sig);

@@ -61,7 +61,7 @@ static void		ft_show_prompt_user(abs_struct *base)
 	ft_putstr(ANSI_COLOR_RESET);
 }
 
-void    		ft_show_prompt(abs_struct *base)
+void	ft_show_prompt(abs_struct *base)
 {
 	ft_show_prompt_user(base);
 	ft_putstr(":");

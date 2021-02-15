@@ -6,7 +6,7 @@
 /*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/23 16:04:24 by acortes-          #+#    #+#             */
-/*   Updated: 2021/01/23 16:04:25 by acortes-         ###   ########.fr       */
+/*   Updated: 2021/02/15 15:28:57 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int				cd(abs_struct *base)
 			home = ft_get_absolute_path(base, home + 5);
 		else
 	        ft_putstr("\e[0mcd: HOME not defined\n");
+		ft_putstr("\e[0mcd: Esto es else\n");
 	}
 	if (!base->error)
 	{
@@ -45,5 +46,6 @@ int				cd(abs_struct *base)
 			print_file_doesnt_exist(home);
 		free(home);
 	}
+	ft_putstr("\e[0mcd: Se ejecuto cd\n");
     return (!base->error);
 }

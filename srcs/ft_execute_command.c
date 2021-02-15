@@ -9,12 +9,12 @@ int				ft_execute_command(abs_struct *base)
 	while (base->actual_argument <= base->num_args)
 	{
 		ft_putstr("\e[0m");
-		if (!base->string || !*base->string)
+		if (ft_strlen(base->string) <= 0 || !*base->string)
 		{
 			ft_execute_ctrl_d(base);
 			break ;
 		}
-		else if (!ft_strcmp(base->string, "exit"))
+		if (!ft_strcmp(base->string, "exit"))
 			ft_exit_minishell(base, 0);
 		else if (!ft_strcmp(base->parseString[base->actual_argument], "echo"))
 			echo(base);
@@ -36,8 +36,8 @@ int				ft_execute_command(abs_struct *base)
 			ft_env(base);
 		else if (!ft_strcmp(base->parseString[base->actual_argument], "setenv"))
 			ft_setenv(base);
-		else if (!ft_strcmp(base->parseString[base->actual_argument], "unsetenv"))
-			ft_unsetenv(base);
+		else if (!ft_strcmp(base->parseString[base->actual_argument], "unset"))
+			ft_unset(base);
 		else if (!ft_strcmp(base->parseString[base->actual_argument], "clear"))
 			clearScreen();
 		else if (!ft_strcmp(base->parseString[base->actual_argument], "export"))

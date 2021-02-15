@@ -6,7 +6,7 @@
 /*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/23 13:33:03 by acortes-          #+#    #+#             */
-/*   Updated: 2021/01/23 16:28:03 by acortes-         ###   ########.fr       */
+/*   Updated: 2021/02/15 17:01:30 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int execute (abs_struct *base)
 	{
 		ft_execute_command(base);
 		// TODO: Este exit debería ser el valor de retorno de la operación el que devuelve $?...
-		exit(0);
+		exit(base->error);
     }
 	else
 		ft_putstr("\e[0mError en la creacion de subproceso\n");

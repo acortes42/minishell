@@ -6,7 +6,7 @@
 /*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/23 16:04:27 by acortes-          #+#    #+#             */
-/*   Updated: 2021/01/23 16:04:28 by acortes-         ###   ########.fr       */
+/*   Updated: 2021/02/15 17:02:00 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,17 @@
 int echo(abs_struct *base)
 {
     int i;
+    int flag;
 
     i = base->actual_argument + 1;
+    flag = 0;
+    if (!base->parseString[i])
+        return (1);
+    flag = (ft_strcmp(base->parseString[i], "-n") == 0) ? 0 : 1;
+    if (flag == 0)
+        i++;
+    if (!base->parseString[i])
+        return (1);
     if (ft_strcmp(base->parseString[i], "$?") == 0)
     {
         ft_putnbr(base->error);
@@ -28,17 +37,19 @@ int echo(abs_struct *base)
         if (ft_strcmp(base->parseString[i], "|") != 0 && ft_strcmp(base->parseString[i], ";") != 0)
         {
             ft_putstr(base->parseString[i]);
+            ft_putstr(" ");
             i++;
             base->actual_argument++;
         }
         else
         {
             if (ft_strcmp(base->parseString[i], "|") != 0 )
-            base->flag = 1;
+                base->flag = 1;
             break;
         }
     }
-    ft_putstr("\n");
+    if (flag == 1)
+        ft_putstr("\n");
     base->error = 0;
     return (1);
 }

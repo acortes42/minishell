@@ -6,7 +6,7 @@
 /*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/23 16:04:40 by acortes-          #+#    #+#             */
-/*   Updated: 2021/01/23 16:04:41 by acortes-         ###   ########.fr       */
+/*   Updated: 2021/02/15 17:54:25 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,6 @@ int ft_pwd()
 int     ft_help()
 {
     ft_putstr("\e[0mLos comandos disponibles són los siguientes:\n\n");
-	ft_putstr("exit\necho\npwd\ncd\nhistory\nhelp\nenv\nsetenv\nunsetenv\nclear\nexport\n");
+	ft_putstr("exit\necho\npwd\ncd\nhistory\nhelp\nenv\nunset\nclear\nexport\n");
     return(1);
 }

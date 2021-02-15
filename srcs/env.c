@@ -6,7 +6,7 @@
 /*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/23 16:04:16 by acortes-          #+#    #+#             */
-/*   Updated: 2021/01/23 16:04:18 by acortes-         ###   ########.fr       */
+/*   Updated: 2021/02/15 17:46:29 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int			ft_env(abs_struct *base)
     return (1);
 }
 
-int			ft_unsetenv(abs_struct *base)
+int			ft_unset(abs_struct *base)
 {
 	char	**it_new;
 	size_t	i;
