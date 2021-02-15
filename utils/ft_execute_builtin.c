@@ -11,7 +11,7 @@ static int	execute_environment_builtins(abs_struct *base, t_process *p)
 	else if (!ft_strcmp(p->argv[0], "setenv"))
 		ft_setenv(base, p);
 	else if (!ft_strcmp(p->argv[0], "unsetenv"))
-		ft_unsetenv(base, p);
+		ft_unset(base, p);
 	else if (!ft_strcmp(p->argv[0], "export"))
 		ft_export(base, p);
 	else

@@ -40,7 +40,7 @@ int			ft_execute_ctrl_d(abs_struct *base)
 	ctrl_d_times = determine_ctrl_d_times(base);
 	if (ctrl_d_times < base->ctrl_d_times)
 	{
-		ft_putstr("exit\n");
+		//ft_putstr("exit\n");
 		ft_exit_minishell(base, 0);
 	}
 	ft_putstr("\e[0mUse <<exit>> to close shell\n");
