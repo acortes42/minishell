@@ -14,7 +14,7 @@ char			*ft_trim(char *str)
 	end--;
 	while (start < end && ft_isspace(*(str + end)))
 		end--;
-	if (start >= end)
+	if (start > end)
 		return (0);
 	if (!(trimmed = ft_calloc(end - start + 2, sizeof(char))))
 		return (0);
