@@ -2,6 +2,13 @@
 # define MINISHELL_H
 
 # define BUFFER_SIZE 1024
+# define ANSI_COLOR_RED     "\x1b[31m"
+# define ANSI_COLOR_GREEN   "\x1b[32m"
+# define ANSI_COLOR_YELLOW  "\x1b[33m"
+# define ANSI_COLOR_BLUE    "\x1b[34m"
+# define ANSI_COLOR_MAGENTA "\x1b[35m"
+# define ANSI_COLOR_CYAN    "\x1b[36m"
+# define ANSI_COLOR_RESET   "\x1b[0m"
 
 # include <stdio.h>
 # include <string.h>
@@ -17,6 +24,8 @@
 # include <limits.h>
 # include <sys/wait.h>   
 # include <sys/types.h>
+# include <sys/stat.h>
+
 
 typedef struct s_files_fd
 {
@@ -72,6 +81,7 @@ int				get_next_line(int fd, char **line);
 char			*ft_strjoin(char const *s1, char const *s2);
 char			**ft_split(char const *s, char c);
 void			ft_putstr(char *s);
+void			ft_putnstr(char *s, size_t len);
 void			ft_putnbr(int n);
 int				ft_strcmp(const char *s1, const char *s2);
 int    			cd(abs_struct *base);
@@ -95,7 +105,7 @@ int				ft_init_minishell(abs_struct *base, char **envp);
 void			clearScreen();
 void		    ft_show_prompt(abs_struct *base);
 
-t_job			*ft_free_job(t_job *j);
+t_job			*ft_release_job(t_job *j);
 void			ft_putstr_fd(char *s, int fd);
 int				ft_job_is_completed(t_job *j);
 int				ft_job_is_stopped(t_job *j);
@@ -104,26 +114,33 @@ void			ft_do_job_notification(t_job *j);
 void			ft_mark_job_as_running(t_job *j);
 void			ft_update_status(abs_struct *base);
 
-t_job			*ft_build_job(char *command);
 t_job			*ft_build_jobs(char *command);
+t_job			*ft_build_job(char *command);
 t_process		*ft_build_processes(char *expanded_cmd);
+t_process		*ft_build_ctrl_d_process(void);
+t_process		*ft_build_process(char *expanded_cmd);
+
 void			ft_launch_job(abs_struct *base, t_job *j);
 void            ft_launch_process(abs_struct *base, t_process *p, t_files_fd files_fd);
 int         	ft_execute_builtin(abs_struct *base, t_process *p);
 
 void			ft_release_base(abs_struct *base);
 void			ft_release_jobs(t_job *job);
+t_process		*ft_release_process(t_process *p);
 
 size_t			ft_strlcat(char *dst, const char *src, size_t size);
+char			*ft_strlcat_paths(char *prefix_path, const char *relative_path);
 size_t			ft_strlcpy(char *dst, const char *src, size_t size);
 size_t			ft_strnlen(const char *s, size_t max);
 int				ft_memcmp(const void *s1, const void *s2, size_t n);
 void			*ft_memcpy(void *dest, const void *src, size_t n);
+int				ft_array_add(char ***array, int *array_len, char *value);
 char			**ft_array_dup(char **envp);
 void			ft_array_release(char **envp);
 size_t			ft_array_len(char **envp);
 char			*ft_getenv(char **env, char *key);
 size_t			ft_strlen(const char *s);
+int				ft_strncmp(const char *s1, const char *s2, size_t n);
 void			*ft_memset(void *b, int c, size_t len);
 int				ft_isempty(const char *s);
 int				ft_isspace(int s);
@@ -132,5 +149,8 @@ char			*ft_itoa(int n2);
 int				ft_isdigit(int c);
 void			*ft_calloc(size_t nmemb, size_t size);
 void			ft_bzero(void *s, size_t n);
+char			*ft_trim(char *str);
+char			*ft_split_shell(char **str);
+char			*ft_split_shell_by(char **str, int separator);
 
 #endif

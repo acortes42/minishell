@@ -52,7 +52,7 @@ int execute (abs_struct *base)
 	return (1);
 }
 
-static void		launch_jobs(abs_struct *base)
+static void		execute_command_read(abs_struct *base)
 {
 	t_job		*job;
 
@@ -60,10 +60,11 @@ static void		launch_jobs(abs_struct *base)
 	while (job) {
 		base->first_job = job;
 		ft_launch_job(base, job);
-		job = ft_free_job(job);
+		job = ft_release_job(job);
 	}
 
 }
+
 int main(int argc, char **argv, char **envp)
 {
 	int         minishell_ready;
@@ -78,7 +79,7 @@ int main(int argc, char **argv, char **envp)
 	{
 		ft_show_prompt(&base);
 		obtain_full_line(&base);
-		launch_jobs(&base);
+		execute_command_read(&base);
 		base.first_job = 0;
 		base.num_args = 0;
 		base.parseString = 0;
