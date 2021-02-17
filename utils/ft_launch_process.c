@@ -92,16 +92,12 @@ static void		prepare_process(t_process *p, t_files_fd files_fd)
 	}
 }
 
+
 void            ft_launch_process(abs_struct *base, t_process *p,
 	t_files_fd files_fd)
 {
 	prepare_process(p, files_fd);
-	if (ft_execute_builtin(base, p))
-	{
-		p->completed = 1;
-		p->status = 0;
-	}
-	else if (*p->argv[0] == '/')
+	if (*p->argv[0] == '/')
 		ft_execute_absolute_shell_command(base, p);
 	else if (*p->argv[0] == '.')
 		ft_execute_relative_shell_command(base, p);
