@@ -37,7 +37,7 @@ int			ft_env(abs_struct *base)
     return (1);
 }
 
-int			ft_unset(abs_struct *base)
+int			ft_unset(abs_struct *base, t_process *p)
 {
 	char	**it_new;
 	size_t	i;
@@ -45,10 +45,9 @@ int			ft_unset(abs_struct *base)
 	char	*env;
 	char	**key_value;
 
-	if (!base->env || !base->parseString || !base->parseString[0] ||
-		!base->parseString[1])
+	if (!base->env || !p || !p->argv || !p->argv[0] || !p->argv[1])
 		return (1);
-	key_value = ft_split(base->parseString[1], '=');
+	key_value = ft_split(p->argv[1], '=');
 	if (!key_value || !(env = ft_getenv(base->env, key_value[0])))
 	{
 		ft_array_release(key_value);

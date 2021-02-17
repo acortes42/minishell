@@ -33,25 +33,6 @@ int obtain_full_line(abs_struct *base)
 	return (0);
 }
 
-int execute (abs_struct *base)
-{   
-	pid_t   pid;
-
-	pid = fork();
-
-	if (pid > 0)
-		wait(&pid);
-	else if (pid == 0)
-	{
-		ft_execute_command(base);
-		// TODO: Este exit debería ser el valor de retorno de la operación el que devuelve $?...
-		exit(base->error);
-    }
-	else
-		ft_putstr("\e[0mError en la creacion de subproceso\n");
-	return (1);
-}
-
 static void		execute_command_read(abs_struct *base)
 {
 	t_job		*job;

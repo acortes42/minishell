@@ -64,10 +64,9 @@ static void		ft_execute_shell_command_using_path(abs_struct *base,
 static void		prepare_process(t_process *p, t_files_fd files_fd)
 {
 	// TODO: Analizar p->argv en busca de las redirecciones y ajustarlas, teniendo en cuenta los pipes
-
 	//esto es una tonteria para que no de errores al no utilizar p
-	
 	p->argv = p->argv;
+
 	/* Set the handling for job control signals back to the default.  */
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);

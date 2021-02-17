@@ -94,18 +94,17 @@ static int	ft_search_env(char **env, char *key)
     return (0);
 }
 
-int			ft_setenv(abs_struct *base)
+int			ft_setenv(abs_struct *base, t_process *p)
 {
 	int		ret;
 	char	**key_value;
 
-	key_value = ft_split(base->parseString[base->actual_argument + 1], '=');
+	key_value = ft_split(p->argv[1], '=');
     if (key_value)
     {
         if (ft_search_env(base->env, key_value[0]))
-			ft_unset(base);
-		if (!(ret = ft_add_line(&base->env, &base->lines_envp,
-			base->parseString[base->actual_argument + 1])))
+			ft_unset(base, p);
+		if (!(ret = ft_add_line(&base->env, &base->lines_envp, p->argv[1])))
 		    ft_putstr("\e[0mNo se añadió el argumento\n");
 		ft_array_release(key_value);
 		return (ret);
