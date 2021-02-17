@@ -28,6 +28,7 @@ CFLAGS_DEBUG		= ${CFLAGS} -g -fsanitize=address
 OBJS				= ${SRCS:.c=.o}
 NAME				= minishell
 
+CC					= clang
 # 
 # Variables para compilado de tests (unitarios y de integración)
 #

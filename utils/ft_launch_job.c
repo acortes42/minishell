@@ -21,8 +21,6 @@ static void		ft_fork_child(abs_struct *base, t_process *p, t_files_fd fds)
 {
 	pid_t		pid;
 
-	if (p->argv && !ft_strcmp(*p->argv, "exit"))
-		ft_exit_minishell(base, 0);
 	/* Fork the child processes.  */
 	pid = fork();
 	//pid = 0;
@@ -43,7 +41,6 @@ static void		ft_fork_child(abs_struct *base, t_process *p, t_files_fd fds)
 		p->pid = pid;
 		wait(&p->status);
 		p->status /= 256;
-
 	}
 }
 
@@ -64,6 +61,12 @@ static void		ft_launch_processes(abs_struct *base, t_job *j)
 	fds.infile = j->stdin;
 	for (p = j->first_process; p; p = p->next)
 	{
+		if (ft_execute_builtin(base, p))
+		{
+			p->completed = 1;
+			p->status = 0;
+			continue ;
+		}
 		ft_setup_pipes(base, j, p, &fds);
 		ft_fork_child(base, p, fds);
 		ft_cleanup_fds(j, fds);

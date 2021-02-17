@@ -110,6 +110,6 @@ int			ft_setenv(abs_struct *base, t_process *p)
 		return (ret);
     }
     ft_putstr("\e[0mError en los argumentos\n");
-	base->error = 0;
+	base->error = 0;	
     return (0);
 }
