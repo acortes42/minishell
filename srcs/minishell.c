@@ -60,8 +60,6 @@ int main(int argc, char **argv, char **envp)
 		clearScreen();
 	while (minishell_ready)
 	{
-		ft_putstr(base->env[base->lines_envp - 1]);
-		ft_putstr("\n");
 		ft_show_prompt(base);
 		obtain_full_line(base);
 		execute_command_read(base);
