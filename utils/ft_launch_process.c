@@ -58,40 +58,43 @@ static void		ft_execute_shell_command_using_path(abs_struct *base,
 	p->status = 1;
 }
 
-static void		prepare_process(t_process *p, t_files_fd files_fd)
+static int		prepare_process(abs_struct *base, t_process *p, t_files_fd files_fd)
 {
-	set_redirections(p);
+	int			ret;
 
-	/* Set the handling for job control signals back to the default.  */
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
-	signal(SIGTSTP, SIG_DFL);
-	signal(SIGTTIN, SIG_DFL);
-	signal(SIGTTOU, SIG_DFL);
-	signal(SIGCHLD, SIG_DFL);
-	/* Set the standard input/output channels of the new process.  */
+	if ((ret = set_redirections(base, p)) || (ret = ft_set_default_signals()))
+		return (ret);
 	if (files_fd.infile != STDIN_FILENO)
 	{
-		dup2(files_fd.infile, STDIN_FILENO);
-		close(files_fd.infile);
+		if (dup2(files_fd.infile, STDIN_FILENO) >= 0)
+			close(files_fd.infile);
+		else
+			ft_putstr_fd(strerror(errno), STDERR_FILENO);
 	}
 	if (files_fd.outfile != STDOUT_FILENO)
 	{
-		dup2(files_fd.outfile, STDOUT_FILENO);
-		close(files_fd.outfile);
+		if (dup2(files_fd.outfile, STDOUT_FILENO) >= 0)
+			close(files_fd.outfile);
+		else
+			ft_putstr_fd(strerror(errno), STDERR_FILENO);		
 	}
 	if (files_fd.errfile != STDERR_FILENO)
 	{
-		dup2(files_fd.errfile, STDERR_FILENO);
-		close(files_fd.errfile);
+		if (dup2(files_fd.errfile, STDERR_FILENO) >= 0)
+			close(files_fd.errfile);
+		else
+			ft_putstr_fd(strerror(errno), STDERR_FILENO);		
 	}
+	return (errno);
 }
 
 
 void            ft_launch_process(abs_struct *base, t_process *p,
 	t_files_fd files_fd)
 {
-	prepare_process(p, files_fd);
+	p->status = prepare_process(base, p, files_fd);
+	if (p->status)
+		return ;
 	if (*p->argv[0] == '/')
 		ft_execute_absolute_shell_command(base, p);
 	else if (*p->argv[0] == '.')

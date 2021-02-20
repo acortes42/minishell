@@ -120,7 +120,7 @@ t_job			*ft_build_job(char *command);
 t_process		*ft_build_processes(char *expanded_cmd);
 t_process		*ft_build_ctrl_d_process(void);
 t_process		*ft_build_process(char *expanded_cmd);
-int				set_redirections(t_process *p);
+int				set_redirections(abs_struct *base, t_process *p);
 
 void			ft_launch_job(abs_struct *base, t_job *j);
 void            ft_launch_process(abs_struct *base, t_process *p, t_files_fd files_fd);
@@ -130,6 +130,7 @@ int         	ft_execute_builtin(abs_struct *base, t_process *p);
 void			ft_release_base(abs_struct *base);
 void			ft_release_jobs(t_job *job);
 t_process		*ft_release_process(t_process *p);
+int				ft_set_default_signals();
 
 size_t			ft_strlcat(char *dst, const char *src, size_t size);
 char			*ft_strlcat_paths(char *prefix_path, const char *relative_path);
@@ -156,5 +157,5 @@ void			ft_bzero(void *s, size_t n);
 char			*ft_trim(char *str);
 char			*ft_split_shell(char **str);
 char			*ft_split_shell_by(char **str, char *separator);
-
+int				ft_isinteger(char *str);
 #endif

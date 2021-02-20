@@ -1,74 +1,126 @@
 #include "minishell.h"
 
+static int	contains_redir(char *str)
+{
+	int		redir;
+	char	*tmp;
+	char	*argv;
+
+	argv = str;
+	tmp = 0;
+	redir = (((tmp = ft_split_shell_by(&argv, ">")) &&
+		*(argv - 1) == '>') ? 1 : 0);
+	if (tmp)
+		free(tmp);
+	if (redir)
+		return (redir);
+	argv = str;
+	redir = (((tmp = ft_split_shell_by(&argv, "<")) &&
+		*(argv - 1) == '<') ? 1 : 0);
+	if (tmp)
+		free(tmp);
+	return (redir);
+}
+
 static int	extract_redirections_from_argv(t_process *p)
 {
 	char	**i;
-	char	*tmp;
-	char	*argv;
 	int		redirs_len;
-	int		argv_pos;
 
-	ft_array_release(p->redirs);
 	i = p->argv;
-	argv_pos = 0;
 	redirs_len = 0;
 	while (*i)
 	{
-		argv = *i;
-		tmp = 0;
-		if ((!(tmp = ft_split_shell_by(&argv, ">")) &&
-			!(tmp = ft_split_shell_by(&argv, ">>")) && 
-			!(tmp = ft_split_shell_by(&argv, "<"))) ||
-			(!argv || *argv == '\0'))
+		if (!contains_redir(*i))
 			i++;
 		else
 		{
 			ft_array_add(&p->redirs, &redirs_len,  *i);
 			ft_array_slide_left(i);
 		}
-		if (tmp)
-			free(tmp);
 	}
 	return (1);
 }
 
-static void	apply_output_redirection(char *left_side, char *right_side)
+static int	apply_output_redirection(abs_struct *base, char *fd, char *right_side)
 {
-	(void)left_side;
-	(void)right_side;
+	int		i_fd;
+	int		o_fd;
+	int		empty;
+	char	*abs_path;
+
+	empty = 0;
+	if (!ft_isinteger(fd) && !(empty = ft_isempty(fd)))
+		return (0);
+	i_fd = empty ? STDOUT_FILENO : ft_atoi(fd);
+	if (!ft_strncmp(right_side, "&-", 2))
+	{
+		// TODO: Comprobar si el fd está abierto como salida, sino dar error (stat)
+		return (close(i_fd));
+	}
+	if (!(abs_path = ft_get_absolute_path(base, right_side)))
+		return (1);
+	if ((o_fd = open(abs_path, O_CREAT | O_TRUNC | O_WRONLY )) < 0 ||
+		dup2(o_fd, i_fd) < 0)
+	{
+		free(abs_path);
+		ft_putstr_fd(strerror(errno), STDERR_FILENO);
+		return (errno);
+	}
+	free(abs_path);
+	if (*right_side != '&')
+		close(o_fd);
+	return (0);
 }
 
-static void	apply_output_add_redirection(char *left_side, char *right_side)
+static int	apply_output_add_redirection(char *fd, char *right_side)
 {
-	(void)left_side;
+	(void)fd;
 	(void)right_side;
+	
+	return (0);
 }
 
-static void	apply_input_redirection(char *left_side, char *right_side)
+static int	apply_input_redirection(char *fd, char *right_side)
 {
-	(void)left_side;
+	(void)fd;
 	(void)right_side;
+	
+	return (0);
 }
 
-int			set_redirections(t_process *p)
+int			set_redirections(abs_struct *base, t_process *p)
 {
 	char	**i;
-	char	*tmp;	
+	char	*fd;
+	char	*redir;
+	int		redirected;
 
 	if (!p || !p->argv || !extract_redirections_from_argv(p))
-		return (0);
+		return (1);
 	i = p->redirs;
-	while (i && *i)
+	fd = 0;
+	redirected = 0;
+	while (!redirected && i && *i)
 	{
-		if ((tmp = ft_split_shell_by(i, ">")))
-			apply_output_redirection(tmp, *i);
-		else if ((tmp = ft_split_shell_by(i, ">>")))
-			apply_output_add_redirection(tmp, *i);
-		else if ((tmp = ft_split_shell_by(i, "<")))
-			apply_input_redirection(tmp, *i);
-		if (tmp)
-			free(tmp);
+		if ((redir = *i) && (fd = ft_split_shell_by(&redir, ">>")) &&
+			*(redir - 1) == '>')
+			redirected = apply_output_add_redirection(fd, redir);
+		if (fd)
+			free(fd);
+		fd = 0;
+		if (!redirected && (redir = *i) &&
+			(fd = ft_split_shell_by(&redir, ">")) && *(redir - 1) == '>')
+			redirected = apply_output_redirection(base, fd, redir);
+		if (fd)
+			free(fd);
+		fd = 0;
+		if (!redirected && (redir = *i) &&
+			(fd = ft_split_shell_by(&redir, "<")) && *(redir - 1) == '<')
+			redirected = apply_input_redirection(fd, redir);
+		if (fd)
+			free(fd);
 		i++;
 	}
-	return (1);
+	return (redirected);
 }

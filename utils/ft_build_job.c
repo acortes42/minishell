@@ -13,6 +13,7 @@ static char		*ft_expand_cmd(char *command)
 	quote = 0;
 	while (*ptr)
 	{
+		// TODO: mover la implementación del $? del echo a la expansión del comando. Ese valor se tiene que utilizar en todos los comandos
 		(void)quote;
 		(void)output;
 		ptr++;
