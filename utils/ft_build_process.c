@@ -7,7 +7,7 @@ static int			ft_extract_fields(char *expanded_cmd, char ***argv)
 	char			*tmp;
 
 	fields = 0;
-	while ((field = ft_split_shell_by(&expanded_cmd, ' ')))
+	while ((field = ft_split_shell_by(&expanded_cmd, " ")))
 	{
 		tmp = ft_trim(field);
 		free(field);

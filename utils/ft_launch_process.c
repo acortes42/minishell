@@ -3,11 +3,8 @@
 static void		ft_execute_absolute_shell_command(abs_struct *base,
 	t_process *p)
 {
-	// TODO: Eliminar de argv las redirecciones
 	if (execve(p->argv[0], p->argv, base->env) && errno == EACCES)
-	{
 		p->status = 126;
-	}
 	p->completed = 1;
 	ft_putstr_fd(strerror(errno), STDERR_FILENO);
 }
@@ -39,7 +36,7 @@ static void		ft_execute_shell_command_using_path(abs_struct *base,
 	paths = ft_getenv(base->env, "PATH");
 	orig_path = *p->argv;
 	paths += 5;
-	while ((path = ft_split_shell_by(&paths, ':')))
+	while ((path = ft_split_shell_by(&paths, ":")))
 	{
 		tmp = ft_strlcat_paths(path, orig_path);
 		*p->argv = tmp;
@@ -63,9 +60,7 @@ static void		ft_execute_shell_command_using_path(abs_struct *base,
 
 static void		prepare_process(t_process *p, t_files_fd files_fd)
 {
-	// TODO: Analizar p->argv en busca de las redirecciones y ajustarlas, teniendo en cuenta los pipes
-	//esto es una tonteria para que no de errores al no utilizar p
-	p->argv = p->argv;
+	set_redirections(p);
 
 	/* Set the handling for job control signals back to the default.  */
 	signal(SIGINT, SIG_DFL);

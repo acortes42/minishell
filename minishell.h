@@ -38,12 +38,13 @@ typedef struct s_files_fd
 /* A process is a single process.  */
 typedef struct s_process
 {
-  struct s_process *next;       /* next process in pipeline */
-  char **argv;                /* for exec */
-  pid_t pid;                  /* process ID */
-  char completed;             /* true if process has completed */
-  char stopped;               /* true if process has stopped */
-  int status;                 /* reported status value */
+  struct s_process	*next;       /* next process in pipeline */
+  char				**argv;                /* for exec */
+  char				**redirs;
+  pid_t				pid;                  /* process ID */
+  char				completed;             /* true if process has completed */
+  char				stopped;               /* true if process has stopped */
+  int				status;                 /* reported status value */
 } t_process;
 
 
@@ -119,10 +120,12 @@ t_job			*ft_build_job(char *command);
 t_process		*ft_build_processes(char *expanded_cmd);
 t_process		*ft_build_ctrl_d_process(void);
 t_process		*ft_build_process(char *expanded_cmd);
+int				set_redirections(t_process *p);
 
 void			ft_launch_job(abs_struct *base, t_job *j);
 void            ft_launch_process(abs_struct *base, t_process *p, t_files_fd files_fd);
 int         	ft_execute_builtin(abs_struct *base, t_process *p);
+
 
 void			ft_release_base(abs_struct *base);
 void			ft_release_jobs(t_job *job);
@@ -138,6 +141,7 @@ int				ft_array_add(char ***array, int *array_len, char *value);
 char			**ft_array_dup(char **envp);
 void			ft_array_release(char **envp);
 size_t			ft_array_len(char **envp);
+void			ft_array_slide_left(char **array);
 char			*ft_getenv(char **env, char *key);
 size_t			ft_strlen(const char *s);
 int				ft_strncmp(const char *s1, const char *s2, size_t n);
@@ -151,6 +155,6 @@ void			*ft_calloc(size_t nmemb, size_t size);
 void			ft_bzero(void *s, size_t n);
 char			*ft_trim(char *str);
 char			*ft_split_shell(char **str);
-char			*ft_split_shell_by(char **str, int separator);
+char			*ft_split_shell_by(char **str, char *separator);
 
 #endif
