@@ -9,12 +9,14 @@ static int			ft_extract_fields(char *expanded_cmd, char ***argv)
 	fields = 0;
 	while ((field = ft_split_shell_by(&expanded_cmd, " ")))
 	{
-		tmp = ft_trim(field);
-		free(field);
-		if (!tmp)
-			continue ;
-		field = tmp;
-		// TODO: Pendiente añadir parseo rediccciones para 
+		if (*field != '\n')
+		{
+			tmp = ft_trim(field);
+			free(field);
+			if (!tmp)
+				continue ;
+			field = tmp;
+		}
 		if (!ft_array_add(argv, &fields, field))
 			return (-1);
 	}
