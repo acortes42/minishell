@@ -43,7 +43,6 @@ static void		execute_command_read(abs_struct *base)
 		ft_launch_job(base, job);
 		job = ft_release_job(job);
 	}
-
 }
 
 int main(int argc, char **argv, char **envp)
