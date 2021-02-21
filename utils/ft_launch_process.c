@@ -64,21 +64,21 @@ static int		prepare_process(abs_struct *base, t_process *p, t_files_fd files_fd)
 
 	if ((ret = set_redirections(base, p)) || (ret = ft_set_default_signals()))
 		return (ret);
-	if (files_fd.infile != STDIN_FILENO)
+	if (!errno && files_fd.infile != STDIN_FILENO)
 	{
 		if (dup2(files_fd.infile, STDIN_FILENO) >= 0)
 			close(files_fd.infile);
 		else
 			ft_putstr_fd(strerror(errno), STDERR_FILENO);
 	}
-	if (files_fd.outfile != STDOUT_FILENO)
+	if (!errno && files_fd.outfile != STDOUT_FILENO)
 	{
 		if (dup2(files_fd.outfile, STDOUT_FILENO) >= 0)
 			close(files_fd.outfile);
 		else
 			ft_putstr_fd(strerror(errno), STDERR_FILENO);		
 	}
-	if (files_fd.errfile != STDERR_FILENO)
+	if (!errno && files_fd.errfile != STDERR_FILENO)
 	{
 		if (dup2(files_fd.errfile, STDERR_FILENO) >= 0)
 			close(files_fd.errfile);
