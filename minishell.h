@@ -131,6 +131,9 @@ void			ft_release_base(abs_struct *base);
 void			ft_release_jobs(t_job *job);
 t_process		*ft_release_process(t_process *p);
 int				ft_set_default_signals();
+void			forked_process_signal_handler(int sig);
+void			dup_std_fds(t_files_fd *fds);
+void			restore_std_fds(t_files_fd fds);
 
 size_t			ft_strlcat(char *dst, const char *src, size_t size);
 char			*ft_strlcat_paths(char *prefix_path, const char *relative_path);

@@ -50,3 +50,12 @@ int			ft_set_default_signals()
 		return (ret);
 	return (0);
 }
+
+void	forked_process_signal_handler(int sig)
+{
+	if (sig == SIGINT)
+	{
+		ft_putstr("\n");
+		exit(0);
+	}
+}
