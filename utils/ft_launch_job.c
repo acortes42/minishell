@@ -21,12 +21,15 @@ static void		ft_fork_child(abs_struct *base, t_process *p, t_files_fd fds)
 {
 	pid_t		pid;
 
-	/* Fork the child processes.  */
+	if (signal(SIGINT, forked_process_signal_handler) == SIG_ERR)
+	{
+		ft_putstr_fd(strerror(errno), STDERR_FILENO);
+		ft_exit_minishell(base, errno);
+	}
 	pid = fork();
 	//pid = 0;
 	if (pid == 0)
 	{
-		/* This is the child process.  */
 		ft_launch_process(base, p, fds);
 		exit(p->status);
 	}
@@ -37,7 +40,6 @@ static void		ft_fork_child(abs_struct *base, t_process *p, t_files_fd fds)
 	}
 	else
 	{
-		/* This is the parent process.  */
 		p->pid = pid;
 		wait(&p->status);
 		p->status /= 256;
@@ -57,7 +59,9 @@ static void		ft_launch_processes(abs_struct *base, t_job *j)
 {
 	t_process	*p;
 	t_files_fd	fds;
+	t_files_fd	std_fds;
 
+	dup_std_fds(&std_fds);
 	fds.infile = j->stdin;
 	for (p = j->first_process; p; p = p->next)
 	{
@@ -72,11 +76,10 @@ static void		ft_launch_processes(abs_struct *base, t_job *j)
 		ft_cleanup_fds(j, fds);
 		fds.infile = fds.pipes[0];
 	}
+	restore_std_fds(std_fds);
 }
 
 void			ft_launch_job(abs_struct *base, t_job *j)
 {
 	ft_launch_processes(base, j);
-//	ft_format_job_info(j, "launched");
-//	ft_wait_for_job(j);
 }
