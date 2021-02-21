@@ -10,6 +10,9 @@
 # define ANSI_COLOR_CYAN    "\x1b[36m"
 # define ANSI_COLOR_RESET   "\x1b[0m"
 
+# include <sys/wait.h>   
+# include <sys/types.h>
+# include <sys/stat.h>
 # include <stdio.h>
 # include <string.h>
 # include <fcntl.h>
@@ -22,9 +25,6 @@
 # include <errno.h>
 # include <signal.h>
 # include <limits.h>
-# include <sys/wait.h>   
-# include <sys/types.h>
-# include <sys/stat.h>
 
 
 typedef struct s_files_fd
@@ -45,20 +45,21 @@ typedef struct s_process
   char				completed;             /* true if process has completed */
   char				stopped;               /* true if process has stopped */
   int				status;                 /* reported status value */
+  t_files_fd		std_fds;
 } t_process;
 
 
 /* A job is a pipeline of processes.  */
 
-typedef struct s_job
+typedef struct		s_job
 {
-  struct s_job *next;           /* next active job */
-  char *command;              /* command line, used for messages */
-  t_process *first_process;     /* list of processes in this job */
-  pid_t pgid;                 /* process group ID */
-  char notified;              /* true if user told about stopped job */
-  //struct termios tmodes;      /* saved terminal modes */
-  int stdin, stdout, stderr;  /* standard i/o channels */
+	struct s_job	*next;           /* next active job */
+	char			*command;              /* command line, used for messages */
+	t_process		*first_process;     /* list of processes in this job */
+	pid_t			pgid;                 /* process group ID */
+	char			notified;              /* true if user told about stopped job */
+	//struct termios tmodes;      /* saved terminal modes */
+	t_files_fd		std_fds;
 } t_job;
 
 typedef struct      abs_struct

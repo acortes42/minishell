@@ -9,7 +9,16 @@ void			dup_std_fds(t_files_fd *fds)
 
 void			restore_std_fds(t_files_fd fds)
 {
-	dup2(fds.infile, STDIN_FILENO);
-	dup2(fds.outfile, STDOUT_FILENO);
-	dup2(fds.errfile, STDERR_FILENO);
+	if (fds.infile > -1 && fds.infile != STDIN_FILENO)
+	{
+		dup2(fds.infile, STDIN_FILENO);
+	}
+	if (fds.outfile > -1 && fds.outfile != STDOUT_FILENO)
+	{
+		dup2(fds.outfile, STDOUT_FILENO);
+	}
+	if (fds.errfile > -1 && fds.errfile != STDERR_FILENO)
+	{
+		dup2(fds.errfile, STDERR_FILENO);
+	}
 }

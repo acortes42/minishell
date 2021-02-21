@@ -49,6 +49,9 @@ TESTS_IT			:= check_it
 
 all: ${NAME}
 
+pipes: fclean
+	${CC} -o pipes ${CFLAGS} tests/pipes_redirs.c
+
 $(NAME): ${OBJS}
 	${CC} -o ${NAME} ${CFLAGS} ${OBJS}
 
@@ -62,6 +65,7 @@ clean:
 	@rm -f  *.o
 	@rm -f  srcs/*.o
 	@rm -rdf SourceFiles
+	${RM} tests/pipes_redirs.o
 	${RM} ${OBJS_UNIT_TESTS} ${OBJS_WITHOUT_MAIN}
 	${RM} -r ${TESTS_IT_OUTPUTS}/* ${TESTS_UT_OUTPUTS}/*
 
@@ -72,6 +76,7 @@ fclean: clean
 	@touch history.txt
 	@rm -f *.out
 	@rm -f *.a
+	${RM} pipes redirection_redirected_output
 	${RM} minishell_check ${NAME}
 	
 test:	${OBJS}

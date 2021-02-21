@@ -42,7 +42,7 @@ static int	extract_redirections_from_argv(t_process *p)
 	return (1);
 }
 
-static int	apply_output_redirection(abs_struct *base, char *fd, char *right_side)
+static int	apply_output_redirection(abs_struct *base, char *fd, char *right_side, t_process *p)
 {
 	int		i_fd;
 	int		o_fd;
@@ -58,12 +58,16 @@ static int	apply_output_redirection(abs_struct *base, char *fd, char *right_side
 		// TODO: Comprobar si el fd está abierto como salida, sino dar error (stat)
 		return (close(i_fd));
 	}
+	if (i_fd == STDOUT_FILENO)
+		p->std_fds.outfile = dup(STDOUT_FILENO);
 	if (!(abs_path = ft_get_absolute_path(base, right_side)))
 		return (1);
-	if ((o_fd = open(abs_path, O_CREAT | O_TRUNC | O_WRONLY )) < 0 ||
+	if ((o_fd = open(abs_path, O_CREAT | O_TRUNC | O_WRONLY, 0666)) < 0 ||
 		dup2(o_fd, i_fd) < 0)
 	{
 		free(abs_path);
+		if (o_fd > -1)
+			close(o_fd);
 		ft_putstr_fd(strerror(errno), STDERR_FILENO);
 		return (errno);
 	}
@@ -111,7 +115,7 @@ int			set_redirections(abs_struct *base, t_process *p)
 		fd = 0;
 		if (!redirected && (redir = *i) &&
 			(fd = ft_split_shell_by(&redir, ">")) && *(redir - 1) == '>')
-			redirected = apply_output_redirection(base, fd, redir);
+			redirected = apply_output_redirection(base, fd, redir, p);
 		if (fd)
 			free(fd);
 		fd = 0;
