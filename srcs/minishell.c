@@ -36,39 +36,38 @@ int obtain_full_line(abs_struct *base)
 static void		execute_command_read(abs_struct *base)
 {
 	t_job		*job;
+	t_files_fd	std_fds;
 
+	dup_std_fds(&std_fds);
 	job = ft_build_jobs(base->string);
 	while (job) {
 		base->first_job = job;
 		ft_launch_job(base, job);
 		job = ft_release_job(job);
 	}
-
+	restore_std_fds(std_fds);
 }
 
 int main(int argc, char **argv, char **envp)
 {
 	int         minishell_ready;
-	abs_struct  *base;
+	abs_struct  base;
 
-	if (!(base = ft_calloc(1, sizeof(abs_struct))))
-		ft_exit_minishell(0, 1);
 	(void)argc;
 	(void)argv;
-	minishell_ready = ft_init_minishell(base, envp);
+	ft_memset(&base, 0, sizeof(abs_struct));
+	minishell_ready = ft_init_minishell(&base, envp);
 	if (minishell_ready)
 		clearScreen();
 	while (minishell_ready)
 	{
-		ft_putstr(base->env[base->lines_envp - 1]);
-		ft_putstr("\n");
-		ft_show_prompt(base);
-		obtain_full_line(base);
-		execute_command_read(base);
-		base->first_job = 0;
-		base->num_args = 0;
-		base->parseString = 0;
+		ft_show_prompt(&base);
+		obtain_full_line(&base);
+		execute_command_read(&base);
+		base.first_job = 0;
+		base.num_args = 0;
+		base.parseString = 0;
 	}
-	free(base);
+	free(&base);
 	return (0);
 }

@@ -6,59 +6,62 @@ static void		ft_setup_pipes(abs_struct *base, t_job *j, t_process *p, t_files_fd
 	{
 		/* Set up pipes */
 		if (pipe(fds->pipes) < 0)
-		{
-			ft_putstr_fd(strerror(errno), fds->errfile); // pipe
 			ft_exit_minishell(base, 1);
-		}
 		fds->outfile = fds->pipes[1];
 	}
 	else
-		fds->outfile = j->stdout;
-	fds->errfile = j->stderr;
+		fds->outfile = j->std_fds.outfile;
+	fds->errfile = j->std_fds.errfile;
 }
 
 static void		ft_fork_child(abs_struct *base, t_process *p, t_files_fd fds)
 {
 	pid_t		pid;
 
-	/* Fork the child processes.  */
+	if (signal(SIGINT, forked_process_signal_handler) == SIG_ERR)
+		ft_exit_minishell(base, errno);
 	pid = fork();
 	//pid = 0;
 	if (pid == 0)
 	{
-		/* This is the child process.  */
 		ft_launch_process(base, p, fds);
 		exit(p->status);
 	}
 	else if (pid < 0)
-	{
-		ft_putstr_fd(strerror(errno), fds.errfile);
 		ft_exit_minishell(base, 1);
-	}
 	else
 	{
-		/* This is the parent process.  */
 		p->pid = pid;
 		wait(&p->status);
 		p->status /= 256;
 	}
 }
 
-static void		ft_cleanup_fds(t_job *j, t_files_fd fds)
+static void		ft_cleanup_fds(t_files_fd fds)
 {
-	/* Clean up after pipes.  */
-	if (fds.infile != j->stdin)
+	if (fds.infile > -1 && fds.infile != STDIN_FILENO)
+	{
 		close(fds.infile);
-	if (fds.outfile != j->stdout)
+	}
+	if (fds.outfile > -1 && fds.outfile != STDOUT_FILENO)
+	{
+		ft_putstr("Closing outfile:");
+		char *out = ft_itoa(fds.outfile);
+		ft_putstr(out);
+		ft_putstr("\n");
+		free(out);
 		close(fds.outfile);
+	}
 }
 
-static void		ft_launch_processes(abs_struct *base, t_job *j)
+void			ft_launch_job(abs_struct *base, t_job *j)
 {
 	t_process	*p;
 	t_files_fd	fds;
+	t_files_fd	std_fds;
 
-	fds.infile = j->stdin;
+	dup_std_fds(&std_fds);
+	fds.infile = j->std_fds.infile;
 	for (p = j->first_process; p; p = p->next)
 	{
 		if (ft_execute_builtin(base, p))
@@ -69,14 +72,8 @@ static void		ft_launch_processes(abs_struct *base, t_job *j)
 		}
 		ft_setup_pipes(base, j, p, &fds);
 		ft_fork_child(base, p, fds);
-		ft_cleanup_fds(j, fds);
+		ft_cleanup_fds(fds);
 		fds.infile = fds.pipes[0];
 	}
-}
-
-void			ft_launch_job(abs_struct *base, t_job *j)
-{
-	ft_launch_processes(base, j);
-//	ft_format_job_info(j, "launched");
-//	ft_wait_for_job(j);
+	restore_std_fds(std_fds);
 }

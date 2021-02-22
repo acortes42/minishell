@@ -13,8 +13,9 @@ UTILS 				= utils/ft_putnbr.c utils/ft_putstr.c utils/ft_split.c \
 	utils/ft_itoa.c utils/ft_calloc.c utils/ft_build_jobs.c \
 	utils/ft_bzero.c utils/ft_execute_builtin.c utils/ft_build_job.c \
 	utils/ft_build_processes.c utils/ft_build_process.c utils/ft_trim.c \
-	utils/ft_split_shell.c utils/ft_release_process.c utils/ft_array_add.c
-	
+	utils/ft_split_shell.c utils/ft_release_process.c utils/ft_array_add.c \
+	utils/redirections.c utils/ft_array_slide_left.c \
+	utils/ft_set_default_signals.c utils/ft_isinteger.c utils/std_fds.c	
 
 SRCS_WITHOUT_MAIN	=  srcs/ft_exit_minishell.c srcs/clearScreen.c \
 	srcs/ft_execute_ctrl_d.c srcs/echo.c srcs/cd.c \
@@ -48,6 +49,9 @@ TESTS_IT			:= check_it
 
 all: ${NAME}
 
+pipes: fclean
+	${CC} -o pipes ${CFLAGS} tests/pipes_redirs.c
+
 $(NAME): ${OBJS}
 	${CC} -o ${NAME} ${CFLAGS} ${OBJS}
 
@@ -61,6 +65,7 @@ clean:
 	@rm -f  *.o
 	@rm -f  srcs/*.o
 	@rm -rdf SourceFiles
+	${RM} tests/pipes_redirs.o
 	${RM} ${OBJS_UNIT_TESTS} ${OBJS_WITHOUT_MAIN}
 	${RM} -r ${TESTS_IT_OUTPUTS}/* ${TESTS_UT_OUTPUTS}/*
 
@@ -71,6 +76,7 @@ fclean: clean
 	@touch history.txt
 	@rm -f *.out
 	@rm -f *.a
+	${RM} pipes redirection_redirected_output
 	${RM} minishell_check ${NAME}
 	
 test:	${OBJS}

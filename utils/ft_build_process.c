@@ -7,14 +7,16 @@ static int			ft_extract_fields(char *expanded_cmd, char ***argv)
 	char			*tmp;
 
 	fields = 0;
-	while ((field = ft_split_shell_by(&expanded_cmd, ' ')))
+	while ((field = ft_split_shell_by(&expanded_cmd, " ")))
 	{
-		tmp = ft_trim(field);
-		free(field);
-		if (!tmp)
-			continue ;
-		field = tmp;
-		// TODO: Pendiente añadir parseo rediccciones para 
+		if (*field != '\n')
+		{
+			tmp = ft_trim(field);
+			free(field);
+			if (!tmp)
+				continue ;
+			field = tmp;
+		}
 		if (!ft_array_add(argv, &fields, field))
 			return (-1);
 	}
@@ -28,6 +30,9 @@ t_process			*ft_build_process(char *expanded_cmd)
 
 	if (!(proc = ft_calloc(1, sizeof(t_process))))
 		return (0);
+	proc->std_fds.infile = STDIN_FILENO;
+	proc->std_fds.outfile = STDOUT_FILENO;
+	proc->std_fds.errfile = STDERR_FILENO;
 	fields = ft_extract_fields(expanded_cmd, &proc->argv);
 	if (fields < 0)
 	{

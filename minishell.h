@@ -10,6 +10,9 @@
 # define ANSI_COLOR_CYAN    "\x1b[36m"
 # define ANSI_COLOR_RESET   "\x1b[0m"
 
+# include <sys/wait.h>   
+# include <sys/types.h>
+# include <sys/stat.h>
 # include <stdio.h>
 # include <string.h>
 # include <fcntl.h>
@@ -22,9 +25,6 @@
 # include <errno.h>
 # include <signal.h>
 # include <limits.h>
-# include <sys/wait.h>   
-# include <sys/types.h>
-# include <sys/stat.h>
 
 
 typedef struct s_files_fd
@@ -38,26 +38,28 @@ typedef struct s_files_fd
 /* A process is a single process.  */
 typedef struct s_process
 {
-  struct s_process *next;       /* next process in pipeline */
-  char **argv;                /* for exec */
-  pid_t pid;                  /* process ID */
-  char completed;             /* true if process has completed */
-  char stopped;               /* true if process has stopped */
-  int status;                 /* reported status value */
+  struct s_process	*next;       /* next process in pipeline */
+  char				**argv;                /* for exec */
+  char				**redirs;
+  pid_t				pid;                  /* process ID */
+  char				completed;             /* true if process has completed */
+  char				stopped;               /* true if process has stopped */
+  int				status;                 /* reported status value */
+  t_files_fd		std_fds;
 } t_process;
 
 
 /* A job is a pipeline of processes.  */
 
-typedef struct s_job
+typedef struct		s_job
 {
-  struct s_job *next;           /* next active job */
-  char *command;              /* command line, used for messages */
-  t_process *first_process;     /* list of processes in this job */
-  pid_t pgid;                 /* process group ID */
-  char notified;              /* true if user told about stopped job */
-  //struct termios tmodes;      /* saved terminal modes */
-  int stdin, stdout, stderr;  /* standard i/o channels */
+	struct s_job	*next;           /* next active job */
+	char			*command;              /* command line, used for messages */
+	t_process		*first_process;     /* list of processes in this job */
+	pid_t			pgid;                 /* process group ID */
+	char			notified;              /* true if user told about stopped job */
+	//struct termios tmodes;      /* saved terminal modes */
+	t_files_fd		std_fds;
 } t_job;
 
 typedef struct      abs_struct
@@ -119,14 +121,20 @@ t_job			*ft_build_job(char *command);
 t_process		*ft_build_processes(char *expanded_cmd);
 t_process		*ft_build_ctrl_d_process(void);
 t_process		*ft_build_process(char *expanded_cmd);
+int				set_redirections(abs_struct *base, t_process *p);
 
 void			ft_launch_job(abs_struct *base, t_job *j);
 void            ft_launch_process(abs_struct *base, t_process *p, t_files_fd files_fd);
 int         	ft_execute_builtin(abs_struct *base, t_process *p);
 
+
 void			ft_release_base(abs_struct *base);
 void			ft_release_jobs(t_job *job);
 t_process		*ft_release_process(t_process *p);
+int				ft_set_default_signals();
+void			forked_process_signal_handler(int sig);
+void			dup_std_fds(t_files_fd *fds);
+void			restore_std_fds(t_files_fd fds);
 
 size_t			ft_strlcat(char *dst, const char *src, size_t size);
 char			*ft_strlcat_paths(char *prefix_path, const char *relative_path);
@@ -138,6 +146,7 @@ int				ft_array_add(char ***array, int *array_len, char *value);
 char			**ft_array_dup(char **envp);
 void			ft_array_release(char **envp);
 size_t			ft_array_len(char **envp);
+void			ft_array_slide_left(char **array);
 char			*ft_getenv(char **env, char *key);
 size_t			ft_strlen(const char *s);
 int				ft_strncmp(const char *s1, const char *s2, size_t n);
@@ -151,6 +160,6 @@ void			*ft_calloc(size_t nmemb, size_t size);
 void			ft_bzero(void *s, size_t n);
 char			*ft_trim(char *str);
 char			*ft_split_shell(char **str);
-char			*ft_split_shell_by(char **str, int separator);
-
+char			*ft_split_shell_by(char **str, char *separator);
+int				ft_isinteger(char *str);
 #endif

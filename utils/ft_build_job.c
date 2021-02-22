@@ -13,6 +13,7 @@ static char		*ft_expand_cmd(char *command)
 	quote = 0;
 	while (*ptr)
 	{
+		// TODO: mover la implementación del $? del echo a la expansión del comando. Ese valor se tiene que utilizar en todos los comandos
 		(void)quote;
 		(void)output;
 		ptr++;
@@ -30,9 +31,9 @@ t_job			*ft_build_job(char *command)
 		return (0);
 	j->command = command;
 	// TODO: Parse command to redirect
-	j->stderr = STDERR_FILENO;
-	j->stdin = STDIN_FILENO;
-	j->stdout = STDOUT_FILENO;
+	j->std_fds.errfile = STDERR_FILENO;
+	j->std_fds.infile = STDIN_FILENO;
+	j->std_fds.outfile = STDOUT_FILENO;
 	cmd = ft_expand_cmd(command);
 	j->first_process = ft_build_processes(cmd);
 	return (j);
