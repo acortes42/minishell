@@ -7,18 +7,21 @@ void			dup_std_fds(t_files_fd *fds)
 	fds->errfile = dup(STDERR_FILENO);
 }
 
-void			restore_std_fds(t_files_fd fds)
+void			restore_std_fds(t_files_fd *fds)
 {
-	if (fds.infile > -1 && fds.infile != STDIN_FILENO)
+	if (fds->infile > -1 && fds->infile != STDIN_FILENO)
 	{
-		dup2(fds.infile, STDIN_FILENO);
+		dup2(fds->infile, STDIN_FILENO);
+		close(fds->infile);
 	}
-	if (fds.outfile > -1 && fds.outfile != STDOUT_FILENO)
+	if (fds->outfile > -1 && fds->outfile != STDOUT_FILENO)
 	{
-		dup2(fds.outfile, STDOUT_FILENO);
+		dup2(fds->outfile, STDOUT_FILENO);
+		close(fds->outfile);
 	}
-	if (fds.errfile > -1 && fds.errfile != STDERR_FILENO)
+	if (fds->errfile > -1 && fds->errfile != STDERR_FILENO)
 	{
-		dup2(fds.errfile, STDERR_FILENO);
+		dup2(fds->errfile, STDERR_FILENO);
+		close(fds->errfile);
 	}
 }

@@ -58,47 +58,34 @@ static void		ft_execute_shell_command_using_path(abs_struct *base,
 	p->status = 1;
 }
 
-static int		prepare_process(abs_struct *base, t_process *p, t_files_fd files_fd)
+static int		ft_set_std_fds(abs_struct *base, t_process *previous,
+	t_process *current)
 {
 	int			ret;
 
-	if ((ret = set_redirections(base, p)) || (ret = ft_set_default_signals()))
+	// TODO: Tratar los errores de dup2
+	if ((ret = set_redirections(base, current)))
 		return (ret);
-	if (!errno && files_fd.infile != STDIN_FILENO)
-	{
-		if (dup2(files_fd.infile, STDIN_FILENO) >= 0)
-			close(files_fd.infile);
-		else
-			ft_putstr_fd(strerror(errno), STDERR_FILENO);
-	}
-	if (!errno && files_fd.outfile != STDOUT_FILENO)
-	{
-		if (dup2(files_fd.outfile, STDOUT_FILENO) >= 0)
-			close(files_fd.outfile);
-		else
-			ft_putstr_fd(strerror(errno), STDERR_FILENO);		
-	}
-	if (!errno && files_fd.errfile != STDERR_FILENO)
-	{
-		if (dup2(files_fd.errfile, STDERR_FILENO) >= 0)
-			close(files_fd.errfile);
-		else
-			ft_putstr_fd(strerror(errno), STDERR_FILENO);		
-	}
-	return (errno);
+	if (previous && previous->std_fds.pipes[0] > -1)
+		dup2(previous->std_fds.pipes[0], STDIN_FILENO);
+	if (current->std_fds.pipes[1] > -1)
+		dup2(previous->std_fds.pipes[1], STDOUT_FILENO);
+	return (0);
 }
 
 
-void            ft_launch_process(abs_struct *base, t_process *p,
-	t_files_fd files_fd)
+void            ft_launch_process(abs_struct *base, t_process *previous,
+	t_process *current)
 {
-	p->status = prepare_process(base, p, files_fd);
-	if (p->status)
+	if ((current->status = ft_set_default_signals()))
 		return ;
-	if (*p->argv[0] == '/')
-		ft_execute_absolute_shell_command(base, p);
-	else if (*p->argv[0] == '.')
-		ft_execute_relative_shell_command(base, p);
+	current->status = ft_set_std_fds(base, previous, current);
+	if (current->status)
+		return ;
+	if (*current->argv[0] == '/')
+		ft_execute_absolute_shell_command(base, current);
+	else if (*current->argv[0] == '.')
+		ft_execute_relative_shell_command(base, current);
 	else
-		ft_execute_shell_command_using_path(base, p);
+		ft_execute_shell_command_using_path(base, current);
 }

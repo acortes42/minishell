@@ -124,7 +124,7 @@ t_process		*ft_build_process(char *expanded_cmd);
 int				set_redirections(abs_struct *base, t_process *p);
 
 void			ft_launch_job(abs_struct *base, t_job *j);
-void            ft_launch_process(abs_struct *base, t_process *p, t_files_fd files_fd);
+void            ft_launch_process(abs_struct *base, t_process *previous, t_process *current);
 int         	ft_execute_builtin(abs_struct *base, t_process *p);
 
 
@@ -134,7 +134,7 @@ t_process		*ft_release_process(t_process *p);
 int				ft_set_default_signals();
 void			forked_process_signal_handler(int sig);
 void			dup_std_fds(t_files_fd *fds);
-void			restore_std_fds(t_files_fd fds);
+void			restore_std_fds(t_files_fd *fds);
 
 size_t			ft_strlcat(char *dst, const char *src, size_t size);
 char			*ft_strlcat_paths(char *prefix_path, const char *relative_path);
