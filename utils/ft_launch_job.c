@@ -1,20 +1,28 @@
 #include "minishell.h"
 
-static void		ft_init_current_io(abs_struct *base, t_process *current)
+static void		ft_create_pipes(abs_struct *base, t_process *current)
 {
-	current->std_fds.infile = STDIN_FILENO;
-	current->std_fds.outfile = STDOUT_FILENO;
-	current->std_fds.errfile = STDERR_FILENO;
 	if (current->next)
 	{
-		if (pipe(current->std_fds.pipes) < 0)
+		if (pipe(current->pipe) < 0)
 			ft_exit_minishell(base, errno);
 	}
 	else
 	{
-		current->std_fds.pipes[0] = -1;
-		current->std_fds.pipes[1] = -1;
+		current->pipe[STDIN_FILENO] = -1;
+		current->pipe[STDOUT_FILENO] = -1;
 	}
+}
+
+static void		ft_close_pipes(t_process *previous, t_process *current)
+{
+	if (previous)
+	{
+		if (previous->pipe[STDIN_FILENO] > -1)
+			close(previous->pipe[STDIN_FILENO]);
+	}
+	if (current->pipe[STDOUT_FILENO] > -1)
+		close(current->pipe[STDOUT_FILENO]);
 }
 
 static void		ft_fork_child(abs_struct *base, t_process *previous,
@@ -57,12 +65,9 @@ void			ft_launch_job(abs_struct *base, t_job *j)
 			current->status = 0;
 			continue ;
 		}
-		ft_init_current_io(base, current);
+		ft_create_pipes(base, current);
 		ft_fork_child(base, previous, current);
-		if (previous && previous->std_fds.pipes[1] > -1)
-			close(previous->std_fds.pipes[1]);
-		if (current->next && current->std_fds.pipes[0] > -1)
-			close(current->std_fds.pipes[0]);
+		ft_close_pipes(previous, current);
 		previous = current;
 	}
 	restore_std_fds(&j->std_fds);

@@ -32,7 +32,6 @@ typedef struct s_files_fd
 	int infile;
     int outfile;
 	int errfile;
-	int pipes[2];
 }				t_files_fd;
 
 /* A process is a single process.  */
@@ -45,7 +44,7 @@ typedef struct s_process
   char				completed;             /* true if process has completed */
   char				stopped;               /* true if process has stopped */
   int				status;                 /* reported status value */
-  t_files_fd		std_fds;
+  int				pipe[2];
 } t_process;
 
 
@@ -135,6 +134,7 @@ int				ft_set_default_signals();
 void			forked_process_signal_handler(int sig);
 void			dup_std_fds(t_files_fd *fds);
 void			restore_std_fds(t_files_fd *fds);
+int				ft_extract_redirections_from_argv(t_process *p);
 
 size_t			ft_strlcat(char *dst, const char *src, size_t size);
 char			*ft_strlcat_paths(char *prefix_path, const char *relative_path);

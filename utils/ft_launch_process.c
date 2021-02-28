@@ -66,13 +66,12 @@ static int		ft_set_std_fds(abs_struct *base, t_process *previous,
 	// TODO: Tratar los errores de dup2
 	if ((ret = set_redirections(base, current)))
 		return (ret);
-	if (previous && previous->std_fds.pipes[0] > -1)
-		dup2(previous->std_fds.pipes[0], STDIN_FILENO);
-	if (current->std_fds.pipes[1] > -1)
-		dup2(previous->std_fds.pipes[1], STDOUT_FILENO);
+	if (previous && previous->pipe[STDIN_FILENO] > -1)
+		dup2(previous->pipe[STDIN_FILENO], STDIN_FILENO);
+	if (current->pipe[STDOUT_FILENO] > -1)
+		dup2(current->pipe[STDOUT_FILENO], STDOUT_FILENO);
 	return (0);
 }
-
 
 void            ft_launch_process(abs_struct *base, t_process *previous,
 	t_process *current)
