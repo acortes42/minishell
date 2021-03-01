@@ -1,20 +1,32 @@
 #include "minishell.h"
 
-static void		ft_setup_pipes(abs_struct *base, t_job *j, t_process *p, t_files_fd *fds)
+static void		ft_create_pipes(abs_struct *base, t_process *current)
 {
-	if (p->next)
+	if (current->next)
 	{
-		/* Set up pipes */
-		if (pipe(fds->pipes) < 0)
-			ft_exit_minishell(base, 1);
-		fds->outfile = fds->pipes[1];
+		if (pipe(current->pipe) < 0)
+			ft_exit_minishell(base, errno);
 	}
 	else
-		fds->outfile = j->std_fds.outfile;
-	fds->errfile = j->std_fds.errfile;
+	{
+		current->pipe[STDIN_FILENO] = -1;
+		current->pipe[STDOUT_FILENO] = -1;
+	}
 }
 
-static void		ft_fork_child(abs_struct *base, t_process *p, t_files_fd fds)
+static void		ft_close_pipes(t_process *previous, t_process *current)
+{
+	if (previous)
+	{
+		if (previous->pipe[STDIN_FILENO] > -1)
+			close(previous->pipe[STDIN_FILENO]);
+	}
+	if (current->pipe[STDOUT_FILENO] > -1)
+		close(current->pipe[STDOUT_FILENO]);
+}
+
+static void		ft_fork_child(abs_struct *base, t_process *previous,
+	t_process *current)
 {
 	pid_t		pid;
 
@@ -24,56 +36,39 @@ static void		ft_fork_child(abs_struct *base, t_process *p, t_files_fd fds)
 	//pid = 0;
 	if (pid == 0)
 	{
-		ft_launch_process(base, p, fds);
-		exit(p->status);
+		ft_launch_process(base, previous, current);
+		exit(current->status);
 	}
 	else if (pid < 0)
 		ft_exit_minishell(base, 1);
 	else
 	{
-		p->pid = pid;
-		wait(&p->status);
-		p->status /= 256;
-	}
-}
-
-static void		ft_cleanup_fds(t_files_fd fds)
-{
-	if (fds.infile > -1 && fds.infile != STDIN_FILENO)
-	{
-		close(fds.infile);
-	}
-	if (fds.outfile > -1 && fds.outfile != STDOUT_FILENO)
-	{
-		ft_putstr("Closing outfile:");
-		char *out = ft_itoa(fds.outfile);
-		ft_putstr(out);
-		ft_putstr("\n");
-		free(out);
-		close(fds.outfile);
+		current->pid = pid;
+		wait(&current->status);
+		current->status /= 256;
 	}
 }
 
 void			ft_launch_job(abs_struct *base, t_job *j)
 {
-	t_process	*p;
-	t_files_fd	fds;
-	t_files_fd	std_fds;
+	t_process	*current;
+	t_process	*previous;
+	
 
-	dup_std_fds(&std_fds);
-	fds.infile = j->std_fds.infile;
-	for (p = j->first_process; p; p = p->next)
+	dup_std_fds(&j->std_fds);
+	previous = 0;
+	for (current = j->first_process; current; current = current->next)
 	{
-		if (ft_execute_builtin(base, p))
+		if (ft_execute_builtin(base, current))
 		{
-			p->completed = 1;
-			p->status = 0;
+			current->completed = 1;
+			current->status = 0;
 			continue ;
 		}
-		ft_setup_pipes(base, j, p, &fds);
-		ft_fork_child(base, p, fds);
-		ft_cleanup_fds(fds);
-		fds.infile = fds.pipes[0];
+		ft_create_pipes(base, current);
+		ft_fork_child(base, previous, current);
+		ft_close_pipes(previous, current);
+		previous = current;
 	}
-	restore_std_fds(std_fds);
+	restore_std_fds(&j->std_fds);
 }

@@ -36,16 +36,13 @@ int obtain_full_line(abs_struct *base)
 static void		execute_command_read(abs_struct *base)
 {
 	t_job		*job;
-	t_files_fd	std_fds;
 
-	dup_std_fds(&std_fds);
 	job = ft_build_jobs(base->string);
 	while (job) {
 		base->first_job = job;
 		ft_launch_job(base, job);
 		job = ft_release_job(job);
 	}
-	restore_std_fds(std_fds);
 }
 
 int main(int argc, char **argv, char **envp)

@@ -30,9 +30,6 @@ t_process			*ft_build_process(char *expanded_cmd)
 
 	if (!(proc = ft_calloc(1, sizeof(t_process))))
 		return (0);
-	proc->std_fds.infile = STDIN_FILENO;
-	proc->std_fds.outfile = STDOUT_FILENO;
-	proc->std_fds.errfile = STDERR_FILENO;
 	fields = ft_extract_fields(expanded_cmd, &proc->argv);
 	if (fields < 0)
 	{
