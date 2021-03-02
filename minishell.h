@@ -162,4 +162,7 @@ char			*ft_trim(char *str);
 char			*ft_split_shell(char **str);
 char			*ft_split_shell_by(char **str, char *separator);
 int				ft_isinteger(char *str);
+int				ft_count_words_until_separator(char **str, int actual_arg);
+
+
 #endif

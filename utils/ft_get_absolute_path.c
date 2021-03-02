@@ -1,5 +1,16 @@
-#include "minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_get_absolute_path.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/02 16:05:59 by acortes-          #+#    #+#             */
+/*   Updated: 2021/03/02 16:06:06 by acortes-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "minishell.h"
 
 static char		*prepend_to_path(char *prefix, char *path)
 {
@@ -36,15 +47,14 @@ static char		*prepend_home_to_path(abs_struct *base, char *path)
 static char		*prepend_pwd_to_path(char *path)
 {
 	char		cwd[PATH_MAX];
-   
+
 	if (!getcwd(cwd, sizeof(cwd)))
 		return (ft_strdup(path));
 	else
 		return (prepend_to_path(cwd, path));
 }
 
-
-char		*ft_get_absolute_path(abs_struct *base, char *path)
+char			*ft_get_absolute_path(abs_struct *base, char *path)
 {
 	if (!path)
 		return (0);

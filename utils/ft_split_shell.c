@@ -45,7 +45,7 @@ char			*ft_split_shell_by(char **str, char *separator)
 			ptr = find_next_single_quote(ptr + 1);
 		if (*ptr == '"')
 			ptr = find_next_double_qoute(ptr + 1);
-		ptr++;		
+		ptr++;
 	}
 	len = ptr - (*str) + 1;
 	if (!(splitted = ft_calloc(len, sizeof(char))))
