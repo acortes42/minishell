@@ -11,13 +11,67 @@ static int		ft_expand_scape(char **res, char **cmd, size_t *pos,
 	return (1);
 }
 
-static int		ft_expand_dollar(abs_struct *base, char **res, size_t *len, size_t *pos, char **cmd)
+static char		*ft_extract_variable_name(char **cmd)
 {
-	(void)base;
-	(void)res;
-	(void)len;
-	(void)pos;
-	(void)cmd;
+	char		*tmp;
+	char		*ret;
+
+	if (!cmd || !(*cmd))
+		return (0);
+	tmp = *cmd;
+	while (*cmd && !ft_isspace(**cmd) && **cmd != '"' && **cmd != '\'')
+		(*cmd)++;
+	if (!(ret = ft_calloc(*cmd - tmp + 1, sizeof(char))))
+		return (0);
+	ft_memcpy(ret, tmp, *cmd - tmp);
+	return (ret);
+}
+
+static int		ft_expand_dollar(abs_struct *base, char **expanded,
+	size_t *expanded_len, size_t *pos, char **cmd)
+{
+	char		*key;
+	char		*variable;
+	char		*tmp;
+	size_t		key_len;
+	size_t		variable_len;
+
+	(*cmd)++;
+	key = ft_extract_variable_name(cmd);
+	key_len = ft_strlen(key);
+	if (key[key_len] == '\n')
+		key[key_len--] = '\0';
+	if (!key_len) {
+		if (key)
+			free(key);
+		return (1);
+	}
+	if (!(variable = ft_getenv(base->env, key)))
+		variable_len = 0;
+	else
+	{
+		variable = variable + key_len + 1;
+		variable_len = ft_strlen(variable);	
+	}
+	if ((variable_len + 1) > key_len)
+	{
+		*expanded_len = *expanded_len + variable_len - key_len - 1 + 1;
+		if (!(tmp = ft_calloc(*expanded_len + 1,
+			sizeof(char))))
+		{
+			free(key);
+			return (0);
+		}
+		if (*expanded)
+		{
+			ft_strlcat(tmp, *expanded, *pos + 1);
+			free(*expanded);
+		}
+		*expanded = tmp;
+	}
+	ft_memcpy(*expanded + *pos, variable, variable_len);
+	*pos += variable_len;
+	free(key);
 	return (1);
 }
 
@@ -47,6 +101,7 @@ static char		*expand(abs_struct *base, char *cmd)
 				return (0);
 			}
 			scape = 0;
+			continue ;
 		}
 		else if (*cmd == '\'' && !quote)
 		{
@@ -61,6 +116,7 @@ static char		*expand(abs_struct *base, char *cmd)
 		else if (*cmd == '$' && (quote || !single_quote))
 		{
 			ft_expand_dollar(base, &res, &len, &pos, &cmd);
+			continue ;
 		}
 		else if (*cmd == '\\')
 		{
