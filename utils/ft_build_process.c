@@ -1,5 +1,25 @@
 #include "minishell.h"
 
+static void			remove_quotes(char *field)
+{
+	size_t			len;
+	size_t			pos;
+
+	len = ft_strlen(field);
+	if (!len)
+		return ;
+	if ((*field != '"' || *(field + len - 1) != '"') &&
+		(*field != '\'' || *(field + len - 1) != '\''))
+		return ;
+	pos = 1;
+	while (*(field + pos) && pos < (len - 1))
+	{
+		*(field + pos - 1) = *(field + pos);
+		pos++;
+	}
+	*(field + pos - 1) = *(field + len);
+}
+
 static int			ft_extract_fields(char *expanded_cmd, char ***argv)
 {
 	int				fields;
@@ -12,6 +32,7 @@ static int			ft_extract_fields(char *expanded_cmd, char ***argv)
 		if (*field != '\n')
 		{
 			tmp = ft_trim(field);
+			remove_quotes(tmp);
 			free(field);
 			if (!tmp)
 				continue ;

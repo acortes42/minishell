@@ -14,7 +14,10 @@
 
 int echo(abs_struct *base)
 {
-    int i;
+	(void)base;
+	ft_putstr("TODO: Recuperar echo pero utilizando t_process");
+	return (1);	
+/*     int i;
     int flag;
 
     i = 1;
@@ -27,19 +30,6 @@ int echo(abs_struct *base)
     if (!base->parseString[i])
         return (1);
 
-    /*
-
-    todo: implementación de $? en expansión del comando
-    
-    if (ft_strcmp(base->parseString[i], "$?") == 0)
-    {
-        ft_putnbr(base->error);
-        ft_putstr("\n");
-        return (1);
-    }
-    
-    */
-   
     while (base->parseString[i])
     {
         if (ft_strcmp(base->parseString[i], "|") != 0 && ft_strcmp(base->parseString[i], ";") != 0 &&
@@ -62,4 +52,4 @@ int echo(abs_struct *base)
         ft_putstr("\n");
     base->error = 0;
     return (1);
-}
+ */}

@@ -1,72 +1,77 @@
 #include "minishell.h"
 
-static char		*ft_expand_slice(abs_struct *base, char *slice)
+static int		ft_expand_scape(char **res, char **cmd, size_t *pos,
+	char single_quote, char quote)
 {
-	char		*tmp;
-	char		*token;
-	char		**splitted;
-	int			len;
-	int			quote;
+	(void)single_quote;
+	(void)quote;
+	*((*res) + *pos) = **cmd;
+	(*cmd)++;
+	(*pos)++;
+	return (1);
+}
 
-	quote = 0;
-	len = 0;
-	while ((token = ft_split_shell_by(&slice, "'")))
-	{
-		if (quote)
-		{
-			ft_array_add(&splitted, &len, token);
-			if (*slice == '\'')
-				ft_array_add(&splitted, &len, ft_strdup("'"));
-		}
-		else
-		{
-			if (*token != '\0')
-				ft_array_add(&splitted, &len, ft_expand_dollar(token));
-			free(token);
-			if (*slice == '\'')
-				ft_array_add(&splitted, &len, ft_strdup("'"));
-		}
-	}
-
-	return (out);
+static int		ft_expand_dollar(abs_struct *base, char **res, size_t *len, size_t *pos, char **cmd)
+{
+	(void)base;
+	(void)res;
+	(void)len;
+	(void)pos;
+	(void)cmd;
+	return (1);
 }
 
 static char		*expand(abs_struct *base, char *cmd)
 {
 	char		*res;
 	size_t		len;
+	size_t		pos;
 	char		quote;
 	char		single_quote;
 	int			scape;
 
 	len = (!cmd ? 0 : ft_strlen(cmd));
-	if (!len || !(res = ft_calloc(len, sizeof(char))))
+	if (!len || !(res = ft_calloc(len + 2, sizeof(char))))
 		return (0);
+	pos = 0;
 	single_quote = 0;
 	quote = 0;
 	scape = 0;
 	while (cmd && *cmd != '\0')
 	{
-		if (*cmd == '\'')
+		if (scape)
+		{
+			if (!ft_expand_scape(&res, &cmd, &pos, single_quote, quote))
+			{
+				free(res);
+				return (0);
+			}
+			scape = 0;
+		}
+		else if (*cmd == '\'' && !quote)
 		{
 			single_quote = (!single_quote ? '\'' : 0);
+			*(res + pos++) = *cmd;
 		}
-		else if (*cmd == '"')
+		else if (*cmd == '"' && !single_quote && !scape)
 		{
 			quote = (!quote ? '"' : quote);
+			*(res + pos++) = *cmd;
 		}
-		else if (*cmd == '$')
+		else if (*cmd == '$' && (quote || !single_quote))
 		{
-			ft_expand_dollar(&res, &len, &cmd);
+			ft_expand_dollar(base, &res, &len, &pos, &cmd);
 		}
 		else if (*cmd == '\\')
 		{
 			scape = (scape ? 0 : 1);
-			if (!scape && (quote || !single_quote))
-				ft_expand_scape(&res, &cmd);
+			*(res + pos++) = *cmd;
 		}
+		else
+			*(res + pos++) = *cmd;
 		cmd++;
 	}
+	*(res + pos) = ' ';
 	return (res);
 }
 
@@ -80,7 +85,7 @@ static char		*ft_expand_cmd(abs_struct *base, char *command)
 	output = 0;
 	while ((to_expand = ft_split_shell_by(&command, " ")))
 	{
-		if (!(expanded_slice = ft_expand_slice(base, to_expand)) ||
+		if (!(expanded_slice = expand(base, to_expand)) ||
 			!(tmp = ft_strjoin(output, expanded_slice)))
 		{
 			free(to_expand);

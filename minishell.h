@@ -66,6 +66,10 @@ typedef struct		abs_struct
 	char    		**env;
 	int     		num_args;
 	int     		lines_envp;
+	char	string[1024];
+	char    **parseString;
+	int     actual_argument;
+	int     error;
 	int     		flag;
 	int				ctrl_d_times;
 	t_process		*last_executed_process;
@@ -112,7 +116,7 @@ void				ft_do_job_notification(t_job *j);
 void				ft_mark_job_as_running(t_job *j);
 void				ft_update_status(abs_struct *base);
 
-t_job				*ft_build_jobs(char *command);
+t_job				*ft_build_jobs(abs_struct *base, char *command);
 t_job				*ft_build_job(abs_struct *base, char *command);
 t_process			*ft_build_processes(char *expanded_cmd);
 t_process			*ft_build_ctrl_d_process(void);
