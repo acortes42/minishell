@@ -12,38 +12,34 @@
 
 #include "../minishell.h"
 
-int echo(abs_struct *base)
+int echo(abs_struct *base, t_process *p)
 {
-	(void)base;
-	ft_putstr("TODO: Recuperar echo pero utilizando t_process");
-	return (1);	
-/*     int i;
+    int i;
     int flag;
 
     i = 1;
     flag = 0;
-    if (!base->parseString[i])
+    if (!p->argv[i])
         return (1);
-    flag = (ft_strcmp(base->parseString[i], "-n") == 0) ? 0 : 1;
+    flag = (ft_strcmp(p->argv[i], "-n") == 0) ? 0 : 1;
     if (flag == 0)
         i++;
-    if (!base->parseString[i])
+    if (!p->argv[i])
         return (1);
 
-    while (base->parseString[i])
+    while (p->argv[i])
     {
-        if (ft_strcmp(base->parseString[i], "|") != 0 && ft_strcmp(base->parseString[i], ";") != 0 &&
-			ft_strcmp(base->parseString[i], "<") != 0 && ft_strcmp(base->parseString[i], ">") != 0 &&
-			ft_strcmp(base->parseString[i], ">>") != 0)
+        if (ft_strcmp(p->argv[i], "|") != 0 && ft_strcmp(p->argv[i], ";") != 0 &&
+			ft_strcmp(p->argv[i], "<") != 0 && ft_strcmp(p->argv[i], ">") != 0 &&
+			ft_strcmp(p->argv[i], ">>") != 0)
         {
-            ft_putstr(base->parseString[i]);
+            ft_putstr(p->argv[i]);
             ft_putstr(" ");
             i++;
-            base->actual_argument++;
         }
         else
         {
-            if (ft_strcmp(base->parseString[i], "|") != 0 )
+            if (ft_strcmp(p->argv[i], "|") != 0 )
                 base->flag = 1;
             break;
         }
@@ -52,4 +48,4 @@ int echo(abs_struct *base)
         ft_putstr("\n");
     base->error = 0;
     return (1);
- */}
+}

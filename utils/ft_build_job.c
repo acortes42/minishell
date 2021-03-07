@@ -137,6 +137,7 @@ static char		*ft_expand_cmd(abs_struct *base, char *command)
 	char		*expanded_slice;
 	char		*to_expand;
 	char		*tmp;
+	size_t		len;
 
 	output = 0;
 	while ((to_expand = ft_split_shell_by(&command, " ")))
@@ -156,6 +157,9 @@ static char		*ft_expand_cmd(abs_struct *base, char *command)
 		free(output);
 		output = tmp;
 	}
+	len = ft_strlen(output);
+	if (len && output[len - 1] == ' ')
+		output[len - 1] = '\0';
 	return (output);
 }
 

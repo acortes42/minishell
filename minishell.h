@@ -88,7 +88,7 @@ void				ft_putnbr(int n);
 int					ft_strcmp(const char *s1, const char *s2);
 int    				cd(abs_struct *base);
 char				*ft_get_absolute_path(abs_struct *base, char *path);
-int    				echo(abs_struct *base);
+int    				echo(abs_struct *base, t_process *p);
 int    				ft_history();
 int    				ft_pwd();
 int    				ft_launch(abs_struct *base);
