@@ -12,13 +12,17 @@ static char		*find_next_single_quote(char *ptr)
 static char		*find_next_double_qoute(char *ptr)
 {
 	int			scape;
+	int			single_quote;
 
 	if (!ptr)
 		return (0);
+	single_quote = 0;
 	scape = 0;
-	while (*ptr && (*ptr != '"' || scape))
+	while (*ptr && (*ptr != '"' || scape || single_quote))
 	{
-		scape = (!scape && *ptr=='\\' ? 1 : 0);
+		if (*ptr == '\'')
+			single_quote = single_quote ? 0 : 1;
+		scape = (!scape && *ptr == '\\' ? 1 : 0);
 		ptr++;
 	}
 	return (ptr);
@@ -43,7 +47,7 @@ char			*ft_split_shell_by(char **str, char *separator)
 	{
 		if (*ptr == '\'')
 			ptr = find_next_single_quote(ptr + 1);
-		if (*ptr == '"')
+		if (*separator != '"' && *ptr == '"')
 			ptr = find_next_double_qoute(ptr + 1);
 		ptr++;
 	}

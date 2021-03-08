@@ -53,12 +53,12 @@ void			ft_launch_job(abs_struct *base, t_job *j)
 {
 	t_process	*current;
 	t_process	*previous;
-	
 
 	dup_std_fds(&j->std_fds);
 	previous = 0;
 	for (current = j->first_process; current; current = current->next)
 	{
+		ft_expand_process_cmd(base, current);
 		if (ft_execute_builtin(base, current))
 		{
 			current->completed = 1;

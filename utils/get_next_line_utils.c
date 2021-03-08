@@ -33,18 +33,14 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	char	*str;
 	int		n;
 
-	if (!(s1 && s2))
-		return (NULL);
-	if (!s1)
-		s1 = ft_strdup("");
 	total = ft_strlen(s2) + ft_strlen(s1) + 1;
 	str = malloc(total * sizeof(char));
 	if (!(str))
 		return (NULL);
 	n = 0;
-	while (*s1)
+	while (s1 && *s1)
 		str[n++] = *s1++;
-	while (*s2)
+	while (s2 && *s2)
 		str[n++] = *s2++;
 	str[n] = '\0';
 	return (str);

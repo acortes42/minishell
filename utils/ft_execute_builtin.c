@@ -24,12 +24,15 @@ int         ft_execute_builtin(abs_struct *base, t_process *p)
 	ft_putstr("\e[0m");
 	if ((!p->argv || !*p->argv) && ft_execute_ctrl_d(base))
 		return (1);
+	// TODO: Utilizar la definición del proceso en lugar del parseString y actual_argument
+	base->parseString = p->argv;
+	base->actual_argument = 0;
 	if (execute_environment_builtins(base, p))
 		return (1);
 	if (!ft_strcmp(p->argv[0], "exit"))
 		ft_exit_minishell(base, 0);
 	else if (!ft_strcmp(p->argv[0], "echo"))
-		echo(base);
+		echo(base, p);
 	else if (!ft_strcmp(p->argv[0], "pwd"))
 		ft_pwd();
 	else if (!ft_strcmp(p->argv[0], "cd"))

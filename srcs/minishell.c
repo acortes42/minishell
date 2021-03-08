@@ -65,6 +65,5 @@ int main(int argc, char **argv, char **envp)
 		base.num_args = 0;
 		base.parseString = 0;
 	}
-	free(&base);
 	return (0);
 }

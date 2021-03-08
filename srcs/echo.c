@@ -12,48 +12,34 @@
 
 #include "../minishell.h"
 
-int echo(abs_struct *base)
+int echo(abs_struct *base, t_process *p)
 {
     int i;
     int flag;
 
     i = 1;
     flag = 0;
-    if (!base->parseString[i])
+    if (!p->argv[i])
         return (1);
-    flag = (ft_strcmp(base->parseString[i], "-n") == 0) ? 0 : 1;
+    flag = (ft_strcmp(p->argv[i], "-n") == 0) ? 0 : 1;
     if (flag == 0)
         i++;
-    if (!base->parseString[i])
+    if (!p->argv[i])
         return (1);
 
-    /*
-
-    todo: implementación de $? en expansión del comando
-    
-    if (ft_strcmp(base->parseString[i], "$?") == 0)
+    while (p->argv[i])
     {
-        ft_putnbr(base->error);
-        ft_putstr("\n");
-        return (1);
-    }
-    
-    */
-   
-    while (base->parseString[i])
-    {
-        if (ft_strcmp(base->parseString[i], "|") != 0 && ft_strcmp(base->parseString[i], ";") != 0 &&
-			ft_strcmp(base->parseString[i], "<") != 0 && ft_strcmp(base->parseString[i], ">") != 0 &&
-			ft_strcmp(base->parseString[i], ">>") != 0)
+        if (ft_strcmp(p->argv[i], "|") != 0 && ft_strcmp(p->argv[i], ";") != 0 &&
+			ft_strcmp(p->argv[i], "<") != 0 && ft_strcmp(p->argv[i], ">") != 0 &&
+			ft_strcmp(p->argv[i], ">>") != 0)
         {
-            ft_putstr(base->parseString[i]);
+            ft_putstr(p->argv[i]);
             ft_putstr(" ");
             i++;
-            base->actual_argument++;
         }
         else
         {
-            if (ft_strcmp(base->parseString[i], "|") != 0 )
+            if (ft_strcmp(p->argv[i], "|") != 0 )
                 base->flag = 1;
             break;
         }
