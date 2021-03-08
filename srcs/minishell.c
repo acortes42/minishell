@@ -37,7 +37,7 @@ static void		execute_command_read(abs_struct *base)
 {
 	t_job		*job;
 
-	job = ft_build_jobs(base, base->string);
+	job = ft_build_jobs(base->string);
 	while (job) {
 		base->first_job = job;
 		ft_launch_job(base, job);
@@ -65,6 +65,5 @@ int main(int argc, char **argv, char **envp)
 		base.num_args = 0;
 		base.parseString = 0;
 	}
-	free(&base);
 	return (0);
 }

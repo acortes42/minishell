@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-t_process			*ft_build_processes(char *expanded_cmd)
+t_process			*ft_build_processes(char *cmd)
 {
 	t_process		*procs;
 	t_process		*last_proc;
@@ -8,7 +8,7 @@ t_process			*ft_build_processes(char *expanded_cmd)
 
 	procs = 0;
 	last_proc = 0;
-	while ((proc_cmd = ft_split_shell_by(&expanded_cmd, "|")))
+	while ((proc_cmd = ft_split_shell_by(&cmd, "|")))
 	{
 		if (!procs)
 		{

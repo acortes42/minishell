@@ -116,12 +116,13 @@ void				ft_do_job_notification(t_job *j);
 void				ft_mark_job_as_running(t_job *j);
 void				ft_update_status(abs_struct *base);
 
-t_job				*ft_build_jobs(abs_struct *base, char *command);
-t_job				*ft_build_job(abs_struct *base, char *command);
+t_job				*ft_build_jobs(char *command);
+t_job				*ft_build_job(char *command);
 t_process			*ft_build_processes(char *expanded_cmd);
 t_process			*ft_build_ctrl_d_process(void);
 t_process			*ft_build_process(char *expanded_cmd);
 int					set_redirections(abs_struct *base, t_process *p);
+int					ft_expand_process_cmd(abs_struct *base, t_process *p);
 
 void				ft_launch_job(abs_struct *base, t_job *j);
 void            	ft_launch_process(abs_struct *base, t_process *previous, t_process *current);

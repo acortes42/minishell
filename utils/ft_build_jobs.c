@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-t_job			*ft_build_jobs(abs_struct *base, char *command)
+t_job			*ft_build_jobs(char *command)
 {
 	char		*job_cmd;
 	char		*cmd_i;
@@ -14,12 +14,12 @@ t_job			*ft_build_jobs(abs_struct *base, char *command)
 	{
 		if (job)
 		{
-			if ((job->next = ft_build_job(base, job_cmd)))
+			if ((job->next = ft_build_job(job_cmd)))
 				job = job->next;
 		}
 		else
 		{
-			jobs = ft_build_job(base, job_cmd);
+			jobs = ft_build_job(job_cmd);
 			job = jobs;
 		}
 	}
