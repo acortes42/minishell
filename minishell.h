@@ -125,7 +125,7 @@ int					set_redirections(abs_struct *base, t_process *p);
 int					ft_expand_process_cmd(abs_struct *base, t_process *p);
 
 void				ft_launch_job(abs_struct *base, t_job *j);
-void            	ft_launch_process(abs_struct *base, t_process *previous, t_process *current);
+void            	ft_launch_process(abs_struct *base, t_process *p);
 int         		ft_execute_builtin(abs_struct *base, t_process *p);
 
 void				ft_release_base(abs_struct *base);

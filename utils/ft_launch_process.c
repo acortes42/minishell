@@ -58,27 +58,11 @@ static void		ft_execute_shell_command_using_path(abs_struct *base,
 	p->status = 1;
 }
 
-static int		ft_set_std_fds(abs_struct *base, t_process *previous,
-	t_process *current)
-{
-	int			ret;
-
-	// TODO: Tratar los errores de dup2
-	if ((ret = set_redirections(base, current)))
-		return (ret);
-	if (previous && previous->pipe[STDIN_FILENO] > -1)
-		dup2(previous->pipe[STDIN_FILENO], STDIN_FILENO);
-	if (current->pipe[STDOUT_FILENO] > -1)
-		dup2(current->pipe[STDOUT_FILENO], STDOUT_FILENO);
-	return (0);
-}
-
-void            ft_launch_process(abs_struct *base, t_process *previous,
-	t_process *current)
+void            ft_launch_process(abs_struct *base, t_process *current)
 {
 	if ((current->status = ft_set_default_signals()))
 		return ;
-	current->status = ft_set_std_fds(base, previous, current);
+	current->status = set_redirections(base, current);
 	if (current->status)
 		return ;
 	if (*current->argv[0] == '/')

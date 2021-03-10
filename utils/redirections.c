@@ -104,14 +104,18 @@ static int	set_redirection(abs_struct *base, char *i)
 		redirected = apply_output_add_redirection(base, fd, redir);
 	if (fd)
 		free(fd);
+	if (*(redir - 1) == '>' && !redirected)
+		return (0);
 	fd = 0;
-	if (redirected && (redir = i) &&
+	if (!redirected && (redir = i) &&
 		(fd = ft_split_shell_by(&redir, ">")) && *(redir - 1) == '>')
 		redirected = apply_output_redirection(base, fd, redir);
 	if (fd)
 		free(fd);
+	if (*(redir - 1) == '>' && !redirected)
+		return (0);
 	fd = 0;
-	if (redirected && (redir = i) &&
+	if (!redirected && (redir = i) &&
 		(fd = ft_split_shell_by(&redir, "<")) && *(redir - 1) == '<')
 		redirected = apply_input_redirection(base, fd, redir);
 	if (fd)

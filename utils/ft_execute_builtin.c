@@ -24,6 +24,8 @@ int         ft_execute_builtin(abs_struct *base, t_process *p)
 	ft_putstr("\e[0m");
 	if ((!p->argv || !*p->argv) && ft_execute_ctrl_d(base))
 		return (1);
+	if (set_redirections(base, p))
+		return (0);
 	// TODO: Utilizar la definición del proceso en lugar del parseString y actual_argument
 	base->parseString = p->argv;
 	base->actual_argument = 0;
