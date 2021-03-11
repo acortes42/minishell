@@ -1,11 +1,5 @@
 6.Comprobar/introducir el correcto funcionamiento de las variables de entorno
-10. Empezar a solucionar leaks:  compilar con flag -fsanitize=address para anotar los leaks que puedan salir al desarrollar
 11. $? funciona pero...¿igual deberia ir diferente?
 15. ¿Textos en inglés?
 21. Tratar los caracteres de borrado. Si escribimos un comando, borramos para corregir y reescribimos, ..., nosotros lo que ejecutaremos no es el result.ado que ve el usuario por pantalla sino todo el comando entero escrito incluyendo los caracteres de borrado, ...
 25. Al lanzar el comando: cat author | more (si el archivo pagina), y pulsamos Ctrl + c, nos finaliza la ejecución de minishell
-27. Revisar porqué falla el comando:
-export A=xxx; echo "$A" >victor 
-(OJO QUE HAY UN ESPACIO AL FINAL DEL COMANDO Y NO HAY QUE QUITARLO)
-28. Revisar porqué falla el comando pipe en el siguiente comando:
-echo "asdfj asdfj añsfj aslkj fasfj a" | more
