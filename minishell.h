@@ -122,11 +122,14 @@ t_process			*ft_build_processes(char *expanded_cmd);
 t_process			*ft_build_ctrl_d_process(void);
 t_process			*ft_build_process(char *expanded_cmd);
 int					set_redirections(abs_struct *base, t_process *p);
+void	            ft_set_pipes(t_process *previous, t_process *current);
+void				ft_close_pipes(t_files_fd fd, t_process *previous, t_process *current);
+void				ft_configure_pipes(abs_struct *base, t_process *current);
 int					ft_expand_process_cmd(abs_struct *base, t_process *p);
 
 void				ft_launch_job(abs_struct *base, t_job *j);
-void            	ft_launch_process(abs_struct *base, t_process *previous, t_process *current);
-int         		ft_execute_builtin(abs_struct *base, t_process *p);
+void            	ft_launch_process(abs_struct *base, t_process *p);
+int         		ft_execute_builtin(abs_struct *base, t_process *previous, t_process *p);
 
 void				ft_release_base(abs_struct *base);
 void				ft_release_jobs(t_job *job);
