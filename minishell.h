@@ -124,9 +124,6 @@ void						ft_show_prompt(t_abs_struct *base);
 
 t_job						*ft_release_job(t_job *j);
 void						ft_putstr_fd(char *s, int fd);
-int							ft_job_is_completed(t_job *j);
-int							ft_job_is_stopped(t_job *j);
-void						ft_format_job_info(t_job *j, const char *status);
 void						ft_update_status(t_abs_struct *base);
 
 t_job						*ft_build_jobs(char *command);

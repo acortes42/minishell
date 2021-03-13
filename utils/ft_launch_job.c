@@ -17,10 +17,7 @@ static void		ft_fork_child(t_abs_struct *base, t_process *previous,
 {
 	pid_t		pid;
 
-//	if (signal(SIGINT, forked_process_signal_handler) == SIG_ERR)
-//		ft_exit_minishell(base, errno);
 	pid = fork();
-	//pid = 0;
 	if (pid == 0)
 	{
 		if (signal(SIGINT, forked_process_signal_handler) == SIG_ERR)
@@ -46,7 +43,8 @@ void			ft_launch_job(t_abs_struct *base, t_job *j)
 
 	dup_std_fds(&j->std_fds);
 	previous = 0;
-	for (current = j->first_process; current; current = current->next)
+	current = j->first_process;
+	while (current)
 	{
 		ft_expand_process_cmd(base, current);
 		ft_configure_pipes(base, current);
@@ -59,6 +57,7 @@ void			ft_launch_job(t_abs_struct *base, t_job *j)
 		}
 		ft_close_pipes(j->std_fds, previous, current);
 		previous = current;
+		current = current->next;
 	}
 	restore_std_fds(&j->std_fds);
 }

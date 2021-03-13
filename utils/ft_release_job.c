@@ -27,7 +27,7 @@ t_job				*ft_release_job(t_job *j)
 		p = p_next;
 	j->first_process = 0;
 	if (j->command)
-		free (j->command);
+		free(j->command);
 	free(j);
 	return (j_next);
 }
