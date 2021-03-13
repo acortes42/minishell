@@ -12,25 +12,25 @@
 
 #include "minishell.h"
 
-int		ft_array_add(char ***array, int *array_len, char *value)
+int				ft_array_add(char ***array, int *array_len, char *value)
 {
-    char		**aux;
-    int			x;
+	char		**aux;
+	int			x;
 
-    x = 0;
-    if (!(aux = malloc(sizeof(char *) * (*array_len + 2))))
+	x = 0;
+	if (!(aux = malloc(sizeof(char *) * (*array_len + 2))))
 		return (0);
-    while (x < *array_len)
-    {
-        *(aux + x) = *((*array) + x);
+	while (x < *array_len)
+	{
+		*(aux + x) = *((*array) + x);
 		*((*array) + x) = 0;
-        x++;
-    }
-    *(aux + x) = value;
+		x++;
+	}
+	*(aux + x) = value;
 	(*array_len)++;
 	aux[*array_len] = NULL;
 	if (*array)
 		free(*array);
 	*array = aux;
-    return (1);
+	return (1);
 }
