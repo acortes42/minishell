@@ -82,6 +82,15 @@ typedef struct				s_abs_struct
 	t_job					*first_job;
 }							t_abs_struct;
 
+typedef struct				s_expand_dollar
+{
+	t_abs_struct			*base;
+	char					*expanded;
+	size_t					expanded_len;
+	size_t					pos;
+	char					*cmd;
+}							t_expand_dollar;
+
 char						*ft_strdup(const char *s1);
 char						*ft_strchr(char *str, int c);
 char						*ft_strcdup(const char *s1, int c);
@@ -118,8 +127,6 @@ void						ft_putstr_fd(char *s, int fd);
 int							ft_job_is_completed(t_job *j);
 int							ft_job_is_stopped(t_job *j);
 void						ft_format_job_info(t_job *j, const char *status);
-void						ft_do_job_notification(t_job *j);
-void						ft_mark_job_as_running(t_job *j);
 void						ft_update_status(t_abs_struct *base);
 
 t_job						*ft_build_jobs(char *command);

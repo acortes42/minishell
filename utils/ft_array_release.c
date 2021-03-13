@@ -26,4 +26,3 @@ void			ft_array_release(char **envp)
 	}
 	free(envp);
 }
-

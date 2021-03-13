@@ -12,11 +12,8 @@
 
 #include "minishell.h"
 
-static int		ft_expand_scape(char **res, char **cmd, size_t *pos,
-	char single_quote, char quote)
+static int		ft_expand_scape(char **res, char **cmd, size_t *pos)
 {
-	(void)single_quote;
-	(void)quote;
 	*((*res) + *pos) = **cmd;
 	(*cmd)++;
 	(*pos)++;
@@ -40,8 +37,7 @@ static char		*ft_extract_variable_name(char **cmd)
 	return (ret);
 }
 
-static int		ft_expand_dollar(t_abs_struct *base, char **expanded,
-	size_t *expanded_len, size_t *pos, char **cmd)
+static int		ft_expand_dollar(t_expand_dollar *d)
 {
 	char		*key;
 	char		*variable;
@@ -49,8 +45,8 @@ static int		ft_expand_dollar(t_abs_struct *base, char **expanded,
 	size_t		key_len;
 	size_t		variable_len;
 
-	(*cmd)++;
-	key = ft_extract_variable_name(cmd);
+	(d->cmd)++;
+	key = ft_extract_variable_name(&d->cmd);
 	key_len = ft_strlen(key);
 	if (key[key_len] == '\n')
 		key[key_len--] = '\0';
@@ -59,7 +55,7 @@ static int		ft_expand_dollar(t_abs_struct *base, char **expanded,
 			free(key);
 		return (1);
 	}
-	if (!(variable = ft_getenv(base->env, key)))
+	if (!(variable = ft_getenv(d->base->env, key)))
 		variable_len = 0;
 	else
 	{
@@ -68,86 +64,86 @@ static int		ft_expand_dollar(t_abs_struct *base, char **expanded,
 	}
 	if ((variable_len + 1) > key_len)
 	{
-		*expanded_len = *expanded_len + variable_len - key_len - 1 + 1;
-		if (!(tmp = ft_calloc(*expanded_len + 1,
-			sizeof(char))))
+		d->expanded_len = d->expanded_len + variable_len - key_len - 1 + 1;
+		if (!(tmp = ft_calloc(d->expanded_len + 1, sizeof(char))))
 		{
 			free(key);
 			return (0);
 		}
-		if (*expanded)
+		if (d->expanded)
 		{
-			ft_strlcat(tmp, *expanded, *pos + 1);
-			free(*expanded);
+			ft_strlcat(tmp, d->expanded, d->pos + 1);
+			free(d->expanded);
 		}
-		*expanded = tmp;
+		d->expanded = tmp;
 	}
-	ft_memcpy(*expanded + *pos, variable, variable_len);
-	*pos += variable_len;
+	ft_memcpy(d->expanded + d->pos, variable, variable_len);
+	d->pos += variable_len;
 	free(key);
 	return (1);
 }
 
-static char		*expand(t_abs_struct *base, char *cmd)
+static char			*expand(t_abs_struct *base, char *cmd)
 {
-	char		*res;
-	size_t		len;
-	size_t		pos;
-	char		quote;
-	char		single_quote;
-	int			scape;
+	t_expand_dollar	d;
+	char			quote;
+	char			single_quote;
+	int				scape;
 
-	len = (!cmd ? 0 : ft_strlen(cmd));
-	if (!len || !(res = ft_calloc(len + 2, sizeof(char))))
+	d.cmd = cmd;
+	d.base = base;
+	d.expanded_len = (!cmd ? 0 : ft_strlen(cmd));
+	if (!d.expanded_len || !(d.expanded = ft_calloc(d.expanded_len + 2,
+		sizeof(char))))
 		return (0);
-	pos = 0;
+	d.pos = 0;
 	single_quote = 0;
 	quote = 0;
 	scape = 0;
-	while (cmd && *cmd != '\0')
+	while (d.cmd && *d.cmd != '\0')
 	{
 		if (scape)
 		{
-			if (!ft_expand_scape(&res, &cmd, &pos, single_quote, quote))
+			if (!ft_expand_scape(&d.expanded, &d.cmd, &d.pos))
 			{
-				free(res);
+				free(d.expanded);
 				return (0);
 			}
 			scape = 0;
 			continue ;
 		}
-		else if (*cmd == '\'' && !quote)
+		else if (*d.cmd == '\'' && !quote)
 		{
 			single_quote = (!single_quote ? '\'' : 0);
-			*(res + pos++) = *cmd;
+			*(d.expanded + d.pos++) = *d.cmd;
 		}
-		else if (*cmd == '"' && !single_quote && !scape)
+		else if (*d.cmd == '"' && !single_quote && !scape)
 		{
 			quote = (!quote ? '"' : quote);
-			*(res + pos++) = *cmd;
+			*(d.expanded + d.pos++) = *d.cmd;
 		}
-		else if (*cmd == '$' && (quote || !single_quote))
+		else if (*d.cmd == '$' && (quote || !single_quote))
 		{
-			ft_expand_dollar(base, &res, &len, &pos, &cmd);
+			ft_expand_dollar(&d);
 			continue ;
 		}
-		else if (*cmd == '\\')
+		else if (*d.cmd == '\\')
 		{
 			scape = (scape ? 0 : 1);
-			*(res + pos++) = *cmd;
+			*(d.expanded + d.pos++) = *d.cmd;
 		}
 		else
-			*(res + pos++) = *cmd;
-		cmd++;
+			*(d.expanded + d.pos++) = *d.cmd;
+		d.cmd++;
 	}
-	*(res + pos) = ' ';
-	return (res);
+	*(d.expanded + d.pos) = ' ';
+	return (d.expanded);
 }
 
-static void			remove_quotes(char *field)
+static void		remove_quotes(char *field)
 {
-	size_t			len;
-	size_t			pos;
+	size_t		len;
+	size_t		pos;
 
 	len = ft_strlen(field);
 	if (!len)
