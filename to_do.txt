@@ -2,9 +2,16 @@
 15. ¿Textos en inglés?
 21. Tratar los caracteres de borrado. Si escribimos un comando, borramos para corregir y reescribimos, ..., nosotros lo que ejecutaremos no es el result.ado que ve el usuario por pantalla sino todo el comando entero escrito incluyendo los caracteres de borrado, ...
 22. Revisar builtins para que ejecuten utilizando el t_process
+23. tratar errores de dup2
+24. Redirecciones: 
+    * >&fd- -> comprobar que el fd está abierto como salida (sino error) (stat)
+    * <&fd- -> comprobar que el fd está abierto como entrada (sino error) (stat)
+25. Revisar el proceso de evaluación para ver si cumplimos con todo
+26. Jugar con el minishell y tratar de romperlo
 
 comentarios de setenv.c
 // TODO: modificar el nombre de fichero por ft_setenv.c
 // Problema al solo aceptar dos introducciones con setenv
 
 /*Existe un problema al crear al crear más memoria y copiar lo necesario*/
+

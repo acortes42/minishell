@@ -133,6 +133,12 @@ t_process					*ft_build_ctrl_d_process(void);
 t_process					*ft_build_process(char *expanded_cmd);
 int							set_redirections(t_abs_struct *base,
 	t_process *p);
+int							ft_output_add_redirection(t_abs_struct *base,
+	char *redir, int *redirected);
+int							ft_output_redirection(t_abs_struct *base, char *redir,
+	int *redirected);
+int							ft_input_redirection(t_abs_struct *base, char *redir,
+	int *redirected);
 void						ft_set_pipes(t_process *previous,
 	t_process *current);
 void						ft_close_pipes(t_files_fd fd, t_process *previous,

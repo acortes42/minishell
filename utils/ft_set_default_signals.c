@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static int	set_signals_1()
+static int		set_signals_1(void)
 {
 	if (signal(SIGINT, SIG_DFL) == SIG_ERR)
 	{
@@ -32,7 +32,7 @@ static int	set_signals_1()
 	return (0);
 }
 
-static int 	set_signals_2()
+static int		set_signals_2(void)
 {
 	if (signal(SIGTTIN, SIG_DFL) == SIG_ERR)
 	{
@@ -52,9 +52,9 @@ static int 	set_signals_2()
 	return (0);
 }
 
-int			ft_set_default_signals()
+int				ft_set_default_signals(void)
 {
-	int		ret;
+	int			ret;
 
 	if ((ret = set_signals_1()))
 		return (ret);
@@ -63,11 +63,11 @@ int			ft_set_default_signals()
 	return (0);
 }
 
-void	forked_process_signal_handler(int sig)
+void			forked_process_signal_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
-        ft_putstr("\e[0m\n    Esto ha terminado con ctrl+c    \n");
+		ft_putstr("\e[0m\n    Esto ha terminado con ctrl+c    \n");
 		exit(0);
 	}
 }

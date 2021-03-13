@@ -6,7 +6,8 @@ UTILS 				= utils/ft_putnbr.c utils/ft_putstr.c utils/ft_split.c \
 	utils/ft_strnlen.c utils/ft_strlcat.c utils/ft_get_absolute_path.c \
 	utils/ft_memcpy.c utils/ft_release_base.c utils/ft_isdigit.c \
 	utils/ft_atoi.c utils/ft_launch_process.c utils/ft_launch_job.c \
-	utils/ft_strncmp.c \
+	utils/ft_strncmp.c utils/ft_output_add_redirection.c \
+	utils/ft_output_redirection.c utils/ft_input_redirection.c \
 	utils/ft_putstr_fd.c utils/ft_release_jobs.c utils/ft_release_job.c \
 	utils/ft_itoa.c utils/ft_calloc.c utils/ft_build_jobs.c \
 	utils/ft_bzero.c utils/ft_execute_builtin.c utils/ft_build_job.c \
