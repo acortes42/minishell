@@ -9,7 +9,9 @@ static int			ft_extract_fields(char *cmd, char ***argv)
 	fields = 0;
 	while ((field = ft_split_shell_by(&cmd, " ")))
 	{
-		if (*field != '\n')
+		if (*field == '\n')
+			free(field);
+		else
 		{
 			tmp = ft_trim(field);
 			free(field);
