@@ -98,7 +98,6 @@ char						*ft_get_absolute_path(t_abs_struct *base,
 int							echo(t_abs_struct *base, t_process *p);
 int							ft_history();
 int							ft_pwd();
-int							ft_launch(t_abs_struct *base);
 int							ft_export(t_abs_struct *base, t_process *p);
 int							ft_copy_env(t_abs_struct *base, char **envp);
 int							ft_env(t_abs_struct *base);
@@ -107,7 +106,6 @@ void						ft_exit_minishell(t_abs_struct *base,
 	int exit_code);
 int							ft_unset(t_abs_struct *base, t_process *p);
 int							ft_help();
-int							vertical_line(t_abs_struct *base);
 void						handle_sigint(int sig);
 int							ft_execute_command(t_abs_struct *base);
 int							ft_execute_ctrl_d(t_abs_struct *base);

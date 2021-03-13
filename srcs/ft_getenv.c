@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_getenv.c                                           :+:      :+:    :+:   */
+/*   ft_getenv.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -19,12 +19,12 @@ char		*ft_getenv(char **env, char *env_key)
 
 	key_len = ft_strlen(env_key);
 	tmp = env;
-    while (tmp && *tmp)
-    {
-        if (ft_strlen(*tmp) > key_len && 
+	while (tmp && *tmp)
+	{
+		if (ft_strlen(*tmp) > key_len &&
 			!ft_memcmp(*tmp, env_key, key_len) && *((*tmp) + key_len) == '=')
-             return (*tmp);
-        tmp++;
-    }
-    return (NULL);
+			return (*tmp);
+		tmp++;
+	}
+	return (NULL);
 }

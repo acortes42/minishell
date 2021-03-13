@@ -24,7 +24,7 @@ UTILS 				= utils/ft_putnbr.c utils/ft_putstr.c utils/ft_split.c \
 SRCS_WITHOUT_MAIN	=  srcs/ft_exit_minishell.c srcs/clear_screen.c \
 	srcs/ft_execute_ctrl_d.c srcs/echo.c srcs/cd.c \
 	srcs/history.c srcs/signals.c srcs/pwd.c srcs/env.c srcs/setenv.c \
-	srcs/vertical_line.c srcs/ft_launch.c srcs/ft_export.c srcs/ft_getenv.c \
+	srcs/ft_export.c srcs/ft_getenv.c \
 	srcs/ft_init_minishell.c srcs/ft_show_prompt.c ${UTILS}
 SRCS 				=  srcs/minishell.c ${SRCS_WITHOUT_MAIN}
 		

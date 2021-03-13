@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_show_prompt.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: visv <marvin@42.fr>                        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/13 15:54:19 by visv              #+#    #+#             */
+/*   Updated: 2021/03/13 15:54:35 by visv             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static char		*ft_get_cwd(t_abs_struct *base)
@@ -8,7 +20,7 @@ static char		*ft_get_cwd(t_abs_struct *base)
 	if (!cwd || *cwd == '(')
 	{
 		if (cwd)
-			free (cwd);
+			free(cwd);
 		ft_exit_minishell(base, errno);
 	}
 	return (cwd);
@@ -30,7 +42,7 @@ static void		ft_show_prompt_cwd(t_abs_struct *base)
 		len--;
 	if (len && !ft_strncmp(cwd, home, len))
 	{
-		tmp = ft_strdup(cwd + len - 1);		
+		tmp = ft_strdup(cwd + len - 1);
 		free(cwd);
 		if (!tmp)
 			ft_exit_minishell(base, -1);
@@ -39,7 +51,7 @@ static void		ft_show_prompt_cwd(t_abs_struct *base)
 	}
 	ft_putstr(ANSI_COLOR_BLUE);
 	ft_putstr(cwd);
-    ft_putstr(ANSI_COLOR_RESET);
+	ft_putstr(ANSI_COLOR_RESET);
 	free(cwd);
 }
 
@@ -57,11 +69,11 @@ static void		ft_show_prompt_user(t_abs_struct *base)
 		ft_putstr("@");
 		len = ft_strchr(str, ':') - str - 16;
 		ft_putnstr(str + 16, len);
-	} 
+	}
 	ft_putstr(ANSI_COLOR_RESET);
 }
 
-void	ft_show_prompt(t_abs_struct *base)
+void			ft_show_prompt(t_abs_struct *base)
 {
 	ft_show_prompt_user(base);
 	ft_putstr(":");
