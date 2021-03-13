@@ -94,7 +94,7 @@ static int	ft_search_env(char **env, char *key)
     return (0);
 }
 
-int			ft_setenv(abs_struct *base, t_process *p)
+int			ft_setenv(t_abs_struct *base, t_process *p)
 {
 	int		ret;
 	char	**key_value;

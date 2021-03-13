@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int		ft_export(abs_struct *base, t_process *p)
+int		ft_export(t_abs_struct *base, t_process *p)
 {
 	return (ft_setenv(base, p));
 }

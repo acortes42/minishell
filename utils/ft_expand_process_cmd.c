@@ -28,7 +28,7 @@ static char		*ft_extract_variable_name(char **cmd)
 	return (ret);
 }
 
-static int		ft_expand_dollar(abs_struct *base, char **expanded,
+static int		ft_expand_dollar(t_abs_struct *base, char **expanded,
 	size_t *expanded_len, size_t *pos, char **cmd)
 {
 	char		*key;
@@ -76,7 +76,7 @@ static int		ft_expand_dollar(abs_struct *base, char **expanded,
 	return (1);
 }
 
-static char		*expand(abs_struct *base, char *cmd)
+static char		*expand(t_abs_struct *base, char *cmd)
 {
 	char		*res;
 	size_t		len;
@@ -152,7 +152,7 @@ static void			remove_quotes(char *field)
 	*(field + pos - 1) = *(field + len);
 }
 
-int				ft_expand_process_cmd(abs_struct *base, t_process *p)
+int				ft_expand_process_cmd(t_abs_struct *base, t_process *p)
 {
 	char		*expanded_slice;
 	char		*trimmed;

@@ -33,7 +33,7 @@ static char		*prepend_to_path(char *prefix, char *path)
 	return (new_path);
 }
 
-static char		*prepend_home_to_path(abs_struct *base, char *path)
+static char		*prepend_home_to_path(t_abs_struct *base, char *path)
 {
 	char		*home;
 
@@ -54,7 +54,7 @@ static char		*prepend_pwd_to_path(char *path)
 		return (prepend_to_path(cwd, path));
 }
 
-char			*ft_get_absolute_path(abs_struct *base, char *path)
+char			*ft_get_absolute_path(t_abs_struct *base, char *path)
 {
 	if (!path)
 		return (0);

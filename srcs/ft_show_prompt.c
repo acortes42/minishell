@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-static char		*ft_get_cwd(abs_struct *base)
+static char		*ft_get_cwd(t_abs_struct *base)
 {
 	char		*cwd;
 
@@ -14,7 +14,7 @@ static char		*ft_get_cwd(abs_struct *base)
 	return (cwd);
 }
 
-static void		ft_show_prompt_cwd(abs_struct *base)
+static void		ft_show_prompt_cwd(t_abs_struct *base)
 {
 	char		*cwd;
 	char		*tmp;
@@ -43,7 +43,7 @@ static void		ft_show_prompt_cwd(abs_struct *base)
 	free(cwd);
 }
 
-static void		ft_show_prompt_user(abs_struct *base)
+static void		ft_show_prompt_user(t_abs_struct *base)
 {
 	char		*str;
 	size_t		len;
@@ -61,7 +61,7 @@ static void		ft_show_prompt_user(abs_struct *base)
 	ft_putstr(ANSI_COLOR_RESET);
 }
 
-void	ft_show_prompt(abs_struct *base)
+void	ft_show_prompt(t_abs_struct *base)
 {
 	ft_show_prompt_user(base);
 	ft_putstr(":");

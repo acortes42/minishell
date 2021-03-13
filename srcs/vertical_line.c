@@ -12,7 +12,7 @@
 
 #include "../minishell.h"
 
-int vertical_line(abs_struct *base)
+int vertical_line(t_abs_struct *base)
 {
 	//Do some work if necesary. This is the proposit of your existence.
 	int silence_warnings;

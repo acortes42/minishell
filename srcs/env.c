@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int ft_copy_env(abs_struct *base, char **envp)
+int ft_copy_env(t_abs_struct *base, char **envp)
 {
 	if (!base)
 		return (0);
@@ -22,7 +22,7 @@ int ft_copy_env(abs_struct *base, char **envp)
     return (1);
 }
 
-int			ft_env(abs_struct *base)
+int			ft_env(t_abs_struct *base)
 {
 	char	**envp;
 
@@ -37,7 +37,7 @@ int			ft_env(abs_struct *base)
     return (1);
 }
 
-int			ft_unset(abs_struct *base, t_process *p)
+int			ft_unset(t_abs_struct *base, t_process *p)
 {
 	char	**it_new;
 	size_t	i;

@@ -12,7 +12,7 @@
 
 #include "../minishell.h"
 
-int echo(abs_struct *base, t_process *p)
+int echo(t_abs_struct *base, t_process *p)
 {
     int i;
     int flag;

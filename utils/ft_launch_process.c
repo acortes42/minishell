@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-static void		ft_execute_absolute_shell_command(abs_struct *base,
+static void		ft_execute_absolute_shell_command(t_abs_struct *base,
 	t_process *p)
 {
 	if (execve(p->argv[0], p->argv, base->env) && errno == EACCES)
@@ -9,7 +9,7 @@ static void		ft_execute_absolute_shell_command(abs_struct *base,
 	ft_putstr_fd(strerror(errno), STDERR_FILENO);
 }
 
-static void		ft_execute_relative_shell_command(abs_struct *base,
+static void		ft_execute_relative_shell_command(t_abs_struct *base,
 	t_process *p)
 {
 	char		*path;
@@ -24,7 +24,7 @@ static void		ft_execute_relative_shell_command(abs_struct *base,
 	free(path);
 }
 
-static void		ft_execute_shell_command_using_path(abs_struct *base,
+static void		ft_execute_shell_command_using_path(t_abs_struct *base,
 	t_process *p)
 {
 	struct stat	statbuf;
@@ -58,7 +58,7 @@ static void		ft_execute_shell_command_using_path(abs_struct *base,
 	p->status = 1;
 }
 
-void            ft_launch_process(abs_struct *base, t_process *current)
+void            ft_launch_process(t_abs_struct *base, t_process *current)
 {
 	if ((current->status = ft_set_default_signals()))
 		return ;

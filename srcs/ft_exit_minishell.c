@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void		ft_exit_minishell(abs_struct *base, int exit_code)
+void		ft_exit_minishell(t_abs_struct *base, int exit_code)
 {
 	if (exit_code && errno != 0)
 	{

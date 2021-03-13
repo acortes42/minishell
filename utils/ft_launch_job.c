@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-static void		ft_fork_child(abs_struct *base, t_process *previous,
+static void		ft_fork_child(t_abs_struct *base, t_process *previous,
 	t_process *current)
 {
 	pid_t		pid;
@@ -27,7 +27,7 @@ static void		ft_fork_child(abs_struct *base, t_process *previous,
 	}
 }
 
-void			ft_launch_job(abs_struct *base, t_job *j)
+void			ft_launch_job(t_abs_struct *base, t_job *j)
 {
 	t_process	*current;
 	t_process	*previous;

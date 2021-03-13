@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-static int	apply_output_redirection(abs_struct *base, char *fd,
+static int	apply_output_redirection(t_abs_struct *base, char *fd,
 	char *right_side)
 {
 	int		i_fd;
@@ -31,7 +31,7 @@ static int	apply_output_redirection(abs_struct *base, char *fd,
 	return (0);
 }
 
-static int	apply_output_add_redirection(abs_struct *base, char *fd,
+static int	apply_output_add_redirection(t_abs_struct *base, char *fd,
 	char *right_side)
 {
 	int		i_fd;
@@ -62,7 +62,7 @@ static int	apply_output_add_redirection(abs_struct *base, char *fd,
 	return (0);
 }
 
-static int	apply_input_redirection(abs_struct *base, char *fd, char *right_side)
+static int	apply_input_redirection(t_abs_struct *base, char *fd, char *right_side)
 {
 	int		i_fd;
 	int		o_fd;
@@ -91,7 +91,7 @@ static int	apply_input_redirection(abs_struct *base, char *fd, char *right_side)
 	return (0);
 }
 
-static int	set_redirection(abs_struct *base, char *i)
+static int	set_redirection(t_abs_struct *base, char *i)
 {
 	char	*redir;
 	char	*fd;
@@ -123,7 +123,7 @@ static int	set_redirection(abs_struct *base, char *i)
 	return (redirected);
 }
 
-int			set_redirections(abs_struct *base, t_process *p)
+int			set_redirections(t_abs_struct *base, t_process *p)
 {
 	char	**i;
 	int		redirected;

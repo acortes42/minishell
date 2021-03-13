@@ -15,7 +15,7 @@ static int	is_number(char *ignoreeof)
 	return (is_num);
 }
 
-static int	determine_ctrl_d_times(abs_struct *base)
+static int	determine_ctrl_d_times(t_abs_struct *base)
 {
 	char	*ignoreeof;
 
@@ -32,7 +32,7 @@ static int	determine_ctrl_d_times(abs_struct *base)
 	} 
 }
 
-int			ft_execute_ctrl_d(abs_struct *base)
+int			ft_execute_ctrl_d(t_abs_struct *base)
 {
 	int		ctrl_d_times;
 	

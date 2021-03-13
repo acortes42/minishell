@@ -1,11 +1,11 @@
 #include "minishell.h"
 
-static int	execute_environment_builtins(abs_struct *base, t_process *previous, t_process *p)
+static int	execute_environment_builtins(t_abs_struct *base, t_process *previous, t_process *p)
 {
 	int		executed;
 
 	executed = 1;
-	base->parseString = p->argv;
+	base->parse_string = p->argv;
 	if (!ft_strcmp(p->argv[0], "env"))
 	{
 		ft_set_pipes(previous,  p);
@@ -22,15 +22,15 @@ static int	execute_environment_builtins(abs_struct *base, t_process *previous, t
 	return (executed);	
 }
 
-int         ft_execute_builtin(abs_struct *base, t_process *previous, t_process *p)
+int         ft_execute_builtin(t_abs_struct *base, t_process *previous, t_process *p)
 {
 	ft_putstr("\e[0m");
 	if ((!p->argv || !*p->argv) && ft_execute_ctrl_d(base))
 		return (1);
 	if (set_redirections(base, p))
 		return (0);
-	// TODO: Utilizar la definición del proceso en lugar del parseString y actual_argument
-	base->parseString = p->argv;
+	// TODO: Utilizar la definición del proceso en lugar del parse_string y actual_argument
+	base->parse_string = p->argv;
 	base->actual_argument = 0;
 	if (execute_environment_builtins(base, previous, p))
 		return (1);
@@ -59,7 +59,7 @@ int         ft_execute_builtin(abs_struct *base, t_process *previous, t_process 
 		ft_help(base);
 	}
 	else if (!ft_strcmp(p->argv[0], "clear"))
-		clearScreen();
+		clear_screen();
 	else
 		return (0);
 	return (1);

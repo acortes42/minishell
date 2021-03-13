@@ -12,12 +12,12 @@
 
 #include "../minishell.h"
 
-int	ft_launch(abs_struct *base)
+int	ft_launch(t_abs_struct *base)
 {
 	char**	argv = {NULL};
   	char**	envp = {NULL};
 
-	if (execve(base->parseString[base->actual_argument], argv, envp) == -1)
+	if (execve(base->parse_string[base->actual_argument], argv, envp) == -1)
 	{
 		ft_putstr("\e[0mFallo en la ejecución\n");
 		base->error  = 1;

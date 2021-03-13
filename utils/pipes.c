@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void		ft_configure_pipes(abs_struct *base, t_process *current)
+void		ft_configure_pipes(t_abs_struct *base, t_process *current)
 {
 	if (current->next)
 	{
