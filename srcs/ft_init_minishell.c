@@ -2,7 +2,7 @@
 
 int				ft_init_minishell(abs_struct *base, char **envp)
 {
-	signal(SIGINT, handle_sigint);
+	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGTSTP, SIG_IGN);
 	signal(SIGTTIN, SIG_IGN);

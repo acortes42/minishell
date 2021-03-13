@@ -11,6 +11,8 @@ static void		ft_fork_child(abs_struct *base, t_process *previous,
 	//pid = 0;
 	if (pid == 0)
 	{
+		if (signal(SIGINT, forked_process_signal_handler) == SIG_ERR)
+			ft_exit_minishell(base, errno);
 		ft_set_pipes(previous, current);
 		ft_launch_process(base, current);
 		exit(current->status);

@@ -55,7 +55,7 @@ void	forked_process_signal_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
-		ft_putstr("\n");
+        ft_putstr("\e[0m\n    Esto ha terminado con ctrl+c    \n");
 		exit(0);
 	}
 }
