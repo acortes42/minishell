@@ -49,7 +49,7 @@ static char						*ft_getenv_value(char **env, char *key,
 	{
 		if (key)
 			free(key);
-		return (1);
+		return (0);
 	}
 	if ((variable = ft_getenv(env, key)))
 		variable = variable + (*key_len) + 1;
@@ -65,7 +65,9 @@ int								ft_expand_dollar(t_expand_dollar *d)
 	internal.key = ft_extract_variable_name(&d->cmd);
 	internal.key_len = ft_strlen(internal.key);
 	internal.variable = ft_getenv_value(d->base->env, internal.key,
-		internal.key_len);
+		&internal.key_len);
+	if (!internal.variable)
+		return (1);
 	internal.variable_len = ft_strlen(internal.variable);
 	if ((internal.variable_len + 1) > internal.key_len)
 	{
@@ -75,12 +77,12 @@ int								ft_expand_dollar(t_expand_dollar *d)
 			return (0);
 		if (d->expanded)
 		{
-			ft_strlcat(tmp, d->expanded, d->pos + 1);
+			ft_strlcat(internal.tmp, d->expanded, d->pos + 1);
 			free(d->expanded);
 		}
 		d->expanded = internal.tmp;
 	}
 	ft_memcpy(d->expanded + d->pos, internal.variable, internal.variable_len);
-	d->pos += variable_len;
+	d->pos += internal.variable_len;
 	return (1);
 }

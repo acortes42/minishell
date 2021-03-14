@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static void			ft_remove_quotes(char *field)
+void			ft_remove_quotes(char *field)
 {
 	size_t			len;
 	size_t			pos;

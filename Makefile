@@ -17,8 +17,8 @@ UTILS 				= utils/ft_putnbr.c utils/ft_putstr.c utils/ft_split.c \
 	utils/ft_set_default_signals.c utils/ft_isinteger.c utils/std_fds.c	\
 	utils/ft_extract_redirections_from_argv.c \
 	utils/ft_count_words_until_separator.c utils/ft_expand_process_cmd.c \
-	utils/pipes.c utils/ft_remove_quotes.c utils/ft_expand_scape.c \
-	utils/ft_extract_variable_name.c utils/ft_expand_dollar.c
+	utils/pipes.c utils/ft_remove_quotes.c \
+	utils/ft_expand_process_cmd_utils.c
 
 
 SRCS_WITHOUT_MAIN	=  srcs/ft_exit_minishell.c srcs/clear_screen.c \
