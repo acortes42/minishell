@@ -89,7 +89,20 @@ typedef struct				s_expand_dollar
 	size_t					expanded_len;
 	size_t					pos;
 	char					*cmd;
+	char					quote;
+	char					single_quote;
+	int						scape;
 }							t_expand_dollar;
+
+typedef struct				s_expand_dollar_internal
+{
+	char					*key;
+	char					*variable;
+	char					*tmp;
+	size_t					key_len;
+	size_t					variable_len;
+}							t_expand_dollar_internal;
+
 
 char						*ft_strdup(const char *s1);
 char						*ft_strchr(char *str, int c);
@@ -193,5 +206,9 @@ char						*ft_split_shell_by(char **str, char *separator);
 int							ft_isinteger(char *str);
 int							ft_count_words_until_separator(char **str,
 	int actual_arg);
+void						ft_remove_quotes(char *field);
+int							ft_expand_scape(char **res, char **cmd, size_t *pos);
+char						*ft_extract_variable_name(char **cmd);
+int							ft_expand_dollar(t_expand_dollar *d);
 
 #endif
