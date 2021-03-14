@@ -10,7 +10,7 @@
 26. Jugar con el minishell y tratar de romperlo
 27. Revisar este comando porque explota y aunque le faltan unas comillas, no debe explotar nada:
  export A=hola; export B=" mundo"; echo "$A$B >victor; cat victor | more
-28. Eliminar comillas en el export:
+28. Eliminar comillas en el export (tratar de utilizar ft_remove_quotes):
     export B=" mundo";
     Al ejecutar env nos muestra:
     B=" mundo"
