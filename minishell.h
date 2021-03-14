@@ -103,7 +103,6 @@ typedef struct				s_expand_dollar_internal
 	size_t					variable_len;
 }							t_expand_dollar_internal;
 
-
 char						*ft_strdup(const char *s1);
 char						*ft_strchr(char *str, int c);
 char						*ft_strcdup(const char *s1, int c);
@@ -148,10 +147,10 @@ int							set_redirections(t_abs_struct *base,
 	t_process *p);
 int							ft_output_add_redirection(t_abs_struct *base,
 	char *redir, int *redirected);
-int							ft_output_redirection(t_abs_struct *base, char *redir,
-	int *redirected);
-int							ft_input_redirection(t_abs_struct *base, char *redir,
-	int *redirected);
+int							ft_output_redirection(t_abs_struct *base,
+	char *redir, int *redirected);
+int							ft_input_redirection(t_abs_struct *base,
+	char *redir, int *redirected);
 void						ft_set_pipes(t_process *previous,
 	t_process *current);
 void						ft_close_pipes(t_files_fd fd, t_process *previous,
@@ -207,7 +206,8 @@ int							ft_isinteger(char *str);
 int							ft_count_words_until_separator(char **str,
 	int actual_arg);
 void						ft_remove_quotes(char *field);
-int							ft_expand_scape(char **res, char **cmd, size_t *pos);
+int							ft_expand_scape(char **res, char **cmd,
+	size_t *pos);
 char						*ft_extract_variable_name(char **cmd);
 int							ft_expand_dollar(t_expand_dollar *d);
 
