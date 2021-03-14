@@ -1,36 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_array_dup.c                                     :+:      :+:    :+:   */
+/*   clear_screen.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: visv <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/13 16:16:58 by visv              #+#    #+#             */
-/*   Updated: 2021/03/13 16:17:04 by visv             ###   ########.fr       */
+/*   Created: 2021/03/13 15:25:34 by visv              #+#    #+#             */
+/*   Updated: 2021/03/13 15:25:36 by visv             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char			**ft_array_dup(char **envp)
+void		clear_screen(void)
 {
-	size_t		l;
-	char		**dup;
-
-	dup = NULL;
-	if (!envp)
-		return (dup);
-	l = 0;
-	while (*(envp + l))
-		l++;
-	if (!(dup = malloc(sizeof(char *) * (l + 1))))
-		return (NULL);
-	l = 0;
-	while (*(envp + l))
-	{
-		*(dup + l) = ft_strdup(*(envp + l));
-		l++;
-	}
-	*(dup + l) = NULL;
-	return (dup);
+	ft_putstr("\e[0m\033[2J\033[1;1H");
+	ft_putstr("\e[92m             |||------------------------------||| \n");
+	ft_putstr("             |||------------------------------||| \n");
+	ft_putstr("             |||------------------------------||| \n");
+	ft_putstr("             |||           MINISHELL          ||| \n");
+	ft_putstr("             |||------------------------------||| \e[0m\n\n\n");
 }

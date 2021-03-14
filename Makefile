@@ -6,9 +6,8 @@ UTILS 				= utils/ft_putnbr.c utils/ft_putstr.c utils/ft_split.c \
 	utils/ft_strnlen.c utils/ft_strlcat.c utils/ft_get_absolute_path.c \
 	utils/ft_memcpy.c utils/ft_release_base.c utils/ft_isdigit.c \
 	utils/ft_atoi.c utils/ft_launch_process.c utils/ft_launch_job.c \
-	utils/ft_format_job_info.c utils/ft_strncmp.c \
-	utils/ft_job_is_stopped.c utils/ft_job_is_completed.c \
-	utils/ft_do_job_notification.c utils/ft_mark_job_as_running.c \
+	utils/ft_strncmp.c utils/ft_output_add_redirection.c \
+	utils/ft_output_redirection.c utils/ft_input_redirection.c \
 	utils/ft_putstr_fd.c utils/ft_release_jobs.c utils/ft_release_job.c \
 	utils/ft_itoa.c utils/ft_calloc.c utils/ft_build_jobs.c \
 	utils/ft_bzero.c utils/ft_execute_builtin.c utils/ft_build_job.c \
@@ -18,13 +17,14 @@ UTILS 				= utils/ft_putnbr.c utils/ft_putstr.c utils/ft_split.c \
 	utils/ft_set_default_signals.c utils/ft_isinteger.c utils/std_fds.c	\
 	utils/ft_extract_redirections_from_argv.c \
 	utils/ft_count_words_until_separator.c utils/ft_expand_process_cmd.c \
-	utils/pipes.c
+	utils/pipes.c utils/ft_remove_quotes.c \
+	utils/ft_expand_process_cmd_utils.c
 
 
-SRCS_WITHOUT_MAIN	=  srcs/ft_exit_minishell.c srcs/clearScreen.c \
+SRCS_WITHOUT_MAIN	=  srcs/ft_exit_minishell.c srcs/clear_screen.c \
 	srcs/ft_execute_ctrl_d.c srcs/echo.c srcs/cd.c \
 	srcs/history.c srcs/signals.c srcs/pwd.c srcs/env.c srcs/setenv.c \
-	srcs/vertical_line.c srcs/ft_launch.c srcs/ft_export.c srcs/ft_getenv.c \
+	srcs/ft_export.c srcs/ft_getenv.c \
 	srcs/ft_init_minishell.c srcs/ft_show_prompt.c ${UTILS}
 SRCS 				=  srcs/minishell.c ${SRCS_WITHOUT_MAIN}
 		

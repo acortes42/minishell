@@ -1,36 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_array_dup.c                                     :+:      :+:    :+:   */
+/*   ft_remove_quotes.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: visv <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/13 16:16:58 by visv              #+#    #+#             */
-/*   Updated: 2021/03/13 16:17:04 by visv             ###   ########.fr       */
+/*   Created: 2021/03/14 09:26:15 by visv              #+#    #+#             */
+/*   Updated: 2021/03/14 09:26:16 by visv             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char			**ft_array_dup(char **envp)
+void			ft_remove_quotes(char *field)
 {
-	size_t		l;
-	char		**dup;
+	size_t			len;
+	size_t			pos;
 
-	dup = NULL;
-	if (!envp)
-		return (dup);
-	l = 0;
-	while (*(envp + l))
-		l++;
-	if (!(dup = malloc(sizeof(char *) * (l + 1))))
-		return (NULL);
-	l = 0;
-	while (*(envp + l))
+	len = ft_strlen(field);
+	if (!len)
+		return ;
+	if ((*field != '"' || *(field + len - 1) != '"') &&
+		(*field != '\'' || *(field + len - 1) != '\''))
+		return ;
+	pos = 1;
+	while (*(field + pos) && pos < (len - 1))
 	{
-		*(dup + l) = ft_strdup(*(envp + l));
-		l++;
+		*(field + pos - 1) = *(field + pos);
+		pos++;
 	}
-	*(dup + l) = NULL;
-	return (dup);
+	*(field + pos - 1) = *(field + len);
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_extract_redirections_from_argv.c                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: visv <marvin@42.fr>                        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/13 16:17:57 by visv              #+#    #+#             */
+/*   Updated: 2021/03/13 16:17:59 by visv             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static int	contains_redir(char *str)
@@ -7,16 +19,15 @@ static int	contains_redir(char *str)
 	char	*argv;
 
 	argv = str;
-	tmp = 0;
-	redir = (((tmp = ft_split_shell_by(&argv, ">")) &&
-		*(argv - 1) == '>') ? 1 : 0);
+	tmp = ft_split_shell_by(&argv, ">");
+	redir = ((tmp && *(argv - 1) == '>') ? 1 : 0);
 	if (tmp)
 		free(tmp);
 	if (redir)
 		return (redir);
 	argv = str;
-	redir = (((tmp = ft_split_shell_by(&argv, "<")) &&
-		*(argv - 1) == '<') ? 1 : 0);
+	tmp = ft_split_shell_by(&argv, "<");
+	redir = ((tmp && *(argv - 1) == '<') ? 1 : 0);
 	if (tmp)
 		free(tmp);
 	return (redir);
@@ -35,7 +46,7 @@ int			ft_extract_redirections_from_argv(t_process *p)
 			i++;
 		else
 		{
-			ft_array_add(&p->redirs, &redirs_len,  *i);
+			ft_array_add(&p->redirs, &redirs_len, *i);
 			ft_array_slide_left(i);
 		}
 	}

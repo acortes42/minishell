@@ -1,6 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipes.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: visv <marvin@42.fr>                        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/13 22:12:45 by visv              #+#    #+#             */
+/*   Updated: 2021/03/13 22:12:47 by visv             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-void		ft_configure_pipes(abs_struct *base, t_process *current)
+void			ft_configure_pipes(t_abs_struct *base,
+	t_process *current)
 {
 	if (current->next)
 	{
@@ -14,9 +27,9 @@ void		ft_configure_pipes(abs_struct *base, t_process *current)
 	}
 }
 
-void		ft_close_pipes(t_files_fd fds, t_process *previous, t_process *current)
+void			ft_close_pipes(t_files_fd fds, t_process *previous,
+	t_process *current)
 {
-	// TODO: tratar errores de dup2
 	if (previous)
 	{
 		if (previous->pipe[STDIN_FILENO] > -1)

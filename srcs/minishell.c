@@ -12,11 +12,11 @@
 
 #include "minishell.h"
 
-int obtain_full_line(abs_struct *base)
+int					obtain_full_line(t_abs_struct *base)
 {
-	char        c;
-	int         fd;
-	int         i;
+	char			c;
+	int				fd;
+	int				i;
 
 	fd = open("history.txt", O_RDWR | O_APPEND);
 	i = 0;
@@ -26,36 +26,37 @@ int obtain_full_line(abs_struct *base)
 		base->string[i] = c;
 		i++;
 		if (c == '\n')
-			break;
+			break ;
 	}
 	base->string[i] = '\0';
 	close(fd);
 	return (0);
 }
 
-static void		execute_command_read(abs_struct *base)
+static void			execute_command_read(t_abs_struct *base)
 {
-	t_job		*job;
+	t_job			*job;
 
 	job = ft_build_jobs(base->string);
-	while (job) {
+	while (job)
+	{
 		base->first_job = job;
 		ft_launch_job(base, job);
 		job = ft_release_job(job);
 	}
 }
 
-int main(int argc, char **argv, char **envp)
+int					main(int argc, char **argv, char **envp)
 {
-	int         minishell_ready;
-	abs_struct  base;
+	int				minishell_ready;
+	t_abs_struct	base;
 
 	(void)argc;
 	(void)argv;
-	ft_memset(&base, 0, sizeof(abs_struct));
+	ft_memset(&base, 0, sizeof(t_abs_struct));
 	minishell_ready = ft_init_minishell(&base, envp);
 	if (minishell_ready)
-		clearScreen();
+		clear_screen();
 	while (minishell_ready)
 	{
 		ft_show_prompt(&base);
@@ -63,7 +64,7 @@ int main(int argc, char **argv, char **envp)
 		execute_command_read(&base);
 		base.first_job = 0;
 		base.num_args = 0;
-		base.parseString = 0;
+		base.parse_string = 0;
 	}
 	return (0);
 }

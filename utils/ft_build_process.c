@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_build_process.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: visv <marvin@42.fr>                        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/13 16:17:34 by visv              #+#    #+#             */
+/*   Updated: 2021/03/13 16:17:36 by visv             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static int			ft_extract_fields(char *cmd, char ***argv)
@@ -9,7 +21,9 @@ static int			ft_extract_fields(char *cmd, char ***argv)
 	fields = 0;
 	while ((field = ft_split_shell_by(&cmd, " ")))
 	{
-		if (*field != '\n')
+		if (*field == '\n')
+			free(field);
+		else
 		{
 			tmp = ft_trim(field);
 			free(field);

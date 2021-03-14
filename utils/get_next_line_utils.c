@@ -12,8 +12,7 @@
 
 #include "minishell.h"
 
-
-char	*ft_strdup(const char *s1)
+char		*ft_strdup(const char *s1)
 {
 	int		x;
 	char	*str;
@@ -27,7 +26,7 @@ char	*ft_strdup(const char *s1)
 	return (str);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char		*ft_strjoin(char const *s1, char const *s2)
 {
 	int		total;
 	char	*str;
@@ -46,7 +45,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (str);
 }
 
-char	*ft_strcdup(const char *s1, int c)
+char		*ft_strcdup(const char *s1, int c)
 {
 	int		i;
 	char	*str;
@@ -67,7 +66,7 @@ char	*ft_strcdup(const char *s1, int c)
 	return (str);
 }
 
-char	*ft_strchr(char *str, int c)
+char		*ft_strchr(char *str, int c)
 {
 	int		i;
 	char	str2;
