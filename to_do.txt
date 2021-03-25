@@ -8,8 +8,6 @@
     * <&fd- -> comprobar que el fd está abierto como entrada (sino error) (stat)
 25. Revisar el proceso de evaluación para ver si cumplimos con todo
 26. Jugar con el minishell y tratar de romperlo
-27. Revisar este comando porque explota y aunque le faltan unas comillas, no debe explotar nada:
- export A=hola; export B=" mundo"; echo "$A$B >victor; cat victor | more
 29. Comprobar en mac si al ejecutar export sin nada, nos muestra: declare -x a=valor. Si no lo hace. Modificar ft_export.c para que no lo haga
 
 comentarios de setenv.c
