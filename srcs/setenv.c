@@ -127,7 +127,8 @@ int				ft_setenv(t_abs_struct *base, t_process *p)
 		if (ft_search_env(base->env, key_value[0]))
 			ft_unset(base, p);
 		trimmed = ft_prepare_export(key_value[0], key_value[1]);
-		if (!trimmed || !(ret = ft_add_line(&base->env, &base->lines_envp, trimmed)))
+		if (!trimmed || !(ret = ft_add_line(&base->env, &base->lines_envp,
+			trimmed)))
 			ft_putstr("\e[0mNo se añadió el argumento\n");
 		ft_array_release(key_value);
 		if (trimmed)

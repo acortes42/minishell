@@ -59,30 +59,29 @@ static char						*ft_getenv_value(char **env, char *key,
 
 int								ft_expand_dollar(t_expand_dollar *d)
 {
-	t_expand_dollar_internal	internal;
+	t_expand_dollar_internal	i;
 
 	(d->cmd)++;
-	internal.key = ft_extract_variable_name(&d->cmd);
-	internal.key_len = ft_strlen(internal.key);
-	internal.variable = ft_getenv_value(d->base->env, internal.key,
-		&internal.key_len);
-	if (!internal.variable)
+	i.key = ft_extract_variable_name(&d->cmd);
+	i.key_len = ft_strlen(i.key);
+	i.variable = ft_getenv_value(d->base->env, i.key, &i.key_len);
+	if (!i.variable)
 		return (1);
-	internal.variable_len = ft_strlen(internal.variable);
-	if ((internal.variable_len + 1) > internal.key_len)
+	i.variable_len = ft_strlen(i.variable);
+	if ((i.variable_len + 1) > i.key_len)
 	{
-		d->expanded_len = d->expanded_len + internal.variable_len
-			- internal.key_len - 1 + 1;
-		if (!(internal.tmp = ft_calloc(d->expanded_len + 1, sizeof(char))))
+		d->expanded_len = d->expanded_len + i.variable_len
+			- i.key_len - 1 + 1;
+		if (!(i.tmp = ft_calloc(d->expanded_len + 1, sizeof(char))))
 			return (0);
 		if (d->expanded)
 		{
-			ft_strlcat(internal.tmp, d->expanded, d->pos + 1);
+			ft_strlcat(i.tmp, d->expanded, d->pos + 1);
 			free(d->expanded);
 		}
-		d->expanded = internal.tmp;
+		d->expanded = i.tmp;
 	}
-	ft_memcpy(d->expanded + d->pos, internal.variable, internal.variable_len);
-	d->pos += internal.variable_len;
+	ft_memcpy(d->expanded + d->pos, i.variable, i.variable_len);
+	d->pos += i.variable_len;
 	return (1);
 }
