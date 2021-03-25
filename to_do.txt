@@ -10,11 +10,7 @@
 26. Jugar con el minishell y tratar de romperlo
 27. Revisar este comando porque explota y aunque le faltan unas comillas, no debe explotar nada:
  export A=hola; export B=" mundo"; echo "$A$B >victor; cat victor | more
-28. Eliminar comillas en el export (tratar de utilizar ft_remove_quotes):
-    export B=" mundo";
-    Al ejecutar env nos muestra:
-    B=" mundo"
-    
+29. Comprobar en mac si al ejecutar export sin nada, nos muestra: declare -x a=valor. Si no lo hace. Modificar ft_export.c para que no lo haga
 
 comentarios de setenv.c
 // TODO: modificar el nombre de fichero por ft_setenv.c
