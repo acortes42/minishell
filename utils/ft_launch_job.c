@@ -40,7 +40,7 @@ void			ft_launch_job(t_abs_struct *base, t_job *j)
 {
 	t_process	*current;
 	t_process	*previous;
-
+	
 	dup_std_fds(&j->std_fds);
 	previous = 0;
 	current = j->first_process;

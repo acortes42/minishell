@@ -65,10 +65,10 @@ int								ft_expand_dollar(t_expand_dollar *d)
 	i.key = ft_extract_variable_name(&d->cmd);
 	i.key_len = ft_strlen(i.key);
 	i.variable = ft_getenv_value(d->base->env, i.key, &i.key_len);
-	if (!i.variable)
-		return (1);
+	if (!i.variable && !i.key_len)
+		i.variable = "$";
 	i.variable_len = ft_strlen(i.variable);
-	if ((i.variable_len + 1) > i.key_len)
+	if (i.variable && *(i.variable) != '$' && (i.variable_len + 1) > i.key_len)
 	{
 		d->expanded_len = d->expanded_len + i.variable_len
 			- i.key_len - 1 + 1;
