@@ -19,6 +19,8 @@ t_job			*ft_build_jobs(char *command)
 	t_job		*jobs;
 	t_job		*job;
 
+	if (command && !(*command))
+		return (ft_build_job_ctrl_d(command));
 	jobs = 0;
 	job = 0;
 	cmd_i = command;

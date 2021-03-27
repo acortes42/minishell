@@ -37,6 +37,17 @@ static int			ft_extract_fields(char *cmd, char ***argv)
 	return (fields);
 }
 
+t_process			*ft_build_ctrl_d_process(void)
+{
+	t_process		*proc;
+
+	if (!(proc = ft_calloc(1, sizeof(t_process))))
+		return (0);
+	proc->ctrl_d=1;
+	return (proc);
+
+}
+
 t_process			*ft_build_process(char *cmd)
 {
 	t_process		*proc;
