@@ -43,9 +43,8 @@ t_process			*ft_build_ctrl_d_process(void)
 
 	if (!(proc = ft_calloc(1, sizeof(t_process))))
 		return (0);
-	proc->ctrl_d=1;
+	proc->ctrl_d = 1;
 	return (proc);
-
 }
 
 t_process			*ft_build_process(char *cmd)
