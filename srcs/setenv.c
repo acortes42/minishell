@@ -88,19 +88,51 @@ static int		ft_search_env(char **env, char *key)
 	return (0);
 }
 
+static char		*ft_prepare_export(char *key, char *value)
+{
+	char		*adjusted;
+	char		*trimmed;
+
+	if (!key || !value)
+		return (0);
+	if (ft_isspace(*value))
+		trimmed = ft_strdup("");
+	else
+		trimmed = ft_strdup(value);
+	if (!trimmed)
+		return (0);
+	ft_remove_quotes(trimmed);
+	if (!(adjusted = ft_calloc(ft_strlen(key) + 1 + ft_strlen(trimmed) + 1,
+		sizeof(char))))
+	{
+		free(trimmed);
+		return (0);
+	}
+	ft_memcpy(adjusted, key, ft_strlen(key));
+	adjusted[ft_strlen(key)] = '=';
+	ft_memcpy(adjusted + ft_strlen(key) + 1, trimmed, ft_strlen(trimmed));
+	free(trimmed);
+	return (adjusted);
+}
+
 int				ft_setenv(t_abs_struct *base, t_process *p)
 {
 	int			ret;
 	char		**key_value;
+	char		*trimmed;
 
 	key_value = ft_split(p->argv[1], '=');
 	if (key_value)
 	{
 		if (ft_search_env(base->env, key_value[0]))
 			ft_unset(base, p);
-		if (!(ret = ft_add_line(&base->env, &base->lines_envp, p->argv[1])))
+		trimmed = ft_prepare_export(key_value[0], key_value[1]);
+		if (!trimmed || !(ret = ft_add_line(&base->env, &base->lines_envp,
+			trimmed)))
 			ft_putstr("\e[0mNo se añadió el argumento\n");
 		ft_array_release(key_value);
+		if (trimmed)
+			free(trimmed);
 		return (ret);
 	}
 	ft_putstr("\e[0mError en los argumentos\n");

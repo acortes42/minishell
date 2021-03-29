@@ -38,11 +38,12 @@ static void			execute_command_read(t_abs_struct *base)
 	t_job			*job;
 
 	job = ft_build_jobs(base->string);
+	base->first_job = job;
 	while (job)
 	{
-		base->first_job = job;
 		ft_launch_job(base, job);
 		job = ft_release_job(job);
+		base->first_job = job;
 	}
 }
 

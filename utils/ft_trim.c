@@ -27,7 +27,7 @@ char			*ft_trim(char *str)
 	while (start < end && ft_isspace(*(str + end)))
 		end--;
 	if (start > end)
-		return (0);
+		start = end;
 	if (!(trimmed = ft_calloc(end - start + 2, sizeof(char))))
 		return (0);
 	ft_memcpy(trimmed, str + start, (end - start + 1));

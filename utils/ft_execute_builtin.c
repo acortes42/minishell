@@ -87,8 +87,12 @@ int					ft_execute_builtin(t_abs_struct *base, t_process *previous,
 	t_process *p)
 {
 	ft_putstr("\e[0m");
-	if ((!p->argv || !*p->argv) && ft_execute_ctrl_d(base))
+	if (!p->argv || !*p->argv)
+	{
+		if (p->ctrl_d)
+			return (ft_execute_ctrl_d(base));
 		return (1);
+	}
 	if (set_redirections(base, p))
 		return (0);
 	base->parse_string = p->argv;

@@ -53,6 +53,7 @@ typedef struct				s_process
 	pid_t					pid;
 	char					completed;
 	char					stopped;
+	int						ctrl_d;
 	int						status;
 	int						pipe[2];
 }							t_process;
@@ -140,6 +141,7 @@ void						ft_update_status(t_abs_struct *base);
 
 t_job						*ft_build_jobs(char *command);
 t_job						*ft_build_job(char *command);
+t_job						*ft_build_job_ctrl_d(char *command);
 t_process					*ft_build_processes(char *expanded_cmd);
 t_process					*ft_build_ctrl_d_process(void);
 t_process					*ft_build_process(char *expanded_cmd);

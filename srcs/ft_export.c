@@ -12,7 +12,42 @@
 
 #include "minishell.h"
 
-int		ft_export(t_abs_struct *base, t_process *p)
+static int	ft_print_declare(char *env)
 {
-	return (ft_setenv(base, p));
+	int		space;
+	char	*value;
+
+	if (!(value = ft_strchr(env, '=')))
+		return (0);
+	space = ft_isspace(*(value + 1));
+	ft_putstr("declare -x ");
+	ft_putnstr(env, (value - env + 1));
+	if (space)
+		ft_putstr("\"");
+	ft_putstr((env + (value - env + 1)));
+	if (space)
+		ft_putstr("\"");
+	ft_putstr("\n");
+	return (1);
+}
+
+static int	ft_print_declares(t_abs_struct *base)
+{
+	char	**it;
+
+	it = base->env;
+	while (it && *it)
+	{
+		ft_print_declare(*it);
+		it++;
+	}
+	return (1);
+}
+
+int			ft_export(t_abs_struct *base, t_process *p)
+{
+	if (!p->argv[1])
+		return (ft_print_declares(base));
+	else
+		return (ft_setenv(base, p));
 }

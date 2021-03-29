@@ -63,7 +63,7 @@ int					ft_expand_process_cmd(t_abs_struct *base, t_process *p)
 	if (!p)
 		return (1);
 	to_expand = p->argv;
-	while (*to_expand)
+	while (to_expand && *to_expand)
 	{
 		if (!(expanded_slice = expand(base, *to_expand)))
 			return (0);
