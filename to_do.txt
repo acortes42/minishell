@@ -1,4 +1,3 @@
-11. $? funciona pero...¿igual deberia ir diferente?
 15. ¿Textos en inglés?
 21. Tratar los caracteres de borrado. Si escribimos un comando, borramos para corregir y reescribimos, ..., nosotros lo que ejecutaremos no es el result.ado que ve el usuario por pantalla sino todo el comando entero escrito incluyendo los caracteres de borrado, ...
 22. Revisar builtins para que ejecuten utilizando el t_process
@@ -9,6 +8,9 @@
 25. Revisar el proceso de evaluación para ver si cumplimos con todo
 26. Jugar con el minishell y tratar de romperlo
 29. Comprobar en mac si al ejecutar export sin nada, nos muestra: declare -x a=valor. Si no lo hace. Modificar ft_export.c para que no lo haga
+30. No funciona $? . Siempre nos muestra 0
+31. Tenemos que tratar el ctrl+z? Si hacemos un more minishell.h y pulsamos ctrl+z debería detener el proceso pero creo que no es necesario contemplar los procesos detenidos
+
 
 comentarios de setenv.c
 // TODO: modificar el nombre de fichero por ft_setenv.c

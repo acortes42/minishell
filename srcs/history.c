@@ -16,18 +16,28 @@ int			ft_history(void)
 {
 	int		fd;
 	int		num;
-	char	**line;
+	char	*line;
 
 	num = 1;
-	line = malloc(sizeof((char**)line) * 1);
+	line = 0;
 	fd = open("history.txt", O_RDWR);
-	while (get_next_line(fd, line) > 0)
+	while (get_next_line(fd, &line) > 0)
 	{
 		ft_putstr("\e[0m  ");
 		ft_putnbr(num++);
 		ft_putstr(" - ");
-		ft_putstr(*line);
+		ft_putstr(line);
 		ft_putstr("\n");
+		if (line)
+		{
+			free(line);
+			line = 0;
+		}
+	}
+	if (line)
+	{
+		free(line);
+		line = 0;
 	}
 	close(fd);
 	return (1);

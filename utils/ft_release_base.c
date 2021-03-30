@@ -16,6 +16,8 @@ void		ft_release_base(t_abs_struct *base)
 {
 	if (!base)
 		return ;
+	if (base->input)
+		free(base->input);
 	ft_array_release(base->env);
 	base->parse_string = 0;
 	ft_release_jobs(base->first_job);

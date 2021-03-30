@@ -14,21 +14,26 @@
 
 int					obtain_full_line(t_abs_struct *base)
 {
-	char			c;
 	int				fd;
-	int				i;
+	int				found_new_line;
+	char			*tmp;
 
 	fd = open("history.txt", O_RDWR | O_APPEND);
-	i = 0;
-	while (read(0, &c, sizeof(char)) > 0)
+	if (base->input)
+		free(base->input);
+	base->input = 0;
+	found_new_line = 0;
+	while (!found_new_line)
 	{
-		write(fd, &c, 1);
-		base->string[i] = c;
-		i++;
-		if (c == '\n')
-			break ;
+		found_new_line = get_next_line(STDIN_FILENO, &base->input);
+		if (found_new_line < 0)
+			ft_exit_minishell(base, 2);
 	}
-	base->string[i] = '\0';
+	if (!base->input || !(tmp = ft_strjoin(base->input, "\n")))
+		ft_exit_minishell(base, 1);
+	free(base->input);
+	base->input = tmp;
+	write(fd, base->input, ft_strlen(base->input));
 	close(fd);
 	return (0);
 }
@@ -37,7 +42,7 @@ static void			execute_command_read(t_abs_struct *base)
 {
 	t_job			*job;
 
-	job = ft_build_jobs(base->string);
+	job = ft_build_jobs(base->input);
 	base->first_job = job;
 	while (job)
 	{
