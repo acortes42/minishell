@@ -17,7 +17,6 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <stdio.h>
-# include <string.h>
 # include <fcntl.h>
 # include <stddef.h>
 # include <stdlib.h>
@@ -37,6 +36,10 @@
 # define ANSI_COLOR_MAGENTA "\x1b[35m"
 # define ANSI_COLOR_CYAN    "\x1b[36m"
 # define ANSI_COLOR_RESET   "\x1b[0m"
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 4096
+# endif
 
 typedef struct				s_files_fd
 {
@@ -73,7 +76,7 @@ typedef struct				s_abs_struct
 	char					**env;
 	int						num_args;
 	int						lines_envp;
-	char					string[1024];
+	char					*input;
 	char					**parse_string;
 	int						actual_argument;
 	int						error;
@@ -175,7 +178,6 @@ void						forked_process_signal_handler(int sig);
 void						dup_std_fds(t_files_fd *fds);
 void						restore_std_fds(t_files_fd *fds);
 int							ft_extract_redirections_from_argv(t_process *p);
-
 size_t						ft_strlcat(char *dst, const char *src, size_t size);
 char						*ft_strlcat_paths(char *prefix_path,
 	const char *relative_path);
