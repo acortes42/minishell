@@ -18,19 +18,16 @@ static void			ft_print_last_process_status(t_expand_dollar *d)
 	char			*status;
 	int				len;
 
-	status = ft_itoa(!d->base->last_executed_process ? 0 :
-		d->base->last_executed_process->status);
-	if (!status)
+	if (!(status = ft_itoa(!d->base->last_executed_process ? 0 :
+		d->base->last_executed_process->status)))
 		ft_exit_minishell(d->base, 1);
-	len = ft_strlen(status);
-	if (len > 2)
+	if ((len = ft_strlen(status)) > 2)
 	{
 		if (!(expansion = ft_calloc(d->expanded_len + (len - 2) + 1,
 			sizeof(char))))
 			ft_exit_minishell(d->base, 1);
 		ft_memcpy(expansion, d->expanded, d->pos);
 		ft_memcpy(expansion + d->pos, status, len);
-		d->pos += len;
 		free(d->expanded);
 		d->expanded = expansion;
 		d->expanded_len += (len - 2);
@@ -38,8 +35,8 @@ static void			ft_print_last_process_status(t_expand_dollar *d)
 	else
 	{
 		ft_memcpy(d->expanded + d->pos, status, len);
-		d->pos += len;
 	}
+	d->pos += len;
 	d->cmd += 2;
 	free(status);
 }
