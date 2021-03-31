@@ -18,8 +18,7 @@ static void			ft_print_last_process_status(t_expand_dollar *d)
 	char			*status;
 	int				len;
 
-	if (!(status = ft_itoa(!d->base->last_executed_process ? 0 :
-		d->base->last_executed_process->status)))
+	if (!(status = ft_itoa(d->base->last_executed_process_status)))
 		ft_exit_minishell(d->base, 1);
 	if ((len = ft_strlen(status)) > 2)
 	{
