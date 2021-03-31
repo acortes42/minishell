@@ -55,6 +55,7 @@ void			ft_launch_job(t_abs_struct *base, t_job *j)
 			current->completed = 1;
 			current->status = 0;
 		}
+		base->last_executed_process = current;
 		ft_close_pipes(j->std_fds, previous, current);
 		previous = current;
 		current = current->next;
