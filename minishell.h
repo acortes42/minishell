@@ -82,7 +82,7 @@ typedef struct				s_abs_struct
 	int						error;
 	int						flag;
 	int						ctrl_d_times;
-	t_process				*last_executed_process;
+	int						last_executed_process_status;
 	t_job					*first_job;
 }							t_abs_struct;
 
