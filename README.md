@@ -23,6 +23,9 @@ https://www.gnu.org/software/bash/manual/html_node/Exit-Status.html#Exit-Status 
 https://man.cx/exit
 #### Launching jobs
 https://www.gnu.org/software/libc/manual/html_node/Launching-Jobs.html
+##### Problems
+###### wait
+* Not child processes: https://stackoverflow.com/questions/1608017/no-child-process-error-from-waitpid-when-waiting-for-process-group
 ### Debug
 #### VSCode
 Debug child thread of a fork. Set follow-fork-mode to child in the Debug console tab using the next command:

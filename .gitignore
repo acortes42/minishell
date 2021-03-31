@@ -9,3 +9,4 @@ utils/main
 pipes
 redirection_redirected_output
 a.out
+tests/tf
