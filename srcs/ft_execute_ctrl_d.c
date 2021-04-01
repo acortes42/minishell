@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execute_ctrl_d.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: visv <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 15:52:43 by visv              #+#    #+#             */
-/*   Updated: 2021/03/13 15:52:45 by visv             ###   ########.fr       */
+/*   Updated: 2021/04/01 17:06:44 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	determine_ctrl_d_times(t_abs_struct *base)
 	}
 }
 
-int			ft_execute_ctrl_d(t_abs_struct *base)
+int	ft_execute_ctrl_d(t_abs_struct *base)
 {
 	int		ctrl_d_times;
 

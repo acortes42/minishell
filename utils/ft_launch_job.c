@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_launch_job.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: visv <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 16:18:17 by visv              #+#    #+#             */
-/*   Updated: 2021/03/13 16:18:18 by visv             ###   ########.fr       */
+/*   Updated: 2021/04/01 14:19:50 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void		ft_fork_child(t_abs_struct *base, t_process *previous,
+static void	ft_fork_child(t_abs_struct *base, t_process *previous,
 	t_process *current)
 {
 	pid_t		pid;
@@ -36,7 +36,7 @@ static void		ft_fork_child(t_abs_struct *base, t_process *previous,
 	}
 }
 
-void			ft_launch_job(t_abs_struct *base, t_job *j)
+void	ft_launch_job(t_abs_struct *base, t_job *j)
 {
 	t_process	*current;
 	t_process	*previous;

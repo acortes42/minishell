@@ -3,17 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expand_process_cmd_utils.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: visv <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 09:02:24 by visv              #+#    #+#             */
-/*   Updated: 2021/03/14 09:02:26 by visv             ###   ########.fr       */
+/*   Updated: 2021/04/01 15:00:58 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int								ft_expand_scape(char **res, char **cmd,
-	size_t *pos)
+int	give_int(int d)
+{
+	if (d)
+		return (0);
+	return (1);
+}
+
+int	ft_expand_scape(char **res, char **cmd, size_t *pos)
 {
 	*((*res) + *pos) = **cmd;
 	(*cmd)++;
@@ -21,27 +27,27 @@ int								ft_expand_scape(char **res, char **cmd,
 	return (1);
 }
 
-char							*ft_extract_variable_name(char **cmd)
+char	*ft_extract_variable_name(char **cmd)
 {
-	char						*tmp;
-	char						*ret;
+	char	*tmp;
+	char	*ret;
 
 	if (!cmd || !(*cmd))
 		return (0);
 	tmp = *cmd;
-	while (*cmd && !ft_isspace(**cmd) && **cmd != '"' && **cmd != '\'' &&
-		**cmd != '$' && (**cmd))
+	while (*cmd && !ft_isspace(**cmd) && **cmd != '"' && **cmd != '\'' \
+				 && **cmd != '$' && (**cmd))
 		(*cmd)++;
-	if (!(ret = ft_calloc(*cmd - tmp + 1, sizeof(char))))
+	ret = ft_calloc(*cmd - tmp + 1, sizeof(char));
+	if (!(ret))
 		return (0);
 	ft_memcpy(ret, tmp, *cmd - tmp);
 	return (ret);
 }
 
-static char						*ft_getenv_value(char **env, char *key,
-	size_t *key_len)
+static char	*ft_getenv_value(char **env, char *key, size_t *key_len)
 {
-	char						*variable;
+	char	*variable;
 
 	if (key[*key_len] == '\n')
 		key[(*key_len)--] = '\0';
@@ -51,13 +57,14 @@ static char						*ft_getenv_value(char **env, char *key,
 			free(key);
 		return (0);
 	}
-	if ((variable = ft_getenv(env, key)))
+	variable = ft_getenv(env, key);
+	if (variable)
 		variable = variable + (*key_len) + 1;
 	free(key);
 	return (variable);
 }
 
-int								ft_expand_dollar(t_expand_dollar *d)
+int	ft_expand_dollar(t_expand_dollar *d)
 {
 	t_expand_dollar_internal	i;
 
@@ -70,9 +77,9 @@ int								ft_expand_dollar(t_expand_dollar *d)
 	i.variable_len = ft_strlen(i.variable);
 	if (i.variable && *(i.variable) != '$' && (i.variable_len + 1) > i.key_len)
 	{
-		d->expanded_len = d->expanded_len + i.variable_len
-			- i.key_len - 1 + 1;
-		if (!(i.tmp = ft_calloc(d->expanded_len + 1, sizeof(char))))
+		d->expanded_len = d->expanded_len + i.variable_len - i.key_len - 1 + 1;
+		ft_calloc(d->expanded_len + 1, sizeof(char));
+		if (!(i.tmp))
 			return (0);
 		if (d->expanded)
 		{

@@ -6,18 +6,19 @@
 /*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/23 13:33:03 by acortes-          #+#    #+#             */
-/*   Updated: 2021/02/15 17:01:30 by acortes-         ###   ########.fr       */
+/*   Updated: 2021/04/01 16:54:54 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int					obtain_full_line(t_abs_struct *base)
+int	obtain_full_line(t_abs_struct *base)
 {
 	int				fd;
 	int				found_new_line;
 	char			*tmp;
 
+	tmp = malloc(sizeof(char));
 	fd = open("history.txt", O_RDWR | O_APPEND);
 	if (base->input)
 		free(base->input);
@@ -29,7 +30,8 @@ int					obtain_full_line(t_abs_struct *base)
 		if (found_new_line < 0)
 			ft_exit_minishell(base, 2);
 	}
-	if (!base->input || !(tmp = ft_strjoin(base->input, "\n")))
+	tmp = ft_strjoin(base->input, "\n");
+	if (!base->input || !(tmp))
 		ft_exit_minishell(base, 1);
 	free(base->input);
 	base->input = tmp;
@@ -38,7 +40,7 @@ int					obtain_full_line(t_abs_struct *base)
 	return (0);
 }
 
-static void			execute_command_read(t_abs_struct *base)
+static void	execute_command_read(t_abs_struct *base)
 {
 	t_job			*job;
 
@@ -52,7 +54,7 @@ static void			execute_command_read(t_abs_struct *base)
 	}
 }
 
-int					main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
 	int				minishell_ready;
 	t_abs_struct	base;

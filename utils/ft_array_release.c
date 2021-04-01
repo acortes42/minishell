@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_array_release.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: visv <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 16:17:11 by visv              #+#    #+#             */
-/*   Updated: 2021/03/13 16:17:13 by visv             ###   ########.fr       */
+/*   Updated: 2021/04/01 16:01:57 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void			ft_array_release(char **envp)
+void	ft_array_release(char **envp)
 {
 	char		**tmp;
 

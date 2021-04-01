@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_release_base.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: visv <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 16:18:29 by visv              #+#    #+#             */
-/*   Updated: 2021/03/13 16:18:30 by visv             ###   ########.fr       */
+/*   Updated: 2021/04/01 12:45:43 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void		ft_release_base(t_abs_struct *base)
+void	ft_release_base(t_abs_struct *base)
 {
 	if (!base)
 		return ;

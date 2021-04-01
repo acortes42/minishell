@@ -3,26 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vsempere <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 14:07:59 by vsempere          #+#    #+#             */
-/*   Updated: 2019/11/27 14:21:24 by vsempere         ###   ########.fr       */
+/*   Updated: 2021/04/01 16:01:44 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int		ft_get_sign(const char *nptr, size_t *i)
+static int	ft_get_sign(const char *nptr, size_t *i)
 {
 	int			sign;
 
-	sign = nptr[*i] == '-' ? -1 : 1;
+	if (nptr[*i] == '-')
+		sign = -1;
+	else
+		sign = 1;
 	if (nptr[*i] == '-' || nptr[*i] == '+')
 		(*i)++;
 	return (sign);
 }
 
-int				ft_atoi(const char *nptr)
+int	ft_test_sign(int sign)
+{
+	if (sign < 0)
+		return (0);
+	return (-1);
+}
+
+int	ft_atoi(const char *nptr)
 {
 	long int	ret;
 	long int	prv;
@@ -40,12 +50,13 @@ int				ft_atoi(const char *nptr)
 	{
 		prv = ret;
 		ret = (ret + (nptr[i] - '0')) * 10;
-		overflow = prv > ret ? 1 : 0;
+		if (!(prv > ret))
+			overflow = 0;
 		i++;
 	}
 	if (!overflow)
 		ret = (ret / 10) * sign;
 	else
-		ret = (sign < 0 ? 0 : -1);
+		ret = ft_test_sign(sign);
 	return (ret);
 }

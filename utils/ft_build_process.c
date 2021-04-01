@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_build_process.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: visv <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 16:17:34 by visv              #+#    #+#             */
-/*   Updated: 2021/03/13 16:17:36 by visv             ###   ########.fr       */
+/*   Updated: 2021/04/01 15:51:07 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int			ft_extract_fields(char *cmd, char ***argv)
+static int	ft_extract_fields(char *cmd, char ***argv)
 {
 	int				fields;
 	char			*field;
@@ -37,22 +37,24 @@ static int			ft_extract_fields(char *cmd, char ***argv)
 	return (fields);
 }
 
-t_process			*ft_build_ctrl_d_process(void)
+t_process	*ft_build_ctrl_d_process(void)
 {
 	t_process		*proc;
 
-	if (!(proc = ft_calloc(1, sizeof(t_process))))
+	proc = ft_calloc(1, sizeof(t_process));
+	if (!(proc))
 		return (0);
 	proc->ctrl_d = 1;
 	return (proc);
 }
 
-t_process			*ft_build_process(char *cmd)
+t_process	*ft_build_process(char *cmd)
 {
 	t_process		*proc;
 	int				fields;
 
-	if (!(proc = ft_calloc(1, sizeof(t_process))))
+	proc = ft_calloc(1, sizeof(t_process));
+	if (!(proc))
 		return (0);
 	fields = ft_extract_fields(cmd, &proc->argv);
 	if (fields < 0)
@@ -62,8 +64,7 @@ t_process			*ft_build_process(char *cmd)
 	}
 	else if (!fields)
 		return (proc);
-	else if (fields == 1 &&
-		(proc->argv && *proc->argv && **proc->argv == '\n'))
+	else if (fields == 1 && (proc->argv && *proc->argv && **proc->argv == '\n'))
 	{
 		ft_release_process(proc);
 		return (0);

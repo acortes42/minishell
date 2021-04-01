@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_build_processes.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: visv <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 16:17:37 by visv              #+#    #+#             */
-/*   Updated: 2021/03/13 16:17:40 by visv             ###   ########.fr       */
+/*   Updated: 2021/04/01 15:47:09 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_process			*ft_build_processes(char *cmd)
+t_process	*ft_build_processes(char *cmd)
 {
 	t_process		*procs;
 	t_process		*last_proc;

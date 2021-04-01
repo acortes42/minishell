@@ -3,17 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vsempere <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 14:07:59 by vsempere          #+#    #+#             */
-/*   Updated: 2019/11/27 14:21:24 by vsempere         ###   ########.fr       */
+/*   Updated: 2021/04/01 14:24:02 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		ft_isspace(int c)
+int	ft_isspace(int c)
 {
-	return ('\f' == c || '\n' == c || '\r' == c || '\t' == c || '\v' == c ||
-			' ' == c ? 1 : 0);
+	if ('\f' == c || '\n' == c || '\r' == c || '\t' == c || '\v' == c || ' ' == c)
+		return (1);
+	return (0);
 }

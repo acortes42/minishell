@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_array_len.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: visv <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 16:17:07 by visv              #+#    #+#             */
-/*   Updated: 2021/03/13 16:17:10 by visv             ###   ########.fr       */
+/*   Updated: 2021/04/01 16:02:03 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-size_t			ft_array_len(char **envp)
+size_t	ft_array_len(char **envp)
 {
-	size_t		l;
+	size_t	l;
 
 	l = 0;
 	if (!envp)

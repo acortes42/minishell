@@ -6,13 +6,13 @@
 /*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/23 16:04:40 by acortes-          #+#    #+#             */
-/*   Updated: 2021/03/02 15:12:23 by acortes-         ###   ########.fr       */
+/*   Updated: 2021/04/01 16:54:10 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int			ft_pwd(void)
+int	ft_pwd(void)
 {
 	char	cwd[1024];
 
@@ -26,7 +26,7 @@ int			ft_pwd(void)
 	return (1);
 }
 
-int			ft_help(void)
+int	ft_help(void)
 {
 	ft_putstr("\e[0mLos comandos disponibles són los siguientes:\n\n");
 	ft_putstr("exit\necho\npwd\ncd\nhistory\nhelp\nenv\nunset\n");

@@ -20,12 +20,12 @@ UTILS 				= utils/ft_putnbr.c utils/ft_putstr.c utils/ft_split.c \
 	utils/pipes.c utils/ft_remove_quotes.c \
 	utils/ft_expand_process_cmd_utils.c
 
-
 SRCS_WITHOUT_MAIN	=  srcs/ft_exit_minishell.c srcs/clear_screen.c \
 	srcs/ft_execute_ctrl_d.c srcs/echo.c srcs/cd.c \
 	srcs/history.c srcs/signals.c srcs/pwd.c srcs/env.c srcs/setenv.c \
-	srcs/ft_export.c srcs/ft_getenv.c \
+	srcs/ft_export.c srcs/ft_getenv.c  srcs/setenv_aux.c\
 	srcs/ft_init_minishell.c srcs/ft_show_prompt.c ${UTILS}
+	
 SRCS 				=  srcs/minishell.c ${SRCS_WITHOUT_MAIN}
 		
 CFLAGS				= -Wall -Wextra -Werror -I . -g -fsanitize=address
@@ -80,6 +80,7 @@ fclean: clean
 	@touch history.txt
 	@rm -f *.out
 	@rm -f *.a
+	@rm  ${NAME}
 	${RM} pipes redirection_redirected_output
 	${RM} minishell_check ${NAME}
 	

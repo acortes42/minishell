@@ -6,7 +6,7 @@
 /*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/23 16:04:34 by acortes-          #+#    #+#             */
-/*   Updated: 2021/01/23 16:04:35 by acortes-         ###   ########.fr       */
+/*   Updated: 2021/04/01 16:55:48 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	write_line(int num, char *line)
 	ft_putstr("\n");
 }
 
-int			ft_history(void)
+int	ft_history(void)
 {
 	int		fd;
 	int		num;

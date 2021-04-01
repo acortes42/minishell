@@ -6,13 +6,13 @@
 /*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 21:45:34 by acortes-          #+#    #+#             */
-/*   Updated: 2019/12/14 16:15:12 by acortes-         ###   ########.fr       */
+/*   Updated: 2021/03/31 12:07:17 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char		*ft_strdup(const char *s1)
+char	*ft_strdup(const char *s1)
 {
 	int		x;
 	char	*str;
@@ -26,7 +26,7 @@ char		*ft_strdup(const char *s1)
 	return (str);
 }
 
-char		*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
 	int		total;
 	char	*str;
@@ -45,7 +45,7 @@ char		*ft_strjoin(char const *s1, char const *s2)
 	return (str);
 }
 
-char		*ft_strcdup(const char *s1, int c)
+char	*ft_strcdup(const char *s1, int c)
 {
 	int		i;
 	char	*str;
@@ -66,7 +66,7 @@ char		*ft_strcdup(const char *s1, int c)
 	return (str);
 }
 
-char		*ft_strchr(char *str, int c)
+char	*ft_strchr(char *str, int c)
 {
 	int		i;
 	char	str2;

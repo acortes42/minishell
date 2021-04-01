@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_build_home.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/01 16:03:49 by acortes-          #+#    #+#             */
+/*   Updated: 2021/04/01 16:04:03 by acortes-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../tests_minishell.h"
 
-char		*ft_build_home(void)
+char	*ft_build_home(void)
 {
 	char	*cwd;
 	char	*path_sep;
@@ -17,7 +29,7 @@ char		*ft_build_home(void)
 	return (home);
 }
 
-char		*ft_build_home_slash_ended(void)
+char	*ft_build_home_slash_ended(void)
 {
 	char	*cwd;
 	char	*path_sep;
