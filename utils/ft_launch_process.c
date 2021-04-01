@@ -50,7 +50,6 @@ static void	ft_execute_shell_command_using_path(t_abs_struct *base,
 	path = ft_split_shell_by(&paths, ":");
 	while (path)
 	{
-		path = ft_split_shell_by(&paths, ":");
 		tmp = ft_strlcat_paths(path, p->argv[0]);
 		free(path);
 		if (!stat(tmp, &statbuf))
@@ -61,6 +60,7 @@ static void	ft_execute_shell_command_using_path(t_abs_struct *base,
 				ft_execute_relative_shell_command(base, p);
 		}
 		free(tmp);
+		path = ft_split_shell_by(&paths, ":");
 	}
 	ft_putstr_fd(*p->argv, STDERR_FILENO);
 	ft_putstr_fd(": not found command\n", STDERR_FILENO);

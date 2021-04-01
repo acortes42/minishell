@@ -30,3 +30,5 @@ https://www.gnu.org/software/libc/manual/html_node/Launching-Jobs.html
 #### VSCode
 Debug child thread of a fork. Set follow-fork-mode to child in the Debug console tab using the next command:
 * -exec set follow-fork-mode child
+Debug main thread of a fork
+* -exec set follow-fork-mode parent

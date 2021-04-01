@@ -12,13 +12,25 @@
 
 #include "minishell.h"
 
+static int	append_new_line(char **str)
+{
+	char			*tmp;
+
+	if (!str || !(*str))
+		return (0);
+	tmp = ft_strjoin(*str, "\n");
+	if (!tmp)
+		return (0);
+	free(*str);
+	*str = tmp;
+	return (1);
+}
+
 int	obtain_full_line(t_abs_struct *base)
 {
 	int				fd;
 	int				found_new_line;
-	char			*tmp;
 
-	tmp = malloc(sizeof(char));
 	fd = open("history.txt", O_RDWR | O_APPEND);
 	if (base->input)
 		free(base->input);
@@ -30,11 +42,8 @@ int	obtain_full_line(t_abs_struct *base)
 		if (found_new_line < 0)
 			ft_exit_minishell(base, 2);
 	}
-	tmp = ft_strjoin(base->input, "\n");
-	if (!base->input || !(tmp))
+	if (!append_new_line(&base->input))
 		ft_exit_minishell(base, 1);
-	free(base->input);
-	base->input = tmp;
 	write(fd, base->input, ft_strlen(base->input));
 	close(fd);
 	return (0);
