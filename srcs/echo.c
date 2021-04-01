@@ -6,13 +6,13 @@
 /*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/23 16:04:27 by acortes-          #+#    #+#             */
-/*   Updated: 2021/03/02 17:51:08 by acortes-         ###   ########.fr       */
+/*   Updated: 2021/04/01 17:10:11 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int			echo(t_abs_struct *base, t_process *p)
+int	echo(t_abs_struct *base, t_process *p)
 {
 	int		i;
 	int		flag;
@@ -21,7 +21,9 @@ int			echo(t_abs_struct *base, t_process *p)
 	flag = 0;
 	if (!p->argv[i])
 		return (1);
-	flag = (ft_strcmp(p->argv[i], "-n") == 0) ? 0 : 1;
+	flag = 1;
+	if (ft_strcmp(p->argv[i], "-n") == 0)
+		flag = 0;
 	if (flag == 0)
 		i++;
 	if (!p->argv[i])

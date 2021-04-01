@@ -6,7 +6,7 @@
 /*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 14:55:18 by acortes-          #+#    #+#             */
-/*   Updated: 2021/02/15 17:29:38 by acortes-         ###   ########.fr       */
+/*   Updated: 2021/04/01 17:06:21 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ static int	ft_print_declare(char *env)
 	int		space;
 	char	*value;
 
-	if (!(value = ft_strchr(env, '=')))
+	value = ft_strchr(env, '=');
+	if (!(value))
 		return (0);
 	space = ft_isspace(*(value + 1));
 	ft_putstr("declare -x ");
@@ -44,7 +45,7 @@ static int	ft_print_declares(t_abs_struct *base)
 	return (1);
 }
 
-int			ft_export(t_abs_struct *base, t_process *p)
+int	ft_export(t_abs_struct *base, t_process *p)
 {
 	if (!p->argv[1])
 		return (ft_print_declares(base));

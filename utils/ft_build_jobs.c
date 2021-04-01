@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_build_jobs.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: visv <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 16:17:30 by visv              #+#    #+#             */
-/*   Updated: 2021/03/13 16:17:33 by visv             ###   ########.fr       */
+/*   Updated: 2021/04/01 15:52:43 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_job			*ft_build_jobs(char *command)
+t_job	*ft_build_jobs(char *command)
 {
 	char		*job_cmd;
 	char		*cmd_i;
@@ -28,7 +28,8 @@ t_job			*ft_build_jobs(char *command)
 	{
 		if (job)
 		{
-			if ((job->next = ft_build_job(job_cmd)))
+			job->next = ft_build_job(job_cmd);
+			if (job->next)
 				job = job->next;
 		}
 		else

@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acortes- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 09:25:59 by acortes-          #+#    #+#             */
-/*   Updated: 2019/11/06 09:26:09 by acortes-         ###   ########.fr       */
+/*   Updated: 2021/04/01 14:09:58 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int		total_words(char const *s1, char c)
+int	total_words(char const *s1, char c)
 {
-	int		n;
-	int		j;
+	int	n;
+	int	j;
 
 	n = 0;
 	j = 0;
@@ -30,10 +30,10 @@ int		total_words(char const *s1, char c)
 	return (j);
 }
 
-int		len_of_word(const char *str, char c)
+int	len_of_word(const char *str, char c)
 {
-	int		word;
-	int		i;
+	int	word;
+	int	i;
 
 	i = 0;
 	word = 0;
@@ -57,12 +57,14 @@ char	**ft_split(char const *s, char c)
 	i = 0;
 	n = 0;
 	j = 0;
-	if (!s || !(str = malloc(sizeof(char *) * (1 + total_words(s, c)))))
+	str = malloc(sizeof(char *) * (1 + total_words(s, c)));
+	if (!s || !(str))
 		return (NULL);
 	while (i < total_words(s, c))
 	{
 		j = 0;
-		if (!(str[i] = malloc(sizeof(char) * (1 + len_of_word(&s[n], c)))))
+		str[i] = malloc(sizeof(char) * (1 + len_of_word(&s[n], c)));
+		if (!(str[i]))
 			return (NULL);
 		while (s[n] == c)
 			n++;

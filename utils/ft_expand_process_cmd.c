@@ -3,27 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expand_process_cmd.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: visv <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 16:17:54 by visv              #+#    #+#             */
-/*   Updated: 2021/03/13 16:17:56 by visv             ###   ########.fr       */
+/*   Updated: 2021/04/01 15:02:07 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void			ft_print_last_process_status(t_expand_dollar *d)
+static void	ft_print_last_process_status(t_expand_dollar *d)
 {
 	char			*expansion;
 	char			*status;
 	int				len;
 
-	if (!(status = ft_itoa(d->base->last_executed_process_status)))
+	status = ft_itoa(d->base->last_executed_process_status);
+	if (!(status))
 		ft_exit_minishell(d->base, 1);
-	if ((len = ft_strlen(status)) > 2)
+	len = ft_strlen(status);
+	if (len > 2)
 	{
-		if (!(expansion = ft_calloc(d->expanded_len + (len - 2) + 1,
-			sizeof(char))))
+		expansion = ft_calloc(d->expanded_len + (len - 2) + 1, sizeof(char));
+		if (!(expansion))
 			ft_exit_minishell(d->base, 1);
 		ft_memcpy(expansion, d->expanded, d->pos);
 		ft_memcpy(expansion + d->pos, status, len);
@@ -32,15 +34,20 @@ static void			ft_print_last_process_status(t_expand_dollar *d)
 		d->expanded_len += (len - 2);
 	}
 	else
-	{
 		ft_memcpy(d->expanded + d->pos, status, len);
-	}
 	d->pos += len;
 	d->cmd += 2;
 	free(status);
 }
 
-static void			expand_char(t_expand_dollar *d)
+char	give_char(char d)
+{
+	if (!d)
+		return ('\'');
+	return (0);
+}
+
+static void	expand_char(t_expand_dollar *d)
 {
 	if (d->scape)
 	{
@@ -49,9 +56,12 @@ static void			expand_char(t_expand_dollar *d)
 		return ;
 	}
 	else if (*d->cmd == '\'' && !d->quote)
-		d->single_quote = (!d->single_quote ? '\'' : 0);
+		d->single_quote = give_char(d->single_quote);
 	else if (*d->cmd == '"' && !d->single_quote && !d->scape)
-		d->quote = (!d->quote ? '"' : d->quote);
+	{
+		if (!d->quote)
+			d->quote = '"';
+	}
 	else if (*d->cmd == '$' && (d->quote || !d->single_quote))
 	{
 		if (*(d->cmd + 1) == '?')
@@ -61,31 +71,32 @@ static void			expand_char(t_expand_dollar *d)
 		return ;
 	}
 	else if (*d->cmd == '\\')
-		d->scape = (d->scape ? 0 : 1);
+		d->scape = give_int(d->scape);
 	*(d->expanded + d->pos++) = *d->cmd;
 	d->cmd++;
 }
 
-static char			*expand(t_abs_struct *base, char *cmd)
+static char	*expand(t_abs_struct *base, char *cmd)
 {
 	t_expand_dollar	d;
 
 	ft_memset(&d, 0, sizeof(t_expand_dollar));
 	d.cmd = cmd;
 	d.base = base;
-	d.expanded_len = (!cmd ? 0 : ft_strlen(cmd));
-	if (!d.expanded_len || !(d.expanded = ft_calloc(d.expanded_len + 2,
-		sizeof(char))))
+	if (!cmd)
+		d.expanded_len = 0;
+	else
+		d.expanded_len = ft_strlen(cmd);
+	d.expanded = ft_calloc(d.expanded_len + 2, sizeof(char));
+	if (!d.expanded_len || !(d.expanded))
 		return (0);
 	while (d.cmd && *d.cmd != '\0')
-	{
 		expand_char(&d);
-	}
 	*(d.expanded + d.pos) = ' ';
 	return (d.expanded);
 }
 
-int					ft_expand_process_cmd(t_abs_struct *base, t_process *p)
+int	ft_expand_process_cmd(t_abs_struct *base, t_process *p)
 {
 	char			*expanded_slice;
 	char			*trimmed;
@@ -96,10 +107,12 @@ int					ft_expand_process_cmd(t_abs_struct *base, t_process *p)
 	to_expand = p->argv;
 	while (to_expand && *to_expand)
 	{
-		if (!(expanded_slice = expand(base, *to_expand)))
+		expanded_slice = expand(base, *to_expand);
+		if (!(expanded_slice))
 			return (0);
 		free(*to_expand);
-		if (!(trimmed = ft_trim(expanded_slice)))
+		trimmed = ft_trim(expanded_slice);
+		if (!(trimmed))
 		{
 			free(expanded_slice);
 			return (0);

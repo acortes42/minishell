@@ -1,9 +1,16 @@
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <string.h>
-#include <stdlib.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   test_fork.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/01 16:07:30 by acortes-          #+#    #+#             */
+/*   Updated: 2021/04/01 16:12:52 by acortes-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "tests_minishell.h"
 
 int main(void)
 {

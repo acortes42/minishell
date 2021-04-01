@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_init_minishell.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: visv <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 15:54:14 by visv              #+#    #+#             */
-/*   Updated: 2021/03/13 15:54:15 by visv             ###   ########.fr       */
+/*   Updated: 2021/04/01 17:05:26 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int				ft_init_minishell(t_abs_struct *base, char **envp)
+int	ft_init_minishell(t_abs_struct *base, char **envp)
 {
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);

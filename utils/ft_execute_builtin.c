@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execute_builtin.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: visv <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 16:17:52 by visv              #+#    #+#             */
-/*   Updated: 2021/03/13 16:17:53 by visv             ###   ########.fr       */
+/*   Updated: 2021/04/01 17:24:54 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int			execute_environment_builtins(t_abs_struct *base,
-	t_process *previous, t_process *p)
+static int	execute_environment_builtins(t_abs_struct *base,
+				 t_process *previous, t_process *p)
 {
-	int				executed;
+	int	executed;
 
 	executed = 1;
 	base->parse_string = p->argv;
@@ -35,7 +35,7 @@ static int			execute_environment_builtins(t_abs_struct *base,
 	return (executed);
 }
 
-static int			execute_environment_builtins2(t_abs_struct *base,
+static int	execute_environment_builtins2(t_abs_struct *base,
 	t_process *previous, t_process *p)
 {
 	if (!ft_strcmp(p->argv[0], "exit"))
@@ -60,8 +60,7 @@ static int			execute_environment_builtins2(t_abs_struct *base,
 	return (0);
 }
 
-static int			execute_environment_builtins3(t_abs_struct *base,
-	t_process *previous, t_process *p)
+static int	execute_environment_builtins3(t_process *previous, t_process *p)
 {
 	if (!ft_strcmp(p->argv[0], "history"))
 	{
@@ -72,7 +71,7 @@ static int			execute_environment_builtins3(t_abs_struct *base,
 	else if (!ft_strcmp(p->argv[0], "help"))
 	{
 		ft_set_pipes(previous, p);
-		ft_help(base);
+		ft_help();
 		return (1);
 	}
 	else if (!ft_strcmp(p->argv[0], "clear"))
@@ -83,7 +82,7 @@ static int			execute_environment_builtins3(t_abs_struct *base,
 	return (0);
 }
 
-int					ft_execute_builtin(t_abs_struct *base, t_process *previous,
+int	ft_execute_builtin(t_abs_struct *base, t_process *previous,
 	t_process *p)
 {
 	ft_putstr("\e[0m");
@@ -96,12 +95,12 @@ int					ft_execute_builtin(t_abs_struct *base, t_process *previous,
 	if (set_redirections(base, p))
 		return (0);
 	base->parse_string = p->argv;
-	base->actual_argument = 0;
+	base->a = 0;
 	if (execute_environment_builtins(base, previous, p))
 		return (1);
 	if (execute_environment_builtins2(base, previous, p))
 		return (1);
-	if (execute_environment_builtins3(base, previous, p))
+	if (execute_environment_builtins3(previous, p))
 		return (1);
 	return (0);
 }

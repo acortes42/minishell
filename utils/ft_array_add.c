@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   setenv.c                                           :+:      :+:    :+:   */
+/*   ft_array_add.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/23 16:04:45 by acortes-          #+#    #+#             */
-/*   Updated: 2021/01/23 16:04:45 by acortes-         ###   ########.fr       */
+/*   Updated: 2021/04/01 16:03:05 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int				ft_array_add(char ***array, int *array_len, char *value)
+int	ft_array_add(char ***array, int *array_len, char *value)
 {
 	char		**aux;
 	int			x;
 
 	x = 0;
-	if (!(aux = malloc(sizeof(char *) * (*array_len + 2))))
+	aux = malloc(sizeof(char *) * (*array_len + 2));
+	if (!(aux))
 		return (0);
 	while (x < *array_len)
 	{

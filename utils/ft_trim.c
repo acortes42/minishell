@@ -3,22 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   ft_trim.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: visv <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 22:11:09 by visv              #+#    #+#             */
-/*   Updated: 2021/03/13 22:11:11 by visv             ###   ########.fr       */
+/*   Updated: 2021/04/01 11:50:03 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char			*ft_trim(char *str)
+char	*ft_trim(char *str)
 {
 	size_t		start;
 	size_t		end;
 	char		*trimmed;
 
-	if (!str || !(end = ft_strlen(str)))
+	end = ft_strlen(str);
+	if (!str || !(end))
 		return (0);
 	start = 0;
 	while (ft_isspace(*(str + start)))
@@ -28,7 +29,8 @@ char			*ft_trim(char *str)
 		end--;
 	if (start > end)
 		start = end;
-	if (!(trimmed = ft_calloc(end - start + 2, sizeof(char))))
+	trimmed = ft_calloc(end - start + 2, sizeof(char));
+	if (!(trimmed))
 		return (0);
 	ft_memcpy(trimmed, str + start, (end - start + 1));
 	return (trimmed);

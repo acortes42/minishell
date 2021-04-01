@@ -6,13 +6,13 @@
 /*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 11:02:52 by acortes-          #+#    #+#             */
-/*   Updated: 2021/01/08 11:06:56 by acortes-         ###   ########.fr       */
+/*   Updated: 2021/04/01 12:45:55 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void		ft_putstr(char *s)
+void	ft_putstr(char *s)
 {
 	int		i;
 
@@ -26,7 +26,7 @@ void		ft_putstr(char *s)
 	}
 }
 
-void		ft_putnstr(char *s, size_t len)
+void	ft_putnstr(char *s, size_t len)
 {
 	size_t	i;
 

@@ -1,30 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_getenv.c                                        :+:      :+:    :+:   */
+/*   setenv_aux.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/23 16:04:45 by acortes-          #+#    #+#             */
-/*   Updated: 2021/04/01 17:05:45 by acortes-         ###   ########.fr       */
+/*   Created: 2021/04/01 17:54:04 by acortes-          #+#    #+#             */
+/*   Updated: 2021/04/01 18:07:13 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ft_getenv(char **env, char *env_key)
+int	ft_check_home(char *home)
 {
-	char	**tmp;
-	size_t	key_len;
+	if (home)
+		return (0);
+	return (1);
+}
 
-	key_len = ft_strlen(env_key);
-	tmp = env;
-	while (tmp && *tmp)
-	{
-		if (ft_strlen(*tmp) > key_len && !ft_memcmp(*tmp, env_key, key_len)
-			 && *((*tmp) + key_len) == '=')
-			return (*tmp);
-		tmp++;
-	}
-	return (NULL);
+int	ft_check_home2(char *home)
+{
+	if (home)
+		return (-1);
+	return (0);
 }

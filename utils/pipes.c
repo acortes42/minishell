@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: visv <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 22:12:45 by visv              #+#    #+#             */
-/*   Updated: 2021/03/13 22:12:47 by visv             ###   ########.fr       */
+/*   Updated: 2021/03/31 12:06:54 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void			ft_configure_pipes(t_abs_struct *base,
+void	ft_configure_pipes(t_abs_struct *base,
 	t_process *current)
 {
 	if (current->next)
@@ -27,7 +27,7 @@ void			ft_configure_pipes(t_abs_struct *base,
 	}
 }
 
-void			ft_close_pipes(t_files_fd fds, t_process *previous,
+void	ft_close_pipes(t_files_fd fds, t_process *previous,
 	t_process *current)
 {
 	if (previous)
@@ -45,7 +45,7 @@ void			ft_close_pipes(t_files_fd fds, t_process *previous,
 	}
 }
 
-void			ft_set_pipes(t_process *previous, t_process *current)
+void	ft_set_pipes(t_process *previous, t_process *current)
 {
 	if (previous && previous->pipe[STDIN_FILENO] > -1)
 		dup2(previous->pipe[STDIN_FILENO], STDIN_FILENO);

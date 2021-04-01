@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: visv <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 22:15:50 by visv              #+#    #+#             */
-/*   Updated: 2021/03/13 22:15:52 by visv             ###   ########.fr       */
+/*   Updated: 2021/03/31 12:06:17 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	set_redirection(t_abs_struct *base, char *i)
 	return (0);
 }
 
-int			set_redirections(t_abs_struct *base, t_process *p)
+int	set_redirections(t_abs_struct *base, t_process *p)
 {
 	char	**i;
 	int		redirected;
@@ -37,7 +37,8 @@ int			set_redirections(t_abs_struct *base, t_process *p)
 	redirected = 0;
 	while (!redirected && i && *i)
 	{
-		if ((redirected = set_redirection(base, *i)))
+		redirected = set_redirection(base, *i);
+		if (redirected)
 			return (redirected);
 		i++;
 	}

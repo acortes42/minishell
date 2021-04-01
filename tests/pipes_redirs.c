@@ -1,12 +1,16 @@
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <sys/wait.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
-#include <errno.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipes_redirs.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/01 16:13:04 by acortes-          #+#    #+#             */
+/*   Updated: 2021/04/01 16:13:05 by acortes-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "tests_minishell.h"
 
 static int redirection(char **env)
 {

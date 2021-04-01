@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_show_prompt.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: visv <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 15:54:19 by visv              #+#    #+#             */
-/*   Updated: 2021/03/13 15:54:35 by visv             ###   ########.fr       */
+/*   Updated: 2021/04/01 17:05:15 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char		*ft_get_cwd(t_abs_struct *base)
+static char	*ft_get_cwd(t_abs_struct *base)
 {
 	char		*cwd;
 
@@ -26,7 +26,14 @@ static char		*ft_get_cwd(t_abs_struct *base)
 	return (cwd);
 }
 
-static void		ft_show_prompt_cwd(t_abs_struct *base)
+int	ft_value_to_len(char *home)
+{
+	if (!home)
+		return (0);
+	return (ft_strlen(home));
+}
+
+static void	ft_show_prompt_cwd(t_abs_struct *base)
 {
 	char		*cwd;
 	char		*tmp;
@@ -37,7 +44,7 @@ static void		ft_show_prompt_cwd(t_abs_struct *base)
 	home = ft_getenv(base->env, "HOME");
 	if (home)
 		home += 5;
-	len = !home ? 0 : ft_strlen(home);
+	len = ft_value_to_len(home);
 	while (len && *(home + len - 1) == '/')
 		len--;
 	if (len && !ft_strncmp(cwd, home, len))
@@ -49,13 +56,11 @@ static void		ft_show_prompt_cwd(t_abs_struct *base)
 		cwd = tmp;
 		cwd[0] = '~';
 	}
-	ft_putstr(ANSI_COLOR_BLUE);
 	ft_putstr(cwd);
-	ft_putstr(ANSI_COLOR_RESET);
 	free(cwd);
 }
 
-static void		ft_show_prompt_user(t_abs_struct *base)
+static void	ft_show_prompt_user(t_abs_struct *base)
 {
 	char		*str;
 	size_t		len;
@@ -73,10 +78,12 @@ static void		ft_show_prompt_user(t_abs_struct *base)
 	ft_putstr(ANSI_COLOR_RESET);
 }
 
-void			ft_show_prompt(t_abs_struct *base)
+void	ft_show_prompt(t_abs_struct *base)
 {
 	ft_show_prompt_user(base);
 	ft_putstr(":");
+	ft_putstr(ANSI_COLOR_BLUE);
 	ft_show_prompt_cwd(base);
+	ft_putstr(ANSI_COLOR_RESET);
 	ft_putstr("$ ");
 }
