@@ -8,10 +8,10 @@
 25. Revisar el proceso de evaluación para ver si cumplimos con todo
 26. Jugar con el minishell y tratar de romperlo
 29. Comprobar en mac si al ejecutar export sin nada, nos muestra: declare -x a=valor. Si no lo hace. Modificar ft_export.c para que no lo haga
-30. No funciona $? . Siempre nos muestra 0
 31. Tenemos que tratar el ctrl+z? Si hacemos un more minishell.h y pulsamos ctrl+z debería detener el proceso pero creo que no es necesario contemplar los procesos detenidos
-33. Revisar porqué el ctrl+d no se interpreta correctamente.
-    ¿problema de la implementación de gnl?
+34. Comiillas simples o dobles individuales, ..., nos muestran 1 permissión denied por cada path ejecutado
+35. He visto que hay algo que puede fallar en la lectura del gnl para el history, si falla, he ajustado para utilizar:
+get_next_line_visv.c y get_next_line_utils_visv.c simplemente cambiando el makefile
 
 
 
