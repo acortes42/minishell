@@ -31,10 +31,13 @@ t_job	*ft_build_jobs(char *command)
 			job->next = ft_build_job(job_cmd);
 			if (job->next)
 				job = job->next;
+			else
+				free(job_cmd);
 		}
 		else
 		{
-			jobs = ft_build_job(job_cmd);
+			if (!(jobs = ft_build_job(job_cmd)))
+				free(job_cmd);
 			job = jobs;
 		}
 	}

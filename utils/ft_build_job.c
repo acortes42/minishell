@@ -19,7 +19,7 @@ t_job	*ft_build_job_ctrl_d(char *command)
 	j = ft_calloc(1, sizeof(t_job));
 	if (!(j))
 		return (0);
-	j->command = ft_strdup(command);
+	j->command = command;
 	j->std_fds.errfile = STDERR_FILENO;
 	j->std_fds.infile = STDIN_FILENO;
 	j->std_fds.outfile = STDOUT_FILENO;

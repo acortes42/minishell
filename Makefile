@@ -76,7 +76,7 @@ clean:
 fclean: clean
 	@rm -f *.o
 	@rm -rdf SourceFiles
-	@rm history.txt
+	@rm -f history.txt
 	@touch history.txt
 	@rm -f *.out
 	@rm -f *.a
