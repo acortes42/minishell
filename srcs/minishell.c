@@ -36,13 +36,13 @@ int	obtain_full_line(t_abs_struct *base)
 		free(base->input);
 	base->input = 0;
 	found_new_line = 0;
-	while (!found_new_line)
+	while (!found_new_line && (!base->input || *base->input))
 	{
 		found_new_line = get_next_line(STDIN_FILENO, &base->input);
 		if (found_new_line < 0)
 			ft_exit_minishell(base, 2);
 	}
-	if (!append_new_line(&base->input))
+	if (base->input && *base->input && !append_new_line(&base->input))
 		ft_exit_minishell(base, 1);
 	write(fd, base->input, ft_strlen(base->input));
 	close(fd);
