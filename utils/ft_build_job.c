@@ -17,7 +17,7 @@ t_job	*ft_build_job_ctrl_d(char *command)
 	t_job		*j;
 
 	j = ft_calloc(1, sizeof(t_job));
-	if (!(j))
+	if (!j)
 		return (0);
 	j->command = command;
 	j->std_fds.errfile = STDERR_FILENO;
@@ -31,8 +31,10 @@ t_job	*ft_build_job(char *command)
 {
 	t_job		*j;
 
+	if (!command || !(*command))
+		return (0);
 	j = ft_calloc(1, sizeof(t_job));
-	if (!command || !(*command) || !(j))
+	if (!j)
 		return (0);
 	j->command = command;
 	j->std_fds.errfile = STDERR_FILENO;
