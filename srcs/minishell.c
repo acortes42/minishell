@@ -51,15 +51,11 @@ int	obtain_full_line(t_abs_struct *base)
 
 static void	execute_command_read(t_abs_struct *base)
 {
-	t_job			*job;
-
-	job = ft_build_jobs(base->input);
-	base->first_job = job;
-	while (job)
+	base->first_job = ft_build_jobs(base->input);
+	while (base->first_job)
 	{
-		ft_launch_job(base, job);
-		job = ft_release_job(job);
-		base->first_job = job;
+		ft_launch_job(base, base->first_job);
+		base->first_job = ft_release_job(base->first_job);
 	}
 }
 
