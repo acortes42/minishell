@@ -1,34 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vsempere <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/29 21:45:34 by acortes-          #+#    #+#             */
-/*   Updated: 2021/03/31 12:07:17 by acortes-         ###   ########.fr       */
+/*   Created: 2019/11/17 14:30:12 by vsempere          #+#    #+#             */
+/*   Updated: 2019/11/17 14:30:15 by vsempere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ft_strcdup(const char *s1, int c)
+char			*ft_strdup(const char *s)
 {
 	int		i;
 	char	*str;
-	char	car;
 
 	i = 0;
-	car = (char)c;
-	while (s1[i] != car && s1[i] != '\0')
-		i++;
-	str = malloc(i + 1 * sizeof(char));
-	str[i] = '\0';
-	if (str == NULL)
+	while (s[i])
 	{
-		return (NULL);
+		i++;
 	}
-	while (i-- > 0)
-		str[i] = s1[i];
+	str = (char *)malloc((i + 1) * sizeof(char));
+	if (str == NULL)
+		return (NULL);
+	i = 0;
+	while (s[i])
+	{
+		str[i] = s[i];
+		i++;
+	}
+	str[i] = s[i];
 	return (str);
 }
