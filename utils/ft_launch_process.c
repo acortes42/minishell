@@ -12,33 +12,6 @@
 
 #include "minishell.h"
 
-static void	ft_execute_absolute_shell_command(t_abs_struct *base,
-	char *cmd, t_process *p)
-{
-	execve(cmd, p->argv, base->env);
-	if (errno == EACCES)
-		p->status = 126;
-	p->completed = 1;
-	ft_putstr_fd(strerror(errno), STDERR_FILENO);
-	ft_putstr_fd("\n", STDERR_FILENO);
-}
-
-static void	ft_execute_relative_shell_command(t_abs_struct *base,
-	t_process *p)
-{
-	char		*path;
-	char		*tmp;
-
-	path = getcwd(0, 0);
-	if (!(path))
-		return ;
-	tmp = ft_strjoin(path, p->argv[0] + 1);
-	free(path);
-	path = tmp;
-	ft_execute_absolute_shell_command(base, path, p);
-	free(path);
-}
-
 static char	*ft_get_path_to_execute(char *paths, char *cmd)
 {
 	struct stat	statbuf;
@@ -52,14 +25,30 @@ static char	*ft_get_path_to_execute(char *paths, char *cmd)
 		free(path);
 		if (!stat(tmp, &statbuf))
 		{
-			if (((statbuf.st_mode & __S_IFMT) == __S_IFDIR) ||
-				((statbuf.st_mode & __S_IFMT) == __S_IFREG))
+			if (((statbuf.st_mode & __S_IFMT) == __S_IFDIR)
+				|| ((statbuf.st_mode & __S_IFMT) == __S_IFREG))
 				return (tmp);
 		}
 		free(tmp);
 		path = ft_split_shell_by(&paths, ":");
 	}
 	return (0);
+}
+
+static void	ft_process_not_found_command(t_process *p)
+{
+	ft_putstr_fd(*p->argv, STDERR_FILENO);
+	ft_putstr_fd(": not found command\n", STDERR_FILENO);
+	p->completed = 1;
+	p->status = 1;
+}
+
+static void	ft_process_is_a_directory_command(t_process *p)
+{
+	ft_putstr_fd(*p->argv, STDERR_FILENO);
+	ft_putstr_fd(": is a directory\n", STDERR_FILENO);
+	p->completed = 1;
+	p->status = 1;
 }
 
 static void	ft_execute_shell_command_using_path(t_abs_struct *base,
@@ -72,22 +61,12 @@ static void	ft_execute_shell_command_using_path(t_abs_struct *base,
 	paths = ft_getenv(base->env, "PATH") + 5;
 	path = ft_get_path_to_execute(paths, p->argv[0]);
 	if (!path)
-	{
-		ft_putstr_fd(*p->argv, STDERR_FILENO);
-		ft_putstr_fd(": not found command\n", STDERR_FILENO);
-		p->completed = 1;
-		p->status = 1;
-	}
+		ft_process_not_found_command(p);
 	else
 	{
 		stat(path, &statbuf);
 		if ((statbuf.st_mode & __S_IFMT) == __S_IFDIR)
-		{
-			ft_putstr_fd(*p->argv, STDERR_FILENO);
-			ft_putstr_fd(": is a directory\n", STDERR_FILENO);
-			p->completed = 1;
-			p->status = 1;
-		}
+			ft_process_is_a_directory_command(p);
 		else if ((statbuf.st_mode & __S_IFMT) == __S_IFREG)
 		{
 			if (*path == '/' || !ft_strncmp(path, "\"/", 2))

@@ -19,7 +19,8 @@ static int	ft_extract_fields(char *cmd, char ***argv)
 	char			*tmp;
 
 	fields = 0;
-	while ((field = ft_split_shell_by(&cmd, " ")))
+	field = ft_split_shell_by(&cmd, " ");
+	while (field)
 	{
 		if (*field == '\n')
 			free(field);
@@ -33,6 +34,7 @@ static int	ft_extract_fields(char *cmd, char ***argv)
 			if (!ft_array_add(argv, &fields, field))
 				return (-1);
 		}
+		field = ft_split_shell_by(&cmd, " ");
 	}
 	return (fields);
 }

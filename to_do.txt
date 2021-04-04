@@ -11,8 +11,8 @@
 31. Tenemos que tratar el ctrl+z? Si hacemos un more minishell.h y pulsamos ctrl+z debería detener el proceso pero creo que no es necesario contemplar los procesos detenidos
 35. He visto que hay algo que puede fallar en la lectura del gnl para el history, si falla, he ajustado para utilizar:
 get_next_line_visv.c y get_next_line_utils_visv.c simplemente cambiando el makefile
-
-
+36. Leak, ejecutando:
+    export a=4243;echo $a$a$a$a$a
 
 comentarios de setenv.c
 // TODO: modificar el nombre de fichero por ft_setenv.c

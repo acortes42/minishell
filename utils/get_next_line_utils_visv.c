@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-char				*ft_concat(char *line, char *bf, int *found_nl)
+char	*ft_concat(char *line, char *bf, int *found_nl)
 {
 	int				i;
 	int				b2c;
@@ -22,12 +22,16 @@ char				*ft_concat(char *line, char *bf, int *found_nl)
 	b2c = 0;
 	while (b2c < BUFFER_SIZE && *(bf + b2c) && *(bf + b2c) != '\n')
 		b2c++;
-	*found_nl = b2c < BUFFER_SIZE && *(bf + b2c) == '\n' ? 1 : 0;
+	if (b2c < BUFFER_SIZE && *(bf + b2c) == '\n')
+		*found_nl = 1;
+	else
+		*found_nl = 0;
 	line_len = 0;
 	while (*(line + line_len))
 		line_len++;
-	if (!(nl = malloc(sizeof(char) *
-		(line_len + (b2c < BUFFER_SIZE ? b2c : BUFFER_SIZE) + 1))))
+	nl = malloc(sizeof(char) * (line_len +
+		(b2c < BUFFER_SIZE ? b2c : BUFFER_SIZE) + 1));
+	if (!nl)
 		return (0);
 	i = -1;
 	while ((++i) < line_len)
@@ -39,7 +43,7 @@ char				*ft_concat(char *line, char *bf, int *found_nl)
 	return (nl);
 }
 
-void				ft_shift_left(char *bf)
+void	ft_shift_left(char *bf)
 {
 	int				i;
 	int				nl_pos;

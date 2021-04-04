@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-char		*ft_strchr(const char *s, int c)
+char	*ft_strchr(const char *s, int c)
 {
 	c = (char)c;
 	while (*s)
@@ -22,5 +22,7 @@ char		*ft_strchr(const char *s, int c)
 		else
 			s++;
 	}
-	return (*s == c ? (char *)s : 0);
+	if (*s == c)
+		return ((char *)s);
+	return (0);
 }

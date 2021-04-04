@@ -55,11 +55,25 @@ char	*ft_split_shell(char **str)
 	return (ft_split_shell_by(str, ";"));
 }
 
+static char	*ft_extract_split(char **str, char *ptr, char *separator)
+{
+	char	*splitted;
+	size_t	len;
+
+	len = ptr - (*str) + 1;
+	splitted = ft_calloc(len, sizeof(char));
+	if (!(splitted))
+		return (0);
+	ft_strlcpy(splitted, *str, len);
+	*str = ptr;
+	if (!ft_strncmp(*str, separator, ft_strlen(separator)))
+		(*str) += ft_strlen(separator);
+	return (splitted);
+}
+
 char	*ft_split_shell_by(char **str, char *separator)
 {
 	char		*ptr;
-	char		*splitted;
-	size_t		len;
 
 	if (!str || !*str || !(**str))
 		return (0);
@@ -74,13 +88,5 @@ char	*ft_split_shell_by(char **str, char *separator)
 		if (*ptr)
 			ptr++;
 	}
-	len = ptr - (*str) + 1;
-	splitted = ft_calloc(len, sizeof(char));
-	if (!(splitted))
-		return (0);
-	ft_strlcpy(splitted, *str, len);
-	*str = ptr;
-	if (!ft_strncmp(*str, separator, ft_strlen(separator)))
-		(*str) += ft_strlen(separator);
-	return (splitted);
+	return (ft_extract_split(str, ptr, separator));
 }

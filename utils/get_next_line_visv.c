@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static int			ft_move_buffer_to_line(char *bf, char **line)
+static int	ft_move_buffer_to_line(char *bf, char **line)
 {
 	char			*new_line;
 	int				found_nl;
@@ -26,15 +26,18 @@ static int			ft_move_buffer_to_line(char *bf, char **line)
 	return (found_nl);
 }
 
-int					get_next_line(int fd, char **line)
+int	get_next_line(int fd, char **line)
 {
 	static char		bf[BUFFER_SIZE];
 	int				proc;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || !line ||
-		!(*line = ft_calloc(1, sizeof(char))))
+	if (fd < 0 || BUFFER_SIZE <= 0 || !line)
 		return (-1);
-	while ((proc = ft_move_buffer_to_line(bf, line)) >= 0)
+	*line = ft_calloc(1, sizeof(char));
+	if (!(*line))
+		return (-1);
+	proc = ft_move_buffer_to_line(bf, line);
+	while (proc >= 0)
 	{
 		if (proc == 1)
 			return (1);
@@ -45,6 +48,7 @@ int					get_next_line(int fd, char **line)
 			return (0);
 		if (proc < BUFFER_SIZE)
 			bf[proc] = 0;
+		proc = ft_move_buffer_to_line(bf, line);
 	}
 	free(*line);
 	return (-1);

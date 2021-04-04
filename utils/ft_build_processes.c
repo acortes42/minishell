@@ -20,7 +20,8 @@ t_process	*ft_build_processes(char *cmd)
 
 	procs = 0;
 	last_proc = 0;
-	while ((proc_cmd = ft_split_shell_by(&cmd, "|")))
+	proc_cmd = ft_split_shell_by(&cmd, "|");
+	while (proc_cmd)
 	{
 		if (!procs)
 		{
@@ -33,6 +34,7 @@ t_process	*ft_build_processes(char *cmd)
 			last_proc = last_proc->next;
 		}
 		free(proc_cmd);
+		proc_cmd = ft_split_shell_by(&cmd, "|");
 	}
 	return (procs);
 }
