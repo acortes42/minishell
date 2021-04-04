@@ -83,7 +83,7 @@ fclean: clean
 	@touch history.txt
 	@rm -f *.out
 	@rm -f *.a
-	@rm  ${NAME}
+	${RM} ${NAME}
 	${RM} pipes redirection_redirected_output
 	${RM} minishell_check ${NAME}
 
