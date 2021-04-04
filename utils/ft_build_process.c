@@ -22,18 +22,16 @@ static int	ft_extract_fields(char *cmd, char ***argv)
 	field = ft_split_shell_by(&cmd, " ");
 	while (field)
 	{
-		if (*field == '\n')
-			free(field);
-		else
+		if (*field != '\n')
 		{
 			tmp = ft_trim(field);
-			free(field);
-			if (!tmp)
-				continue ;
-			field = tmp;
-			if (!ft_array_add(argv, &fields, field))
-				return (-1);
+			if (tmp)
+			{
+				if (!ft_array_add(argv, &fields, tmp))
+					return (-1);
+			}
 		}
+		free(field);
 		field = ft_split_shell_by(&cmd, " ");
 	}
 	return (fields);

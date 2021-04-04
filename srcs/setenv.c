@@ -67,7 +67,6 @@ static char	*ft_prepare_export(char *key, char *value)
 
 	if (!key || !value)
 		return (0);
-	tri = malloc(sizeof(char));
 	if (ft_isspace(*value))
 		tri = ft_strdup("");
 	else
