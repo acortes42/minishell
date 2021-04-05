@@ -48,8 +48,8 @@ int	cd(t_abs_struct *base)
 
 	base->num_args = ft_count_until_separator(base->parse_string, base->a);
 	aux_nb = value_to_aux(base->num_args);
-	base->error = aux_nb;
-	if (aux_nb == 0)
+	base->error = !aux_nb;
+	if (base->error)
 		ft_putstr("\e[0mcd: Too many arguments\n");
 	else if (base->num_args > 1 && !ft_isempty(base->parse_string[base->a + 1]))
 		home = ft_get_absolute_path(base, base->parse_string[base->a + 1]);
