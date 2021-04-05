@@ -212,7 +212,9 @@ void			ft_remove_quotes(char *field);
 int				ft_expand_scape(char **res, char **cmd, size_t *pos);
 char			*ft_extract_variable_name(char **cmd);
 int				ft_expand_dollar(t_expand_dollar *d);
-void			ft_execute_absolute_shell_command(t_abs_struct *base, char *cmd, t_process *p);
-void			ft_execute_relative_shell_command(t_abs_struct *base, t_process *p);
+void			ft_execute_absolute_shell_command(t_abs_struct *base,
+					char *cmd, t_process *p);
+void			ft_execute_relative_shell_command(t_abs_struct *base,
+					t_process *p);
 
 #endif
