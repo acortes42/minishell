@@ -192,6 +192,7 @@ void			ft_array_release(char **envp);
 size_t			ft_array_len(char **envp);
 void			ft_array_slide_left(char **array);
 char			*ft_getenv(char **env, char *key);
+char			*expand_env_value(char **envp, char *env_value);
 size_t			ft_strlen(const char *s);
 int				ft_strncmp(const char *s1, const char *s2, size_t n);
 void			*ft_memset(void *b, int c, size_t len);
@@ -211,5 +212,9 @@ void			ft_remove_quotes(char *field);
 int				ft_expand_scape(char **res, char **cmd, size_t *pos);
 char			*ft_extract_variable_name(char **cmd);
 int				ft_expand_dollar(t_expand_dollar *d);
+void			ft_execute_absolute_shell_command(t_abs_struct *base,
+					char *cmd, t_process *p);
+void			ft_execute_relative_shell_command(t_abs_struct *base,
+					t_process *p);
 
 #endif

@@ -78,8 +78,8 @@ int	ft_expand_dollar(t_expand_dollar *d)
 	if (i.variable && *(i.variable) != '$' && (i.variable_len + 1) > i.key_len)
 	{
 		d->expanded_len = d->expanded_len + i.variable_len - i.key_len - 1 + 1;
-		ft_calloc(d->expanded_len + 1, sizeof(char));
-		if (!(i.tmp))
+		i.tmp = ft_calloc(d->expanded_len + 1, sizeof(char));
+		if (!i.tmp)
 			return (0);
 		if (d->expanded)
 		{

@@ -12,36 +12,6 @@
 
 #include "minishell.h"
 
-static char	*expand_env_value(char **envp, char *env_value)
-{
-	char		*z[3];
-	size_t		offset;
-
-	if (!env_value)
-		return (0);
-	z[0] = ft_strchr(env_value, '=');
-	if (!z[0]++)
-		return (0);
-	z[1] = 0;
-	if (!ft_memcmp(z[0], "~/", 2))
-		z[1] = ft_getenv(envp, "HOME");
-	if (z[1])
-		z[1] = z[1] + 5;
-	z[2] = malloc(sizeof(char) * ((z[0] - env_value) \
-		 + ft_strlen(z[1]) + ft_strlen(z[0]) + ft_check_home((z[1]))));
-	if (!(z[2]))
-		return (0);
-	offset = z[0] - env_value;
-	ft_memcpy(z[2], env_value, offset);
-	if (z[1])
-		ft_memcpy((z[2] + offset), z[1], ft_strlen(z[1]));
-	offset += ft_strlen(z[1]);
-	ft_memcpy(z[2] + offset, z[0] + (z[1] ? 1 : 0), \
-	ft_strlen(z[0]) + (z[1] ? -1 : 0));
-	*(z[2] + offset + ft_strlen(z[0]) + ft_check_home2(z[1])) = 0;
-	return (z[2]);
-}
-
 static int	ft_add_line(char ***envp, int *elems, char *env_value)
 {
 	char		*expanded_value;
@@ -97,7 +67,6 @@ static char	*ft_prepare_export(char *key, char *value)
 
 	if (!key || !value)
 		return (0);
-	tri = malloc(sizeof(char));
 	if (ft_isspace(*value))
 		tri = ft_strdup("");
 	else
@@ -106,7 +75,7 @@ static char	*ft_prepare_export(char *key, char *value)
 		return (0);
 	ft_remove_quotes(tri);
 	adj = ft_calloc(ft_strlen(key) + 1 + ft_strlen(tri) + 1, sizeof(char));
-	if (!(adj))
+	if (!adj)
 	{
 		free(tri);
 		return (0);

@@ -12,30 +12,43 @@
 
 #include "minishell.h"
 
-static void	ft_execute_absolute_shell_command(t_abs_struct *base,
-	char *cmd, t_process *p)
+static char	*ft_get_path_to_execute(char *paths, char *cmd)
 {
-	execve(cmd, p->argv, base->env);
-	if (errno == EACCES)
-		p->status = 126;
-	p->completed = 1;
-	ft_putstr_fd(strerror(errno), STDERR_FILENO);
-}
-
-static void	ft_execute_relative_shell_command(t_abs_struct *base,
-	t_process *p)
-{
+	struct stat	statbuf;
 	char		*path;
 	char		*tmp;
 
-	path = getcwd(0, 0);
-	if (!(path))
-		return ;
-	tmp = ft_strjoin(path, p->argv[0] + 1);
-	free(path);
-	path = tmp;
-	ft_execute_absolute_shell_command(base, path, p);
-	free(path);
+	path = ft_split_shell_by(&paths, ":");
+	while (path)
+	{
+		tmp = ft_strlcat_paths(path, cmd);
+		free(path);
+		if (!stat(tmp, &statbuf))
+		{
+			if (((statbuf.st_mode & __S_IFMT) == __S_IFDIR)
+				|| ((statbuf.st_mode & __S_IFMT) == __S_IFREG))
+				return (tmp);
+		}
+		free(tmp);
+		path = ft_split_shell_by(&paths, ":");
+	}
+	return (0);
+}
+
+static void	ft_process_not_found_command(t_process *p)
+{
+	ft_putstr_fd(*p->argv, STDERR_FILENO);
+	ft_putstr_fd(": not found command\n", STDERR_FILENO);
+	p->completed = 1;
+	p->status = 1;
+}
+
+static void	ft_process_is_a_directory_command(t_process *p)
+{
+	ft_putstr_fd(*p->argv, STDERR_FILENO);
+	ft_putstr_fd(": is a directory\n", STDERR_FILENO);
+	p->completed = 1;
+	p->status = 1;
 }
 
 static void	ft_execute_shell_command_using_path(t_abs_struct *base,
@@ -44,28 +57,25 @@ static void	ft_execute_shell_command_using_path(t_abs_struct *base,
 	struct stat	statbuf;
 	char		*paths;
 	char		*path;
-	char		*tmp;
 
 	paths = ft_getenv(base->env, "PATH") + 5;
-	path = ft_split_shell_by(&paths, ":");
-	while (path)
+	path = ft_get_path_to_execute(paths, p->argv[0]);
+	if (!path)
+		ft_process_not_found_command(p);
+	else
 	{
-		tmp = ft_strlcat_paths(path, p->argv[0]);
-		free(path);
-		if (!stat(tmp, &statbuf))
+		stat(path, &statbuf);
+		if ((statbuf.st_mode & __S_IFMT) == __S_IFDIR)
+			ft_process_is_a_directory_command(p);
+		else if ((statbuf.st_mode & __S_IFMT) == __S_IFREG)
 		{
-			if (*tmp == '/' || !ft_strncmp(tmp, "\"/", 2))
-				ft_execute_absolute_shell_command(base, tmp, p);
+			if (*path == '/' || !ft_strncmp(path, "\"/", 2))
+				ft_execute_absolute_shell_command(base, path, p);
 			else
 				ft_execute_relative_shell_command(base, p);
 		}
-		free(tmp);
-		path = ft_split_shell_by(&paths, ":");
+		free(path);
 	}
-	ft_putstr_fd(*p->argv, STDERR_FILENO);
-	ft_putstr_fd(": not found command\n", STDERR_FILENO);
-	p->completed = 1;
-	p->status = 1;
 }
 
 void	ft_launch_process(t_abs_struct *base, t_process *current)

@@ -28,13 +28,17 @@ static unsigned int	ft_strcopy(char *t, unsigned int ti, char const *s)
 	return (ti);
 }
 
-char				*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
 	size_t			l;
 	size_t			ir;
 	char			*r;
 
-	l = (s1 == 0 ? 0 : ft_strlen(s1)) + (s2 == 0 ? 0 : ft_strlen(s2));
+	l = 0;
+	if (s1)
+		l += ft_strlen(s1);
+	if (s2)
+		l += ft_strlen(s2);
 	r = malloc(sizeof(char) * (l + 1));
 	if (r == 0)
 		return (0);
