@@ -14,10 +14,10 @@
 
 long	value_of_r_pos(int sign, long n)
 {
-	if ('0' + (sign < 0))
-		return (-n % 10);
+	if (sign < 0)
+		return '0' + (-n % 10);
 	else
-		return (n % 10);
+		return '0' + (n % 10);
 }
 
 char	*ft_itoa(int n2)

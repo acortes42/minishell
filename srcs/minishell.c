@@ -42,7 +42,7 @@ int	obtain_full_line(t_abs_struct *base)
 		if (found_new_line < 0)
 			ft_exit_minishell(base, 2);
 	}
-	if (base->input && *base->input && !append_new_line(&base->input))
+	if (base->input && found_new_line && !append_new_line(&base->input))
 		ft_exit_minishell(base, 1);
 	write(fd, base->input, ft_strlen(base->input));
 	close(fd);
