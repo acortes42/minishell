@@ -75,7 +75,7 @@ static char	*ft_prepare_export(char *key, char *value)
 		return (0);
 	ft_remove_quotes(tri);
 	adj = ft_calloc(ft_strlen(key) + 1 + ft_strlen(tri) + 1, sizeof(char));
-	if (!(adj))
+	if (!adj)
 	{
 		free(tri);
 		return (0);
