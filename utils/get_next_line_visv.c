@@ -18,10 +18,10 @@ static int	ft_move_buffer_to_line(char *bf, char **line)
 	int				found_nl;
 
 	new_line = ft_concat(*line, bf, &found_nl);
-	if (*line)
-		free(*line);
 	if (!new_line)
 		return (-1);
+	if (*line)
+		free(*line);
 	*line = new_line;
 	ft_shift_left(bf);
 	return (found_nl);
@@ -33,6 +33,7 @@ void	ft_erase(char **line)
 	struct termios	settings;
 	int				result;
 	size_t			len;
+	size_t			erased;
 
 	if (!line || !(*line))
 		return ;
@@ -43,8 +44,12 @@ void	ft_erase(char **line)
 		return ;
 	}
 	len = ft_strlen(*line);
-	while (len)
+	erased = 0;
+	while (erased < len)
+	{
 		ft_putstr((char *)(&settings.c_cc[VERASE]));
+		erased++;
+	}
 	free(*line);
 	*line = 0;
 }
@@ -55,9 +60,6 @@ int	get_next_line(int fd, char **line)
 	int				proc;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || !line)
-		return (-1);
-	*line = ft_calloc(1, sizeof(char));
-	if (!(*line))
 		return (-1);
 	proc = ft_move_buffer_to_line(bf, line);
 	while (proc >= 0)
@@ -72,15 +74,17 @@ int	get_next_line(int fd, char **line)
 		if (!ft_strcmp(ARROW_UP, bf))
 		{
 			ft_erase(line);
-			ft_memcpy(bf, "ls -la\0", 7);
-			proc = ft_move_buffer_to_line(bf, line);
+			ft_memset(bf, 0, BUFFER_SIZE);
+			proc = 0;
+			*line = ft_strdup("ls -la");
 			ft_putstr(*line);
 		}
 		else if (!ft_strcmp(ARROW_DOWN, bf))
 		{
 			ft_erase(line);
-			ft_memcpy(bf, "ls -la\0", 7);
-			proc = ft_move_buffer_to_line(bf, line);
+			ft_memset(bf, 0, BUFFER_SIZE);
+			proc = 0;
+			*line = ft_strdup("ls -d");
 			ft_putstr(*line);
 		}
 		else

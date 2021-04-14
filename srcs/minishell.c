@@ -85,7 +85,8 @@ int	main(int argc, char **argv, char **envp)
 	if (minishell_ready)
 		clear_screen();
 	base.c_lflag = ft_getlflag(STDIN_FILENO); // Keep c_lflag value before changing anything
-	ft_setlflag(STDIN_FILENO, 0, ICANON|ECHO); // Disable canonical input and echoing
+	if (!ft_setlflag(STDIN_FILENO, 0, ICANON|ECHO))
+		ft_exit_minishell(&base, 1); // Exit minishell: Not disabled canonical input and echoing
 	while (minishell_ready)
 	{
 		ft_show_prompt(&base);
