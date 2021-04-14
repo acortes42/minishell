@@ -20,6 +20,7 @@
 # include <fcntl.h>
 # include <stddef.h>
 # include <stdlib.h>
+# include <termios.h>
 # include <unistd.h>
 # include <string.h>
 # include <ctype.h>
@@ -28,7 +29,10 @@
 # include <signal.h>
 # include <limits.h>
 
-# define BUFFER_SIZE		1024
+# define ARROW_UP			"\033[A"
+# define ARROW_DOWN			"\033[B"
+
+# define BUFFER_SIZE		1000
 # define ANSI_COLOR_RED     "\x1b[31m"
 # define ANSI_COLOR_GREEN   "\x1b[32m"
 # define ANSI_COLOR_YELLOW  "\x1b[33m"
@@ -84,6 +88,7 @@ typedef struct s_abs_struct
 	int						ctrl_d_times;
 	int						last_executed_process_status;
 	t_job					*first_job;
+	unsigned int			c_lflag;
 }							t_abs_struct;
 
 typedef struct s_expand_dollar
@@ -216,5 +221,6 @@ void			ft_execute_absolute_shell_command(t_abs_struct *base,
 					char *cmd, t_process *p);
 void			ft_execute_relative_shell_command(t_abs_struct *base,
 					t_process *p);
+int				ft_setlflag(int fd, int set_flag, unsigned int value);
 
 #endif
