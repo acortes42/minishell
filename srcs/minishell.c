@@ -59,6 +59,20 @@ static void	execute_command_read(t_abs_struct *base)
 	}
 }
 
+unsigned int	ft_getlflag(int fd)
+{
+	struct termios	settings;
+	unsigned int	result;
+
+	if (tcgetattr (fd, &settings) < 0)
+	{
+		perror ("error in tcgetattr");
+		return 0;
+	}
+	result = settings.c_lflag;
+	return (result);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	int				minishell_ready;
@@ -70,6 +84,9 @@ int	main(int argc, char **argv, char **envp)
 	minishell_ready = ft_init_minishell(&base, envp);
 	if (minishell_ready)
 		clear_screen();
+	base.c_lflag = ft_getlflag(STDIN_FILENO); // Keep c_lflag value before changing anything
+	if (!ft_setlflag(STDIN_FILENO, 0, ICANON|ECHO))
+		ft_exit_minishell(&base, 1); // Exit minishell: Not disabled canonical input and echoing
 	while (minishell_ready)
 	{
 		ft_show_prompt(&base);
