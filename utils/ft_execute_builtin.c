@@ -6,7 +6,7 @@
 /*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 16:17:52 by visv              #+#    #+#             */
-/*   Updated: 2021/04/01 17:24:54 by acortes-         ###   ########.fr       */
+/*   Updated: 2021/04/20 15:57:35 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,12 @@ static int	execute_environment_builtins2(t_abs_struct *base,
 	return (0);
 }
 
-static int	execute_environment_builtins3(t_process *previous, t_process *p)
+static int	execute_environment_builtins3(t_process *previous, t_process *p, t_abs_struct *base)
 {
 	if (!ft_strcmp(p->argv[0], "history"))
 	{
 		ft_set_pipes(previous, p);
-		ft_history();
+		ft_history(base);
 		return (1);
 	}
 	else if (!ft_strcmp(p->argv[0], "help"))
@@ -100,7 +100,7 @@ int	ft_execute_builtin(t_abs_struct *base, t_process *previous,
 		return (1);
 	if (execute_environment_builtins2(base, previous, p))
 		return (1);
-	if (execute_environment_builtins3(previous, p))
+	if (execute_environment_builtins3(previous, p, base))
 		return (1);
 	return (0);
 }

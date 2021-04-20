@@ -6,7 +6,7 @@
 /*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/23 13:33:03 by acortes-          #+#    #+#             */
-/*   Updated: 2021/04/01 16:54:54 by acortes-         ###   ########.fr       */
+/*   Updated: 2021/04/20 16:02:58 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	obtain_full_line(t_abs_struct *base)
 	int				fd;
 	int				found_new_line;
 
-	fd = open("history.txt", O_RDWR | O_APPEND);
+	fd = open(ft_strjoin(base->env[8] + 4, "/history.txt"), O_RDWR | O_APPEND);
 	if (base->input)
 		free(base->input);
 	base->input = 0;

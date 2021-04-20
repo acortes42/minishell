@@ -21,7 +21,8 @@ UTILS 				= utils/ft_putnbr.c utils/ft_putstr.c utils/ft_strchr.c \
 	utils/pipes.c utils/ft_remove_quotes.c \
 	utils/ft_expand_process_cmd_utils.c \
 	utils/ft_execute_absolute_shell_command.c \
-	utils/ft_execute_relative_shell_command.c utils/ft_setlflag.c
+	utils/ft_execute_relative_shell_command.c utils/ft_setlflag.c \
+	utils/ft_classic_get_next.c 
 
 SRCS_WITHOUT_MAIN	=  srcs/ft_exit_minishell.c srcs/clear_screen.c \
 	srcs/ft_execute_ctrl_d.c srcs/echo.c srcs/cd.c \

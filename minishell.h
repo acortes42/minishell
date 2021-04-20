@@ -6,7 +6,7 @@
 /*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 09:31:42 by visv              #+#    #+#             */
-/*   Updated: 2021/04/01 18:07:29 by acortes-         ###   ########.fr       */
+/*   Updated: 2021/04/20 16:49:57 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ int				ft_strcmp(const char *s1, const char *s2);
 int				cd(t_abs_struct *base);
 char			*ft_get_absolute_path(t_abs_struct *base, char *path);
 int				echo(t_abs_struct *base, t_process *p);
-int				ft_history(void);
+int				ft_history(t_abs_struct *base);
 int				ft_pwd(void);
 int				ft_export(t_abs_struct *base, t_process *p);
 int				ft_copy_env(t_abs_struct *base, char **envp);
@@ -222,5 +222,6 @@ void			ft_execute_absolute_shell_command(t_abs_struct *base,
 void			ft_execute_relative_shell_command(t_abs_struct *base,
 					t_process *p);
 int				ft_setlflag(int fd, int set_flag, unsigned int value);
+int				classic_get_next(int fd, char **line);
 
 #endif

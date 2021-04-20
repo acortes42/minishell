@@ -6,7 +6,7 @@
 /*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 16:18:19 by visv              #+#    #+#             */
-/*   Updated: 2021/04/01 14:18:50 by acortes-         ###   ########.fr       */
+/*   Updated: 2021/04/20 14:27:37 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ static char	*ft_get_path_to_execute(char *paths, char *cmd)
 		free(path);
 		if (!stat(tmp, &statbuf))
 		{
-			if (((statbuf.st_mode & __S_IFMT) == __S_IFDIR)
-				|| ((statbuf.st_mode & __S_IFMT) == __S_IFREG))
+			if (((statbuf.st_mode & S_IFMT) == S_IFDIR)
+				|| ((statbuf.st_mode & S_IFMT) == S_IFREG))
 				return (tmp);
 		}
 		free(tmp);
@@ -65,9 +65,9 @@ static void	ft_execute_shell_command_using_path(t_abs_struct *base,
 	else
 	{
 		stat(path, &statbuf);
-		if ((statbuf.st_mode & __S_IFMT) == __S_IFDIR)
+		if ((statbuf.st_mode & S_IFMT) == S_IFDIR)
 			ft_process_is_a_directory_command(p);
-		else if ((statbuf.st_mode & __S_IFMT) == __S_IFREG)
+		else if ((statbuf.st_mode & S_IFMT) == S_IFREG)
 		{
 			if (*path == '/' || !ft_strncmp(path, "\"/", 2))
 				ft_execute_absolute_shell_command(base, path, p);
