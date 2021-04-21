@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   ft_get_correct_line.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/29 19:54:39 by acortes-          #+#    #+#             */
-/*   Updated: 2021/04/01 12:11:20 by acortes-         ###   ########.fr       */
+/*   Created: 2021/04/20 20:24:34 by acortes-          #+#    #+#             */
+/*   Updated: 2021/04/21 14:49:39 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*ft_strsub(char const *s, unsigned int start, size_t len)
+char	*ft_strsub3(char const *s, unsigned int start, size_t len)
 {
 	unsigned long int	o;
 	char				*c;
@@ -46,7 +46,7 @@ static	int	finalline(char **stat, char **line)
 		l++;
 	if ((*stat)[l] == '\n')
 	{
-		*line = ft_strsub(*stat, 0, l);
+		*line = ft_strsub3(*stat, 0, l);
 		c = ft_strdup(&((*stat)[l + 1]));
 		free(*stat);
 		*stat = c;
@@ -74,15 +74,17 @@ static	int	end(char **stat, char **line, int i, int fd)
 		return (finalline(&stat[fd], line));
 }
 
-int	get_next_line(int fd, char **line)
+char	*ft_get_correct_line(int fd, char **line, int ret)
 {
 	static char		*stat[2048];
 	char			buff[BUFFER_SIZE + 1];
 	char			*temp;
 	int				i;
 
+	if (ret < 0)
+		return(ft_strdup(" "));
 	if (fd < 0 || line == NULL || BUFFER_SIZE < 1 || read(fd, buff, 0) < 0)
-		return (-1);
+		return (NULL);
 	i = read(fd, buff, BUFFER_SIZE);
 	while (i > 0)
 	{
@@ -98,5 +100,9 @@ int	get_next_line(int fd, char **line)
 		if (ft_strchr(stat[fd], '\n'))
 			break ;
 	}
-	return (end(stat, line, i, fd));
+	if (end(stat, line, i, fd) < 0)
+		return (NULL);
+	if (--ret > 0)
+		ft_get_correct_line(fd, line, ret);
+	return (*line);
 }

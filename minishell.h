@@ -6,7 +6,7 @@
 /*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 09:31:42 by visv              #+#    #+#             */
-/*   Updated: 2021/04/20 16:49:57 by acortes-         ###   ########.fr       */
+/*   Updated: 2021/04/21 14:45:23 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ typedef struct s_abs_struct
 	int						last_executed_process_status;
 	t_job					*first_job;
 	unsigned int			c_lflag;
+	int						last_line;
+	int						counter;
 }							t_abs_struct;
 
 typedef struct s_expand_dollar
@@ -121,7 +123,8 @@ void			redirect_to_exit(t_abs_struct *base, int o_fd, int i_fd);
 char			*ft_strdup(const char *s1);
 char			*ft_strchr(const char *s, int c);
 char			*ft_strcdup(const char *s1, int c);
-int				get_next_line(int fd, char **line);
+int				get_next_line(int fd, char **line, t_abs_struct *base);
+char			*ft_get_correct_line(int fd, char **line, int ret);
 char			*ft_concat(char *line, char *bf, int *found_nl);
 void			ft_shift_left(char *bf);
 char			*ft_strjoin(char const *s1, char const *s2);
@@ -213,6 +216,7 @@ char			*ft_split_shell(char **str);
 char			*ft_split_shell_by(char **str, char *separator);
 int				ft_isinteger(char *str);
 int				ft_count_until_separator(char **str, int actual_arg);
+int				ft_obtain_last(int fd, char **line);
 void			ft_remove_quotes(char *field);
 int				ft_expand_scape(char **res, char **cmd, size_t *pos);
 char			*ft_extract_variable_name(char **cmd);

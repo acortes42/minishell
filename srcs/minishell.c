@@ -6,7 +6,7 @@
 /*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/23 13:33:03 by acortes-          #+#    #+#             */
-/*   Updated: 2021/04/20 16:02:58 by acortes-         ###   ########.fr       */
+/*   Updated: 2021/04/21 12:49:30 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,17 @@ int	obtain_full_line(t_abs_struct *base)
 	found_new_line = 0;
 	while (!found_new_line && (!base->input || *base->input))
 	{
-		found_new_line = get_next_line(STDIN_FILENO, &base->input);
+		found_new_line = get_next_line(STDIN_FILENO, &base->input, base);
 		if (found_new_line < 0)
 			ft_exit_minishell(base, 2);
 	}
 	if (base->input && found_new_line && !append_new_line(&base->input))
 		ft_exit_minishell(base, 1);
-	write(fd, base->input, ft_strlen(base->input));
+	if (ft_strlen(base->input) >= 1 && ft_strcmp(base->input, "\n"))
+	{
+		write(fd, base->input, ft_strlen(base->input));
+		base->last_line++;
+	}
 	close(fd);
 	return (0);
 }

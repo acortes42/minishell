@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_classic_get_next.c                              :+:      :+:    :+:   */
+/*   ft_get_count_line.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/20 16:11:24 by acortes-          #+#    #+#             */
-/*   Updated: 2021/04/21 14:48:31 by acortes-         ###   ########.fr       */
+/*   Created: 2021/04/20 19:25:51 by acortes-          #+#    #+#             */
+/*   Updated: 2021/04/21 11:48:24 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*ft_strsub(char const *s, unsigned int start, size_t len)
+char	*ft_strsub2(char const *s, unsigned int start, size_t len)
 {
 	unsigned long int	o;
 	char				*c;
@@ -46,7 +46,7 @@ static	int	finalline(char **stat, char **line)
 		l++;
 	if ((*stat)[l] == '\n')
 	{
-		*line = ft_strsub(*stat, 0, l);
+		*line = ft_strsub2(*stat, 0, l);
 		c = ft_strdup(&((*stat)[l + 1]));
 		free(*stat);
 		*stat = c;
@@ -74,16 +74,17 @@ static	int	end(char **stat, char **line, int i, int fd)
 		return (finalline(&stat[fd], line));
 }
 
-int	classic_get_next(int fd, char **line)
+int	ft_obtain_last(int fd, char **line)
 {
 	static char		*stat[2048];
-	char			buff[BUFFER_SIZE + 1];
+	static int		ret;
+	char			buff[2000];
 	char			*temp;
 	int				i;
 
-	if (fd < 0 || line == NULL || BUFFER_SIZE < 1 || read(fd, buff, 0) < 0)
+	if (fd < 0 || line == NULL || read(fd, buff, 0) < 0)
 		return (-1);
-	i = read(fd, buff, BUFFER_SIZE);
+	i = read(fd, buff, 2000);
 	while (i > 0)
 	{
 		buff[i] = '\0';
@@ -98,5 +99,8 @@ int	classic_get_next(int fd, char **line)
 		if (ft_strchr(stat[fd], '\n'))
 			break ;
 	}
-	return (end(stat, line, i, fd));
+	ret++;
+	if (end(stat, line, i, fd))
+		ft_obtain_last(fd, line);
+	return (ret);
 }
