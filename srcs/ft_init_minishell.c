@@ -39,9 +39,6 @@ static void ft_init_history(t_abs_struct *base)
 	//
 	// Creo que necesitamos cuidar los nombres de las variables, .., para mantener la legibilidad (no se si piensas lo mismo), por ejemplo vi una variable que se llama a, dentro de la estructura y me tocó pelearme con el historial de git para entender de dónde venía
 	// Yo soy el primero que se lía con los nombres y que no lo hace claro, pero creo que tenemos que levantar los dos la mano cuando vemos esto.
-
-
-	free(path);
 }
 
 int	ft_init_minishell(t_abs_struct *base, char **envp)

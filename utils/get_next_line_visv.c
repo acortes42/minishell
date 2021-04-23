@@ -32,60 +32,84 @@ void	ft_erase(char **line)
 	if (!line || !(*line))
 		return ;
 	ft_clear_input(ft_strlen(*line));
+	free(*line);
 	*line = 0;
+}
+
+static void load_previous_command(t_abs_struct *base, char **line, char *bf)
+{
+	int		fd;
+	char	*history_line;
+
+	if (!base->current_history_line)
+		return ; // No hacemos nada cuando estamos al inicio
+	fd = ft_open_history(base, O_RDWR);
+	if (fd < 0)
+		return ;
+	base->current_history_line--;
+	history_line = ft_get_file_line_by_fd(fd, base->current_history_line);
+	close(fd);
+	if (!history_line)
+		return ;
+	ft_erase(line);
+	*line = history_line;
+	ft_memset(bf, 0, BUFFER_SIZE);
+	ft_putstr(*line);
+}
+
+static void load_next_command(t_abs_struct *base, char **line, char *bf)
+{
+	int		fd;
+	char	*history_line;
+
+	if (base->current_history_line >= base->history_lines)
+	{ // Borramos el contenido, vaciamos el buffer y apuntamos el history
+		ft_erase(line);
+		ft_memset(bf, 0, BUFFER_SIZE);
+		base->current_history_line = base->history_lines + 1;
+		return ;
+	}
+	fd = ft_open_history(base, O_RDWR);
+	if (fd < 0)
+		return ;
+	base->current_history_line++;
+	history_line = ft_get_file_line_by_fd(fd, base->current_history_line);
+	close(fd);
+	if (!history_line)
+		return ;
+	ft_erase(line);
+	*line = history_line;
+	ft_memset(bf, 0, BUFFER_SIZE);
+	ft_putstr(*line);
 }
 
 int	get_next_line(int fd, char **line, t_abs_struct *base)
 {
 	static char		bf[BUFFER_SIZE];
 	int				proc;
-	int				x;
-	char			*buf_line;
-	int				fd2;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || !line)
 		return (-1);
 	proc = ft_move_buffer_to_line(bf, line);
-	x = 0;
 	while (proc >= 0)
 	{
-		fd2 = ft_open_history(base, O_RDWR);
 		if (proc == 1)
 			return (1);
 		proc = read(fd, bf, 4);
 		if (proc < 0)
-			return (-1);
+			break ;
 		if (!proc)
 			return (0);
-		/* No acabo de hacerlo funcionar, por lo que implemente una version muy simple que solo
-			 busca los dos ultimos valores del historial. Debe ser un fallo bastante tonto, pero no lo veo.*/
 		if (!ft_strcmp(ARROW_UP, bf))
-		{
-			ft_erase(line);
-			ft_memset(bf, 0, BUFFER_SIZE);
-			proc = 1;
-			if (x < 2)
-				*line = ft_strdup(ft_get_correct_line(fd2, &buf_line, base->last_line - ++x));
-			ft_putstr(*line);
-		}
+			load_previous_command(base, line, bf);
 		else if (!ft_strcmp(ARROW_DOWN, bf))
-		{
-			ft_erase(line);
-			ft_memset(bf, 0, BUFFER_SIZE);
-			proc = 0;
-			if (x > 0)
-				*line = ft_strdup(ft_get_correct_line(fd2, &buf_line, base->last_line - --x));
-			ft_putstr(*line);
-		}
+			load_next_command(base, line, bf);
 		else
 			ft_putstr(bf);
-		if (!ft_strcmp(ARROW_DOWN, bf) || !ft_strcmp(ARROW_UP, bf))
-			x = 0;
-		if (proc < BUFFER_SIZE)
-			bf[proc] = 0;
 		proc = ft_move_buffer_to_line(bf, line);
-		close(fd2);
 	}
-	free(*line);
+	if (*line)
+		free(*line);
+	*line = 0;
 	return (-1);
 }

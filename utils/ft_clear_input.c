@@ -10,9 +10,9 @@ void	ft_clear_input(int chars)
 	str = ft_calloc((chars * 3) + 1, sizeof(char));
 	if (!str)
 		return ;
-	ft_memset(str, settings.c_cc[VERASE], chars);
+	ft_memset(str, '\b', chars);
 	ft_memset(str + chars, ' ', chars);
-	ft_memset(str + chars + chars, settings.c_cc[VERASE], chars);
+	ft_memset(str + chars + chars, '\b', chars);
 	ft_putstr(str);
 	free(str);
 }
