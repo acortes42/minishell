@@ -233,5 +233,6 @@ int				classic_get_next(int fd, char **line);
 
 int				ft_file_lines(char *file);
 char 			*ft_get_file_line(char *file, int line);
+void			ft_clear_input(int chars);
 
 #endif

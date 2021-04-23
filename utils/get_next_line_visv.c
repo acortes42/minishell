@@ -27,30 +27,11 @@ static int	ft_move_buffer_to_line(char *bf, char **line)
 	return (found_nl);
 }
 
-
 void	ft_erase(char **line)
 {
-	struct termios	settings;
-	int				result;
-	size_t			len;
-	size_t			erased;
-
 	if (!line || !(*line))
 		return ;
-	result = tcgetattr (STDIN_FILENO, &settings);
-	if (result < 0)
-	{
-		perror ("error in tcgetattr");
-		return ;
-	}
-	len = ft_strlen(*line);
-	erased = 0;
-	while (erased < len)
-	{
-		ft_putstr((char *)(&settings.c_cc[VERASE]));
-		erased++;
-	}
-	free(*line);
+	ft_clear_input(ft_strlen(*line));
 	*line = 0;
 }
 
@@ -77,7 +58,7 @@ int	get_next_line(int fd, char **line, t_abs_struct *base)
 		if (!proc)
 			return (0);
 		/* No acabo de hacerlo funcionar, por lo que implemente una version muy simple que solo
-			 busca los dos ultimos valores del historial. Debe ser un fallo bastante tonto, pero no lo veo.*/ 
+			 busca los dos ultimos valores del historial. Debe ser un fallo bastante tonto, pero no lo veo.*/
 		if (!ft_strcmp(ARROW_UP, bf))
 		{
 			ft_erase(line);

@@ -29,7 +29,7 @@ static void ft_init_history(t_abs_struct *base)
 		free(path);
 		ft_exit_minishell(base, -1);
 	}
-	base->current_history_line = base->history_lines;
+	base->current_history_line = base->history_lines + 1;
 	// La idea es cargar el número de líneas y apuntar a la última línea. Después con una función de apoyo permitir solicitar la línea que queremos del archivo de modo que nos abstraemos de toda la lógica y sólo llamamos a la función
 	// En el procesamiento del teclado, actualizamos el puntero a la línea del history, no dejando superar el índice máximo o mínimo.
 	// Si se rebasa por arriba, borramos todo y queda apuntando al history + 1
@@ -54,9 +54,9 @@ static void ft_init_history(t_abs_struct *base)
 
 int	ft_init_minishell(t_abs_struct *base, char **envp)
 {
-	int	fd2;
+/* 	int	fd2;
 	char	*buf_line;
-
+ */
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGTSTP, SIG_IGN);
@@ -67,7 +67,7 @@ int	ft_init_minishell(t_abs_struct *base, char **envp)
 	ft_memset(base, 0, sizeof(t_abs_struct));
 	ft_copy_env(base, envp);
 	ft_init_history(base);
-	if (!(base->last_line)) // Siempre va a ser 0. Creo que no tiene sentido el if
+/* 	if (!(base->last_line)) // Siempre va a ser 0. Creo que no tiene sentido el if
 	{
 		// TODO: Cambiar todos estos open por ft_open_history (tiene fuga de memoria y apuntamos a un env fijo que no tiene porque tener lo que esperamos)
 		// TODO: Comentado porque explota cuando no encuentra el fichero history porque buf_line es nulo y lo intenamos liberar al final del if
@@ -78,6 +78,7 @@ int	ft_init_minishell(t_abs_struct *base, char **envp)
 		close(fd2);
 		free(buf_line);
 	}
+ */
 	base->counter = 0;
 	return (1);
 }
