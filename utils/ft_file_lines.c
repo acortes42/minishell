@@ -1,13 +1,11 @@
 #include "minishell.h"
 
-int	ft_file_lines(char *file)
+int	ft_file_lines_by_fd(int fd)
 {
-	int		fd;
 	char	c;
 	int		lines;
 	int		read_ok;
 
-	fd = open(file, O_RDONLY);
 	if (fd <= 0)
 		return (0);
 	lines = 0;
@@ -18,6 +16,16 @@ int	ft_file_lines(char *file)
 		if (read_ok > 0 && c == '\n')
 			lines++;
 	}
+	return (lines);
+}
+
+int	ft_file_lines(char *file)
+{
+	int		fd;
+	int		lines;
+
+	fd = open(file, O_RDONLY);
+	lines = ft_file_lines_by_fd(fd);
 	close(fd);
 	return (lines);
 }

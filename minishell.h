@@ -232,6 +232,7 @@ int				ft_setlflag(int fd, int set_flag, unsigned int value);
 int				classic_get_next(int fd, char **line);
 
 int				ft_file_lines(char *file);
+int				ft_file_lines_by_fd(int fd);
 char 			*ft_get_file_line(char *file, int line);
 void			ft_clear_input(int chars);
 

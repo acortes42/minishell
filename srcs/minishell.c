@@ -31,7 +31,9 @@ int	obtain_full_line(t_abs_struct *base)
 	int				fd;
 	int				found_new_line;
 
-	fd = open(ft_strjoin(base->env[8] + 4, "/history.txt"), O_RDWR | O_APPEND);
+	fd = ft_open_history(base, O_RDWR | O_APPEND);
+	if (fd < 0)
+		return (0);
 	if (base->input)
 		free(base->input);
 	base->input = 0;

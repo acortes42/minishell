@@ -14,21 +14,13 @@
 
 static void ft_init_history(t_abs_struct *base)
 {
-	char	*path;
-	char	*home;
+	int		fd;
 
-	home = ft_getenv(base->env, "HOME");
-	if (!home)
-		return ;
-	path = ft_strjoin(home + 5, "/.history");
-	if (!path)
-		return ;
-	base->history_lines = ft_file_lines(path);
+	fd = ft_open_history(base, O_RDONLY);
+	base->history_lines = ft_file_lines_by_fd(fd);
+	close(fd);
 	if (base->history_lines < 0)
-	{
-		free(path);
 		ft_exit_minishell(base, -1);
-	}
 	base->current_history_line = base->history_lines + 1;
 	// La idea es cargar el número de líneas y apuntar a la última línea. Después con una función de apoyo permitir solicitar la línea que queremos del archivo de modo que nos abstraemos de toda la lógica y sólo llamamos a la función
 	// En el procesamiento del teclado, actualizamos el puntero a la línea del history, no dejando superar el índice máximo o mínimo.
@@ -73,10 +65,13 @@ int	ft_init_minishell(t_abs_struct *base, char **envp)
 		// TODO: Comentado porque explota cuando no encuentra el fichero history porque buf_line es nulo y lo intenamos liberar al final del if
 		// Creo que no debemos cargar la last line, sino utilizar el métofo ft_get_file_line a partir del valor de base->current_history_line .
 		// Ver comentarios del ft_init_history
-		fd2 = open(ft_strjoin(base->env[8] + 4, "/history.txt"), O_RDWR);
+		fd2 = ft_open_history(base, O_RDONLY);
+		buf_line = 0;
 		base->last_line = ft_obtain_last(fd2, &buf_line);
-		close(fd2);
-		free(buf_line);
+		if (fd2)
+			close(fd2);
+		if (buf_line);
+			free(buf_line);
 	}
  */
 	base->counter = 0;

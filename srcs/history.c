@@ -25,7 +25,9 @@ int	ft_history(t_abs_struct *base)
 	char	*line;
 
 	line = 0;
-	fd = open(ft_strjoin(base->env[8] + 4, "/history.txt"), O_RDWR);
+	fd = ft_open_history(base, O_RDWR);
+	if (fd <= 0)
+		return (0);
 	while (classic_get_next(fd, &line) > 0)
 	{
 		write_line(line);

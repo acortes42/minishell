@@ -49,7 +49,7 @@ int	get_next_line(int fd, char **line, t_abs_struct *base)
 	x = 0;
 	while (proc >= 0)
 	{
-		fd2 = open(ft_strjoin(base->env[8] + 4, "/history.txt"), O_RDWR);
+		fd2 = ft_open_history(base, O_RDWR);
 		if (proc == 1)
 			return (1);
 		proc = read(fd, bf, 4);
