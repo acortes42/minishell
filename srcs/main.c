@@ -17,11 +17,14 @@ int main(void)
 
 	tcgetattr(STDIN_FILENO, &sets);
 	lflag = sets.c_lflag ;
-	sets.c_lflag &= ~(ICANON|ECHO);
+	sets.c_lflag |= ICANON;
 	tcsetattr(STDIN_FILENO, TCSANOW, &sets);
 
+		write(STDOUT_FILENO, "HOLA", 4);
+		write(STDOUT_FILENO, "\b", 1);
+		write(STDOUT_FILENO, "J", 1);
 
-	d = 8;
+/* 	d = 8;
 	c = 127;
 	end = 0;
 	while (!end) {
@@ -35,7 +38,7 @@ int main(void)
 
 		end = bf[0] == 'z';
 	}
-
+ */
 	sets.c_lflag  = lflag;
 	tcsetattr(STDIN_FILENO, TCSANOW, &sets);
 }

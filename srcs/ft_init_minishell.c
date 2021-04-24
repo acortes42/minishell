@@ -14,14 +14,15 @@
 
 static void ft_init_history(t_abs_struct *base)
 {
-	int		fd;
+	int			fd;
 
 	fd = ft_open_history(base, O_RDONLY);
 	base->history_lines = ft_file_lines_by_fd(fd);
-	close(fd);
+	if (fd >= 0)
+		close(fd);
 	if (base->history_lines < 0)
 		ft_exit_minishell(base, -1);
-	base->current_history_line = base->history_lines + 1;
+	base->current_history_line = base->history_lines;
 	// La idea es cargar el número de líneas y apuntar a la última línea. Después con una función de apoyo permitir solicitar la línea que queremos del archivo de modo que nos abstraemos de toda la lógica y sólo llamamos a la función
 	// En el procesamiento del teclado, actualizamos el puntero a la línea del history, no dejando superar el índice máximo o mínimo.
 	// Si se rebasa por arriba, borramos todo y queda apuntando al history + 1
@@ -41,16 +42,26 @@ static void ft_init_history(t_abs_struct *base)
 	// Yo soy el primero que se lía con los nombres y que no lo hace claro, pero creo que tenemos que levantar los dos la mano cuando vemos esto.
 }
 
+void	process_quit_handler(int sig)
+{
+	//if (sig == SIGQUIT)
+	//{
+		(void)sig;
+		ft_setlflag(STDIN_FILENO, 1, ICANON | ECHO);
+//		ft_exit_minishell(base_static, 0);
+	//}
+}
+
 int	ft_init_minishell(t_abs_struct *base, char **envp)
 {
 /* 	int	fd2;
 	char	*buf_line;
  */
-	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGTSTP, SIG_IGN);
-	signal(SIGTTIN, SIG_IGN);
-	signal(SIGTTOU, SIG_IGN);
+	signal(SIGINT, process_quit_handler);
+	signal(SIGQUIT, process_quit_handler);
+	signal(SIGTSTP, process_quit_handler);
+	signal(SIGTTIN, process_quit_handler);
+	signal(SIGTTOU, process_quit_handler);
 	if (!base)
 		return (0);
 	ft_memset(base, 0, sizeof(t_abs_struct));

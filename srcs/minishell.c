@@ -28,12 +28,8 @@ static int	append_new_line(char **str)
 
 int	obtain_full_line(t_abs_struct *base)
 {
-	int				fd;
 	int				found_new_line;
 
-	fd = ft_open_history(base, O_RDWR | O_APPEND);
-	if (fd < 0)
-		return (0);
 	if (base->input)
 		free(base->input);
 	base->input = 0;
@@ -47,13 +43,7 @@ int	obtain_full_line(t_abs_struct *base)
 	if (base->input && found_new_line && !append_new_line(&base->input))
 		ft_exit_minishell(base, 1);
 	if (ft_strlen(base->input) >= 1 && ft_strcmp(base->input, "\n"))
-	{
-		write(fd, base->input, ft_strlen(base->input));
-		base->last_line++;
-		base->history_lines++;
-		base->current_history_line = base->history_lines + 1;
-	}
-	close(fd);
+		ft_write_history_line(base);
 	return (0);
 }
 
@@ -84,7 +74,7 @@ unsigned int	ft_getlflag(int fd)
 int	main(int argc, char **argv, char **envp)
 {
 	int				minishell_ready;
-	t_abs_struct	base;
+	t_abs_struct 	base;
 
 	(void)argc;
 	(void)argv;

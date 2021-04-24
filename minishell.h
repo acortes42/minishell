@@ -29,6 +29,7 @@
 # include <signal.h>
 # include <limits.h>
 
+# define ESCAPE				'\033'
 # define ARROW_UP			"\033[A"
 # define ARROW_DOWN			"\033[B"
 
@@ -89,7 +90,6 @@ typedef struct s_abs_struct
 	int						last_executed_process_status;
 	t_job					*first_job;
 	unsigned int			c_lflag;
-	int						last_line;
 	int						counter;
 	int						history_lines;
 	int						current_history_line;
@@ -140,6 +140,7 @@ char			*ft_get_absolute_path(t_abs_struct *base, char *path);
 int				echo(t_abs_struct *base, t_process *p);
 int				ft_history(t_abs_struct *base);
 int				ft_open_history(t_abs_struct *base, int mode);
+void			ft_write_history_line(t_abs_struct *base);
 int				ft_pwd(void);
 int				ft_export(t_abs_struct *base, t_process *p);
 int				ft_copy_env(t_abs_struct *base, char **envp);
@@ -236,5 +237,6 @@ int				ft_file_lines_by_fd(int fd);
 char 			*ft_get_file_line(char *file, int line);
 char			*ft_get_file_line_by_fd(int fd, int line);
 void			ft_clear_input(char **line);
+void			ft_delete_chars(int len);
 
 #endif

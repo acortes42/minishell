@@ -2,22 +2,26 @@
 
 static int	ft_cmdlen(char *line)
 {
-	// TODO: Ojo con los comandos de mas de 1 byte... ctrl + ...
-	// Son los que hacen que al navegar por el historial se borre más de la cuenta
-	return ft_strlen(line);
+	int		size;
+
+	size = 0;
+	while (line && *line)
+	{
+		if (*line == ESCAPE)
+			line += 2;
+		else
+			size++;
+		line++;
+	}
+	return (size);
 }
 
-void	ft_clear_input(char **line)
+void	ft_delete_chars(int len)
 {
-	int				len;
 	char			*str;
-	struct termios	settings;
 
-	if (!line || !(*line))
+	if (len <= 0)
 		return ;
-	if (tcgetattr (STDIN_FILENO, &settings) < 0)
-		return ;
-	len = ft_cmdlen(*line);
 	str = ft_calloc((len * 3) + 1, sizeof(char));
 	if (!str)
 		return ;
@@ -26,6 +30,19 @@ void	ft_clear_input(char **line)
 	ft_memset(str + len + len, '\b', len);
 	ft_putstr(str);
 	free(str);
+}
+
+void	ft_clear_input(char **line)
+{
+	int				len;
+	struct termios	settings;
+
+	if (!line || !(*line))
+		return ;
+	if (tcgetattr (STDIN_FILENO, &settings) < 0)
+		return ;
+	len = ft_cmdlen(*line);
+	ft_delete_chars(len);
 	free(*line);
 	*line = 0;
 }

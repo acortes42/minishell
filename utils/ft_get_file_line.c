@@ -10,19 +10,23 @@ char	*ft_get_file_line_by_fd(int fd, int line)
 		return (0);
 	curr_line = 0;
 	str = 0;
-	while (curr_line < (line - 1))
+	while (curr_line <= line)
 	{
+		// TODO: Corregir el otro gran problema que tenemos aquí...
+		// Como abrimos y cerramos el fichero sin leerlo del todo  al leer el history, lo que leemos la próxima vez, no es lo que esperamos sino el buffer que quedó pendiente de leer hasta el final del archivo
+		// Bastaría con implementar un close que limpie el buffer del fd, con esto el subir y bajar por el historial va medianamente fino
+
 		found_nl = classic_get_next(fd, &str);
 		if (found_nl < 1)
 			break ;
-		curr_line++;
-		if (str && curr_line < (line - 1))
+		if (str && curr_line < line)
 		{
 			free(str);
 			str = 0;
 		}
+		curr_line++;
 	}
-	if (curr_line < (line -1) && str)
+	if (curr_line < line && str)
 	{
 		free(str);
 		str = 0;

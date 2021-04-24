@@ -14,12 +14,14 @@
 
 int	ft_pwd(void)
 {
-	char	cwd[1024];
+	char	*cwd;
 
-	if (getcwd(cwd, sizeof(cwd)))
+	cwd = getcwd(0, 0);
+	if (cwd)
 	{
 		ft_putstr(cwd);
 		ft_putstr("\n");
+		free(cwd);
 	}
 	else
 		ft_putstr_fd("getcwd() error", STDERR_FILENO);
