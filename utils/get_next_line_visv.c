@@ -27,15 +27,6 @@ static int	ft_move_buffer_to_line(char *bf, char **line)
 	return (found_nl);
 }
 
-void	ft_erase(char **line)
-{
-	if (!line || !(*line))
-		return ;
-	ft_clear_input(ft_strlen(*line));
-	free(*line);
-	*line = 0;
-}
-
 static void load_previous_command(t_abs_struct *base, char **line, char *bf)
 {
 	int		fd;
@@ -43,7 +34,7 @@ static void load_previous_command(t_abs_struct *base, char **line, char *bf)
 
 	if (!base->current_history_line)
 		return ; // No hacemos nada cuando estamos al inicio
-	fd = ft_open_history(base, O_RDWR);
+	fd = ft_open_history(base, O_RDONLY);
 	if (fd < 0)
 		return ;
 	base->current_history_line--;
@@ -51,7 +42,7 @@ static void load_previous_command(t_abs_struct *base, char **line, char *bf)
 	close(fd);
 	if (!history_line)
 		return ;
-	ft_erase(line);
+	ft_clear_input(line);
 	*line = history_line;
 	ft_memset(bf, 0, BUFFER_SIZE);
 	ft_putstr(*line);
@@ -64,7 +55,7 @@ static void load_next_command(t_abs_struct *base, char **line, char *bf)
 
 	if (base->current_history_line >= base->history_lines)
 	{ // Borramos el contenido, vaciamos el buffer y apuntamos el history
-		ft_erase(line);
+		ft_clear_input(line);
 		ft_memset(bf, 0, BUFFER_SIZE);
 		base->current_history_line = base->history_lines + 1;
 		return ;
@@ -77,7 +68,7 @@ static void load_next_command(t_abs_struct *base, char **line, char *bf)
 	close(fd);
 	if (!history_line)
 		return ;
-	ft_erase(line);
+	ft_clear_input(line);
 	*line = history_line;
 	ft_memset(bf, 0, BUFFER_SIZE);
 	ft_putstr(*line);
