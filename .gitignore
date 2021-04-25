@@ -10,3 +10,5 @@ pipes
 redirection_redirected_output
 a.out
 tests/tf
+test_keyboard
+history_visv.txt

@@ -1,7 +1,26 @@
 {
     "tasks": [
         {
-            
+
+            "type": "shell",
+            "label": "keyboardTestBuild",
+            "command": "make",
+            "args": [
+                "keyboard"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+
             "type": "shell",
             "label": "minishellBuildToDebug",
             "command": "make",

@@ -60,6 +60,9 @@ TESTS_IT			:= check_it
 
 all: ${NAME}
 
+keyboard: fclean
+	${CC} -o test_keyboard ${CFLAGS} tests/keyboard.c
+
 pipes: fclean
 	${CC} -o pipes ${CFLAGS} tests/pipes_redirs.c
 
@@ -88,7 +91,7 @@ fclean: clean
 	@rm -f *.out
 	@rm -f *.a
 	${RM} ${NAME}
-	${RM} pipes redirection_redirected_output
+	${RM} pipes redirection_redirected_output test_keyboard
 	${RM} minishell_check ${NAME}
 
 test:	${OBJS}
