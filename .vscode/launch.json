@@ -4,30 +4,11 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-    {
-        "name": "(gdb) Debug pipes",
-        "type": "cppdbg",
-        "request": "launch",
-        "program": "${workspaceFolder}/pipes",
-        "args": [],
-        "stopAtEntry": true,
-        "cwd": "${workspaceFolder}",
-        "environment": [],
-        "externalConsole": false,
-        "MIMode": "gdb",
-        "setupCommands": [
-            {
-                "description": "Habilitar la impresión con sangría para gdb",
-                "text": "-enable-pretty-printing",
-                "ignoreFailures": true
-            }
-        ]
-    },
         {
-            "name": "Debug minishell",
+            "name": "(gdb) Debug pipes",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/minishell",
+            "program": "${workspaceFolder}/pipes",
             "args": [],
             "stopAtEntry": true,
             "cwd": "${workspaceFolder}",
@@ -37,12 +18,51 @@
             "setupCommands": [
                 {
                     "description": "Habilitar la impresión con sangría para gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        {
+            "name": "(gdb) Debug pipes",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/pipes",
+            "args": [],
+            "stopAtEntry": true,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Habilitar la impresión con sangría para gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+                {
+            "name": "Debug keyboard",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/test_keyboard",
+            "args": [],
+            "stopAtEntry": true,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+
+            "setupCommands": [
+                {
+                    "description": "Habilitar la impresión con sangría para gdb",
                     "text": "-enable-pretty-printing -gdb-set follow-fork-mode child",
                     "ignoreFailures": true
                 }
             ],
             "envFile": "${workspaceFolder}/.env",
-            "preLaunchTask": "minishellBuildToDebug",
+            "preLaunchTask": "keyboardTestBuild",
             "miDebuggerPath": "/usr/bin/gdb"
         }
 

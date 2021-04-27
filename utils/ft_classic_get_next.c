@@ -20,7 +20,10 @@ char	*ft_strsub(char const *s, unsigned int start, size_t len)
 	o = 0;
 	c = malloc(len + 1);
 	if (!s)
+	{
+		// TODO: fuga de memoria. Tenemos c con malloc pero sin liberar
 		return (0);
+	}
 	if (c == 0)
 		return (0);
 	if (start < ft_strlen(s))

@@ -13,6 +13,7 @@
 get_next_line_visv.c y get_next_line_utils_visv.c simplemente cambiando el makefile
 36. Leak, ejecutando:
     export a=4243;echo $a$a$a$a$a
+37. Pendiente capturar señales para que al salir de minishell, se vuelva a activar ICANON Y ECHO, sino nos quedamos sin output
 
 comentarios de setenv.c
 // TODO: modificar el nombre de fichero por ft_setenv.c
