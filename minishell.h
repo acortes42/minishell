@@ -6,7 +6,7 @@
 /*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 09:31:42 by visv              #+#    #+#             */
-/*   Updated: 2021/04/30 16:17:23 by acortes-         ###   ########.fr       */
+/*   Updated: 2021/04/30 20:50:30 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,6 +232,7 @@ void			ft_execute_relative_shell_command(t_abs_struct *base,
 					t_process *p);
 int				ft_setlflag(int fd, int set_flag, unsigned int value);
 int				classic_get_next(int fd, char **line);
+int				ft_isascii(int c);
 
 int				ft_file_lines(char *file);
 int				ft_file_lines_by_fd(int fd);

@@ -6,7 +6,7 @@
 /*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 12:41:59 by vsempere          #+#    #+#             */
-/*   Updated: 2021/04/30 19:19:13 by acortes-         ###   ########.fr       */
+/*   Updated: 2021/04/30 20:59:24 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,11 +104,21 @@ int	get_next_line(int fd, char **line, t_abs_struct *base)
 			return (0);
 		if (*bf == 127)
 		{
-			//El borrado tiene  errores (Eliminando más de lo que es introducido, dando problemas al guardarse en historial)
-			aux = ft_strcdup(*line, ft_strlen(*line) - 1);
-			delete_char(bf);
-			ft_memset(bf, 0, BUFFER_SIZE);
-			*line = ft_strdup(aux);
+			//El borrado elimmina más de lo introducido sin el else, que da espacio para que no falle(lo cual es muy cutre)
+			if (ft_strlen(*line) > 0)
+			{
+				aux = malloc(sizeof(char) * (ft_strlen(*line)));
+				ft_strlcpy(aux, *line, ft_strlen(*line));
+				delete_char(bf);
+				ft_memset(bf, 0, BUFFER_SIZE);
+				*line = ft_strdup(aux);
+				free(aux);
+			}
+			else
+			{
+				ft_putstr(" ");
+				*line = ft_strdup("");
+			}
 		}
 		else if (*bf == 27)
 		{

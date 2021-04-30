@@ -6,11 +6,19 @@
 /*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 14:18:11 by vsempere          #+#    #+#             */
-/*   Updated: 2021/04/01 14:25:21 by acortes-         ###   ########.fr       */
+/*   Updated: 2021/04/30 20:50:12 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	ft_isascii(int c)
+{
+	if (c >= 0 && c < 127)
+		return (1);
+	else
+		return (0);
+}
 
 int	ft_isdigit(int c)
 {
