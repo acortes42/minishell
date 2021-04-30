@@ -17,6 +17,7 @@ char	*ft_get_file_line_by_fd(int fd, int line)
 		// Bastaría con implementar un close que limpie el buffer del fd, con esto el subir y bajar por el historial va medianamente fino
 
 		found_nl = classic_get_next(fd, &str);
+		//close(fd);
 		if (found_nl < 1)
 			break ;
 		if (str && curr_line < line)

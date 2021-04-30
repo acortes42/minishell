@@ -6,7 +6,7 @@
 /*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 12:41:59 by vsempere          #+#    #+#             */
-/*   Updated: 2021/04/21 15:12:31 by acortes-         ###   ########.fr       */
+/*   Updated: 2021/04/30 19:19:13 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,9 @@ static void load_previous_command(t_abs_struct *base, char **line, char *bf)
 	fd = ft_open_history(base, O_RDONLY);
 	if (fd < 0)
 		return ;
-	history_line = ft_get_file_line_by_fd(fd, base->current_history_line);
-	close(fd);
+	history_line = ft_trim(ft_get_file_line_by_fd(fd, base->current_history_line));
+	if (fd)
+		close(fd);
 	if (!history_line)
 		return ;
 	ft_clear_input(line);
@@ -85,32 +86,53 @@ int	get_next_line(int fd, char **line, t_abs_struct *base)
 {
 	static char		bf[BUFFER_SIZE];
 	int				proc;
+	unsigned int	x;
+	char			*aux;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || !line)
 		return (-1);
 	proc = ft_move_buffer_to_line(bf, line);
+	x = 0;
 	while (proc >= 0)
 	{
 		if (proc == 1)
 			return (1);
-		proc = read(fd, bf, 4);
-		// TODO: Aquí creo que tenemos un problema
-		// Si salimos del read al leer 4 caracteres, podemos haber leído:
-		// \033[Ad --> procesamos \033[A y nos comemos la d
-		// Y al revés:
-		// d\033[Ad --> Imprimimos la d y el ARROW UP y no lo interpretamos... por eso hace cosas raras el history
+		proc = read(fd, bf, 1);
 		if (proc < 0)
 			break ;
 		if (!proc)
 			return (0);
-		if (!ft_strcmp(ARROW_UP, bf))
-			load_previous_command(base, line, bf);
-		else if (!ft_strcmp(ARROW_DOWN, bf))
-			load_next_command(base, line, bf);
-		else if (*bf == '\b')
+		if (*bf == 127)
+		{
+			//El borrado tiene  errores (Eliminando más de lo que es introducido, dando problemas al guardarse en historial)
+			aux = ft_strcdup(*line, ft_strlen(*line) - 1);
 			delete_char(bf);
+			ft_memset(bf, 0, BUFFER_SIZE);
+			*line = ft_strdup(aux);
+		}
+		else if (*bf == 27)
+		{
+				read(fd, bf, 1);
+				if (*bf == 91)
+				{
+					read(fd, bf, 1);
+					if (*bf == 65)
+						load_previous_command(base, line, bf);
+					else if (*bf == 66)
+						load_next_command(base, line, bf);
+				}
+		}
+		else if (*bf == 3)
+		{
+			ft_clear_input(line);
+			ft_putstr("\n");;
+			return (1);
+		}
 		else
+		{
 			ft_putstr(bf);
+			x++;
+		}
 		proc = ft_move_buffer_to_line(bf, line);
 	}
 	if (*line)

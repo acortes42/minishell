@@ -6,7 +6,7 @@
 /*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 09:31:42 by visv              #+#    #+#             */
-/*   Updated: 2021/04/21 14:45:23 by acortes-         ###   ########.fr       */
+/*   Updated: 2021/04/30 16:17:23 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,7 @@ int				ft_execute_ctrl_d(t_abs_struct *base);
 int				ft_init_minishell(t_abs_struct *base, char **envp);
 void			clear_screen(void);
 void			ft_show_prompt(t_abs_struct *base);
+void			enableRawMode();
 
 t_job			*ft_release_job(t_job *j);
 void			ft_putstr_fd(char *s, int fd);

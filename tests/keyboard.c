@@ -15,7 +15,11 @@ int main(void)
 
 	tcgetattr(STDIN_FILENO, &sets);
 	lflag = sets.c_lflag ;
-	sets.c_lflag &= ~(ICANON|ECHO);
+	sets.c_iflag |= (IUTF8);
+	sets.c_iflag &= ~(BRKINT | INPCK | ISTRIP | IXON | ISTRIP);
+	sets.c_cflag |= (CS8);
+	sets.c_lflag &= ~(ECHO | ICANON | IEXTEN | ISIG);
+  	sets.c_oflag &= ~(OPOST);
 	tcsetattr(STDIN_FILENO, TCSANOW, &sets);
 
 	end = 0;

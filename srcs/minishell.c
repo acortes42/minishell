@@ -6,7 +6,7 @@
 /*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/23 13:33:03 by acortes-          #+#    #+#             */
-/*   Updated: 2021/04/21 12:49:30 by acortes-         ###   ########.fr       */
+/*   Updated: 2021/04/30 19:06:12 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,9 @@ int	obtain_full_line(t_abs_struct *base)
 	}
 	if (base->input && found_new_line && !append_new_line(&base->input))
 		ft_exit_minishell(base, 1);
-	if (ft_strlen(base->input) >= 1 && ft_strcmp(base->input, "\n"))
+	if (ft_strlen(base->input) >= 1 && ft_strcmp(ft_trim(base->input), "\n"))
 		ft_write_history_line(base);
+	ft_setlflag(STDIN_FILENO, 1, base->c_lflag);
 	return (0);
 }
 
@@ -83,10 +84,11 @@ int	main(int argc, char **argv, char **envp)
 	if (minishell_ready)
 		clear_screen();
 	base.c_lflag = ft_getlflag(STDIN_FILENO); // Keep c_lflag value before changing anything
-	if (!ft_setlflag(STDIN_FILENO, 0, ICANON|ECHO))
-		ft_exit_minishell(&base, 1); // Exit minishell: Not disabled canonical input and echoing
+ // Exit minishell: Not disabled canonical input and echoing
 	while (minishell_ready)
 	{
+		if (!ft_setlflag(STDIN_FILENO, 0, ICANON | ECHO| IEXTEN | ISIG))
+			ft_exit_minishell(&base, 1);
 		ft_show_prompt(&base);
 		obtain_full_line(&base);
 		execute_command_read(&base);

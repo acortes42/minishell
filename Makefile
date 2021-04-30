@@ -25,7 +25,8 @@ UTILS 				= utils/ft_putnbr.c utils/ft_putstr.c utils/ft_strchr.c \
 	utils/ft_classic_get_next.c utils/ft_get_count_line.c \
 	utils/ft_get_correct_line.c utils/ft_file_lines.c \
 	utils/ft_get_file_line.c utils/ft_open_history.c \
-	utils/ft_clear_input.c utils/ft_write_history_line.c
+	utils/ft_clear_input.c utils/ft_write_history_line.c \
+	utils/get_next_line_utils.c
 
 SRCS_WITHOUT_MAIN	=  srcs/ft_exit_minishell.c srcs/clear_screen.c \
 	srcs/ft_execute_ctrl_d.c srcs/echo.c srcs/cd.c \
@@ -88,6 +89,8 @@ fclean: clean
 	@rm -rdf SourceFiles
 	@rm -f history.txt
 	@touch history.txt
+	@rm -f history_visv.txt
+	@touch history_visv.txt
 	@rm -f *.out
 	@rm -f *.a
 	${RM} ${NAME}
