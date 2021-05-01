@@ -6,7 +6,7 @@
 /*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/23 13:33:03 by acortes-          #+#    #+#             */
-/*   Updated: 2021/04/30 20:57:40 by acortes-         ###   ########.fr       */
+/*   Updated: 2021/05/01 15:55:45 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ int	obtain_full_line(t_abs_struct *base)
 	}
 	if (base->input && found_new_line && !append_new_line(&base->input))
 		ft_exit_minishell(base, 1);
-	if (ft_strlen(base->input) >= 1 && ft_strcmp(ft_trim(base->input), "\n") && ft_isascii(base->input[0]))
+	if (ft_strlen(base->input) >= 1 && ft_strcmp(ft_trim(base->input), "\n") \
+			&& ft_isascii(base->input[0]))
 		ft_write_history_line(base);
 	ft_setlflag(STDIN_FILENO, 1, base->c_lflag);
 	return (0);
@@ -66,7 +67,7 @@ unsigned int	ft_getlflag(int fd)
 	if (tcgetattr (fd, &settings) < 0)
 	{
 		perror ("error in tcgetattr");
-		return 0;
+		return (0);
 	}
 	result = settings.c_lflag;
 	return (result);
@@ -75,7 +76,7 @@ unsigned int	ft_getlflag(int fd)
 int	main(int argc, char **argv, char **envp)
 {
 	int				minishell_ready;
-	t_abs_struct 	base;
+	t_abs_struct	base;
 
 	(void)argc;
 	(void)argv;
@@ -83,11 +84,10 @@ int	main(int argc, char **argv, char **envp)
 	minishell_ready = ft_init_minishell(&base, envp);
 	if (minishell_ready)
 		clear_screen();
-	base.c_lflag = ft_getlflag(STDIN_FILENO); // Keep c_lflag value before changing anything
- // Exit minishell: Not disabled canonical input and echoing
+	base.c_lflag = ft_getlflag(STDIN_FILENO);
 	while (minishell_ready)
 	{
-		if (!ft_setlflag(STDIN_FILENO, 0, ICANON | ECHO| IEXTEN | ISIG))
+		if (!ft_setlflag(STDIN_FILENO, 0, ICANON | ECHO | IEXTEN | ISIG))
 			ft_exit_minishell(&base, 1);
 		ft_show_prompt(&base);
 		obtain_full_line(&base);

@@ -6,7 +6,7 @@
 /*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 14:09:06 by vsempere          #+#    #+#             */
-/*   Updated: 2021/04/01 14:22:05 by acortes-         ###   ########.fr       */
+/*   Updated: 2021/05/01 16:29:59 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 long	value_of_r_pos(int sign, long n)
 {
 	if (sign < 0)
-		return '0' + (-n % 10);
+		return ('0' + (-n % 10));
 	else
-		return '0' + (n % 10);
+		return ('0' + (n % 10));
 }
 
 char	*ft_itoa(int n2)

@@ -6,7 +6,7 @@
 /*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 12:41:59 by vsempere          #+#    #+#             */
-/*   Updated: 2021/04/30 20:59:24 by acortes-         ###   ########.fr       */
+/*   Updated: 2021/05/01 16:26:55 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	ft_move_buffer_to_line(char *bf, char **line)
 	return (found_nl);
 }
 
-static void load_previous_command(t_abs_struct *base, char **line, char *bf)
+static void	load_previous_command(t_abs_struct *base, char **line, char *bf)
 {
 	int		fd;
 	char	*history_line;
@@ -39,7 +39,8 @@ static void load_previous_command(t_abs_struct *base, char **line, char *bf)
 	fd = ft_open_history(base, O_RDONLY);
 	if (fd < 0)
 		return ;
-	history_line = ft_trim(ft_get_file_line_by_fd(fd, base->current_history_line));
+	history_line = \
+		ft_trim(ft_get_file_line_by_fd(fd, base->current_history_line));
 	if (fd)
 		close(fd);
 	if (!history_line)
@@ -50,13 +51,13 @@ static void load_previous_command(t_abs_struct *base, char **line, char *bf)
 	ft_putstr(*line);
 }
 
-static void load_next_command(t_abs_struct *base, char **line, char *bf)
+static void	load_next_command(t_abs_struct *base, char **line, char *bf)
 {
 	int		fd;
 	char	*history_line;
 
 	if (base->current_history_line >= (base->history_lines - 1))
-	{ // Borramos el contenido, vaciamos el buffer y apuntamos el history
+	{
 		ft_clear_input(line);
 		ft_memset(bf, 0, BUFFER_SIZE);
 		base->current_history_line = base->history_lines;
@@ -76,23 +77,41 @@ static void load_next_command(t_abs_struct *base, char **line, char *bf)
 	ft_putstr(*line);
 }
 
-static void delete_char(char *bf)
+int	ft_read_from_keyboard(char *bf, char **line, t_abs_struct *base, int fd)
 {
-	ft_delete_chars(1);
-	ft_memset(bf, 0, BUFFER_SIZE);
+	if (*bf == 127)
+		ft_borrow_char(ft_strlen(*line), line, bf);
+	else if (*bf == 27)
+	{
+		read(fd, bf, 1);
+		if (*bf == 91)
+		{
+			read(fd, bf, 1);
+			if (*bf == 65)
+				load_previous_command(base, line, bf);
+			else if (*bf == 66)
+				load_next_command(base, line, bf);
+		}
+	}
+	else if (*bf == 3)
+	{
+		ft_clear_input(line);
+		ft_putstr("\n");
+		return (1);
+	}
+	else
+		ft_putstr(bf);
+	return (0);
 }
 
 int	get_next_line(int fd, char **line, t_abs_struct *base)
 {
 	static char		bf[BUFFER_SIZE];
 	int				proc;
-	unsigned int	x;
-	char			*aux;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || !line)
 		return (-1);
 	proc = ft_move_buffer_to_line(bf, line);
-	x = 0;
 	while (proc >= 0)
 	{
 		if (proc == 1)
@@ -102,47 +121,8 @@ int	get_next_line(int fd, char **line, t_abs_struct *base)
 			break ;
 		if (!proc)
 			return (0);
-		if (*bf == 127)
-		{
-			//El borrado elimmina más de lo introducido sin el else, que da espacio para que no falle(lo cual es muy cutre)
-			if (ft_strlen(*line) > 0)
-			{
-				aux = malloc(sizeof(char) * (ft_strlen(*line)));
-				ft_strlcpy(aux, *line, ft_strlen(*line));
-				delete_char(bf);
-				ft_memset(bf, 0, BUFFER_SIZE);
-				*line = ft_strdup(aux);
-				free(aux);
-			}
-			else
-			{
-				ft_putstr(" ");
-				*line = ft_strdup("");
-			}
-		}
-		else if (*bf == 27)
-		{
-				read(fd, bf, 1);
-				if (*bf == 91)
-				{
-					read(fd, bf, 1);
-					if (*bf == 65)
-						load_previous_command(base, line, bf);
-					else if (*bf == 66)
-						load_next_command(base, line, bf);
-				}
-		}
-		else if (*bf == 3)
-		{
-			ft_clear_input(line);
-			ft_putstr("\n");;
+		if (ft_read_from_keyboard(bf, &(*line), base, fd) == 1)
 			return (1);
-		}
-		else
-		{
-			ft_putstr(bf);
-			x++;
-		}
 		proc = ft_move_buffer_to_line(bf, line);
 	}
 	if (*line)

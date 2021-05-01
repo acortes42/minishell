@@ -6,7 +6,7 @@
 /*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 09:31:42 by visv              #+#    #+#             */
-/*   Updated: 2021/04/30 20:50:30 by acortes-         ###   ########.fr       */
+/*   Updated: 2021/05/01 16:21:52 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ int				ft_execute_ctrl_d(t_abs_struct *base);
 int				ft_init_minishell(t_abs_struct *base, char **envp);
 void			clear_screen(void);
 void			ft_show_prompt(t_abs_struct *base);
-void			enableRawMode();
+void			enableRawMode(void);
 
 t_job			*ft_release_job(t_job *j);
 void			ft_putstr_fd(char *s, int fd);
@@ -233,10 +233,11 @@ void			ft_execute_relative_shell_command(t_abs_struct *base,
 int				ft_setlflag(int fd, int set_flag, unsigned int value);
 int				classic_get_next(int fd, char **line);
 int				ft_isascii(int c);
+void			ft_borrow_char(int x, char **line, char *bf);
 
 int				ft_file_lines(char *file);
 int				ft_file_lines_by_fd(int fd);
-char 			*ft_get_file_line(char *file, int line);
+char			*ft_get_file_line(char *file, int line);
 char			*ft_get_file_line_by_fd(int fd, int line);
 void			ft_clear_input(char **line);
 void			ft_delete_chars(int len);

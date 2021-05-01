@@ -6,7 +6,7 @@
 /*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 16:18:29 by visv              #+#    #+#             */
-/*   Updated: 2021/04/01 12:45:43 by acortes-         ###   ########.fr       */
+/*   Updated: 2021/05/01 16:28:52 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,6 @@ void	ft_release_base(t_abs_struct *base)
 	base->parse_string = 0;
 	ft_release_jobs(base->first_job);
 	base->first_job = 0;
-	ft_setlflag(STDIN_FILENO, 1, base->c_lflag); // Restore original c_lflag values
+	ft_setlflag(STDIN_FILENO, 1, base->c_lflag);
 	return ;
 }

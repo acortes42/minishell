@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_visv.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vsempere <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 12:41:59 by vsempere          #+#    #+#             */
-/*   Updated: 2019/11/27 14:11:18 by vsempere         ###   ########.fr       */
+/*   Updated: 2021/05/01 16:27:19 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,30 @@ void	ft_shift_left(char *bf)
 		nl_pos++;
 	}
 	*(bf + i) = 0;
+}
+
+static void	delete_char(char *bf)
+{
+	ft_delete_chars(1);
+	ft_memset(bf, 0, BUFFER_SIZE);
+}
+
+void	ft_borrow_char(int x, char **line, char *bf)
+{
+	char	*aux;
+
+	if (x > 0)
+	{
+		aux = malloc(sizeof(char) * x);
+		ft_strlcpy(aux, *line, ft_strlen(*line));
+		delete_char(bf);
+		ft_memset(bf, 0, BUFFER_SIZE);
+		*line = ft_strdup(aux);
+		free(aux);
+	}
+	else
+	{
+		ft_putstr(" ");
+		*line = ft_strdup("");
+	}
 }
