@@ -17,14 +17,11 @@ char	*ft_strsub(char const *s, unsigned int start, size_t len)
 	unsigned long int	o;
 	char				*c;
 
-	o = 0;
-	c = malloc(len + 1);
 	if (!s)
-	{
-		// TODO: fuga de memoria. Tenemos c con malloc pero sin liberar
 		return (0);
-	}
-	if (c == 0)
+	o = 0;
+	c = malloc(sizeof(char) * (len + 1));
+	if (!c)
 		return (0);
 	if (start < ft_strlen(s))
 	{
@@ -45,6 +42,8 @@ static	int	finalline(char **stat, char **line)
 	char			*c;
 
 	l = 0;
+	if (*line)
+		free(*line);
 	while ((*stat)[l] != '\n' && (*stat)[l] != '\0')
 		l++;
 	if ((*stat)[l] == '\n')
