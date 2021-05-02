@@ -31,6 +31,7 @@ static void	load_previous_command(t_abs_struct *base, char **line, char *bf)
 {
 	int		fd;
 	char	*history_line;
+	char	*tmp;
 
 	if (base->current_history_line <= 0)
 		base->current_history_line = 0;
@@ -39,8 +40,10 @@ static void	load_previous_command(t_abs_struct *base, char **line, char *bf)
 	fd = ft_open_history(base, O_RDONLY);
 	if (fd < 0)
 		return ;
-	history_line = \
-		ft_trim(ft_get_file_line_by_fd(fd, base->current_history_line));
+	tmp = ft_get_file_line_by_fd(fd, base->current_history_line);
+	history_line = ft_trim(tmp);
+	if (tmp)
+		free(tmp);
 	if (fd)
 		close(fd);
 	if (!history_line)
@@ -121,7 +124,7 @@ int	get_next_line(int fd, char **line, t_abs_struct *base)
 			break ;
 		if (!proc)
 			return (0);
-		if (ft_read_from_keyboard(bf, &(*line), base, fd) == 1)
+		if (ft_read_from_keyboard(bf, line, base, fd) == 1)
 			return (1);
 		proc = ft_move_buffer_to_line(bf, line);
 	}
