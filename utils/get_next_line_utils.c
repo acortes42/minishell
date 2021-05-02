@@ -21,9 +21,9 @@ char	*ft_strcdup(const char *s1, int c)
 	while (s1[i] != c && s1[i] != '\0')
 		i++;
 	str = malloc(sizeof(char) * (i + 1));
-	str[i] = '\0';
 	if (str == NULL)
 		return (NULL);
+	str[i] = '\0';
 	while (i-- > 0)
 		str[i] = s1[i];
 	return (str);
