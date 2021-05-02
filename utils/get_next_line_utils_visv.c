@@ -78,13 +78,16 @@ void	ft_borrow_char(int x, char **line, char *bf)
 		aux = malloc(sizeof(char) * x);
 		ft_strlcpy(aux, *line, ft_strlen(*line));
 		delete_char(bf);
-		ft_memset(bf, 0, BUFFER_SIZE);
+		if (*line)
+			free(*line);
 		*line = ft_strdup(aux);
 		free(aux);
 	}
 	else
 	{
 		ft_putstr(" ");
+		if (*line)
+			free(*line);
 		*line = ft_strdup("");
 	}
 }

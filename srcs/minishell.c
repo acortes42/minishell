@@ -28,7 +28,8 @@ static int	append_new_line(char **str)
 
 int	obtain_full_line(t_abs_struct *base)
 {
-	int	found_new_line;
+	int		found_new_line;
+	char	*trimmed_input;
 
 	if (base->input)
 		free(base->input);
@@ -42,10 +43,12 @@ int	obtain_full_line(t_abs_struct *base)
 	}
 	if (base->input && found_new_line && !append_new_line(&base->input))
 		ft_exit_minishell(base, 1);
-	if (ft_strlen(base->input) >= 1 && ft_strcmp(ft_trim(base->input), "\n") \
+	trimmed_input = ft_trim(base->input);
+	if (ft_strlen(base->input) >= 1 && ft_strcmp(trimmed_input, "\n") \
 			&& ft_isascii(base->input[0]))
 		ft_write_history_line(base);
-	ft_setlflag(STDIN_FILENO, 1, base->c_lflag);
+	if (trimmed_input)
+		free(trimmed_input);
 	return (0);
 }
 
@@ -91,6 +94,8 @@ int	main(int argc, char **argv, char **envp)
 			ft_exit_minishell(&base, 1);
 		ft_show_prompt(&base);
 		obtain_full_line(&base);
+		if (!ft_setlflag(STDIN_FILENO, 1, base.c_lflag))
+			ft_exit_minishell(&base, 1);
 		execute_command_read(&base);
 		base.first_job = 0;
 		base.num_args = 0;
