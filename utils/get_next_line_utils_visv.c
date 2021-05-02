@@ -23,7 +23,7 @@ char	*ft_concat(char *line, char *bf, int *found_nl)
 	while (b2c < BUFFER_SIZE && *(bf + b2c) && *(bf + b2c) != '\n')
 		b2c++;
 	*found_nl = 0;
-	if (b2c < BUFFER_SIZE && *(bf + b2c) == '\n')
+	if (*(bf + b2c) == '\n')
 		*found_nl = 1;
 	line_len = ft_strlen(line);
 	nl = malloc(sizeof(char) * (line_len + b2c + 1));
