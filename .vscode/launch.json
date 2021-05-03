@@ -24,10 +24,10 @@
             ]
         },
         {
-            "name": "(gdb) Debug pipes",
+            "name": "Debug minishell",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/pipes",
+            "program": "${workspaceFolder}/minishell",
             "args": [],
             "stopAtEntry": true,
             "cwd": "${workspaceFolder}",
@@ -37,12 +37,15 @@
             "setupCommands": [
                 {
                     "description": "Habilitar la impresión con sangría para gdb",
-                    "text": "-enable-pretty-printing",
+                    "text": "-enable-pretty-printing -gdb-set follow-fork-mode child",
                     "ignoreFailures": true
                 }
-            ]
+            ],
+            "envFile": "${workspaceFolder}/.env",
+            "preLaunchTask": "minishellBuildToDebug",
+            "miDebuggerPath": "/usr/bin/gdb"
         },
-                {
+        {
             "name": "Debug keyboard",
             "type": "cppdbg",
             "request": "launch",

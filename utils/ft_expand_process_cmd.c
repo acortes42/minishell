@@ -12,34 +12,6 @@
 
 #include "minishell.h"
 
-static void	ft_print_last_process_status(t_expand_dollar *d)
-{
-	char			*expansion;
-	char			*status;
-	int				len;
-
-	status = ft_itoa(d->base->last_executed_process_status);
-	if (!(status))
-		ft_exit_minishell(d->base, 1);
-	len = ft_strlen(status);
-	if (len > 2)
-	{
-		expansion = ft_calloc(d->expanded_len + (len - 2) + 1, sizeof(char));
-		if (!(expansion))
-			ft_exit_minishell(d->base, 1);
-		ft_memcpy(expansion, d->expanded, d->pos);
-		ft_memcpy(expansion + d->pos, status, len);
-		free(d->expanded);
-		d->expanded = expansion;
-		d->expanded_len += (len - 2);
-	}
-	else
-		ft_memcpy(d->expanded + d->pos, status, len);
-	d->pos += len;
-	d->cmd += 2;
-	free(status);
-}
-
 char	give_char(char d)
 {
 	if (!d)
@@ -50,30 +22,28 @@ char	give_char(char d)
 static void	expand_char(t_expand_dollar *d)
 {
 	if (d->scape)
-	{
-		ft_expand_scape(&d->expanded, &d->cmd, &d->pos);
-		d->scape = 0;
-		return ;
-	}
+		ft_expand_scape(d);
 	else if (*d->cmd == '\'' && !d->quote)
+	{
 		d->single_quote = give_char(d->single_quote);
+		d->cmd++;
+	}
 	else if (*d->cmd == '"' && !d->single_quote && !d->scape)
-	{
-		if (!d->quote)
-			d->quote = '"';
-	}
-	else if (*d->cmd == '$' && (d->quote || !d->single_quote))
-	{
-		if (*(d->cmd + 1) == '?')
-			ft_print_last_process_status(d);
-		else
-			ft_expand_dollar(d);
-		return ;
-	}
+		ft_expand_quote(d);
+	else if (!ft_strncmp("$?", d->cmd, 2) && (d->quote || !d->single_quote))
+		ft_print_last_process_status(d);
+	else if (!ft_strncmp("$", d->cmd, 1) && (d->quote || !d->single_quote))
+		ft_expand_dollar(d);
 	else if (*d->cmd == '\\')
+	{
 		d->scape = give_int(d->scape);
-	*(d->expanded + d->pos++) = *d->cmd;
-	d->cmd++;
+		d->cmd++;
+	}
+	else
+	{
+		*(d->expanded + d->pos++) = *d->cmd;
+		d->cmd++;
+	}
 }
 
 static char	*expand(t_abs_struct *base, char *cmd)
@@ -90,6 +60,8 @@ static char	*expand(t_abs_struct *base, char *cmd)
 	d.expanded = ft_calloc(d.expanded_len + 2, sizeof(char));
 	if (!d.expanded_len || !(d.expanded))
 		return (0);
+	if (!ft_strncmp(d.cmd, "~/", 2))
+		ft_expand_tilde(&d);
 	while (d.cmd && *d.cmd != '\0')
 		expand_char(&d);
 	*(d.expanded + d.pos) = ' ';

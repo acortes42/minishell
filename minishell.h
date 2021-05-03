@@ -29,11 +29,17 @@
 # include <signal.h>
 # include <limits.h>
 
+# define CTRL_C				'\x3'
+# define CTRL_D				'\x4'
+# define DEL				'\x7F'
 # define ESCAPE				'\033'
+# define FE_ESCAPE_START	'\x40'
+# define FE_ESCAPE_END		'\x5F'
+# define CSI_ESCAPE			"\033["
 # define ARROW_UP			"\033[A"
 # define ARROW_DOWN			"\033[B"
+# define CLEAR_LINE			"\033[2K"
 
-# define BUFFER_SIZE		1000
 # define ANSI_COLOR_RED     "\x1b[31m"
 # define ANSI_COLOR_GREEN   "\x1b[32m"
 # define ANSI_COLOR_YELLOW  "\x1b[33m"
@@ -129,6 +135,7 @@ int				get_next_line(int fd, char **line, t_abs_struct *base);
 char			*ft_get_correct_line(int fd, char **line, int ret);
 char			*ft_concat(char *line, char *bf, int *found_nl);
 void			ft_shift_left(char *bf);
+void			ft_shift_left_bytes(char *bf, int bytes);
 char			*ft_strjoin(char const *s1, char const *s2);
 char			**ft_split(char const *s, char c);
 void			ft_putstr(char *s);
@@ -141,6 +148,10 @@ int				echo(t_abs_struct *base, t_process *p);
 int				ft_history(t_abs_struct *base);
 int				ft_open_history(t_abs_struct *base, int mode);
 void			ft_write_history_line(t_abs_struct *base);
+void			load_previous_history_command(t_abs_struct *base, char **line,
+	char *bf);
+void			load_next_history_command(t_abs_struct *base, char **line,
+	char *bf);
 int				ft_pwd(void);
 int				ft_export(t_abs_struct *base, t_process *p);
 int				ft_copy_env(t_abs_struct *base, char **envp);
@@ -163,7 +174,7 @@ void			ft_update_status(t_abs_struct *base);
 
 t_job			*ft_build_jobs(char *command);
 t_job			*ft_build_job(char *command);
-t_job			*ft_build_job_ctrl_d(char *command);
+t_job			*ft_build_job_ctrl_d(void);
 t_process		*ft_build_processes(char *expanded_cmd);
 t_process		*ft_build_ctrl_d_process(void);
 t_process		*ft_build_process(char *expanded_cmd);
@@ -179,6 +190,7 @@ void			ft_close_pipes(t_files_fd fd, t_process *previous, \
 				t_process *current);
 void			ft_configure_pipes(t_abs_struct *base, t_process *current);
 int				ft_expand_process_cmd(t_abs_struct *base, t_process *p);
+void			ft_expand_tilde(t_expand_dollar *d);
 
 void			ft_launch_job(t_abs_struct *base, t_job *j);
 void			ft_launch_process(t_abs_struct *base, t_process *p);
@@ -223,9 +235,11 @@ int				ft_isinteger(char *str);
 int				ft_count_until_separator(char **str, int actual_arg);
 int				ft_obtain_last(int fd, char **line);
 void			ft_remove_quotes(char *field);
-int				ft_expand_scape(char **res, char **cmd, size_t *pos);
 char			*ft_extract_variable_name(char **cmd);
+int				ft_expand_scape(t_expand_dollar *d);
 int				ft_expand_dollar(t_expand_dollar *d);
+void			ft_expand_quote(t_expand_dollar *d);
+void			ft_print_last_process_status(t_expand_dollar *d);
 void			ft_execute_absolute_shell_command(t_abs_struct *base,
 					char *cmd, t_process *p);
 void			ft_execute_relative_shell_command(t_abs_struct *base,
@@ -241,5 +255,8 @@ char			*ft_get_file_line(char *file, int line);
 char			*ft_get_file_line_by_fd(int fd, int line);
 void			ft_clear_input(char **line);
 void			ft_delete_chars(int len);
-
+int				process_escape_sequences(char *bf, char **line,
+	t_abs_struct *base);
+int				process_csi_escape_sequence(char *bf, char **line,
+	t_abs_struct *base);
 #endif

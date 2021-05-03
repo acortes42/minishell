@@ -20,7 +20,11 @@ int	ft_isinteger(char *str)
 
 	trimmed = ft_trim(str);
 	if (!str || *str == '\0' || !(trimmed))
+	{
+		if (trimmed)
+			free(trimmed);
 		return (0);
+	}
 	i = trimmed;
 	while (ft_isdigit(*i))
 		i++;

@@ -22,6 +22,5 @@ void	ft_release_base(t_abs_struct *base)
 	base->parse_string = 0;
 	ft_release_jobs(base->first_job);
 	base->first_job = 0;
-	ft_setlflag(STDIN_FILENO, 1, base->c_lflag);
 	return ;
 }

@@ -20,7 +20,7 @@ int	ft_open_history(t_abs_struct *base, int mode)
 
 	if (!base)
 		return (-1);
-	home = ft_getenv(base->env, "PWD") + 4;
+	home = ft_getenv(base->env, "HOME") + 5;
 	if (ft_strlen(home) == 5)
 		return (-1);
 	history_path = ft_strjoin(home, "/history_visv.txt");

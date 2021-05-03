@@ -28,7 +28,10 @@ static int	ft_extract_fields(char *cmd, char ***argv)
 			if (tmp)
 			{
 				if (!ft_array_add(argv, &fields, tmp))
+				{
+					free(field);
 					return (-1);
+				}
 			}
 		}
 		free(field);

@@ -47,12 +47,18 @@ static char	*prepend_home_to_path(t_abs_struct *base, char *path)
 
 static char	*prepend_pwd_to_path(char *path)
 {
-	char		cwd[PATH_MAX];
+	char		*cwd;
+	char		*adjusted_path;
 
-	if (!getcwd(cwd, sizeof(cwd)))
+	cwd = getcwd(0, 0);
+	if (!cwd)
 		return (ft_strdup(path));
 	else
-		return (prepend_to_path(cwd, path));
+	{
+		adjusted_path = prepend_to_path(cwd, path);
+		free(cwd);
+		return (adjusted_path);
+	}
 }
 
 char	*ft_get_absolute_path(t_abs_struct *base, char *path)
@@ -67,7 +73,7 @@ char	*ft_get_absolute_path(t_abs_struct *base, char *path)
 	else if (*path == '/')
 		return (ft_strdup(path));
 	else
-	{	
+	{
 		if (!ft_memcmp(path, "./", 2))
 			aux = 2;
 		return (prepend_pwd_to_path(path + aux));

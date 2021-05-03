@@ -23,7 +23,7 @@ char	*ft_concat(char *line, char *bf, int *found_nl)
 	while (b2c < BUFFER_SIZE && *(bf + b2c) && *(bf + b2c) != '\n')
 		b2c++;
 	*found_nl = 0;
-	if (b2c < BUFFER_SIZE && *(bf + b2c) == '\n')
+	if (*(bf + b2c) == '\n')
 		*found_nl = 1;
 	line_len = ft_strlen(line);
 	nl = malloc(sizeof(char) * (line_len + b2c + 1));
@@ -39,9 +39,22 @@ char	*ft_concat(char *line, char *bf, int *found_nl)
 	return (nl);
 }
 
-void	ft_shift_left(char *bf)
+void	ft_shift_left_bytes(char *bf, int bytes)
 {
 	int				i;
+
+	i = 0;
+	while (bytes < BUFFER_SIZE)
+	{
+		*(bf + i) = *(bf + bytes);
+		i++;
+		bytes++;
+	}
+	*(bf + i) = 0;
+}
+
+void	ft_shift_left(char *bf)
+{
 	int				nl_pos;
 
 	nl_pos = 0;
@@ -52,39 +65,22 @@ void	ft_shift_left(char *bf)
 		*bf = 0;
 		return ;
 	}
-	i = 0;
 	nl_pos++;
-	while (nl_pos < BUFFER_SIZE)
-	{
-		*(bf + i) = *(bf + nl_pos);
-		i++;
-		nl_pos++;
-	}
-	*(bf + i) = 0;
-}
-
-static void	delete_char(char *bf)
-{
-	ft_delete_chars(1);
-	ft_memset(bf, 0, BUFFER_SIZE);
+	ft_shift_left_bytes(bf, nl_pos);
 }
 
 void	ft_borrow_char(int x, char **line, char *bf)
 {
 	char	*aux;
 
+	ft_memset(bf, 0, BUFFER_SIZE);
 	if (x > 0)
 	{
+		ft_delete_chars(1);
 		aux = malloc(sizeof(char) * x);
 		ft_strlcpy(aux, *line, ft_strlen(*line));
-		delete_char(bf);
-		ft_memset(bf, 0, BUFFER_SIZE);
-		*line = ft_strdup(aux);
-		free(aux);
-	}
-	else
-	{
-		ft_putstr(" ");
-		*line = ft_strdup("");
+		if (*line)
+			free(*line);
+		*line = aux;
 	}
 }

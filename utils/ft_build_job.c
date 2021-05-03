@@ -12,14 +12,14 @@
 
 #include "minishell.h"
 
-t_job	*ft_build_job_ctrl_d(char *command)
+t_job	*ft_build_job_ctrl_d(void)
 {
 	t_job		*j;
 
 	j = ft_calloc(1, sizeof(t_job));
 	if (!j)
 		return (0);
-	j->command = ft_strdup(command);
+	j->command = ft_strdup("");
 	j->std_fds.errfile = STDERR_FILENO;
 	j->std_fds.infile = STDIN_FILENO;
 	j->std_fds.outfile = STDOUT_FILENO;
