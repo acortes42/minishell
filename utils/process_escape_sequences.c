@@ -27,10 +27,8 @@ static int	process_control_characters(char *bf, char **line)
 
 static int	process_fe_escape_sequence(char *bf)
 {
-	if (!bf || *bf != ESCAPE)
+	if (!bf || *bf != ESCAPE || !(*(bf + 1)))
 		return (0);
-	if (!(*(bf + 1)))
-		read(STDIN_FILENO, bf + 1, 1);
 	if (*(bf + 1) >= FE_ESCAPE_START && *(bf + 1) <= FE_ESCAPE_END &&
 		ft_strncmp(bf, CSI_ESCAPE, 2))
 	{
