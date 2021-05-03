@@ -20,10 +20,9 @@ comentarios de setenv.c
 40. Hacer un trim al comando a ejecutar, ahora mismo nos da error porque no conoce el comando al ejecutar:
 ' exit'
 41. Después de ejecutar un comando, necesitamos 2 pulsaciones de arrow_up para que nos muestre el último elemento
-42. Si pulsamos ESC, el siguiente caracter no se muestra en pantalla hasta que no escribimos un segundo
 43. El fichero de history no lo tratamos y si se mete cualquier cosa rara, va a hacer que el terminal haga cosas raras. Por ejemplo si se mete una secuencia de escape, se imprimirá directamente por pantalla y no quedará desactivada como cuando realizamos la entrada por teclado
-
-
+44. No se ejecuta el comando: more ~/history_visv.txt (problemas de path?)
+45. Al ejecutar un comando el historial no funciona si no hacemos dos pulsaciones hacia arriba
 // TODO: modificar el nombre de fichero por ft_setenv.c
 // Problema al solo aceptar dos introducciones con setenv
 

@@ -7,10 +7,10 @@ void	load_previous_history_command(t_abs_struct *base, char **line,
 	char	*history_line;
 	char	*tmp;
 
+	ft_memset(bf, 0, BUFFER_SIZE);
 	if (base->current_history_line <= 0)
 	{
 		base->current_history_line = 0;
-		ft_memset(bf, 0, BUFFER_SIZE);
 		return ;
 	}
 	base->current_history_line--;
@@ -27,7 +27,6 @@ void	load_previous_history_command(t_abs_struct *base, char **line,
 		return ;
 	ft_clear_input(line);
 	*line = history_line;
-	ft_memset(bf, 0, BUFFER_SIZE);
 	ft_putstr(*line);
 }
 
@@ -36,10 +35,11 @@ void	load_next_history_command(t_abs_struct *base, char **line, char *bf)
 	int		fd;
 	char	*history_line;
 
+	ft_memset(bf, 0, BUFFER_SIZE);
 	if (base->current_history_line >= (base->history_lines - 1))
 	{
 		ft_clear_input(line);
-		ft_memset(bf, 0, BUFFER_SIZE);
+		*line = ft_strdup("");
 		base->current_history_line = base->history_lines;
 		return ;
 	}
@@ -53,6 +53,5 @@ void	load_next_history_command(t_abs_struct *base, char **line, char *bf)
 		return ;
 	ft_clear_input(line);
 	*line = history_line;
-	ft_memset(bf, 0, BUFFER_SIZE);
 	ft_putstr(*line);
 }

@@ -30,6 +30,7 @@
 # include <limits.h>
 
 # define CTRL_C				'\x3'
+# define CTRL_D				'\x4'
 # define DEL				'\x7F'
 # define ESCAPE				'\033'
 # define FE_ESCAPE_START	'\x40'
@@ -173,7 +174,7 @@ void			ft_update_status(t_abs_struct *base);
 
 t_job			*ft_build_jobs(char *command);
 t_job			*ft_build_job(char *command);
-t_job			*ft_build_job_ctrl_d(char *command);
+t_job			*ft_build_job_ctrl_d(void);
 t_process		*ft_build_processes(char *expanded_cmd);
 t_process		*ft_build_ctrl_d_process(void);
 t_process		*ft_build_process(char *expanded_cmd);
