@@ -63,31 +63,18 @@ void	ft_shift_left(char *bf)
 	*(bf + i) = 0;
 }
 
-static void	delete_char(char *bf)
-{
-	ft_delete_chars(1);
-	ft_memset(bf, 0, BUFFER_SIZE);
-}
-
 void	ft_borrow_char(int x, char **line, char *bf)
 {
 	char	*aux;
 
+	ft_memset(bf, 0, BUFFER_SIZE);
 	if (x > 0)
 	{
+		ft_delete_chars(1);
 		aux = malloc(sizeof(char) * x);
 		ft_strlcpy(aux, *line, ft_strlen(*line));
-		delete_char(bf);
 		if (*line)
 			free(*line);
-		*line = ft_strdup(aux);
-		free(aux);
-	}
-	else
-	{
-		ft_putstr(" ");
-		if (*line)
-			free(*line);
-		*line = ft_strdup("");
+		*line = aux;
 	}
 }
