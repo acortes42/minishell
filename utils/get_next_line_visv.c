@@ -100,6 +100,7 @@ int	ft_read_from_keyboard(char *bf, char **line, t_abs_struct *base, int fd)
 	{
 		ft_clear_input(line);
 		ft_putstr("\n");
+		ft_memset(bf, 0, BUFFER_SIZE);
 		return (1);
 	}
 	else
