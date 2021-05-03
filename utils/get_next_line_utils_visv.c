@@ -39,9 +39,22 @@ char	*ft_concat(char *line, char *bf, int *found_nl)
 	return (nl);
 }
 
-void	ft_shift_left(char *bf)
+void	ft_shift_left_bytes(char *bf, int bytes)
 {
 	int				i;
+
+	i = 0;
+	while (bytes < BUFFER_SIZE)
+	{
+		*(bf + i) = *(bf + bytes);
+		i++;
+		bytes++;
+	}
+	*(bf + i) = 0;
+}
+
+void	ft_shift_left(char *bf)
+{
 	int				nl_pos;
 
 	nl_pos = 0;
@@ -52,15 +65,8 @@ void	ft_shift_left(char *bf)
 		*bf = 0;
 		return ;
 	}
-	i = 0;
 	nl_pos++;
-	while (nl_pos < BUFFER_SIZE)
-	{
-		*(bf + i) = *(bf + nl_pos);
-		i++;
-		nl_pos++;
-	}
-	*(bf + i) = 0;
+	ft_shift_left_bytes(bf, nl_pos);
 }
 
 void	ft_borrow_char(int x, char **line, char *bf)

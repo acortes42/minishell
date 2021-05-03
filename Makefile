@@ -26,7 +26,8 @@ UTILS 				= utils/ft_putnbr.c utils/ft_putstr.c utils/ft_strchr.c \
 	utils/ft_get_correct_line.c utils/ft_file_lines.c \
 	utils/ft_get_file_line.c utils/ft_open_history.c \
 	utils/ft_clear_input.c utils/ft_write_history_line.c \
-	utils/get_next_line_utils.c
+	utils/get_next_line_utils.c utils/load_history_commands.c \
+	utils/process_escape_sequences.c utils/process_csi_sequences.c
 
 SRCS_WITHOUT_MAIN	=  srcs/ft_exit_minishell.c srcs/clear_screen.c \
 	srcs/ft_execute_ctrl_d.c srcs/echo.c srcs/cd.c \

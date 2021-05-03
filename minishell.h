@@ -29,9 +29,15 @@
 # include <signal.h>
 # include <limits.h>
 
+# define CTRL_C				'\x3'
+# define DEL				'\x7F'
 # define ESCAPE				'\033'
+# define FE_ESCAPE_START	'\x40'
+# define FE_ESCAPE_END		'\x5F'
+# define CSI_ESCAPE			"\033["
 # define ARROW_UP			"\033[A"
 # define ARROW_DOWN			"\033[B"
+# define CLEAR_LINE			"\033[2K"
 
 # define ANSI_COLOR_RED     "\x1b[31m"
 # define ANSI_COLOR_GREEN   "\x1b[32m"
@@ -128,6 +134,7 @@ int				get_next_line(int fd, char **line, t_abs_struct *base);
 char			*ft_get_correct_line(int fd, char **line, int ret);
 char			*ft_concat(char *line, char *bf, int *found_nl);
 void			ft_shift_left(char *bf);
+void			ft_shift_left_bytes(char *bf, int bytes);
 char			*ft_strjoin(char const *s1, char const *s2);
 char			**ft_split(char const *s, char c);
 void			ft_putstr(char *s);
@@ -140,6 +147,10 @@ int				echo(t_abs_struct *base, t_process *p);
 int				ft_history(t_abs_struct *base);
 int				ft_open_history(t_abs_struct *base, int mode);
 void			ft_write_history_line(t_abs_struct *base);
+void			load_previous_history_command(t_abs_struct *base, char **line,
+	char *bf);
+void			load_next_history_command(t_abs_struct *base, char **line,
+	char *bf);
 int				ft_pwd(void);
 int				ft_export(t_abs_struct *base, t_process *p);
 int				ft_copy_env(t_abs_struct *base, char **envp);
@@ -240,6 +251,8 @@ char			*ft_get_file_line(char *file, int line);
 char			*ft_get_file_line_by_fd(int fd, int line);
 void			ft_clear_input(char **line);
 void			ft_delete_chars(int len);
-void			process_escape_sequences(char *bf, char **line, t_abs_struct *base);
-
+int				process_escape_sequences(char *bf, char **line,
+	t_abs_struct *base);
+int				process_csi_escape_sequence(char *bf, char **line,
+	t_abs_struct *base);
 #endif

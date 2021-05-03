@@ -88,14 +88,12 @@ int	main(int argc, char **argv, char **envp)
 	if (minishell_ready)
 		clear_screen();
 	base.c_lflag = ft_getlflag(STDIN_FILENO);
+	if (!ft_setlflag(STDIN_FILENO, 0, ICANON | ECHO | IEXTEN | ISIG))
+		ft_exit_minishell(&base, 1);
 	while (minishell_ready)
 	{
-		if (!ft_setlflag(STDIN_FILENO, 0, ICANON | ECHO | IEXTEN | ISIG))
-			ft_exit_minishell(&base, 1);
 		ft_show_prompt(&base);
 		obtain_full_line(&base);
-		if (!ft_setlflag(STDIN_FILENO, 1, base.c_lflag))
-			ft_exit_minishell(&base, 1);
 		execute_command_read(&base);
 		base.first_job = 0;
 		base.num_args = 0;

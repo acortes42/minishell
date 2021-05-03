@@ -21,6 +21,10 @@ https://www.gnu.org/software/bash/manual/html_node/Shell-Parameter-Expansion.htm
 #### Keyboard processing
 ##### ANSI escape codes
 https://en.m.wikipedia.org/wiki/ANSI_escape_code
+##### ISO/IEC 2022
+https://en.m.wikipedia.org/wiki/ISO/IEC_2022
+##### C0 and C1 control codes
+https://en.m.wikipedia.org/wiki/C0_and_C1_control_codes
 
 #### Exit builtin
 https://www.gnu.org/software/bash/manual/html_node/Exit-Status.html#Exit-Status -> interesting exit codes to check
