@@ -17,6 +17,9 @@ get_next_line_visv.c y get_next_line_utils_visv.c simplemente cambiando el makef
 comentarios de setenv.c
 38. Al borrar si no hay nada, escribe un espacio
 39. Si pulsamos la flecha a la izda, se va acumulando en el buffer y después nos permite borrar hasta que desaparecen todas las flechas y nos comemos todo
+40. Hacer un trim al comando a ejecutar, ahora mismo nos da error porque no conoce el comando al ejecutar:
+' exit'
+41. Después de ejecutar un comando, necesitamos 2 pulsaciones de arrow_up para que nos muestre el último elemento
 
 // TODO: modificar el nombre de fichero por ft_setenv.c
 // Problema al solo aceptar dos introducciones con setenv

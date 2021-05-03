@@ -33,7 +33,6 @@
 # define ARROW_UP			"\033[A"
 # define ARROW_DOWN			"\033[B"
 
-# define BUFFER_SIZE		1000
 # define ANSI_COLOR_RED     "\x1b[31m"
 # define ANSI_COLOR_GREEN   "\x1b[32m"
 # define ANSI_COLOR_YELLOW  "\x1b[33m"
@@ -241,5 +240,6 @@ char			*ft_get_file_line(char *file, int line);
 char			*ft_get_file_line_by_fd(int fd, int line);
 void			ft_clear_input(char **line);
 void			ft_delete_chars(int len);
+void			process_escape_sequences(char *bf, char **line, t_abs_struct *base);
 
 #endif
