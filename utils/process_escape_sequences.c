@@ -2,22 +2,24 @@
 
 static int	process_control_characters(char *bf, char **line)
 {
+	if (!bf)
+		return (0);
 	if (*bf == CTRL_C)
 	{
 		ft_clear_input(line);
 		ft_putstr("\n");
-		ft_shift_left_bytes(bf, 1);
+		ft_memset(bf, 0, BUFFER_SIZE);
 		return (1);
 	}
 	else if (*bf == DEL)
 	{
 		ft_borrow_char(ft_strlen(*line), line, bf);
-		ft_shift_left_bytes(bf, 1);
+		ft_memset(bf, 0, BUFFER_SIZE);
 		return (1);
 	}
 	else if (*bf == ESCAPE)
 	{
-		ft_shift_left_bytes(bf, 1);
+		ft_memset(bf, 0, BUFFER_SIZE);
 		return (1);
 	}
 	return (0);
