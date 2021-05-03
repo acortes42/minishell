@@ -8,9 +8,12 @@ void	load_previous_history_command(t_abs_struct *base, char **line,
 	char	*tmp;
 
 	if (base->current_history_line <= 0)
+	{
 		base->current_history_line = 0;
-	else
-		base->current_history_line--;
+		ft_memset(bf, 0, BUFFER_SIZE);
+		return ;
+	}
+	base->current_history_line--;
 	fd = ft_open_history(base, O_RDONLY);
 	if (fd < 0)
 		return ;
