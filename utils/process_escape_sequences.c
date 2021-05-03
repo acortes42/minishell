@@ -15,6 +15,11 @@ static int	process_control_characters(char *bf, char **line)
 		ft_shift_left_bytes(bf, 1);
 		return (1);
 	}
+	else if (*bf == ESCAPE)
+	{
+		ft_shift_left_bytes(bf, 1);
+		return (1);
+	}
 	return (0);
 }
 
