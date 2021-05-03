@@ -20,6 +20,7 @@ comentarios de setenv.c
 40. Hacer un trim al comando a ejecutar, ahora mismo nos da error porque no conoce el comando al ejecutar:
 ' exit'
 41. Después de ejecutar un comando, necesitamos 2 pulsaciones de arrow_up para que nos muestre el último elemento
+42. Si pulsamos ESC, el siguiente caracter no se muestra en pantalla hasta que no escribimos un segundo
 
 // TODO: modificar el nombre de fichero por ft_setenv.c
 // Problema al solo aceptar dos introducciones con setenv
