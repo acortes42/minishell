@@ -19,11 +19,12 @@ int	give_int(int d)
 	return (1);
 }
 
-int	ft_expand_scape(char **res, char **cmd, size_t *pos)
+int	ft_expand_scape(t_expand_dollar *data)
 {
-	*((*res) + *pos) = **cmd;
-	(*cmd)++;
-	(*pos)++;
+	*(data->expanded + data->pos) = *data->cmd;
+	data->cmd++;
+	data->pos++;
+	data->scape = 0;
 	return (1);
 }
 

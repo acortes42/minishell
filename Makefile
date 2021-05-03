@@ -19,7 +19,7 @@ UTILS 				= utils/ft_putnbr.c utils/ft_putstr.c utils/ft_strchr.c \
 	utils/ft_extract_redirections_from_argv.c \
 	utils/ft_count_words_until_separator.c utils/ft_expand_process_cmd.c \
 	utils/pipes.c utils/ft_remove_quotes.c \
-	utils/ft_expand_process_cmd_utils.c \
+	utils/ft_expand_process_cmd_utils.c utils/ft_expand_process_cmd_utils_2.c \
 	utils/ft_execute_absolute_shell_command.c \
 	utils/ft_execute_relative_shell_command.c utils/ft_setlflag.c \
 	utils/ft_classic_get_next.c utils/ft_get_count_line.c \
@@ -27,7 +27,8 @@ UTILS 				= utils/ft_putnbr.c utils/ft_putstr.c utils/ft_strchr.c \
 	utils/ft_get_file_line.c utils/ft_open_history.c \
 	utils/ft_clear_input.c utils/ft_write_history_line.c \
 	utils/get_next_line_utils.c utils/load_history_commands.c \
-	utils/process_escape_sequences.c utils/process_csi_sequences.c
+	utils/process_escape_sequences.c utils/process_csi_sequences.c \
+	utils/ft_print_last_process_status.c
 
 SRCS_WITHOUT_MAIN	=  srcs/ft_exit_minishell.c srcs/clear_screen.c \
 	srcs/ft_execute_ctrl_d.c srcs/echo.c srcs/cd.c \

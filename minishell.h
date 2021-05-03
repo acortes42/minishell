@@ -190,6 +190,7 @@ void			ft_close_pipes(t_files_fd fd, t_process *previous, \
 				t_process *current);
 void			ft_configure_pipes(t_abs_struct *base, t_process *current);
 int				ft_expand_process_cmd(t_abs_struct *base, t_process *p);
+void			ft_expand_tilde(t_expand_dollar *d);
 
 void			ft_launch_job(t_abs_struct *base, t_job *j);
 void			ft_launch_process(t_abs_struct *base, t_process *p);
@@ -234,9 +235,11 @@ int				ft_isinteger(char *str);
 int				ft_count_until_separator(char **str, int actual_arg);
 int				ft_obtain_last(int fd, char **line);
 void			ft_remove_quotes(char *field);
-int				ft_expand_scape(char **res, char **cmd, size_t *pos);
 char			*ft_extract_variable_name(char **cmd);
+int				ft_expand_scape(t_expand_dollar *d);
 int				ft_expand_dollar(t_expand_dollar *d);
+void			ft_expand_quote(t_expand_dollar *d);
+void			ft_print_last_process_status(t_expand_dollar *d);
 void			ft_execute_absolute_shell_command(t_abs_struct *base,
 					char *cmd, t_process *p);
 void			ft_execute_relative_shell_command(t_abs_struct *base,
