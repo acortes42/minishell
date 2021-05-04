@@ -132,7 +132,6 @@ char			*ft_strdup(const char *s1);
 char			*ft_strchr(const char *s, int c);
 char			*ft_strcdup(const char *s1, int c);
 int				get_next_line(int fd, char **line, t_abs_struct *base);
-char			*ft_get_correct_line(int fd, char **line, int ret);
 char			*ft_concat(char *line, char *bf, int *found_nl);
 void			ft_shift_left(char *bf);
 void			ft_shift_left_bytes(char *bf, int bytes);
@@ -149,9 +148,9 @@ int				ft_history(t_abs_struct *base);
 int				ft_open_history(t_abs_struct *base, int mode);
 void			ft_write_history_line(t_abs_struct *base);
 void			load_previous_history_command(t_abs_struct *base, char **line,
-	char *bf);
+					char *bf);
 void			load_next_history_command(t_abs_struct *base, char **line,
-	char *bf);
+					char *bf);
 int				ft_pwd(void);
 int				ft_export(t_abs_struct *base, t_process *p);
 int				ft_copy_env(t_abs_struct *base, char **envp);
@@ -212,7 +211,11 @@ size_t			ft_strnlen(const char *s, size_t max);
 int				ft_memcmp(const void *s1, const void *s2, size_t n);
 void			*ft_memcpy(void *dest, const void *src, size_t n);
 int				ft_array_add(char ***array, int *array_len, char *value);
+int				ft_array_update(char ***array, int *array_len, char *key,
+					char *value);
 char			**ft_array_dup(char **envp);
+char			**ft_array_dup_without(char **env, size_t len_env,
+					char *not_dup);
 void			ft_array_release(char **envp);
 size_t			ft_array_len(char **envp);
 void			ft_array_slide_left(char **array);
@@ -233,7 +236,6 @@ char			*ft_split_shell(char **str);
 char			*ft_split_shell_by(char **str, char *separator);
 int				ft_isinteger(char *str);
 int				ft_count_until_separator(char **str, int actual_arg);
-int				ft_obtain_last(int fd, char **line);
 void			ft_remove_quotes(char *field);
 char			*ft_extract_variable_name(char **cmd);
 int				ft_expand_scape(t_expand_dollar *d);
@@ -256,7 +258,7 @@ char			*ft_get_file_line_by_fd(int fd, int line);
 void			ft_clear_input(char **line);
 void			ft_delete_chars(int len);
 int				process_escape_sequences(char *bf, char **line,
-	t_abs_struct *base);
+					t_abs_struct *base);
 int				process_csi_escape_sequence(char *bf, char **line,
-	t_abs_struct *base);
+					t_abs_struct *base);
 #endif

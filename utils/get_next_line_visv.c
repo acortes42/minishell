@@ -64,11 +64,11 @@ int	get_next_line(int fd, char **line, t_abs_struct *base)
 		{
 			proc = read(fd, bf, 2);
 			if (proc < 0)
-				break;
+				break ;
 			else if (proc > 0)
 			{
-				if (!process_escape_sequences(bf, line, base) &&
-					process_read_data(bf, line))
+				if (!process_escape_sequences(bf, line, base)
+					&& process_read_data(bf, line))
 					return (1);
 			}
 		}

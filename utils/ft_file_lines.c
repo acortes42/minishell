@@ -27,14 +27,13 @@ int	ft_file_lines_by_fd(int fd)
 	while (read_ok > 0)
 	{
 		read_ok = read(fd, &c, 1);
-		if (read_ok > 0)
+		if (read_ok < 0)
+			break ;
+		line_with_content = 1;
+		if (c == '\n')
 		{
-			line_with_content = 1;
-			if (c == '\n')
-			{
-				line_with_content = 0;
-				lines++;
-			}
+			line_with_content = 0;
+			lines++;
 		}
 	}
 	if (line_with_content)
