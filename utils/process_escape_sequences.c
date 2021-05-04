@@ -29,8 +29,8 @@ static int	process_fe_escape_sequence(char *bf)
 {
 	if (!bf || *bf != ESCAPE || !(*(bf + 1)))
 		return (0);
-	if (*(bf + 1) >= FE_ESCAPE_START && *(bf + 1) <= FE_ESCAPE_END &&
-		ft_strncmp(bf, CSI_ESCAPE, 2))
+	if (*(bf + 1) >= FE_ESCAPE_START && *(bf + 1) <= FE_ESCAPE_END
+		&& ft_strncmp(bf, CSI_ESCAPE, 2))
 	{
 		bf[0] = 0;
 		bf[1] = 0;

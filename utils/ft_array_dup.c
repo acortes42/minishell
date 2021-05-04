@@ -62,4 +62,3 @@ char	**ft_array_dup_without(char **env, size_t len_env, char *not_dup)
 	*(it_new + j) = NULL;
 	return (it_new);
 }
-

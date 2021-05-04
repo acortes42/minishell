@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   process_csi_sequences.c                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/23 16:04:45 by acortes-          #+#    #+#             */
+/*   Updated: 2021/04/01 16:03:05 by acortes-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static int	is_csi_escape_sequence_complete(char *bf)
 {
-	char *tmp;
+	char		*tmp;
 
 	if (ft_strncmp(bf, CSI_ESCAPE, 2))
 		return (0);
@@ -25,7 +37,7 @@ static void	read_csi_escape_sequence(char *bf)
 	{
 		read(STDIN_FILENO, bf + len, 1);
 		if (*(bf + len) >= 0x40 && *(bf + len) <= 0x7E)
-			break;
+			break ;
 		len++;
 	}
 }
@@ -44,4 +56,3 @@ int	process_csi_escape_sequence(char *bf, char **line, t_abs_struct *base)
 		ft_memset(bf, 0, BUFFER_SIZE);
 	return (1);
 }
-

@@ -39,12 +39,14 @@ void	ft_aux_function(t_abs_struct *base, char *home)
 	{
 		pwd = ft_getenv(base->env, "PWD");
 		if (!pwd)
-			ft_array_add(&base->env, &base->lines_envp, ft_strjoin("PWD=", pwd));
+			ft_array_add(&base->env, &base->lines_envp,
+				ft_strjoin("PWD=", pwd));
 		else
 			ft_array_update(&base->env, &base->lines_envp, "PWD", pwd);
 		old_pwd = ft_getenv(base->env, "OLDPWD");
 		if (!old_pwd)
-			ft_array_add(&base->env, &base->lines_envp, ft_strjoin("OLDPWD=", pwd));
+			ft_array_add(&base->env, &base->lines_envp,
+				ft_strjoin("OLDPWD=", pwd));
 		else
 			ft_array_update(&base->env, &base->lines_envp, "OLDPWD", pwd);
 	}
