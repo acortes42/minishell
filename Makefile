@@ -22,8 +22,7 @@ UTILS 				= utils/ft_putnbr.c utils/ft_putstr.c utils/ft_strchr.c \
 	utils/ft_expand_process_cmd_utils.c utils/ft_expand_process_cmd_utils_2.c \
 	utils/ft_execute_absolute_shell_command.c \
 	utils/ft_execute_relative_shell_command.c utils/ft_setlflag.c \
-	utils/ft_classic_get_next.c utils/ft_get_count_line.c \
-	utils/ft_file_lines.c \
+	utils/ft_classic_get_next.c utils/ft_file_lines.c \
 	utils/ft_get_file_line.c utils/ft_open_history.c \
 	utils/ft_clear_input.c utils/ft_write_history_line.c \
 	utils/get_next_line_utils.c utils/load_history_commands.c \
