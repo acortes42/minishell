@@ -54,33 +54,6 @@ static char	*ft_get_env_to_unset(t_abs_struct *base, t_process *p)
 	return (env);
 }
 
-static char	**ft_array_dup_without(char **env, size_t len_env, char *not_dup)
-{
-	char	**it_new;
-	size_t	i;
-	size_t	j;
-
-	it_new = malloc(sizeof(char *) * len_env);
-	if (!(it_new))
-	{
-		ft_putstr("\e[0mError de memoria\n");
-		return (0);
-	}
-	i = 0;
-	j = 0;
-	while (env && *(env + i))
-	{
-		if (*(env + i) != not_dup)
-		{
-			*(it_new + j) = *(env + i);
-			j++;
-		}
-		i++;
-	}
-	*(it_new + j) = NULL;
-	return (it_new);
-}
-
 int	ft_unset(t_abs_struct *base, t_process *p)
 {
 	char	**it_new;

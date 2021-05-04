@@ -14,7 +14,7 @@ UTILS 				= utils/ft_putnbr.c utils/ft_putstr.c utils/ft_strchr.c \
 	utils/ft_bzero.c utils/ft_execute_builtin.c utils/ft_build_job.c \
 	utils/ft_build_processes.c utils/ft_build_process.c utils/ft_trim.c \
 	utils/ft_split_shell.c utils/ft_release_process.c utils/ft_array_add.c \
-	utils/redirections.c utils/ft_array_slide_left.c \
+	utils/ft_array_update.c utils/redirections.c utils/ft_array_slide_left.c \
 	utils/ft_set_default_signals.c utils/ft_isinteger.c utils/std_fds.c	\
 	utils/ft_extract_redirections_from_argv.c \
 	utils/ft_count_words_until_separator.c utils/ft_expand_process_cmd.c \
