@@ -27,8 +27,10 @@ static void	ft_init_history(t_abs_struct *base)
 
 void	process_quit_handler(int sig)
 {
+	extern t_abs_struct	base;
+
 	(void)sig;
-	ft_setlflag(STDIN_FILENO, 1, ICANON | ECHO);
+	ft_exit_minishell(&base, base.last_executed_process_status);
 }
 
 int	ft_init_minishell(t_abs_struct *base, char **envp)
@@ -38,6 +40,7 @@ int	ft_init_minishell(t_abs_struct *base, char **envp)
 	signal(SIGTSTP, process_quit_handler);
 	signal(SIGTTIN, process_quit_handler);
 	signal(SIGTTOU, process_quit_handler);
+	signal(SIGKILL, process_quit_handler);
 	if (!base)
 		return (0);
 	ft_memset(base, 0, sizeof(t_abs_struct));

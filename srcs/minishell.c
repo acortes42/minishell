@@ -26,27 +26,28 @@ static int	append_new_line(char **str)
 	return (1);
 }
 
-int	obtain_full_line(t_abs_struct *base)
+int	obtain_full_line()
 {
-	int		found_new_line;
-	char	*trimmed_input;
+	extern t_abs_struct	base;
+	int					found_new_line;
+	char				*trimmed_input;
 
-	if (base->input)
-		free(base->input);
-	base->input = 0;
+	if (base.input)
+		free(base.input);
+	base.input = 0;
 	found_new_line = 0;
-	while (!found_new_line && (!base->input || *base->input))
+	while (!found_new_line && (!base.input || *base.input))
 	{
-		found_new_line = get_next_line(STDIN_FILENO, &base->input, base);
+		found_new_line = get_next_line(STDIN_FILENO, &base.input, &base);
 		if (found_new_line < 0)
-			ft_exit_minishell(base, 2);
+			ft_exit_minishell(&base, 2);
 	}
-	if (base->input && found_new_line && !append_new_line(&base->input))
-		ft_exit_minishell(base, 1);
-	trimmed_input = ft_trim(base->input);
-	if (ft_strlen(base->input) >= 1 && ft_strcmp(trimmed_input, "\n") \
-			&& ft_isascii(base->input[0]))
-		ft_write_history_line(base);
+	if (base.input && found_new_line && !append_new_line(&base.input))
+		ft_exit_minishell(&base, 1);
+	trimmed_input = ft_trim(base.input);
+	if (ft_strlen(base.input) >= 1 && ft_strcmp(trimmed_input, "\n") \
+			&& ft_isascii(base.input[0]))
+		ft_write_history_line(&base);
 	if (trimmed_input)
 		free(trimmed_input);
 	return (0);
@@ -78,8 +79,8 @@ unsigned int	ft_getlflag(int fd)
 
 int	main(int argc, char **argv, char **envp)
 {
-	int				minishell_ready;
-	t_abs_struct	base;
+	int					minishell_ready;
+	extern t_abs_struct	base;
 
 	(void)argc;
 	(void)argv;
@@ -88,12 +89,12 @@ int	main(int argc, char **argv, char **envp)
 	if (minishell_ready)
 		clear_screen();
 	base.c_lflag = ft_getlflag(STDIN_FILENO);
-	if (!ft_setlflag(STDIN_FILENO, 0, ICANON | ECHO | IEXTEN | ISIG))
+	if (!ft_setlflag(STDIN_FILENO, 0, ICANON | ECHO | IEXTEN))
 		ft_exit_minishell(&base, 1);
 	while (minishell_ready)
 	{
 		ft_show_prompt(&base);
-		obtain_full_line(&base);
+		obtain_full_line();
 		execute_command_read(&base);
 		base.first_job = 0;
 		base.num_args = 0;

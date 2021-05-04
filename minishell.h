@@ -261,4 +261,7 @@ int				process_escape_sequences(char *bf, char **line,
 					t_abs_struct *base);
 int				process_csi_escape_sequence(char *bf, char **line,
 					t_abs_struct *base);
+
+t_abs_struct	base;
+
 #endif
