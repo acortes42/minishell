@@ -88,7 +88,7 @@ int	main(int argc, char **argv, char **envp)
 	if (minishell_ready)
 		clear_screen();
 	base.c_lflag = ft_getlflag(STDIN_FILENO);
-	if (!ft_setlflag(STDIN_FILENO, 0, ICANON | ECHO | IEXTEN | ISIG))
+	if (!ft_setlflag(STDIN_FILENO, 0, ICANON | ECHO | IEXTEN))
 		ft_exit_minishell(&base, 1);
 	while (minishell_ready)
 	{
