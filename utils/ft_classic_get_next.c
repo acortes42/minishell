@@ -103,6 +103,7 @@ int	classic_get_next(int fd, char **line, int clean_buffer)
 		}
 		if (ft_strchr(stat[fd], '\n'))
 			break ;
+		i = read(fd, buff, BUFFER_SIZE);
 	}
 	return (end(stat, line, i, fd));
 }
