@@ -99,6 +99,7 @@ typedef struct s_abs_struct
 	int						counter;
 	int						history_lines;
 	int						current_history_line;
+	char					*last_history_command;
 }							t_abs_struct;
 
 typedef struct s_expand_dollar
@@ -262,6 +263,6 @@ int				process_escape_sequences(char *bf, char **line,
 int				process_csi_escape_sequence(char *bf, char **line,
 					t_abs_struct *base);
 
-t_abs_struct	base;
+t_abs_struct	g_base;
 
 #endif

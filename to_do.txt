@@ -16,6 +16,41 @@ comentarios de setenv.c
 43. El fichero de history no lo tratamos y si se mete cualquier cosa rara, va a hacer que el terminal haga cosas raras. Por ejemplo si se mete una secuencia de escape, se imprimirá directamente por pantalla y no quedará desactivada como cuando realizamos la entrada por teclado
 // TODO: modificar el nombre de fichero por ft_setenv.c
 // Problema al solo aceptar dos introducciones con setenv
+44. Encontrado un memory leak. Para reproducir ejecutar los siguientes comandos:
+$ env | grep PWD
+$ CD ..
+# Este comando CD va en mayúsculas
+$ env | grep PWD
+# Este comando con el pipe ya no nos devuelve la salida esperada
+$ env | grep PWD
+# Este comando tampoco nos devuelve la salida esperada
+$ ENV
+# Este comando ENV nos genera el leak. (pego por si no se reproduce el stack trace)
+197==ERROR: LeakSanitizer: detected memory leaks
+
+Direct leak of 103 byte(s) in 2 object(s) allocated from:
+    #0 0x7ffff6ef6b40 in __interceptor_malloc (/usr/lib/x86_64-linux-gnu/libasan.so.4+0xdeb40)
+    #1 0x55555555c1df in ft_strdup utils/ft_strdup.c:25
+    #2 0x55555555d577 in ft_array_dup utils/ft_array_dup.c:32
+    #3 0x555555559811 in ft_copy_env srcs/env.c:19
+    #4 0x55555555ac6d in ft_init_minishell srcs/ft_init_minishell.c:51
+    #5 0x555555558561 in main srcs/minishell.c:88
+    #6 0x7ffff6a48bf6 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x21bf6)
+
+Direct leak of 50 byte(s) in 1 object(s) allocated from:
+    #0 0x7ffff6ef6b40 in __interceptor_malloc (/usr/lib/x86_64-linux-gnu/libasan.so.4+0xdeb40)
+    #1 0x55555555c4e0 in ft_strjoin utils/ft_strjoin.c:42
+    #2 0x555555562e51 in ft_array_update utils/ft_array_update.c:32
+    #3 0x555555558f2d in ft_aux_function srcs/cd.c:45
+    #4 0x555555559384 in cd srcs/cd.c:85
+    #5 0x555555561582 in execute_environment_builtins2 utils/ft_execute_builtin.c:57
+    #6 0x5555555618f5 in ft_execute_builtin utils/ft_execute_builtin.c:102
+    #7 0x55555555f885 in ft_launch_job utils/ft_launch_job.c:51
+    #8 0x555555558305 in execute_command_read srcs/minishell.c:61
+    #9 0x5555555585c7 in main srcs/minishell.c:98
+    #10 0x7ffff6a48bf6 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x21bf6)
+
+SUMMARY: AddressSanitizer: 153 byte(s) leaked in 3 allocation(s).
 
 /*Existe un problema al crear al crear más memoria y copiar lo necesario*/
 

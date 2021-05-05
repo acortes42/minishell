@@ -12,13 +12,14 @@
 
 #include "minishell.h"
 
+// Same command won't be registered twice in a row
 void	ft_write_history_line(t_abs_struct *base)
 {
 	int	fd;
 
 	if (base->last_history_command != 0
 		&& !ft_strcmp(base->last_history_command, base->input))
-		return ; // Same command won't be registered twice in a row
+		return ;
 	if (base->last_history_command)
 		free(base->last_history_command);
 	base->last_history_command = ft_strdup(base->input);

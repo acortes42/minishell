@@ -31,10 +31,10 @@ static void	ft_init_history(t_abs_struct *base)
 
 void	process_quit_handler(int sig)
 {
-	extern t_abs_struct	base;
+	extern t_abs_struct	g_base;
 
 	(void)sig;
-	ft_exit_minishell(&base, base.last_executed_process_status);
+	ft_exit_minishell(&g_base, g_base.last_executed_process_status);
 }
 
 int	ft_init_minishell(t_abs_struct *base, char **envp)
