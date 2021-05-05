@@ -36,7 +36,7 @@ void	load_next_history_command(t_abs_struct *base, char **line, char *bf)
 	char	*history_line;
 
 	ft_memset(bf, 0, BUFFER_SIZE);
-	if (base->current_history_line >= (base->history_lines - 1))
+	if (base->current_history_line >= (base->history_lines))
 	{
 		ft_clear_input(line);
 		*line = ft_strdup("");

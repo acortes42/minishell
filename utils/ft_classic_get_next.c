@@ -76,7 +76,7 @@ static	int	end(char **stat, char **line, int i, int fd)
 		return (finalline(&stat[fd], line));
 }
 
-int	classic_get_next(int fd, char **line)
+int	classic_get_next(int fd, char **line, int clean_buffer)
 {
 	static char		*stat[2048];
 	char			buff[BUFFER_SIZE + 1];
@@ -89,8 +89,12 @@ int	classic_get_next(int fd, char **line)
 	while (i > 0)
 	{
 		buff[i] = '\0';
-		if (stat[fd] == NULL)
+		if (stat[fd] == NULL || clean_buffer)
+		{
+			if (clean_buffer)
+				free(stat[fd]);
 			stat[fd] = ft_strdup(buff);
+		}
 		else
 		{
 			temp = ft_strjoin(stat[fd], buff);

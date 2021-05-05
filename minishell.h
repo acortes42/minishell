@@ -247,7 +247,7 @@ void			ft_execute_absolute_shell_command(t_abs_struct *base,
 void			ft_execute_relative_shell_command(t_abs_struct *base,
 					t_process *p);
 int				ft_setlflag(int fd, int set_flag, unsigned int value);
-int				classic_get_next(int fd, char **line);
+int				classic_get_next(int fd, char **line, int clean_buffer);
 int				ft_isascii(int c);
 void			ft_borrow_char(int x, char **line, char *bf);
 
