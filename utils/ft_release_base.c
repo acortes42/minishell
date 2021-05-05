@@ -20,6 +20,8 @@ void	ft_release_base(t_abs_struct *base)
 		free(base->input);
 	ft_array_release(base->env);
 	base->parse_string = 0;
+	if (base->last_history_command)
+		free(base->last_history_command);
 	ft_release_jobs(base->first_job);
 	base->first_job = 0;
 	return ;
