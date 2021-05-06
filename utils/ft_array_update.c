@@ -26,14 +26,14 @@ int	ft_array_update(char ***array, int *array_len, char *key, char *value)
 	tmp = ft_strjoin(key, "=");
 	if (!tmp)
 	{
-		ft_array_release(updated_array);
+		free(updated_array);
 		return (0);
 	}
-	key = ft_strjoin(tmp, value + ft_strlen(key) + 1);
+	key = ft_strjoin(tmp, value);
 	free(tmp);
 	if (!key)
 	{
-		ft_array_release(updated_array);
+		free(updated_array);
 		return (0);
 	}
 	free(*array);

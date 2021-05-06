@@ -164,6 +164,7 @@ void			handle_sigint(int sig);
 int				ft_execute_command(t_abs_struct *base);
 int				ft_execute_ctrl_d(t_abs_struct *base);
 int				ft_init_minishell(t_abs_struct *base, char **envp);
+void			ft_init_history(t_abs_struct *base);
 void			clear_screen(void);
 void			ft_show_prompt(t_abs_struct *base);
 void			enableRawMode(void);

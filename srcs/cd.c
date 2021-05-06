@@ -29,7 +29,6 @@ int	value_to_aux(int x)
 
 void	ft_aux_function(t_abs_struct *base, char *home)
 {
-	char	*pwd;
 	char	*old_pwd;
 
 	base->error = chdir(home);
@@ -37,18 +36,17 @@ void	ft_aux_function(t_abs_struct *base, char *home)
 		print_file_doesnt_exist(home);
 	else
 	{
-		pwd = ft_getenv(base->env, "PWD");
-		if (!pwd)
+		old_pwd = ft_getenv(base->env, "PWD") + 4;
+		if (old_pwd == (char *)(4))
 			ft_array_add(&base->env, &base->lines_envp,
-				ft_strjoin("PWD=", pwd));
+				ft_strjoin("PWD=", home));
 		else
-			ft_array_update(&base->env, &base->lines_envp, "PWD", pwd);
-		old_pwd = ft_getenv(base->env, "OLDPWD");
-		if (!old_pwd)
+			ft_array_update(&base->env, &base->lines_envp, "PWD", home);
+		if (!ft_getenv(base->env, "OLDPWD"))
 			ft_array_add(&base->env, &base->lines_envp,
-				ft_strjoin("OLDPWD=", pwd));
+				ft_strjoin("OLDPWD=", old_pwd));
 		else
-			ft_array_update(&base->env, &base->lines_envp, "OLDPWD", pwd);
+			ft_array_update(&base->env, &base->lines_envp, "OLDPWD", old_pwd);
 	}
 }
 
