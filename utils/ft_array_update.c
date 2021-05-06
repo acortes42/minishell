@@ -12,6 +12,13 @@
 
 #include "minishell.h"
 
+static int	release_array(char **array)
+{
+	if (array)
+		free(array);
+	return (0);
+}
+
 int	ft_array_update(char ***array, int *array_len, char *key, char *value)
 {
 	char	**updated_array;
@@ -27,17 +34,11 @@ int	ft_array_update(char ***array, int *array_len, char *key, char *value)
 	free(tmp);
 	tmp = ft_strjoin(key, "=");
 	if (!tmp)
-	{
-		free(updated_array);
-		return (0);
-	}
+		return (release_array(updated_array));
 	key = ft_strjoin(tmp, value);
 	free(tmp);
 	if (!key)
-	{
-		free(updated_array);
-		return (0);
-	}
+		return (release_array(updated_array));
 	free(*array);
 	*array = updated_array;
 	return (ft_array_add(array, array_len, key));

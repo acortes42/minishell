@@ -263,6 +263,7 @@ int				process_escape_sequences(char *bf, char **line,
 					t_abs_struct *base);
 int				process_csi_escape_sequence(char *bf, char **line,
 					t_abs_struct *base);
+void			ft_update_environment_pwds(char *old_pwd, char *pwd);
 
 t_abs_struct	g_base;
 

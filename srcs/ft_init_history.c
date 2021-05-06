@@ -10,7 +10,7 @@ void	ft_init_history(t_abs_struct *base)
 		close(fd);
 	fd = ft_open_history(base, O_RDONLY);
 	base->last_history_command = ft_get_file_line_by_fd(fd,
-		base->history_lines - 1);
+			base->history_lines - 1);
 	if (fd >= 0)
 		close(fd);
 	if (base->history_lines < 0)
