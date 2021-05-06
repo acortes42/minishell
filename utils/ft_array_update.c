@@ -23,6 +23,8 @@ int	ft_array_update(char ***array, int *array_len, char *key, char *value)
 	updated_array = ft_array_dup_without(*array, *array_len, tmp);
 	if (!updated_array)
 		return (0);
+	(*array_len)--;
+	free(tmp);
 	tmp = ft_strjoin(key, "=");
 	if (!tmp)
 	{
