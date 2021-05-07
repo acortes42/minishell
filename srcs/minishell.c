@@ -26,28 +26,28 @@ static int	append_new_line(char **str)
 	return (1);
 }
 
-int	obtain_full_line()
+int	obtain_full_line(void)
 {
-	extern t_abs_struct	base;
+	extern t_abs_struct	g_base;
 	int					found_new_line;
 	char				*trimmed_input;
 
-	if (base.input)
-		free(base.input);
-	base.input = 0;
+	if (g_base.input)
+		free(g_base.input);
+	g_base.input = 0;
 	found_new_line = 0;
-	while (!found_new_line && (!base.input || *base.input))
+	while (!found_new_line && (!g_base.input || *g_base.input))
 	{
-		found_new_line = get_next_line(STDIN_FILENO, &base.input, &base);
+		found_new_line = get_next_line(STDIN_FILENO, &g_base.input, &g_base);
 		if (found_new_line < 0)
-			ft_exit_minishell(&base, 2);
+			ft_exit_minishell(&g_base, 2);
 	}
-	if (base.input && found_new_line && !append_new_line(&base.input))
-		ft_exit_minishell(&base, 1);
-	trimmed_input = ft_trim(base.input);
-	if (ft_strlen(base.input) >= 1 && ft_strcmp(trimmed_input, "\n") \
-			&& ft_isascii(base.input[0]))
-		ft_write_history_line(&base);
+	if (g_base.input && found_new_line && !append_new_line(&g_base.input))
+		ft_exit_minishell(&g_base, 1);
+	trimmed_input = ft_trim(g_base.input);
+	if (ft_strlen(g_base.input) >= 1 && ft_strcmp(trimmed_input, "\n") \
+			&& ft_isascii(g_base.input[0]))
+		ft_write_history_line(&g_base);
 	if (trimmed_input)
 		free(trimmed_input);
 	return (0);
@@ -80,25 +80,25 @@ unsigned int	ft_getlflag(int fd)
 int	main(int argc, char **argv, char **envp)
 {
 	int					minishell_ready;
-	extern t_abs_struct	base;
+	extern t_abs_struct	g_base;
 
 	(void)argc;
 	(void)argv;
-	ft_memset(&base, 0, sizeof(t_abs_struct));
-	minishell_ready = ft_init_minishell(&base, envp);
+	ft_memset(&g_base, 0, sizeof(t_abs_struct));
+	minishell_ready = ft_init_minishell(&g_base, envp);
 	if (minishell_ready)
 		clear_screen();
-	base.c_lflag = ft_getlflag(STDIN_FILENO);
+	g_base.c_lflag = ft_getlflag(STDIN_FILENO);
 	if (!ft_setlflag(STDIN_FILENO, 0, ICANON | ECHO | IEXTEN))
-		ft_exit_minishell(&base, 1);
+		ft_exit_minishell(&g_base, 1);
 	while (minishell_ready)
 	{
-		ft_show_prompt(&base);
+		ft_show_prompt(&g_base);
 		obtain_full_line();
-		execute_command_read(&base);
-		base.first_job = 0;
-		base.num_args = 0;
-		base.parse_string = 0;
+		execute_command_read(&g_base);
+		g_base.first_job = 0;
+		g_base.num_args = 0;
+		g_base.parse_string = 0;
 	}
 	return (0);
 }

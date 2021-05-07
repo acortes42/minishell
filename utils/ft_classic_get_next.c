@@ -76,11 +76,28 @@ static	int	end(char **stat, char **line, int i, int fd)
 		return (finalline(&stat[fd], line));
 }
 
-int	classic_get_next(int fd, char **line)
+static void	assign_buffer_to_stat(char *buff, char **stat, int clean_buffer)
+{
+	char	*temp;
+
+	if (*stat == NULL || clean_buffer)
+	{
+		if (clean_buffer && *stat != NULL)
+			free(*stat);
+		*stat = ft_strdup(buff);
+	}
+	else
+	{
+		temp = ft_strjoin(*stat, buff);
+		free(*stat);
+		*stat = temp;
+	}
+}
+
+int	classic_get_next(int fd, char **line, int clean_buffer)
 {
 	static char		*stat[2048];
 	char			buff[BUFFER_SIZE + 1];
-	char			*temp;
 	int				i;
 
 	if (fd < 0 || line == NULL || BUFFER_SIZE < 1 || read(fd, buff, 0) < 0)
@@ -89,16 +106,11 @@ int	classic_get_next(int fd, char **line)
 	while (i > 0)
 	{
 		buff[i] = '\0';
-		if (stat[fd] == NULL)
-			stat[fd] = ft_strdup(buff);
-		else
-		{
-			temp = ft_strjoin(stat[fd], buff);
-			free(stat[fd]);
-			stat[fd] = temp;
-		}
+		assign_buffer_to_stat(buff, &stat[fd], clean_buffer);
+		clean_buffer = 0;
 		if (ft_strchr(stat[fd], '\n'))
 			break ;
+		i = read(fd, buff, BUFFER_SIZE);
 	}
 	return (end(stat, line, i, fd));
 }

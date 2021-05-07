@@ -12,25 +12,12 @@
 
 #include "minishell.h"
 
-static void	ft_init_history(t_abs_struct *base)
-{
-	int			fd;
-
-	fd = ft_open_history(base, O_RDONLY);
-	base->history_lines = ft_file_lines_by_fd(fd);
-	if (fd >= 0)
-		close(fd);
-	if (base->history_lines < 0)
-		ft_exit_minishell(base, -1);
-	base->current_history_line = base->history_lines;
-}
-
 void	process_quit_handler(int sig)
 {
-	extern t_abs_struct	base;
+	extern t_abs_struct	g_base;
 
 	(void)sig;
-	ft_exit_minishell(&base, base.last_executed_process_status);
+	ft_exit_minishell(&g_base, g_base.last_executed_process_status);
 }
 
 int	ft_init_minishell(t_abs_struct *base, char **envp)

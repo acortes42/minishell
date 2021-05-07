@@ -32,24 +32,17 @@ void	ft_aux_function(t_abs_struct *base, char *home)
 	char	*pwd;
 	char	*old_pwd;
 
+	old_pwd = getcwd(0, 0);
 	base->error = chdir(home);
+	pwd = getcwd(0, 0);
 	if (base->error)
 		print_file_doesnt_exist(home);
 	else
-	{
-		pwd = ft_getenv(base->env, "PWD");
-		if (!pwd)
-			ft_array_add(&base->env, &base->lines_envp,
-				ft_strjoin("PWD=", pwd));
-		else
-			ft_array_update(&base->env, &base->lines_envp, "PWD", pwd);
-		old_pwd = ft_getenv(base->env, "OLDPWD");
-		if (!old_pwd)
-			ft_array_add(&base->env, &base->lines_envp,
-				ft_strjoin("OLDPWD=", pwd));
-		else
-			ft_array_update(&base->env, &base->lines_envp, "OLDPWD", pwd);
-	}
+		ft_update_environment_pwds(old_pwd, pwd);
+	if (pwd)
+		free(pwd);
+	if (old_pwd)
+		free(old_pwd);
 }
 
 int	check_if_home(char *home, int aux)
@@ -74,8 +67,7 @@ int	cd(t_abs_struct *base)
 	else
 	{
 		home = ft_getenv(base->env, "HOME");
-		aux_nb = check_if_home(home, aux_nb);
-		if (!(aux_nb))
+		if (!(check_if_home(home, aux_nb)))
 			home = ft_get_absolute_path(base, home + 5);
 		else
 			ft_putstr("\e[0mcd: HOME not defined\n");
@@ -83,7 +75,8 @@ int	cd(t_abs_struct *base)
 	if (!base->error)
 	{
 		ft_aux_function(base, home);
-		free(home);
+		if (home)
+			free(home);
 	}
 	return (!base->error);
 }

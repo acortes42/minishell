@@ -33,7 +33,8 @@ SRCS_WITHOUT_MAIN	=  srcs/ft_exit_minishell.c srcs/clear_screen.c \
 	srcs/ft_execute_ctrl_d.c srcs/echo.c srcs/cd.c \
 	srcs/history.c srcs/signals.c srcs/pwd.c srcs/env.c srcs/setenv.c \
 	srcs/ft_export.c srcs/ft_getenv.c  srcs/setenv_aux.c\
-	srcs/ft_init_minishell.c srcs/ft_show_prompt.c srcs/ft_expand_env_value.c ${UTILS}
+	srcs/ft_init_minishell.c srcs/ft_show_prompt.c srcs/ft_expand_env_value.c \
+	srcs/ft_init_history.c srcs/ft_update_environment_pwds.c ${UTILS}
 
 SRCS 				=  srcs/minishell.c ${SRCS_WITHOUT_MAIN}
 

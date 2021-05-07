@@ -19,29 +19,33 @@ static void	write_line(char *line)
 	ft_putstr("\n");
 }
 
+static void	free_line(char **line)
+{
+	if (line && *line)
+	{
+		free(*line);
+		*line = 0;
+	}
+}
+
 int	ft_history(t_abs_struct *base)
 {
 	int		fd;
 	char	*line;
+	int		clean_buffer;
 
 	line = 0;
+	clean_buffer = 1;
 	fd = ft_open_history(base, O_RDWR);
 	if (fd <= 0)
 		return (0);
-	while (classic_get_next(fd, &line) > 0)
+	while (classic_get_next(fd, &line, clean_buffer) > 0)
 	{
+		clean_buffer = 0;
 		write_line(line);
-		if (line)
-		{
-			free(line);
-			line = 0;
-		}
+		free_line(&line);
 	}
-	if (line)
-	{
-		free(line);
-		line = 0;
-	}
+	free_line(&line);
 	close(fd);
 	return (1);
 }

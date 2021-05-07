@@ -26,14 +26,17 @@ char	*ft_get_file_line_by_fd(int fd, int line)
 	char	*str;
 	int		curr_line;
 	int		found_nl;
+	int		clean_buffer;
 
 	if (fd < 0)
 		return (0);
 	curr_line = 0;
 	str = 0;
+	clean_buffer = 1;
 	while (curr_line <= line)
 	{
-		found_nl = classic_get_next(fd, &str);
+		found_nl = classic_get_next(fd, &str, clean_buffer);
+		clean_buffer = 0;
 		if (found_nl < 1)
 			break ;
 		reset_str(curr_line, line, &str);

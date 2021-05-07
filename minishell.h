@@ -99,6 +99,7 @@ typedef struct s_abs_struct
 	int						counter;
 	int						history_lines;
 	int						current_history_line;
+	char					*last_history_command;
 }							t_abs_struct;
 
 typedef struct s_expand_dollar
@@ -163,6 +164,7 @@ void			handle_sigint(int sig);
 int				ft_execute_command(t_abs_struct *base);
 int				ft_execute_ctrl_d(t_abs_struct *base);
 int				ft_init_minishell(t_abs_struct *base, char **envp);
+void			ft_init_history(t_abs_struct *base);
 void			clear_screen(void);
 void			ft_show_prompt(t_abs_struct *base);
 void			enableRawMode(void);
@@ -247,7 +249,7 @@ void			ft_execute_absolute_shell_command(t_abs_struct *base,
 void			ft_execute_relative_shell_command(t_abs_struct *base,
 					t_process *p);
 int				ft_setlflag(int fd, int set_flag, unsigned int value);
-int				classic_get_next(int fd, char **line);
+int				classic_get_next(int fd, char **line, int clean_buffer);
 int				ft_isascii(int c);
 void			ft_borrow_char(int x, char **line, char *bf);
 
@@ -261,7 +263,8 @@ int				process_escape_sequences(char *bf, char **line,
 					t_abs_struct *base);
 int				process_csi_escape_sequence(char *bf, char **line,
 					t_abs_struct *base);
+void			ft_update_environment_pwds(char *old_pwd, char *pwd);
 
-t_abs_struct	base;
+t_abs_struct	g_base;
 
 #endif
