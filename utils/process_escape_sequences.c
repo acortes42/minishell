@@ -17,7 +17,7 @@ static int	process_control_characters(char *bf, char **line)
 		ft_memset(bf, 0, BUFFER_SIZE);
 		return (1);
 	}
-	else if (*bf <= 0x6)
+	else if (*bf <= 0x6 && *bf != CTRL_D)
 	{
 		ft_memset(bf, 0, BUFFER_SIZE);
 		return (1);

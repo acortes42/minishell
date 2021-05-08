@@ -22,6 +22,11 @@ void	signal_handler(int sig)
 		ft_clear_input(&g_base.input);
 		ft_putstr("\n");
 		ft_show_prompt(&g_base);
+		g_base.last_executed_process_status = 130;
+	}
+	else if (sig == SIGQUIT)
+	{
+		ft_exit_minishell(&g_base, 128 + sig);
 	}
 }
 
@@ -30,6 +35,6 @@ void	forked_process_signal_handler(int sig)
 	if (sig == SIGINT)
 	{
 		ft_putstr("\n");
-		exit(0);
+		exit(130);
 	}
 }
