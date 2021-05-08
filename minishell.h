@@ -88,6 +88,7 @@ typedef struct s_abs_struct
 	int						num_args;
 	int						lines_envp;
 	char					*input;
+	char					input_bf[BUFFER_SIZE];
 	char					**parse_string;
 	int						a;
 	int						error;
@@ -100,6 +101,7 @@ typedef struct s_abs_struct
 	int						history_lines;
 	int						current_history_line;
 	char					*last_history_command;
+
 }							t_abs_struct;
 
 typedef struct s_expand_dollar

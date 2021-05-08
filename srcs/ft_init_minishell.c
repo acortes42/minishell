@@ -16,8 +16,15 @@ void	process_quit_handler(int sig)
 {
 	extern t_abs_struct	g_base;
 
-	(void)sig;
-	ft_exit_minishell(&g_base, g_base.last_executed_process_status);
+	if (sig == SIGINT)
+	{
+		ft_memset(g_base.input_bf, 0, BUFFER_SIZE);
+		ft_clear_input(&g_base.input);
+		ft_putstr("\n");
+		ft_show_prompt(&g_base);
+	}
+	else
+		ft_exit_minishell(&g_base, g_base.last_executed_process_status);
 }
 
 int	ft_init_minishell(t_abs_struct *base, char **envp)

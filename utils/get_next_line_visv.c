@@ -54,21 +54,20 @@ static int	process_read_data(char *bf, char **line)
 
 int	get_next_line(int fd, char **line, t_abs_struct *base)
 {
-	static char		bf[BUFFER_SIZE];
 	int				proc;
 
-	proc = ft_move_buffer_to_line(bf, line);
+	proc = ft_move_buffer_to_line(base->input_bf, line);
 	if (!proc)
 	{
 		while (fd >= 0 && BUFFER_SIZE >= 0)
 		{
-			proc = read(fd, bf, 2);
+			proc = read(fd, base->input_bf, 2);
 			if (proc < 0)
 				break ;
 			else if (proc > 0)
 			{
-				if (!process_escape_sequences(bf, line, base)
-					&& process_read_data(bf, line))
+				if (!process_escape_sequences(base->input_bf, line, base)
+					&& process_read_data(base->input_bf, line))
 					return (1);
 			}
 		}
