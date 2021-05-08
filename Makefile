@@ -91,8 +91,7 @@ fclean: clean
 	@rm -rdf SourceFiles
 	@rm -f history.txt
 	@touch history.txt
-	@rm -f history_visv.txt
-	@touch history_visv.txt
+	@rm -f history_minishell.txt
 	@rm -f *.out
 	@rm -f *.a
 	${RM} ${NAME}
