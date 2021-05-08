@@ -27,6 +27,19 @@ static int	ft_move_buffer_to_line(char *bf, char **line)
 	return (found_nl);
 }
 
+static void	ft_convert_tab_to_spaces(char *bf, int line_len)
+{
+	int		spaces;
+
+	spaces = TAB_SPACES - (line_len % TAB_SPACES);
+	while (spaces)
+	{
+		*bf = ' ';
+		spaces--;
+		bf++;
+	}
+}
+
 static int	process_read_data(char *bf, char **line)
 {
 	if (*bf == '\n')
@@ -47,6 +60,8 @@ static int	process_read_data(char *bf, char **line)
 	}
 	else
 	{
+		if (!ft_strcmp(bf, "\t"))
+			ft_convert_tab_to_spaces(bf, ft_strlen(*line));
 		ft_putstr(bf);
 		return (ft_move_buffer_to_line(bf, line));
 	}

@@ -60,12 +60,13 @@ void	ft_shift_left(char *bf)
 	nl_pos = 0;
 	while (nl_pos < BUFFER_SIZE && *(bf + nl_pos) && *(bf + nl_pos) != '\n')
 		nl_pos++;
-	if (nl_pos >= BUFFER_SIZE || !*(bf + nl_pos))
+	if (nl_pos >= BUFFER_SIZE)
 	{
-		*bf = 0;
+		ft_memset(bf, 0, BUFFER_SIZE);
 		return ;
 	}
-	nl_pos++;
+	else if (*(bf + nl_pos) == '\n')
+		nl_pos++;
 	ft_shift_left_bytes(bf, nl_pos);
 }
 

@@ -29,6 +29,7 @@
 # include <signal.h>
 # include <limits.h>
 
+# define TAB_SPACES			4
 # define CTRL_C				'\x3'
 # define CTRL_D				'\x4'
 # define DEL				'\x7F'
