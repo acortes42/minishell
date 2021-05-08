@@ -12,7 +12,7 @@ void	ft_print_last_process_status(t_expand_dollar *d)
 	len = ft_strlen(status);
 	if (len > 2)
 	{
-		expansion = ft_calloc(d->expanded_len + (len - 2) + 1, sizeof(char));
+		expansion = ft_calloc(d->expanded_len + (len - 2) + 2, sizeof(char));
 		if (!(expansion))
 			ft_exit_minishell(d->base, 1);
 		ft_memcpy(expansion, d->expanded, d->pos);
