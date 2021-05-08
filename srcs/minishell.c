@@ -55,12 +55,16 @@ int	obtain_full_line(void)
 
 static void	execute_command_read(t_abs_struct *base)
 {
+	if (!ft_setlflag(STDIN_FILENO, 1, g_base.c_lflag))
+		ft_exit_minishell(base, 1);
 	base->first_job = ft_build_jobs(base->input);
 	while (base->first_job)
 	{
 		ft_launch_job(base, base->first_job);
 		base->first_job = ft_release_job(base->first_job);
 	}
+	if (!ft_setlflag(STDIN_FILENO, 0, ICANON | ECHO | IEXTEN))
+		ft_exit_minishell(base, 1);
 }
 
 unsigned int	ft_getlflag(int fd)
