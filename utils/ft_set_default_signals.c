@@ -34,14 +34,3 @@ int	ft_set_default_signals(void)
 		return (ret);
 	return (0);
 }
-
-void	forked_process_signal_handler(int sig)
-{
-	extern t_abs_struct	g_base;
-
-	if (sig == SIGINT)
-	{
-		ft_putstr("\e[0m\n    Esto ha terminado con ctrl+c    \n");
-		ft_exit_minishell(&g_base, g_base.last_executed_process_status);
-	}
-}

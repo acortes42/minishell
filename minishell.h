@@ -29,6 +29,7 @@
 # include <signal.h>
 # include <limits.h>
 
+# define TAB_SPACES			4
 # define CTRL_C				'\x3'
 # define CTRL_D				'\x4'
 # define DEL				'\x7F'
@@ -88,6 +89,7 @@ typedef struct s_abs_struct
 	int						num_args;
 	int						lines_envp;
 	char					*input;
+	char					input_bf[BUFFER_SIZE];
 	char					**parse_string;
 	int						a;
 	int						error;
@@ -100,6 +102,7 @@ typedef struct s_abs_struct
 	int						history_lines;
 	int						current_history_line;
 	char					*last_history_command;
+
 }							t_abs_struct;
 
 typedef struct s_expand_dollar
@@ -160,7 +163,7 @@ int				ft_setenv(t_abs_struct *base, t_process *p);
 void			ft_exit_minishell(t_abs_struct *base, int exit_code);
 int				ft_unset(t_abs_struct *base, t_process *p);
 int				ft_help(void);
-void			handle_sigint(int sig);
+void			signal_handler(int sig);
 int				ft_execute_command(t_abs_struct *base);
 int				ft_execute_ctrl_d(t_abs_struct *base);
 int				ft_init_minishell(t_abs_struct *base, char **envp);

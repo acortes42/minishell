@@ -27,6 +27,19 @@ static int	ft_move_buffer_to_line(char *bf, char **line)
 	return (found_nl);
 }
 
+static void	ft_convert_tab_to_spaces(char *bf, int line_len)
+{
+	int		spaces;
+
+	spaces = TAB_SPACES - (line_len % TAB_SPACES);
+	while (spaces)
+	{
+		*bf = ' ';
+		spaces--;
+		bf++;
+	}
+}
+
 static int	process_read_data(char *bf, char **line)
 {
 	if (*bf == '\n')
@@ -47,6 +60,8 @@ static int	process_read_data(char *bf, char **line)
 	}
 	else
 	{
+		if (!ft_strcmp(bf, "\t"))
+			ft_convert_tab_to_spaces(bf, ft_strlen(*line));
 		ft_putstr(bf);
 		return (ft_move_buffer_to_line(bf, line));
 	}
@@ -54,21 +69,20 @@ static int	process_read_data(char *bf, char **line)
 
 int	get_next_line(int fd, char **line, t_abs_struct *base)
 {
-	static char		bf[BUFFER_SIZE];
 	int				proc;
 
-	proc = ft_move_buffer_to_line(bf, line);
+	proc = ft_move_buffer_to_line(base->input_bf, line);
 	if (!proc)
 	{
 		while (fd >= 0 && BUFFER_SIZE >= 0)
 		{
-			proc = read(fd, bf, 2);
+			proc = read(fd, base->input_bf, 2);
 			if (proc < 0)
 				break ;
 			else if (proc > 0)
 			{
-				if (!process_escape_sequences(bf, line, base)
-					&& process_read_data(bf, line))
+				if (!process_escape_sequences(base->input_bf, line, base)
+					&& process_read_data(base->input_bf, line))
 					return (1);
 			}
 		}

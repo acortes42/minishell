@@ -23,7 +23,7 @@ int	ft_open_history(t_abs_struct *base, int mode)
 	home = ft_getenv(base->env, "HOME") + 5;
 	if (home == (char *)(5))
 		return (-1);
-	history_path = ft_strjoin(home, "/history_visv.txt");
+	history_path = ft_strjoin(home, "/history_minishell.txt");
 	if (!history_path)
 		return (-1);
 	fd = open(history_path, mode | O_CREAT, S_IRUSR | S_IWUSR);

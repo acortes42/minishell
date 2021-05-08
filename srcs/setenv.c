@@ -60,17 +60,43 @@ static int	ft_search_env(char **env, char *key)
 	return (0);
 }
 
+static char	*ft_prepare_export_value(char *value)
+{
+	char					*tri;
+	extern t_abs_struct		g_base;
+	t_expand_dollar			d;
+
+	ft_memset(&d, 0, sizeof(t_expand_dollar));
+	d.base = &g_base;
+	if (ft_isspace(*value))
+		tri = ft_strdup("");
+	else if (!ft_strncmp(value, "~/", 2))
+	{
+		ft_expand_tilde(&d);
+		tri = ft_strjoin(d.expanded, value + 2);
+		free(d.expanded);
+	}
+	else if (!ft_strcmp(value, "~"))
+	{
+		ft_expand_tilde(&d);
+		d.expanded[ft_strlen(d.expanded) - 1] = 0;
+		tri = d.expanded;
+	}
+	else
+		tri = ft_strdup(value);
+	if (!tri)
+		return (0);
+	return (tri);
+}
+
 static char	*ft_prepare_export(char *key, char *value)
 {
-	char		*adj;
-	char		*tri;
+	char					*adj;
+	char					*tri;
 
 	if (!key || !value)
 		return (0);
-	if (ft_isspace(*value))
-		tri = ft_strdup("");
-	else
-		tri = ft_strdup(value);
+	tri = ft_prepare_export_value(value);
 	if (!tri)
 		return (0);
 	ft_remove_quotes(tri);

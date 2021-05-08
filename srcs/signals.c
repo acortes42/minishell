@@ -10,13 +10,26 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
-void	handle_sigint(int sig)
+void	signal_handler(int sig)
 {
-	if (sig == 2)
+	extern t_abs_struct	g_base;
+
+	if (sig == SIGINT)
 	{
-		ft_putstr("\e[0m\n    Esto ha terminado con ctrl+c    \n");
+		ft_memset(g_base.input_bf, 0, BUFFER_SIZE);
+		ft_clear_input(&g_base.input);
+		ft_putstr("\n");
+		ft_show_prompt(&g_base);
+	}
+}
+
+void	forked_process_signal_handler(int sig)
+{
+	if (sig == SIGINT)
+	{
+		ft_putstr("\n");
 		exit(0);
 	}
 }

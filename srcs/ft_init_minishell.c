@@ -12,22 +12,9 @@
 
 #include "minishell.h"
 
-void	process_quit_handler(int sig)
-{
-	extern t_abs_struct	g_base;
-
-	(void)sig;
-	ft_exit_minishell(&g_base, g_base.last_executed_process_status);
-}
-
 int	ft_init_minishell(t_abs_struct *base, char **envp)
 {
-	signal(SIGINT, process_quit_handler);
-	signal(SIGQUIT, process_quit_handler);
-	signal(SIGTSTP, process_quit_handler);
-	signal(SIGTTIN, process_quit_handler);
-	signal(SIGTTOU, process_quit_handler);
-	signal(SIGKILL, process_quit_handler);
+	signal(SIGQUIT, signal_handler);
 	if (!base)
 		return (0);
 	ft_memset(base, 0, sizeof(t_abs_struct));
