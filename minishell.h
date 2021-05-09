@@ -95,7 +95,6 @@ typedef struct s_abs_struct
 	int						error;
 	int						flag;
 	int						ctrl_d_times;
-	int						last_executed_process_status;
 	t_job					*first_job;
 	unsigned int			c_lflag;
 	int						counter;

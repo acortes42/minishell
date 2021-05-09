@@ -69,10 +69,7 @@ static void	ft_execute_shell_command_using_path(t_abs_struct *base,
 			ft_process_is_a_directory_command(p);
 		else if ((statbuf.st_mode & S_IFMT) == S_IFREG)
 		{
-			if (*path == '/' || !ft_strncmp(path, "\"/", 2))
-				ft_execute_absolute_shell_command(base, path, p);
-			else
-				ft_execute_relative_shell_command(base, p);
+			ft_execute_absolute_shell_command(base, path, p);
 		}
 		free(path);
 	}
@@ -86,10 +83,9 @@ void	ft_launch_process(t_abs_struct *base, t_process *current)
 	current->status = set_redirections(base, current);
 	if (current->status)
 		return ;
-	if (*current->argv[0] == '/')
+	if (*current->argv[0] == '/' || !ft_strncmp(current->argv[0], "./", 2)
+		|| !ft_strncmp(current->argv[0], "../", 3))
 		ft_execute_absolute_shell_command(base, current->argv[0], current);
-	else if (*current->argv[0] == '.')
-		ft_execute_relative_shell_command(base, current);
 	else
 		ft_execute_shell_command_using_path(base, current);
 }

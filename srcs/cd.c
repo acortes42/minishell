@@ -20,25 +20,31 @@ static void	print_file_doesnt_exist(char *file)
 	ft_putstr(": File or dir doesn't exist\n");
 }
 
-int	value_to_aux(int x)
+int	cd_valid_number_of_arguments(int x)
 {
 	if (x > 2)
 		return (0);
 	return (1);
 }
 
-void	ft_aux_function(t_abs_struct *base, char *home)
+void	perform_chdir_and_environment_update(t_abs_struct *base, char *home)
 {
 	char	*pwd;
 	char	*old_pwd;
 
+	pwd = 0;
 	old_pwd = getcwd(0, 0);
-	base->error = chdir(home);
-	pwd = getcwd(0, 0);
-	if (base->error)
-		print_file_doesnt_exist(home);
+	if (chdir(home))
+	{
+		print_file_doesnt_exist(base->parse_string[base->a + 1]);
+		base->error = 1;
+	}
 	else
+	{
+		base->error = 0;
+		pwd = getcwd(0, 0);
 		ft_update_environment_pwds(old_pwd, pwd);
+	}
 	if (pwd)
 		free(pwd);
 	if (old_pwd)
@@ -55,11 +61,9 @@ int	check_if_home(char *home, int aux)
 int	cd(t_abs_struct *base)
 {
 	char		*home;
-	int			aux_nb;
 
 	base->num_args = ft_count_until_separator(base->parse_string, base->a);
-	aux_nb = value_to_aux(base->num_args);
-	base->error = !aux_nb;
+	base->error = !cd_valid_number_of_arguments(base->num_args);
 	if (base->error)
 		ft_putstr("\e[0mcd: Too many arguments\n");
 	else if (base->num_args > 1 && !ft_isempty(base->parse_string[base->a + 1]))
@@ -67,14 +71,14 @@ int	cd(t_abs_struct *base)
 	else
 	{
 		home = ft_getenv(base->env, "HOME");
-		if (!(check_if_home(home, aux_nb)))
+		if (!(check_if_home(home, 1)))
 			home = ft_get_absolute_path(base, home + 5);
 		else
 			ft_putstr("\e[0mcd: HOME not defined\n");
 	}
 	if (!base->error)
 	{
-		ft_aux_function(base, home);
+		perform_chdir_and_environment_update(base, home);
 		if (home)
 			free(home);
 	}

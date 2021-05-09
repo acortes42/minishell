@@ -14,5 +14,16 @@ get_next_line_visv.c y get_next_line_utils_visv.c simplemente cambiando el makef
 43. El fichero de history no lo tratamos y si se mete cualquier cosa rara, va a hacer que el terminal haga cosas raras. Por ejemplo si se mete una secuencia de escape, se imprimirá directamente por pantalla y no quedará desactivada como cuando realizamos la entrada por teclado
 // TODO: modificar el nombre de fichero por ft_setenv.c
 // Problema al solo aceptar dos introducciones con setenv
+44. Multiples prompts se imprimen cuando ejecutamos la siguiente secuencia:
+$ cat
+-> pulsar ctrl + c
+45. Al volver a leer el proyecto recién descargado de la intra, veo que cuando habla
+de las teclas de arriba y abajo pide utilizar termcap con mandatory entre paréntesis.
+No se cómo lo entendí la otra vez o si es que vi una versión antigua pero ahora me
+da la sensación de que utilizar termcap es obligatorio. De echo la lista de funciones
+externas, incluye funciones de termcap. Por lo tanto habría que utilizar termcap para hacer el historial
+Use up and down arrows to navigate through the command using termcap (manda-tory) history which we will then be able to edit (at least like we can for classic lines)if we feel like it (the line, not the history
+46. Para implementar lo de las redirecciones utilizando nombres, hay una función ft_get_absolute_path que te devuelve el path absoluto en base a un path recibido para poder abrir los ficheros  y obtener el fd.
+Después habrá que implementar una función que con dup, reubique el fd si es menor o = a 10, tal y como se dice en gnu.org
 
 /*Existe un problema al crear al crear más memoria y copiar lo necesario*/

@@ -33,6 +33,7 @@ static void	ft_fork_child(t_abs_struct *base, t_process *previous,
 		current->pid = pid;
 		wait(&current->status);
 		current->status /= 256;
+		base->error = current->status;
 	}
 }
 
@@ -55,7 +56,7 @@ void	ft_launch_job(t_abs_struct *base, t_job *j)
 			current->completed = 1;
 			current->status = 0;
 		}
-		base->last_executed_process_status = current->status;
+		base->error = current->status;
 		ft_close_pipes(j->std_fds, previous, current);
 		previous = current;
 		current = current->next;

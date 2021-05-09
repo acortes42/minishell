@@ -48,7 +48,7 @@ char	*ft_strlcat_paths(char *prefix, const char *rel_path)
 	prefix_len = ft_strlen(prefix);
 	add_slash = 0;
 	if (*(prefix + prefix_len - 1) != '/' && \
-		ft_strncmp((prefix + prefix_len - 2), "/\"", 2))
+		*(prefix + prefix_len - 1) != '\\')
 		add_slash = 1;
 	rel_path_len = ft_strlen(rel_path);
 	ret = ft_calloc(prefix_len + add_slash + rel_path_len + 1, sizeof(char));

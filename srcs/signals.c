@@ -16,20 +16,19 @@ void	signal_handler(int sig)
 {
 	extern t_abs_struct	g_base;
 
+	g_base.error = 128 + sig;
 	if (sig == SIGINT)
 	{
-		if (ft_strlen(g_base.input_bf) > 0)
-		{
-			ft_memset(g_base.input_bf, 0, BUFFER_SIZE);
-			ft_clear_input(&g_base.input);
-		}
+		ft_memset(g_base.input_bf, 0, BUFFER_SIZE);
+		if (g_base.input)
+			free(g_base.input);
+		g_base.input = 0;
 		ft_putstr("\n");
 		ft_show_prompt(&g_base);
-		g_base.last_executed_process_status = 130;
 	}
 	else if (sig == SIGQUIT)
 	{
-		ft_exit_minishell(&g_base, 128 + sig);
+		ft_exit_minishell(&g_base, g_base.error);
 	}
 }
 
@@ -38,6 +37,6 @@ void	forked_process_signal_handler(int sig)
 	if (sig == SIGINT)
 	{
 		ft_putstr("\n");
-		exit(130);
+		exit(128 + sig);
 	}
 }
