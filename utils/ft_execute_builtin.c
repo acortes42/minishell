@@ -35,11 +35,22 @@ static int	execute_environment_builtins(t_abs_struct *base,
 	return (executed);
 }
 
+static void	launch_exit_builtin(char *exit_code)
+{
+	int	exit;
+
+	if (exit_code)
+		exit = ft_atoi(exit_code);
+	else
+		exit = 0;
+	ft_exit_minishell(exit);
+}
+
 static int	execute_environment_builtins2(t_abs_struct *base,
 	t_process *previous, t_process *p)
 {
 	if (!ft_strcmp(p->argv[0], "exit"))
-		ft_exit_minishell(0);
+		launch_exit_builtin(p->argv[1]);
 	else if (!ft_strcmp(p->argv[0], "echo"))
 	{
 		ft_set_pipes(previous, p);
