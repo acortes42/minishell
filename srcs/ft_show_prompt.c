@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static char	*ft_get_cwd(t_abs_struct *base)
+static char	*ft_get_cwd(void)
 {
 	char		*cwd;
 
@@ -21,7 +21,7 @@ static char	*ft_get_cwd(t_abs_struct *base)
 	{
 		if (cwd)
 			free(cwd);
-		ft_exit_minishell(base, errno);
+		ft_exit_minishell(errno);
 	}
 	return (cwd);
 }
@@ -40,7 +40,7 @@ static void	ft_show_prompt_cwd(t_abs_struct *base)
 	size_t		len;
 	char		*home;
 
-	cwd = ft_get_cwd(base);
+	cwd = ft_get_cwd();
 	home = ft_getenv(base->env, "HOME");
 	if (home)
 		home += 5;
@@ -52,7 +52,7 @@ static void	ft_show_prompt_cwd(t_abs_struct *base)
 		tmp = ft_strdup(cwd + len - 1);
 		free(cwd);
 		if (!tmp)
-			ft_exit_minishell(base, -1);
+			ft_exit_minishell(-1);
 		cwd = tmp;
 		cwd[0] = '~';
 	}

@@ -28,7 +28,7 @@ void	signal_handler(int sig)
 	}
 	else if (sig == SIGQUIT)
 	{
-		ft_exit_minishell(&g_base, g_base.error);
+		ft_exit_minishell(g_base.error);
 	}
 }
 

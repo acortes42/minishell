@@ -14,27 +14,30 @@
 
 static int	contains_redir(char *str)
 {
-	int		redir;
-	char	*tmp;
-	char	*argv;
+	return (str && (ft_strchr(str, '>') || ft_strchr(str, '<')));
+}
 
-	argv = str;
-	tmp = ft_split_shell_by(&argv, ">");
-	redir = 0;
-	if (tmp && *(argv - 1) == '>')
-		redir = 1;
-	if (tmp)
-		free(tmp);
-	if (redir)
-		return (redir);
-	argv = str;
-	tmp = ft_split_shell_by(&argv, "<");
-	redir = 0;
-	if (tmp && *(argv - 1) == '<')
-		redir = 1;
-	if (tmp)
-		free(tmp);
-	return (redir);
+int	complete_redir_with_next_argv(char *str)
+{
+	int		len;
+
+	len = ft_strlen(str);
+	if (len && (*(str + len - 1) == '>' || *(str + len - 1) == '<'))
+		return (1);
+	else
+		return (0);
+}
+
+static void	add_redir_joining_adjacent_params(char ***redirs, int *redirs_len,
+	char **params)
+{
+	char	*redir;
+
+	redir = ft_strjoin(*params, *(params + 1));
+	ft_array_add(redirs, redirs_len, redir);
+	free(*params);
+	ft_array_slide_left(params);
+	free(*params);
 }
 
 int	ft_extract_redirections_from_argv(t_process *p)
@@ -50,7 +53,10 @@ int	ft_extract_redirections_from_argv(t_process *p)
 			i++;
 		else
 		{
-			ft_array_add(&p->redirs, &redirs_len, *i);
+			if (complete_redir_with_next_argv(*i) && *(i + 1))
+				add_redir_joining_adjacent_params(&p->redirs, &redirs_len, i);
+			else
+				ft_array_add(&p->redirs, &redirs_len, *i);
 			ft_array_slide_left(i);
 		}
 	}

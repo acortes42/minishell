@@ -40,10 +40,10 @@ int	obtain_full_line(void)
 	{
 		found_new_line = get_next_line(STDIN_FILENO, &g_base.input, &g_base);
 		if (found_new_line < 0)
-			ft_exit_minishell(&g_base, 2);
+			ft_exit_minishell(2);
 	}
 	if (g_base.input && found_new_line && !append_new_line(&g_base.input))
-		ft_exit_minishell(&g_base, 1);
+		ft_exit_minishell(1);
 	trimmed_input = ft_trim(g_base.input);
 	if (ft_strlen(g_base.input) >= 1 && ft_strcmp(trimmed_input, "\n") \
 			&& ft_isascii(g_base.input[0]))
@@ -56,7 +56,7 @@ int	obtain_full_line(void)
 static void	execute_command_read(t_abs_struct *base)
 {
 	if (!ft_setlflag(STDIN_FILENO, 1, g_base.c_lflag))
-		ft_exit_minishell(base, 1);
+		ft_exit_minishell(1);
 	base->first_job = ft_build_jobs(base->input);
 	while (base->first_job)
 	{
@@ -64,7 +64,7 @@ static void	execute_command_read(t_abs_struct *base)
 		base->first_job = ft_release_job(base->first_job);
 	}
 	if (!ft_setlflag(STDIN_FILENO, 0, ICANON | ECHO | IEXTEN))
-		ft_exit_minishell(base, 1);
+		ft_exit_minishell(1);
 }
 
 unsigned int	ft_getlflag(int fd)
@@ -94,7 +94,7 @@ int	main(int argc, char **argv, char **envp)
 		clear_screen();
 	g_base.c_lflag = ft_getlflag(STDIN_FILENO);
 	if (!ft_setlflag(STDIN_FILENO, 0, ICANON | ECHO | IEXTEN))
-		ft_exit_minishell(&g_base, 1);
+		ft_exit_minishell(1);
 	while (minishell_ready)
 	{
 		signal(SIGINT, signal_handler);

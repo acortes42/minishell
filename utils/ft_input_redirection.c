@@ -12,40 +12,49 @@
 
 #include "minishell.h"
 
-static int	apply_input_redirection(t_abs_struct *base, char *fd,
+static int	apply_input_redirection(int i_fd,
 	char *right_side)
 {
-	int			i_fd;
 	int			o_fd;
-	int			empty;
-	int			fd_help;
 	char		*fd_file;
 
-	empty = ft_isempty(fd);
-	if (!ft_isinteger(fd) && !(empty))
-		return (0);
-	i_fd = assign_to_i_fd(empty, fd);
 	fd_file = ft_trim(right_side);
-	if (!(fd_file))
-		return (1);
+	if (!fd_file)
+		return (0);
 	if (!ft_strncmp(fd_file, "&-", 2))
 	{
 		free(fd_file);
-		return (close(i_fd));
+		close(i_fd);
+		return (1);
 	}
-	fd_help = assign_to_fd_helper(*fd_file);
-	o_fd = open((fd_file + fd_help), O_CREAT | O_TRUNC | O_WRONLY, 0666);
-	redirect_to_exit(base, o_fd, i_fd);
+	o_fd = ft_get_redirection_fd(fd_file, O_RDONLY, 0666, -1);
+	if (o_fd < 0)
+	{
+		free(fd_file);
+		return (0);
+	}
+	dup2(o_fd, i_fd);
 	if (*fd_file != '&')
 		close(o_fd);
 	free(fd_file);
-	return (0);
+	return (1);
 }
 
-int	ft_input_redirection(t_abs_struct *base, char *redir,
-	int *redirected)
+static void	dup_stdin_and_close_it(int i_fd)
+{
+	extern t_abs_struct	g_base;
+
+	if (i_fd != STDIN_FILENO)
+	{
+		g_base.std_fds.infile = dup(STDIN_FILENO);
+		close(STDIN_FILENO);
+	}
+}
+
+int	ft_input_redirection(char *redir, int *redirected)
 {
 	char			*fd;
+	int				i_fd;
 	int				found_redirection;
 
 	found_redirection = 0;
@@ -54,7 +63,14 @@ int	ft_input_redirection(t_abs_struct *base, char *redir,
 		fd = ft_split_shell_by(&redir, "<");
 	if (redir && fd && *(redir - 1) == '<')
 	{
-		*redirected = apply_input_redirection(base, fd, redir);
+		i_fd = ft_get_fd(fd, STDIN_FILENO);
+		if (i_fd < 0)
+			*redirected = 0;
+		else
+		{
+			dup_stdin_and_close_it(i_fd);
+			*redirected = apply_input_redirection(i_fd, redir);
+		}
 		found_redirection = 1;
 	}
 	if (fd)

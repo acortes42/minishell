@@ -12,13 +12,12 @@
 
 #include "minishell.h"
 
-void	ft_configure_pipes(t_abs_struct *base,
-	t_process *current)
+void	ft_configure_pipes(t_process *current)
 {
 	if (current->next)
 	{
 		if (pipe(current->pipe) < 0)
-			ft_exit_minishell(base, errno);
+			ft_exit_minishell(errno);
 	}
 	else
 	{
@@ -27,21 +26,24 @@ void	ft_configure_pipes(t_abs_struct *base,
 	}
 }
 
-void	ft_close_pipes(t_files_fd fds, t_process *previous,
-	t_process *current)
+void	ft_close_pipes(t_process *previous, t_process *current)
 {
+	extern t_abs_struct	g_base;
+
 	if (previous)
 	{
 		if (previous->pipe[STDIN_FILENO] > -1)
 		{
 			close(previous->pipe[STDIN_FILENO]);
-			dup2(fds.infile, STDIN_FILENO);
+			previous->pipe[STDIN_FILENO] = -1;
+			dup2(g_base.std_fds.infile, STDIN_FILENO);
 		}
 	}
 	if (current->pipe[STDOUT_FILENO] > -1)
 	{
 		close(current->pipe[STDOUT_FILENO]);
-		dup2(fds.outfile, STDOUT_FILENO);
+		current->pipe[STDOUT_FILENO] = -1;
+		dup2(g_base.std_fds.outfile, STDOUT_FILENO);
 	}
 }
 

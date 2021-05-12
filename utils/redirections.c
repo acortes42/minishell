@@ -19,9 +19,9 @@ static int	set_redirection(t_abs_struct *base, char *i)
 	redirected = 0;
 	if (ft_output_add_redirection(base, i, &redirected))
 		return (redirected);
-	if (ft_output_redirection(base, i, &redirected))
+	if (ft_output_redirection(i, &redirected))
 		return (redirected);
-	if (ft_input_redirection(base, i, &redirected))
+	if (ft_input_redirection(i, &redirected))
 		return (redirected);
 	return (0);
 }
@@ -35,11 +35,10 @@ int	set_redirections(t_abs_struct *base, t_process *p)
 		return (1);
 	i = p->redirs;
 	redirected = 0;
-	while (!redirected && i && *i)
+	while (i && *i)
 	{
-		redirected = set_redirection(base, *i);
-		if (redirected)
-			return (redirected);
+		if (set_redirection(base, *i))
+			redirected = 1;
 		i++;
 	}
 	return (redirected);

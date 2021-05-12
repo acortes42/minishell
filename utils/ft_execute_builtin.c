@@ -39,7 +39,7 @@ static int	execute_environment_builtins2(t_abs_struct *base,
 	t_process *previous, t_process *p)
 {
 	if (!ft_strcmp(p->argv[0], "exit"))
-		ft_exit_minishell(base, 0);
+		ft_exit_minishell(0);
 	else if (!ft_strcmp(p->argv[0], "echo"))
 	{
 		ft_set_pipes(previous, p);
@@ -93,8 +93,6 @@ int	ft_execute_builtin(t_abs_struct *base, t_process *previous,
 			return (ft_execute_ctrl_d(base));
 		return (1);
 	}
-	if (set_redirections(base, p))
-		return (0);
 	base->parse_string = p->argv;
 	base->a = 0;
 	if (execute_environment_builtins(base, previous, p))

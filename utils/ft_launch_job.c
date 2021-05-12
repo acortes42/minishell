@@ -21,13 +21,14 @@ static void	ft_fork_child(t_abs_struct *base, t_process *previous,
 	if (pid == 0)
 	{
 		if (signal(SIGINT, forked_process_signal_handler) == SIG_ERR)
-			ft_exit_minishell(base, errno);
+			ft_exit_minishell(errno);
+		set_redirections(base, current);
 		ft_set_pipes(previous, current);
 		ft_launch_process(base, current);
 		exit(current->status);
 	}
 	else if (pid < 0)
-		ft_exit_minishell(base, 1);
+		ft_exit_minishell(1);
 	else
 	{
 		current->pid = pid;
@@ -42,13 +43,12 @@ void	ft_launch_job(t_abs_struct *base, t_job *j)
 	t_process	*current;
 	t_process	*previous;
 
-	dup_std_fds(&j->std_fds);
 	previous = 0;
 	current = j->first_process;
 	while (current)
 	{
 		ft_expand_process_cmd(base, current);
-		ft_configure_pipes(base, current);
+		ft_configure_pipes(current);
 		if (!ft_execute_builtin(base, previous, current))
 			ft_fork_child(base, previous, current);
 		else
@@ -57,9 +57,8 @@ void	ft_launch_job(t_abs_struct *base, t_job *j)
 			current->status = 0;
 		}
 		base->error = current->status;
-		ft_close_pipes(j->std_fds, previous, current);
+		ft_close_pipes(previous, current);
 		previous = current;
 		current = current->next;
 	}
-	restore_std_fds(&j->std_fds);
 }
