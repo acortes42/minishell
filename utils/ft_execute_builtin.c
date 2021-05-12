@@ -39,6 +39,7 @@ static void	launch_exit_builtin(char *exit_code)
 {
 	int	exit;
 
+	ft_putstr("exit\n");
 	if (exit_code)
 		exit = ft_atoi(exit_code);
 	else
