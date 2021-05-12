@@ -147,7 +147,7 @@ void			ft_putstr(char *s);
 void			ft_putnstr(char *s, size_t len);
 void			ft_putnbr(int n);
 int				ft_strcmp(const char *s1, const char *s2);
-int				cd(t_abs_struct *base);
+int				cd(t_process *process);
 char			*ft_get_absolute_path(t_abs_struct *base, char *path);
 int				echo(t_abs_struct *base, t_process *p);
 int				ft_history(t_abs_struct *base);

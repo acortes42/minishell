@@ -52,10 +52,7 @@ void	ft_launch_job(t_abs_struct *base, t_job *j)
 		if (!ft_execute_builtin(base, previous, current))
 			ft_fork_child(base, previous, current);
 		else
-		{
 			current->completed = 1;
-			current->status = 0;
-		}
 		base->error = current->status;
 		ft_close_pipes(previous, current);
 		previous = current;

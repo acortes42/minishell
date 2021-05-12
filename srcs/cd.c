@@ -58,29 +58,31 @@ int	check_if_home(char *home, int aux)
 	return (aux);
 }
 
-int	cd(t_abs_struct *base)
+int	cd(t_process *p)
 {
+	extern t_abs_struct	g_base;
 	char		*home;
+	int			args;
 
-	base->num_args = ft_count_until_separator(base->parse_string, base->a);
-	base->error = !cd_valid_number_of_arguments(base->num_args);
-	if (base->error)
-		ft_putstr("\e[0mcd: Too many arguments\n");
-	else if (base->num_args > 1 && !ft_isempty(base->parse_string[base->a + 1]))
-		home = ft_get_absolute_path(base, base->parse_string[base->a + 1]);
+	p->status = 0;
+	if (!p || !p->argv || !(*p->argv))
+		ft_exit_minishell(1);
+	args = ft_array_len(p->argv);
+	if (args > 1)
+		home = ft_get_absolute_path(&g_base, p->argv[1]);
 	else
 	{
-		home = ft_getenv(base->env, "HOME");
-		if (!(check_if_home(home, 1)))
-			home = ft_get_absolute_path(base, home + 5);
-		else
+		home = ft_getenv(g_base.env, "HOME");
+		if (!home)
+		{
 			ft_putstr("\e[0mcd: HOME not defined\n");
+			p->status = 1;
+			return (1);
+		}
+		home = ft_get_absolute_path(&g_base, home + 5);
 	}
-	if (!base->error)
-	{
-		perform_chdir_and_environment_update(base, home);
-		if (home)
-			free(home);
-	}
-	return (!base->error);
+	perform_chdir_and_environment_update(&g_base, home);
+	if (home)
+		free(home);
+	return (g_base.error);
 }

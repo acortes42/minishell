@@ -66,7 +66,7 @@ static int	execute_environment_builtins2(t_abs_struct *base,
 	}
 	else if (!ft_strcmp(p->argv[0], "cd"))
 	{
-		cd(base);
+		cd(p);
 		return (1);
 	}
 	return (0);
