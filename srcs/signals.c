@@ -23,7 +23,7 @@ void	signal_handler(int sig)
 		if (g_base.input)
 			free(g_base.input);
 		g_base.input = 0;
-		ft_putstr("\n");
+		ft_putstr("^C\n");
 		ft_show_prompt(&g_base);
 	}
 	else if (sig == SIGQUIT)
