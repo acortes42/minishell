@@ -4,6 +4,8 @@ void	ft_expand_quote(t_expand_dollar *d)
 {
 	if (!d->quote)
 		d->quote = '"';
+	else
+		d->quote = 0;
 	d->cmd++;
 }
 

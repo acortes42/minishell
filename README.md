@@ -34,6 +34,9 @@ https://www.gnu.org/software/libc/manual/html_node/Launching-Jobs.html
 ##### Problems
 ###### wait
 * Not child processes: https://stackoverflow.com/questions/1608017/no-child-process-error-from-waitpid-when-waiting-for-process-group
+###### Core dump files
+check man 5 core. Also check /proc/sys/kernel/core_pattern file.
+
 ### Debug
 #### VSCode
 Debug child thread of a fork. Set follow-fork-mode to child in the Debug console tab using the next command:
