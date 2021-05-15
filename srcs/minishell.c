@@ -97,7 +97,6 @@ int	main(int argc, char **argv, char **envp)
 		ft_exit_minishell(1);
 	while (minishell_ready)
 	{
-		signal(SIGINT, signal_handler);
 		ft_show_prompt(&g_base);
 		obtain_full_line();
 		execute_command_read(&g_base);

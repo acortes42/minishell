@@ -12,16 +12,23 @@
 
 #include "minishell.h"
 
+//
+// Why signal hanlder is stablished before fork? (source: man 7 signal)
+// Forked process receives a copy of it's parents signals.
+// And execve executions will reset signal to it's defaults, so if we set
+// signals at forked child, they will be reset to parent signals in
+// execve
+//
 static void	ft_fork_child(t_abs_struct *base, t_process *previous,
 	t_process *current)
 {
 	pid_t		pid;
 
+	signal(SIGINT, forked_process_signal_handler);
+	signal(SIGQUIT, forked_process_signal_handler);
 	pid = fork();
 	if (pid == 0)
 	{
-		if (signal(SIGINT, forked_process_signal_handler) == SIG_ERR)
-			ft_exit_minishell(errno);
 		set_redirections(base, current);
 		ft_set_pipes(previous, current);
 		ft_launch_process(base, current);
@@ -35,6 +42,8 @@ static void	ft_fork_child(t_abs_struct *base, t_process *previous,
 		wait(&current->status);
 		current->status /= 256;
 		base->error = current->status;
+		signal(SIGINT, signal_handler);
+		signal(SIGQUIT, signal_handler);
 	}
 }
 
