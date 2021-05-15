@@ -6,7 +6,7 @@
 /*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/23 16:04:27 by acortes-          #+#    #+#             */
-/*   Updated: 2021/04/01 17:10:11 by acortes-         ###   ########.fr       */
+/*   Updated: 2021/05/15 14:59:51 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	echo_args(char **argv)
 	}
 }
 
-int	echo(t_abs_struct *base, t_process *p)
+int	ft_echo(t_abs_struct *base, t_process *p)
 {
 	int		i;
 	int		flag;

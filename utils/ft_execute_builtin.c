@@ -6,7 +6,7 @@
 /*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 16:17:52 by visv              #+#    #+#             */
-/*   Updated: 2021/05/01 17:00:39 by acortes-         ###   ########.fr       */
+/*   Updated: 2021/05/15 15:00:14 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static int	execute_environment_builtins2(t_abs_struct *base,
 	else if (!ft_strcmp(p->argv[0], "echo"))
 	{
 		ft_set_pipes(previous, p);
-		echo(base, p);
+		ft_echo(base, p);
 		return (1);
 	}
 	else if (!ft_strcmp(p->argv[0], "pwd"))
@@ -89,7 +89,7 @@ static int	execute_environment_builtins3(t_process *previous, t_process *p,
 	}
 	else if (!ft_strcmp(p->argv[0], "clear"))
 	{
-		clear_screen();
+		ft_clear_screen();
 		return (1);
 	}
 	return (0);

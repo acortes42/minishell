@@ -6,7 +6,7 @@
 /*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 16:12:34 by acortes-          #+#    #+#             */
-/*   Updated: 2021/04/01 16:12:56 by acortes-         ###   ########.fr       */
+/*   Updated: 2021/05/15 15:00:03 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int				test_echo(void)
 	abs.parse_string[1] = "hola";
 	ft_memset(&p, 0, sizeof(t_process));
 	p.argv = abs.parse_string;
-	res = echo(&abs, &p);
+	res = ft_echo(&abs, &p);
 	free(abs.parse_string);
 	printf("--- \n\n\n");
 	return (res ? 0 : 1);

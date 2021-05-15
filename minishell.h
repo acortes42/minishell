@@ -6,7 +6,7 @@
 /*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 09:31:42 by visv              #+#    #+#             */
-/*   Updated: 2021/05/01 16:21:52 by acortes-         ###   ########.fr       */
+/*   Updated: 2021/05/15 16:17:31 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,12 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <stdio.h>
+# include <termios.h>
+# include <curses.h>
+# include <term.h>
 # include <fcntl.h>
 # include <stddef.h>
 # include <stdlib.h>
-# include <termios.h>
 # include <unistd.h>
 # include <string.h>
 # include <ctype.h>
@@ -28,6 +30,7 @@
 # include <errno.h>
 # include <signal.h>
 # include <limits.h>
+
 
 # define REDIRECTIONS_MINIMUM_FD	11
 # define MAX_FD						4096
@@ -96,6 +99,8 @@ typedef struct s_abs_struct
 	int						error;
 	int						flag;
 	int						ctrl_d_times;
+	char					*arrow_up;
+	char					*arrow_down;
 	t_job					*first_job;
 	unsigned int			c_lflag;
 	int						counter;
@@ -149,7 +154,7 @@ void			ft_putnbr(int n);
 int				ft_strcmp(const char *s1, const char *s2);
 int				cd(t_process *process);
 char			*ft_get_absolute_path(t_abs_struct *base, char *path);
-int				echo(t_abs_struct *base, t_process *p);
+int				ft_echo(t_abs_struct *base, t_process *p);
 int				ft_history(t_abs_struct *base);
 int				ft_open_history(t_abs_struct *base, int mode);
 void			ft_write_history_line(t_abs_struct *base);
@@ -170,7 +175,7 @@ int				ft_execute_command(t_abs_struct *base);
 int				ft_execute_ctrl_d(t_abs_struct *base);
 int				ft_init_minishell(t_abs_struct *base, char **envp);
 void			ft_init_history(t_abs_struct *base);
-void			clear_screen(void);
+void			ft_clear_screen(void);
 void			ft_show_prompt(t_abs_struct *base);
 void			enableRawMode(void);
 

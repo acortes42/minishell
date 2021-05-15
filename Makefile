@@ -71,7 +71,7 @@ pipes: fclean
 	${CC} -o pipes ${CFLAGS} tests/pipes_redirs.c
 
 $(NAME): ${OBJS}
-	${CC} -o ${NAME} ${CFLAGS} ${OBJS}
+	${CC} -o ${NAME} ${CFLAGS} ${OBJS} -lncurses
 
 library: ${OBJS}
 	@gcc -c ${CFLAGS} ${OBJS}

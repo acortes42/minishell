@@ -6,7 +6,7 @@
 /*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/23 16:04:45 by acortes-          #+#    #+#             */
-/*   Updated: 2021/04/01 16:03:05 by acortes-         ###   ########.fr       */
+/*   Updated: 2021/05/15 18:04:35 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,14 @@ static void	read_csi_escape_sequence(char *bf)
 
 int	process_csi_escape_sequence(char *bf, char **line, t_abs_struct *base)
 {
+	base->counter = 0;
 	if (ft_strncmp(bf, CSI_ESCAPE, 2))
 		return (0);
 	if (!is_csi_escape_sequence_complete(bf))
 		read_csi_escape_sequence(bf);
-	if (!ft_strncmp(bf, ARROW_UP, 3))
+	if (bf[2] == base->arrow_up[2])
 		load_previous_history_command(base, line, bf);
-	else if (!ft_strncmp(bf, ARROW_DOWN, 3))
+	else if (bf[2] == base->arrow_down[2])
 		load_next_history_command(base, line, bf);
 	else
 		ft_memset(bf, 0, BUFFER_SIZE);
