@@ -23,12 +23,12 @@ void	signal_handler(int sig)
 		if (g_base.input)
 			free(g_base.input);
 		g_base.input = 0;
-		ft_putstr("\n");
+		ft_putstr("^C\n");
 		ft_show_prompt(&g_base);
 	}
 	else if (sig == SIGQUIT)
 	{
-		ft_exit_minishell(g_base.error);
+		g_base.error = 0;
 	}
 }
 
@@ -38,6 +38,8 @@ void	forked_process_signal_handler(int sig)
 	{
 		if (sig == SIGINT)
 			ft_putstr("\n");
+		else if (sig == SIGQUIT)
+			ft_putstr("Abandona (`core' generado)\n");
 		exit(128 + sig);
 	}
 }
