@@ -6,7 +6,7 @@
 /*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/23 13:33:03 by acortes-          #+#    #+#             */
-/*   Updated: 2021/05/01 15:55:45 by acortes-         ###   ########.fr       */
+/*   Updated: 2021/05/15 14:55:10 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	main(int argc, char **argv, char **envp)
 	ft_memset(&g_base, 0, sizeof(t_abs_struct));
 	minishell_ready = ft_init_minishell(&g_base, envp);
 	if (minishell_ready)
-		clear_screen();
+		ft_clear_screen();
 	g_base.c_lflag = ft_getlflag(STDIN_FILENO);
 	if (!ft_setlflag(STDIN_FILENO, 0, ICANON | ECHO | IEXTEN))
 		ft_exit_minishell(1);
