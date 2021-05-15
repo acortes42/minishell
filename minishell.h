@@ -29,25 +29,27 @@
 # include <signal.h>
 # include <limits.h>
 
-# define TAB_SPACES			4
-# define CTRL_C				'\x3'
-# define CTRL_D				'\x4'
-# define DEL				'\x7F'
-# define ESCAPE				'\033'
-# define FE_ESCAPE_START	'\x40'
-# define FE_ESCAPE_END		'\x5F'
-# define CSI_ESCAPE			"\033["
-# define ARROW_UP			"\033[A"
-# define ARROW_DOWN			"\033[B"
-# define CLEAR_LINE			"\033[2K"
+# define REDIRECTIONS_MINIMUM_FD	11
+# define MAX_FD						4096
+# define TAB_SPACES					4
+# define CTRL_C						'\x3'
+# define CTRL_D						'\x4'
+# define DEL						'\x7F'
+# define ESCAPE						'\033'
+# define FE_ESCAPE_START			'\x40'
+# define FE_ESCAPE_END				'\x5F'
+# define CSI_ESCAPE					"\033["
+# define ARROW_UP					"\033[A"
+# define ARROW_DOWN					"\033[B"
+# define CLEAR_LINE					"\033[2K"
 
-# define ANSI_COLOR_RED     "\x1b[31m"
-# define ANSI_COLOR_GREEN   "\x1b[32m"
-# define ANSI_COLOR_YELLOW  "\x1b[33m"
-# define ANSI_COLOR_BLUE    "\x1b[34m"
-# define ANSI_COLOR_MAGENTA "\x1b[35m"
-# define ANSI_COLOR_CYAN    "\x1b[36m"
-# define ANSI_COLOR_RESET   "\x1b[0m"
+# define ANSI_COLOR_RED     		"\x1b[31m"
+# define ANSI_COLOR_GREEN   		"\x1b[32m"
+# define ANSI_COLOR_YELLOW  		"\x1b[33m"
+# define ANSI_COLOR_BLUE    		"\x1b[34m"
+# define ANSI_COLOR_MAGENTA 		"\x1b[35m"
+# define ANSI_COLOR_CYAN    		"\x1b[36m"
+# define ANSI_COLOR_RESET   		"\x1b[0m"
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 4096
@@ -80,7 +82,6 @@ typedef struct s_job
 	t_process				*first_process;
 	pid_t					pgid;
 	char					notified;
-	t_files_fd				std_fds;
 }							t_job;
 
 typedef struct s_abs_struct
@@ -101,7 +102,7 @@ typedef struct s_abs_struct
 	int						history_lines;
 	int						current_history_line;
 	char					*last_history_command;
-
+	t_files_fd				std_fds;
 }							t_abs_struct;
 
 typedef struct s_expand_dollar
@@ -128,9 +129,11 @@ typedef struct s_expand_dollar_internal
 int				ft_check_home2(char *home);
 int				ft_check_home(char *home);
 int				give_int(int d);
-int				assign_to_i_fd(int empty, char *fd);
+int				ft_get_redirection_fd(char *redirection, int flags,
+					mode_t mode, int default_fd);
+int				ft_get_fd(char *redirection, int default_fd);
 int				assign_to_fd_helper(char c);
-void			redirect_to_exit(t_abs_struct *base, int o_fd, int i_fd);
+void			redirect_to_exit(int o_fd, int i_fd);
 char			*ft_strdup(const char *s1);
 char			*ft_strchr(const char *s, int c);
 char			*ft_strcdup(const char *s1, int c);
@@ -144,7 +147,7 @@ void			ft_putstr(char *s);
 void			ft_putnstr(char *s, size_t len);
 void			ft_putnbr(int n);
 int				ft_strcmp(const char *s1, const char *s2);
-int				cd(t_abs_struct *base);
+int				cd(t_process *process);
 char			*ft_get_absolute_path(t_abs_struct *base, char *path);
 int				echo(t_abs_struct *base, t_process *p);
 int				ft_history(t_abs_struct *base);
@@ -159,7 +162,7 @@ int				ft_export(t_abs_struct *base, t_process *p);
 int				ft_copy_env(t_abs_struct *base, char **envp);
 int				ft_env(t_abs_struct *base);
 int				ft_setenv(t_abs_struct *base, t_process *p);
-void			ft_exit_minishell(t_abs_struct *base, int exit_code);
+void			ft_exit_minishell(int exit_code);
 int				ft_unset(t_abs_struct *base, t_process *p);
 int				ft_help(void);
 void			signal_handler(int sig);
@@ -184,14 +187,11 @@ t_process		*ft_build_process(char *expanded_cmd);
 int				set_redirections(t_abs_struct *base, t_process *p);
 int				ft_output_add_redirection(t_abs_struct *base, char *redir, \
 				int *redirected);
-int				ft_output_redirection(t_abs_struct *base, char *redir, \
-				int *redirected);
-int				ft_input_redirection(t_abs_struct *base, char *redir, \
-				int *redirected);
+int				ft_output_redirection(char *redir, int *redirected);
+int				ft_input_redirection(char *redir, int *redirected);
 void			ft_set_pipes(t_process *previous, t_process *current);
-void			ft_close_pipes(t_files_fd fd, t_process *previous, \
-				t_process *current);
-void			ft_configure_pipes(t_abs_struct *base, t_process *current);
+void			ft_close_pipes(t_process *previous, t_process *current);
+void			ft_configure_pipes(t_process *current);
 int				ft_expand_process_cmd(t_abs_struct *base, t_process *p);
 void			ft_expand_tilde(t_expand_dollar *d);
 
@@ -266,6 +266,8 @@ int				process_escape_sequences(char *bf, char **line,
 int				process_csi_escape_sequence(char *bf, char **line,
 					t_abs_struct *base);
 void			ft_update_environment_pwds(char *old_pwd, char *pwd);
+int				ft_get_first_fd_available_between(int minimum, int maximum);
+char			*ft_strtrim(char const *s1, char const *set);
 
 t_abs_struct	g_base;
 

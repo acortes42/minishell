@@ -28,15 +28,16 @@ void	signal_handler(int sig)
 	}
 	else if (sig == SIGQUIT)
 	{
-		ft_exit_minishell(&g_base, g_base.error);
+		ft_exit_minishell(g_base.error);
 	}
 }
 
 void	forked_process_signal_handler(int sig)
 {
-	if (sig == SIGINT)
+	if (sig == SIGINT || sig == SIGQUIT)
 	{
-		ft_putstr("\n");
+		if (sig == SIGINT)
+			ft_putstr("\n");
 		exit(128 + sig);
 	}
 }

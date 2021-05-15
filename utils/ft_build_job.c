@@ -20,9 +20,6 @@ t_job	*ft_build_job_ctrl_d(void)
 	if (!j)
 		return (0);
 	j->command = ft_strdup("");
-	j->std_fds.errfile = STDERR_FILENO;
-	j->std_fds.infile = STDIN_FILENO;
-	j->std_fds.outfile = STDOUT_FILENO;
 	j->first_process = ft_build_ctrl_d_process();
 	return (j);
 }
@@ -37,9 +34,6 @@ t_job	*ft_build_job(char *command)
 	if (!j)
 		return (0);
 	j->command = command;
-	j->std_fds.errfile = STDERR_FILENO;
-	j->std_fds.infile = STDIN_FILENO;
-	j->std_fds.outfile = STDOUT_FILENO;
 	j->first_process = ft_build_processes(command);
 	return (j);
 }

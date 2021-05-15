@@ -14,6 +14,6 @@ void	ft_init_history(t_abs_struct *base)
 	if (fd >= 0)
 		close(fd);
 	if (base->history_lines < 0)
-		ft_exit_minishell(base, -1);
+		ft_exit_minishell(-1);
 	base->current_history_line = base->history_lines;
 }

@@ -46,6 +46,20 @@ static void	expand_char(t_expand_dollar *d)
 	}
 }
 
+static void	process_tilde_expansion(t_expand_dollar *d)
+{
+	if (!ft_strncmp(d->cmd, "~/", 2))
+	{
+		ft_expand_tilde(d);
+		d->cmd += 2;
+	}
+	else if (!ft_strcmp(d->cmd, "~"))
+	{
+		ft_expand_tilde(d);
+		d->cmd++;
+	}
+}
+
 static char	*expand(t_abs_struct *base, char *cmd)
 {
 	t_expand_dollar	d;
@@ -60,8 +74,7 @@ static char	*expand(t_abs_struct *base, char *cmd)
 	d.expanded = ft_calloc(d.expanded_len + 2, sizeof(char));
 	if (!d.expanded_len || !(d.expanded))
 		return (0);
-	if (!ft_strncmp(d.cmd, "~/", 2))
-		ft_expand_tilde(&d);
+	process_tilde_expansion(&d);
 	while (d.cmd && *d.cmd != '\0')
 		expand_char(&d);
 	*(d.expanded + d.pos) = ' ';

@@ -35,11 +35,23 @@ static int	execute_environment_builtins(t_abs_struct *base,
 	return (executed);
 }
 
+static void	launch_exit_builtin(char *exit_code)
+{
+	int	exit;
+
+	ft_putstr("exit\n");
+	if (exit_code)
+		exit = ft_atoi(exit_code);
+	else
+		exit = 0;
+	ft_exit_minishell(exit);
+}
+
 static int	execute_environment_builtins2(t_abs_struct *base,
 	t_process *previous, t_process *p)
 {
 	if (!ft_strcmp(p->argv[0], "exit"))
-		ft_exit_minishell(base, 0);
+		launch_exit_builtin(p->argv[1]);
 	else if (!ft_strcmp(p->argv[0], "echo"))
 	{
 		ft_set_pipes(previous, p);
@@ -54,7 +66,7 @@ static int	execute_environment_builtins2(t_abs_struct *base,
 	}
 	else if (!ft_strcmp(p->argv[0], "cd"))
 	{
-		cd(base);
+		cd(p);
 		return (1);
 	}
 	return (0);
@@ -93,8 +105,6 @@ int	ft_execute_builtin(t_abs_struct *base, t_process *previous,
 			return (ft_execute_ctrl_d(base));
 		return (1);
 	}
-	if (set_redirections(base, p))
-		return (0);
 	base->parse_string = p->argv;
 	base->a = 0;
 	if (execute_environment_builtins(base, previous, p))

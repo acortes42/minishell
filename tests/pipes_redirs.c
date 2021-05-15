@@ -91,10 +91,28 @@ static int pipelining(char **env)
 	return (0);
 }
 
+static void		redirection_input(char **env)
+{
+	char *argv[2];
+	int	fd;
+
+	fd = open("/home/visv/42/code/minishell_adrian/minishell/author", O_RDONLY);
+	if (dup2(fd, STDIN_FILENO) == -1)
+	{
+		printf("Error abriendo archivo %s\n", strerror(errno));
+		exit(0);
+	}
+	argv[0] = "cat";
+	argv[1] = 0;
+	execve(*argv, argv, env);
+}
+
 int main(int argc, char **argv, char **env)
 {
 	(void)argv;
 	(void)argc;
-	redirection(env);
-	return (pipelining(env));
+	redirection_input(env);
+	//redirection(env);
+	// (pipelining(env));
+	return (0);
 }

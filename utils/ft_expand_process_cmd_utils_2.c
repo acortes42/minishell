@@ -29,5 +29,4 @@ void	ft_expand_tilde(t_expand_dollar *d)
 	d->pos += ft_strlen(d->expanded);
 	d->expanded_len += ft_strlen(tilde_path) - 1;
 	free(tilde_path);
-	d->cmd += 2;
 }

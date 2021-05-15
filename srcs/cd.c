@@ -12,6 +12,24 @@
 
 #include "minishell.h"
 
+static char	*get_first_non_empty_arg(char **args)
+{
+	char	*trim;
+
+	while (*args)
+	{
+		trim = ft_strtrim(*args, " \t");
+		if (ft_strlen(trim))
+		{
+			free (trim);
+			return (*args);
+		}
+		free(trim);
+		args++;
+	}
+	return (0);
+}
+
 static void	print_file_doesnt_exist(char *file)
 {
 	ft_putstr("\e[0mcd: ");
@@ -27,7 +45,7 @@ int	cd_valid_number_of_arguments(int x)
 	return (1);
 }
 
-void	perform_chdir_and_environment_update(t_abs_struct *base, char *home)
+static void	perform_chdir_and_environment_update(t_process *p, char *home)
 {
 	char	*pwd;
 	char	*old_pwd;
@@ -36,12 +54,12 @@ void	perform_chdir_and_environment_update(t_abs_struct *base, char *home)
 	old_pwd = getcwd(0, 0);
 	if (chdir(home))
 	{
-		print_file_doesnt_exist(base->parse_string[base->a + 1]);
-		base->error = 1;
+		print_file_doesnt_exist(get_first_non_empty_arg(p->argv + 1));
+		p->status = 1;
 	}
 	else
 	{
-		base->error = 0;
+		p->status = 0;
 		pwd = getcwd(0, 0);
 		ft_update_environment_pwds(old_pwd, pwd);
 	}
@@ -58,29 +76,31 @@ int	check_if_home(char *home, int aux)
 	return (aux);
 }
 
-int	cd(t_abs_struct *base)
+int	cd(t_process *p)
 {
+	extern t_abs_struct	g_base;
 	char		*home;
+	int			args;
 
-	base->num_args = ft_count_until_separator(base->parse_string, base->a);
-	base->error = !cd_valid_number_of_arguments(base->num_args);
-	if (base->error)
-		ft_putstr("\e[0mcd: Too many arguments\n");
-	else if (base->num_args > 1 && !ft_isempty(base->parse_string[base->a + 1]))
-		home = ft_get_absolute_path(base, base->parse_string[base->a + 1]);
+	p->status = 0;
+	if (!p || !p->argv || !(*p->argv))
+		ft_exit_minishell(1);
+	args = ft_array_len(p->argv);
+	if (args > 1)
+		home = ft_get_absolute_path(&g_base, get_first_non_empty_arg(p->argv + 1));
 	else
 	{
-		home = ft_getenv(base->env, "HOME");
-		if (!(check_if_home(home, 1)))
-			home = ft_get_absolute_path(base, home + 5);
-		else
+		home = ft_getenv(g_base.env, "HOME");
+		if (!home)
+		{
 			ft_putstr("\e[0mcd: HOME not defined\n");
+			p->status = 1;
+			return (1);
+		}
+		home = ft_get_absolute_path(&g_base, home + 5);
 	}
-	if (!base->error)
-	{
-		perform_chdir_and_environment_update(base, home);
-		if (home)
-			free(home);
-	}
-	return (!base->error);
+	perform_chdir_and_environment_update(p, home);
+	if (home)
+		free(home);
+	return (g_base.error);
 }
