@@ -20,9 +20,9 @@ Señales
 - Pruebe ctrl-C en un prompt vacío
 - Pruebe ctrl-\ en un prompt vacío
 - Pruebe ctrl-D en un prompt vacío
-- Pruebe ctrl-C en un prompt después de haber escrito algo
-- Pruebe ctrl-D en un prompt después de haber escrito algo
-- Pruebe ctrl-\ en un prompt después de haber escrito algo
+- Pruebe ctrl-C en un prompt después de haber escrito algo (sigint)
+- Pruebe ctrl-D en un prompt después de haber escrito algo ()
+- Pruebe ctrl-\ en un prompt después de haber escrito algo (sigquit)
 - Pruebe ctrl-C después de haber ejecutado un comando que provoque un bloqueo, como cat o grep sin argumento
 - Pruebe ctrl-\ después de haber ejecutado un comando que provoque un bloqueo, como cat o grep sin argumento
 - Pruebe ctrl-D después de haber ejecutado un comando que provoque un bloqueo, como cat o grep sin argumento

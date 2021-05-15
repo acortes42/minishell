@@ -95,6 +95,8 @@ int	main(int argc, char **argv, char **envp)
 	g_base.c_lflag = ft_getlflag(STDIN_FILENO);
 	if (!ft_setlflag(STDIN_FILENO, 0, ICANON | ECHO | IEXTEN))
 		ft_exit_minishell(1);
+	signal(SIGINT, signal_handler);
+	signal(SIGQUIT, signal_handler);
 	while (minishell_ready)
 	{
 		ft_show_prompt(&g_base);

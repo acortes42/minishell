@@ -23,18 +23,23 @@ static void	expand_char(t_expand_dollar *d)
 {
 	if (d->scape)
 		ft_expand_scape(d);
-	else if (*d->cmd == '\'' && !d->quote)
+	else if (*d->cmd == '\'')
 	{
-		d->single_quote = give_char(d->single_quote);
+		if (d->single_quote)
+			d->single_quote = 0;
+		else
+			d->single_quote = give_char(d->single_quote);
+		if (d->quote)
+			*(d->expanded + d->pos++) = *d->cmd;
 		d->cmd++;
 	}
 	else if (*d->cmd == '"' && !d->single_quote && !d->scape)
 		ft_expand_quote(d);
-	else if (!ft_strncmp("$?", d->cmd, 2) && (d->quote || !d->single_quote))
+	else if (!ft_strncmp("$?", d->cmd, 2) && ((!d->single_quote) || d->quote))
 		ft_print_last_process_status(d);
-	else if (!ft_strncmp("$", d->cmd, 1) && (d->quote || !d->single_quote))
+	else if (!ft_strncmp("$", d->cmd, 1) && (!d->single_quote || d->quote))
 		ft_expand_dollar(d);
-	else if (*d->cmd == '\\')
+	else if (*d->cmd == '\\' && !d->single_quote)
 	{
 		d->scape = give_int(d->scape);
 		d->cmd++;
@@ -96,14 +101,13 @@ int	ft_expand_process_cmd(t_abs_struct *base, t_process *p)
 		if (!(expanded_slice))
 			return (0);
 		free(*to_expand);
-		trimmed = ft_trim(expanded_slice);
+		trimmed = ft_strtrim(expanded_slice, " \t");
 		if (!(trimmed))
 		{
 			free(expanded_slice);
 			return (0);
 		}
 		free(expanded_slice);
-		ft_remove_quotes(trimmed);
 		*to_expand = trimmed;
 		to_expand++;
 	}

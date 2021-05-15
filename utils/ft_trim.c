@@ -84,7 +84,7 @@ char				*ft_strtrim(char const *s1, char const *set)
 		return ((char *)s1);
 	s = ft_strtrim_start_index(s1, set);
 	e = ft_strtrim_end_index(s1, set, s);
-	l = s == 0 && e == 0 ? l : l - s - (l - e - 1);
+	l = s == 0 && e == 0 ? 1 : l - s - (l - e - 1);
 	r = malloc((sizeof(char) * l) + 1);
 	if (r == 0)
 		return (0);
