@@ -19,7 +19,8 @@ int	ft_get_redirection_fd(char *redirection, int flags,
 
 	if (ft_isempty(redirection))
 		return (default_fd);
-	if (ft_isinteger(redirection))
+	if ((*redirection == '&' && ft_isinteger(redirection + 1)) ||
+		ft_isinteger(redirection))
 		return (ft_atoi(redirection));
 	path = ft_get_absolute_path(&g_base, redirection);
 	if (!path)

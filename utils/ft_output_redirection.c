@@ -24,18 +24,15 @@ void	redirect_to_exit(int o_fd, int i_fd)
 {
 	if (o_fd < 0)
 		ft_exit_minishell(errno);
-	if (dup2(o_fd, i_fd) < 0)
-		ft_exit_minishell(errno);
+	dup2(o_fd, i_fd);
 }
 
-static int	apply_output_redirection(int i_fd, char *right_side,
-				int files_must_exist)
+static int	apply_output_redirection(int i_fd, char *right_side)
 {
 	int			o_fd;
 	char		*fd_file;
 	int			flags;
 
-	(void)files_must_exist;
 	fd_file = ft_trim(right_side);
 	if (!fd_file)
 		return (0);
@@ -59,10 +56,11 @@ static int	apply_output_redirection(int i_fd, char *right_side,
 	return (1);
 }
 
-static void	dup_stdout_and_close_it(int i_fd)
+static void	dup_stdout_and_close_it(int i_fd, char *redir)
 {
 	extern t_abs_struct		g_base;
 
+(void)redir;
 	if (i_fd == STDOUT_FILENO)
 	{
 		g_base.std_fds.outfile = dup(STDOUT_FILENO);
@@ -70,7 +68,7 @@ static void	dup_stdout_and_close_it(int i_fd)
 	}
 }
 
-int	ft_output_redirection(char *redir, int *redirected, int files_must_exist)
+int	ft_output_redirection(char *redir, int *redirected)
 {
 	char		*fd;
 	int			i_fd;
@@ -86,9 +84,8 @@ int	ft_output_redirection(char *redir, int *redirected, int files_must_exist)
 		i_fd = ft_get_fd(fd, STDOUT_FILENO);
 		if (i_fd >= 0)
 		{
-			dup_stdout_and_close_it(i_fd);
-			*redirected = apply_output_redirection(i_fd, redir,
-					files_must_exist);
+			dup_stdout_and_close_it(i_fd, redir);
+			*redirected = apply_output_redirection(i_fd, redir);
 		}
 		found_redirection = 1;
 	}

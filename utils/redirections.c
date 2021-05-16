@@ -12,20 +12,18 @@
 
 #include "minishell.h"
 
-static int	set_redirection(t_abs_struct *base, char *i, int files_must_exist)
+static int	set_redirection(t_abs_struct *base, char *i)
 {
 	int		redirected;
 	int		found_redirection;
 
 	found_redirection = 0;
 	redirected = 0;
-	if (ft_output_add_redirection(base, i, &redirected, files_must_exist))
+	if (ft_output_add_redirection(base, i, &redirected))
 		found_redirection = 1;
-	if (!found_redirection && ft_output_redirection(i, &redirected,
-			files_must_exist))
+	if (!found_redirection && ft_output_redirection(i, &redirected))
 		found_redirection = 1;
-	if (!found_redirection && ft_input_redirection(i, &redirected,
-			files_must_exist))
+	if (!found_redirection && ft_input_redirection(i, &redirected))
 		found_redirection = 1;
 	if (found_redirection)
 	{
@@ -37,7 +35,7 @@ static int	set_redirection(t_abs_struct *base, char *i, int files_must_exist)
 	return (0);
 }
 
-int	set_redirections(t_abs_struct *base, t_process *p, int files_must_exist)
+int	set_redirections(t_abs_struct *base, t_process *p)
 {
 	char	**i;
 	int		redirected;
@@ -49,7 +47,7 @@ int	set_redirections(t_abs_struct *base, t_process *p, int files_must_exist)
 	redirected = 0;
 	while (i && *i)
 	{
-		redirOk = set_redirection(base, *i, files_must_exist);
+		redirOk = set_redirection(base, *i);
 		if (redirOk < 0)
 		{
 			ft_putstr("Error en la redirección\n");

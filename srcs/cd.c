@@ -39,28 +39,11 @@ static void	print_file_doesnt_exist(char *file)
 	ft_putstr(": File or dir doesn't exist\n");
 }
 
-static void	perform_chdir_and_environment_update(t_process *p, char *home)
+static void	perform_environment_update(int changed_dir, t_process *p,
+				char *old_pwd, char *pwd, char *home)
 {
-	char				*pwd;
-	char				*old_pwd;
-	char				*path;
-	int					changed_dir;
 	extern t_abs_struct	g_base;
 
-	pwd = 0;
-	old_pwd = getcwd(0, 0);
-	changed_dir = !chdir(home);
-	if (!changed_dir)
-	{
-		path = get_first_non_empty_arg(p->argv + 1);
-		print_file_doesnt_exist(path);
-	}
-	pwd = getcwd(0, 0);
-	if (!pwd)
-	{
-		ft_putstr(strerror(errno));
-		ft_putstr("\n");
-	}
 	if (!changed_dir)
 	{
 		p->status = 127;
@@ -78,6 +61,30 @@ static void	perform_chdir_and_environment_update(t_process *p, char *home)
 		free(pwd);
 	if (old_pwd)
 		free(old_pwd);
+}
+
+static void	perform_chdir_and_environment_update(t_process *p, char *home)
+{
+	char				*pwd;
+	char				*old_pwd;
+	char				*path;
+	int					changed_dir;
+
+	pwd = 0;
+	old_pwd = getcwd(0, 0);
+	changed_dir = !chdir(home);
+	if (!changed_dir)
+	{
+		path = get_first_non_empty_arg(p->argv + 1);
+		print_file_doesnt_exist(path);
+	}
+	pwd = getcwd(0, 0);
+	if (!pwd)
+	{
+		ft_putstr(strerror(errno));
+		ft_putstr("\n");
+	}
+	perform_environment_update(changed_dir, p, old_pwd, pwd, home);
 }
 
 int	cd(t_process *p)

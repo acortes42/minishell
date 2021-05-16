@@ -29,7 +29,7 @@ static void	ft_fork_child(t_abs_struct *base, t_process *previous,
 	pid = fork();
 	if (pid == 0)
 	{
-		if (set_redirections(base, current, 1) < 0)
+		if (set_redirections(base, current) < 0)
 		{
 			current->status = 1;
 			restore_std_fds(&base->std_fds);

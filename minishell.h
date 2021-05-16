@@ -189,14 +189,11 @@ t_job			*ft_build_job_ctrl_d(void);
 t_process		*ft_build_processes(char *expanded_cmd);
 t_process		*ft_build_ctrl_d_process(void);
 t_process		*ft_build_process(char *expanded_cmd);
-int				set_redirections(t_abs_struct *base, t_process *p,
-					int files_must_exist);
+int				set_redirections(t_abs_struct *base, t_process *p);
 int				ft_output_add_redirection(t_abs_struct *base, char *redir, \
-					int *redirected, int files_must_exist);
-int				ft_output_redirection(char *redir, int *redirected,
-					int files_must_exist);
-int				ft_input_redirection(char *redir, int *redirected,
-					int files_must_exist);
+					int *redirected);
+int				ft_output_redirection(char *redir, int *redirected);
+int				ft_input_redirection(char *redir, int *redirected);
 void			ft_set_pipes(t_process *previous, t_process *current);
 void			ft_close_pipes(t_process *previous, t_process *current);
 void			ft_configure_pipes(t_process *current);
