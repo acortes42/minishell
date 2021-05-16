@@ -6,7 +6,7 @@
 /*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 09:02:24 by visv              #+#    #+#             */
-/*   Updated: 2021/04/01 15:00:58 by acortes-         ###   ########.fr       */
+/*   Updated: 2021/05/16 18:40:04 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ char	*ft_extract_variable_name(char **cmd)
 		return (0);
 	tmp = *cmd;
 	while (*cmd && !ft_isspace(**cmd) && **cmd != '"' && **cmd != '\'' \
-				 && **cmd != '$' && **cmd != ':' && **cmd != '='
-				 && **cmd != '\\' && **cmd != '/' && (**cmd))
+		&& **cmd != '$' && **cmd != ':' && **cmd != '='
+		&& **cmd != '\\' && **cmd != '/' && (**cmd))
 		(*cmd)++;
 	ret = ft_calloc(*cmd - tmp + 1, sizeof(char));
 	if (!(ret))

@@ -6,7 +6,7 @@
 /*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/23 16:04:24 by acortes-          #+#    #+#             */
-/*   Updated: 2021/05/15 19:02:14 by acortes-         ###   ########.fr       */
+/*   Updated: 2021/05/16 18:31:49 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	perform_chdir_and_environment_update(t_process *p, char *home)
 	char	*old_pwd;
 	char	*path;
 	int		changed_dir;
-	extern t_abs_struct	g_base;
+	extern	t_abs_struct	g_base;
 
 	pwd = 0;
 	old_pwd = getcwd(0, 0);
