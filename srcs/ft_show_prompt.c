@@ -14,9 +14,12 @@
 
 static char	*ft_get_cwd(void)
 {
-	char		*cwd;
+	extern t_abs_struct	g_base;
+	char				*cwd;
 
 	cwd = getcwd(0, 0);
+	if (!cwd)
+		cwd = ft_strdup(ft_getenv(g_base.env, "PWD") + 4);
 	if (!cwd || *cwd == '(')
 	{
 		if (cwd)

@@ -37,7 +37,8 @@ char	*ft_extract_variable_name(char **cmd)
 		return (0);
 	tmp = *cmd;
 	while (*cmd && !ft_isspace(**cmd) && **cmd != '"' && **cmd != '\'' \
-				 && **cmd != '$' && **cmd != ':' && **cmd != '=' && (**cmd))
+				 && **cmd != '$' && **cmd != ':' && **cmd != '='
+				 && **cmd != '\\' && **cmd != '/' && (**cmd))
 		(*cmd)++;
 	ret = ft_calloc(*cmd - tmp + 1, sizeof(char));
 	if (!(ret))
