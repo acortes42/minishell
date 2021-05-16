@@ -58,7 +58,9 @@ static void	ft_execute_shell_command_using_path(t_abs_struct *base,
 	char		*paths;
 	char		*path;
 
-	paths = ft_getenv(base->env, "PATH") + 5;
+	paths = ft_getenv(base->env, "PATH");
+	if (paths)
+		paths += 5;
 	path = ft_get_path_to_execute(paths, p->argv[0]);
 	if (!path)
 		ft_process_not_found_command(p);
