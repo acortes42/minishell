@@ -102,6 +102,7 @@ typedef struct s_abs_struct
 	char					*arrow_up;
 	char					*arrow_down;
 	t_job					*first_job;
+	t_process				*current_process;
 	unsigned int			c_lflag;
 	int						counter;
 	int						history_lines;

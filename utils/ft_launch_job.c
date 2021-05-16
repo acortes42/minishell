@@ -56,6 +56,7 @@ void	ft_launch_job(t_abs_struct *base, t_job *j)
 	current = j->first_process;
 	while (current)
 	{
+		base->current_process = current;
 		ft_expand_process_cmd(base, current);
 		ft_configure_pipes(current);
 		if (!ft_execute_builtin(base, previous, current))

@@ -102,7 +102,7 @@ test:	${OBJS}
 	@gcc ${OBJS} && ./a.out
 
 debug:	${OBJS}
-	${CC} -o ${NAME} ${CFLAGS_DEBUG} ${OBJS}
+	${CC} -o ${NAME} ${CFLAGS_DEBUG} ${OBJS} -lncurses
 
 re: fclean all
 
