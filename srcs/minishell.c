@@ -67,20 +67,6 @@ static void	execute_command_read(t_abs_struct *base)
 		ft_exit_minishell(1);
 }
 
-unsigned int	ft_getlflag(int fd)
-{
-	struct termios	settings;
-	unsigned int	result;
-
-	if (tcgetattr (fd, &settings) < 0)
-	{
-		perror ("error in tcgetattr");
-		return (0);
-	}
-	result = settings.c_lflag;
-	return (result);
-}
-
 int	main(int argc, char **argv, char **envp)
 {
 	int					minishell_ready;
@@ -92,9 +78,6 @@ int	main(int argc, char **argv, char **envp)
 	minishell_ready = ft_init_minishell(&g_base, envp);
 	if (minishell_ready)
 		ft_clear_screen();
-	g_base.c_lflag = ft_getlflag(STDIN_FILENO);
-	if (!ft_setlflag(STDIN_FILENO, 0, ICANON | ECHO | IEXTEN))
-		ft_exit_minishell(1);
 	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, signal_handler);
 	while (minishell_ready)
