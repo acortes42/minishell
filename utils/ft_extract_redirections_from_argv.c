@@ -45,7 +45,9 @@ int	ft_extract_redirections_from_argv(t_process *p)
 	char	**i;
 	int		redirs_len;
 
-	i = p->argv;
+	if (!p || !p->argv)
+		return (0);
+	i = p->argv + 1;
 	redirs_len = 0;
 	while (*i)
 	{
