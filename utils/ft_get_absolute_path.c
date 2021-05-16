@@ -22,7 +22,7 @@ static char	*prepend_to_path(char *prefix, char *path)
 	if (len_prefix && prefix[len_prefix - 1] != '/')
 		len_prefix++;
 	len_path = ft_strlen(path);
-	new_path = malloc(sizeof(char) * (len_prefix + len_path + 1));
+	new_path = ft_calloc((len_prefix + len_path + 1), sizeof(char));
 	if (!(new_path))
 		return (0);
 	*new_path = 0;

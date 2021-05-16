@@ -24,7 +24,8 @@ static char	*get_first_non_empty_arg(char **args)
 			free (trim);
 			return (*args);
 		}
-		free(trim);
+		if (trim)
+			free(trim);
 		args++;
 	}
 	return (0);
@@ -49,18 +50,35 @@ static void	perform_chdir_and_environment_update(t_process *p, char *home)
 {
 	char	*pwd;
 	char	*old_pwd;
+	char	*path;
+	int		changed_dir;
+	extern t_abs_struct	g_base;
 
 	pwd = 0;
 	old_pwd = getcwd(0, 0);
-	if (chdir(home))
+	changed_dir = !chdir(home);
+	if (!changed_dir)
 	{
-		print_file_doesnt_exist(get_first_non_empty_arg(p->argv + 1));
+		path = get_first_non_empty_arg(p->argv + 1);
+		print_file_doesnt_exist(path);
+	}
+	pwd = getcwd(0, 0);
+	if (!pwd)
+	{
+		ft_putstr(strerror(errno));
+		ft_putstr("\n");
+	}
+	if (!changed_dir)
+	{
 		p->status = 127;
+		if (old_pwd)
+			free(old_pwd);
+		old_pwd = ft_strdup(ft_getenv(g_base.env, "PWD") + 4);
+		ft_update_environment_pwds(old_pwd, home);
 	}
 	else
 	{
 		p->status = 0;
-		pwd = getcwd(0, 0);
 		ft_update_environment_pwds(old_pwd, pwd);
 	}
 	if (pwd)
@@ -87,7 +105,7 @@ int	cd(t_process *p)
 		ft_exit_minishell(1);
 	args = ft_array_len(p->argv);
 	if (args > 1)
-		home = ft_get_absolute_path(&g_base, get_first_non_empty_arg(p->argv + 1));
+		home = ft_strdup(*(p->argv + 1));
 	else
 	{
 		home = ft_getenv(g_base.env, "HOME");
@@ -97,7 +115,7 @@ int	cd(t_process *p)
 			p->status = 127;
 			return (1);
 		}
-		home = ft_get_absolute_path(&g_base, home + 5);
+		home = ft_strdup(home + 5);
 	}
 	perform_chdir_and_environment_update(p, home);
 	if (home)
