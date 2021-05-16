@@ -16,7 +16,7 @@ int	ft_init_minishell(t_abs_struct *base, char **envp)
 {
 	char	termbuf[2048];
 	char	*capbuf;
-	
+
 	tgetent(termbuf, "xterm-256color");
 	signal(SIGQUIT, signal_handler);
 	if (!base)
@@ -24,7 +24,10 @@ int	ft_init_minishell(t_abs_struct *base, char **envp)
 	ft_memset(base, 0, sizeof(t_abs_struct));
 	ft_copy_env(base, envp);
 	ft_init_history(base);
+	capbuf = 0;
 	base->arrow_up = tgetstr("ku", &capbuf);
 	base->arrow_down = tgetstr("kd", &capbuf);
+	if (capbuf)
+		free(capbuf);
 	return (1);
 }
