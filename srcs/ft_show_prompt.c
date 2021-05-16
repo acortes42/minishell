@@ -67,24 +67,32 @@ static void	ft_show_prompt_user(t_abs_struct *base)
 {
 	char		*str;
 	size_t		len;
+	int			user_prompt;
 
+	user_prompt = 0;
 	str = ft_getenv(base->env, "USER");
 	ft_putstr(ANSI_COLOR_GREEN);
-	ft_putstr(str + 5);
+	if (str)
+	{
+		ft_putstr(str + 5);
+		user_prompt = 1;
+	}
 	str = ft_getenv(base->env, "SESSION_MANAGER");
 	if (str)
 	{
 		ft_putstr("@");
 		len = ft_strchr(str, ':') - str - 16;
 		ft_putnstr(str + 16, len);
+		user_prompt = 1;
 	}
 	ft_putstr(ANSI_COLOR_RESET);
+	if (user_prompt)
+		ft_putstr(":");
 }
 
 void	ft_show_prompt(t_abs_struct *base)
 {
 	ft_show_prompt_user(base);
-	ft_putstr(":");
 	ft_putstr(ANSI_COLOR_BLUE);
 	ft_show_prompt_cwd(base);
 	ft_putstr(ANSI_COLOR_RESET);
