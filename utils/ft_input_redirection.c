@@ -12,11 +12,12 @@
 
 #include "minishell.h"
 
-static int	apply_input_redirection(int i_fd,
-	char *right_side)
+static int	apply_input_redirection(int i_fd, char *right_side,
+				int file_must_exist)
 {
 	int			o_fd;
 	char		*fd_file;
+	int			flags;
 
 	fd_file = ft_trim(right_side);
 	if (!fd_file)
@@ -27,7 +28,10 @@ static int	apply_input_redirection(int i_fd,
 		close(i_fd);
 		return (1);
 	}
-	o_fd = ft_get_redirection_fd(fd_file, O_RDONLY, 0666, -1);
+	flags = O_CREAT | O_RDONLY;
+	if (file_must_exist)
+		flags = O_RDONLY;
+	o_fd = ft_get_redirection_fd(fd_file, flags, 0666, -1);
 	if (o_fd < 0)
 	{
 		free(fd_file);
@@ -44,14 +48,14 @@ static void	dup_stdin_and_close_it(int i_fd)
 {
 	extern t_abs_struct	g_base;
 
-	if (i_fd != STDIN_FILENO)
+	if (i_fd == STDIN_FILENO)
 	{
 		g_base.std_fds.infile = dup(STDIN_FILENO);
 		close(STDIN_FILENO);
 	}
 }
 
-int	ft_input_redirection(char *redir, int *redirected)
+int	ft_input_redirection(char *redir, int *redirected, int file_must_exist)
 {
 	char			*fd;
 	int				i_fd;
@@ -69,7 +73,8 @@ int	ft_input_redirection(char *redir, int *redirected)
 		else
 		{
 			dup_stdin_and_close_it(i_fd);
-			*redirected = apply_input_redirection(i_fd, redir);
+			*redirected = apply_input_redirection(i_fd, redir,
+				file_must_exist);
 		}
 		found_redirection = 1;
 	}

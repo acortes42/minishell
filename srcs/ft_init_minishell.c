@@ -47,5 +47,8 @@ int	ft_init_minishell(t_abs_struct *base, char **envp)
 	base->arrow_down = tgetstr("kd", &capbuf);
 	if (capbuf)
 		free(capbuf);
+	base->std_fds.infile = -1;
+	base->std_fds.outfile = -1;
+	base->std_fds.errfile = -1;
 	return (1);
 }
