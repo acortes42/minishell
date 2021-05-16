@@ -12,9 +12,24 @@
 
 #include "minishell.h"
 
+// This function will check syntax
+static int	check_command_syntax(char **argv)
+{
+	if (!argv || !(*argv))
+		return (0);
+	if (ft_strchr(*argv, '>') || ft_strchr(*argv, '<'))
+	{
+		ft_putstr("Syntatic error in command");
+		return (0);
+	}
+	return (1);
+}
+
 void	ft_execute_absolute_shell_command(t_abs_struct *base,
 	char *cmd, t_process *p)
 {
+	if (!check_command_syntax(p->argv))
+		return ;
 	execve(cmd, p->argv, base->env);
 	if (errno == EACCES)
 		p->status = 126;

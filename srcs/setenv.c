@@ -120,7 +120,7 @@ int	ft_setenv(t_abs_struct *base, t_process *p)
 
 	ret = 0;
 	key_value = ft_split(p->argv[1], '=');
-	if (key_value)
+	if (key_value && *key_value)
 	{
 		if (ft_search_env(base->env, key_value[0]))
 			ft_unset(base, p);
@@ -133,6 +133,8 @@ int	ft_setenv(t_abs_struct *base, t_process *p)
 			free(tri);
 		return (ret);
 	}
+	if (key_value)
+		ft_array_release(key_value);
 	ft_putstr("\e[0mError en los argumentos\n");
 	base->error = 0;
 	return (0);
