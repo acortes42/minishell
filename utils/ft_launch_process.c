@@ -6,7 +6,7 @@
 /*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 16:18:19 by visv              #+#    #+#             */
-/*   Updated: 2021/04/20 14:27:37 by acortes-         ###   ########.fr       */
+/*   Updated: 2021/05/15 19:01:09 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	ft_process_not_found_command(t_process *p)
 	ft_putstr_fd(*p->argv, STDERR_FILENO);
 	ft_putstr_fd(": not found command\n", STDERR_FILENO);
 	p->completed = 1;
-	p->status = 1;
+	p->status = 127;
 }
 
 static void	ft_process_is_a_directory_command(t_process *p)

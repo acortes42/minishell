@@ -6,7 +6,7 @@
 /*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/23 16:04:24 by acortes-          #+#    #+#             */
-/*   Updated: 2021/04/01 18:00:20 by acortes-         ###   ########.fr       */
+/*   Updated: 2021/05/15 19:02:14 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	perform_chdir_and_environment_update(t_process *p, char *home)
 	if (chdir(home))
 	{
 		print_file_doesnt_exist(get_first_non_empty_arg(p->argv + 1));
-		p->status = 1;
+		p->status = 127;
 	}
 	else
 	{
@@ -94,7 +94,7 @@ int	cd(t_process *p)
 		if (!home)
 		{
 			ft_putstr("\e[0mcd: HOME not defined\n");
-			p->status = 1;
+			p->status = 127;
 			return (1);
 		}
 		home = ft_get_absolute_path(&g_base, home + 5);
