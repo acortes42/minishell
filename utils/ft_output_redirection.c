@@ -60,7 +60,7 @@ static void	dup_stdout_and_close_it(int i_fd)
 {
 	extern t_abs_struct		g_base;
 
-	if (i_fd == STDOUT_FILENO)
+	if (i_fd == STDOUT_FILENO && g_base.std_fds.outfile < 0)
 	{
 		g_base.std_fds.outfile = dup(STDOUT_FILENO);
 		close(STDOUT_FILENO);

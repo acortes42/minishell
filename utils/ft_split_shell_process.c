@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split_shell.c                                   :+:      :+:    :+:   */
+/*   ft_split_shell_process.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -48,11 +48,6 @@ static char	*find_next_double_qoute(char *ptr)
 	return (ptr);
 }
 
-char	*ft_split_shell(char **str)
-{
-	return (ft_split_shell_by(str, ";"));
-}
-
 static char	*ft_extract_split(char **str, char *ptr, char *separator)
 {
 	char	*splitted;
@@ -64,27 +59,35 @@ static char	*ft_extract_split(char **str, char *ptr, char *separator)
 		return (0);
 	ft_strlcpy(splitted, *str, len);
 	*str = ptr;
-	if (!ft_strncmp(*str, separator, ft_strlen(separator)))
-		(*str) += ft_strlen(separator);
+	if (**str == *separator && *separator == ' ')
+		(*str) += 1;
 	return (splitted);
 }
 
-char	*ft_split_shell_by(char **str, char *separator)
+char	*ft_split_shell_process(char **str)
 {
 	char		*ptr;
+	char		*chars;
 
 	if (!str || !*str || !(**str))
 		return (0);
+	chars = " <>";
 	ptr = *str;
-	while (*ptr && *ptr != '\0' && ft_strncmp(ptr, \
-			separator, ft_strlen(separator)))
+	if (*ptr == '<')
+		ptr++;
+	else if (*ptr == '>')
+	{
+		while (*ptr == '>')
+			ptr++;
+	}
+	while (*ptr && *ptr != '\0' && !ft_strchr(chars, *ptr))
 	{
 		if (*ptr == '\'')
 			ptr = find_next_single_quote(ptr + 1);
-		if (*separator != '"' && *ptr == '"')
+		if (*ptr == '"')
 			ptr = find_next_double_qoute(ptr + 1);
 		if (*ptr)
 			ptr++;
 	}
-	return (ft_extract_split(str, ptr, separator));
+	return (ft_extract_split(str, ptr, ptr));
 }

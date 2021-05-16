@@ -26,8 +26,6 @@ static int	execute_environment_builtins(t_abs_struct *base,
 		ft_set_pipes(previous, p);
 		ft_env(base);
 	}
-	else if (!ft_strcmp(p->argv[0], "setenv"))
-		ft_setenv(base, p);
 	else if (!ft_strcmp(p->argv[0], "unset"))
 		ft_unset(base, p);
 	else if (!ft_strcmp(p->argv[0], "export"))
