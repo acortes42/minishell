@@ -77,6 +77,15 @@ typedef struct s_process
 	int						pipe[2];
 }							t_process;
 
+typedef struct s_env_update
+{
+	int						changed_dir;
+	t_process				*p;
+	char					*old_pwd;
+	char					*pwd;
+	char					*home;
+}							t_env_update;
+
 typedef struct s_job
 {
 	struct s_job			*next;

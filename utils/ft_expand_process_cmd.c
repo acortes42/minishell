@@ -12,19 +12,12 @@
 
 #include "minishell.h"
 
-char	give_char(char d)
-{
-	if (!d)
-		return ('\'');
-	return (0);
-}
-
 static void	ft_expand_char_single_quote(t_expand_dollar *d)
 {
 	if (d->single_quote)
 		d->single_quote = 0;
 	else
-		d->single_quote = give_char(d->single_quote);
+		d->single_quote = '\'';
 	if (d->quote)
 		*(d->expanded + d->pos++) = *d->cmd;
 	d->cmd++;

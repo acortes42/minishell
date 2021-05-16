@@ -56,11 +56,10 @@ static int	apply_output_redirection(int i_fd, char *right_side)
 	return (1);
 }
 
-static void	dup_stdout_and_close_it(int i_fd, char *redir)
+static void	dup_stdout_and_close_it(int i_fd)
 {
 	extern t_abs_struct		g_base;
 
-(void)redir;
 	if (i_fd == STDOUT_FILENO)
 	{
 		g_base.std_fds.outfile = dup(STDOUT_FILENO);
@@ -84,7 +83,7 @@ int	ft_output_redirection(char *redir, int *redirected)
 		i_fd = ft_get_fd(fd, STDOUT_FILENO);
 		if (i_fd >= 0)
 		{
-			dup_stdout_and_close_it(i_fd, redir);
+			dup_stdout_and_close_it(i_fd);
 			*redirected = apply_output_redirection(i_fd, redir);
 		}
 		found_redirection = 1;
