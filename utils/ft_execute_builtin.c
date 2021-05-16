@@ -21,6 +21,8 @@ static int	execute_environment_builtins(t_abs_struct *base,
 	base->parse_string = p->argv;
 	if (!ft_strcmp(p->argv[0], "env"))
 	{
+		if (set_redirections(base, p, 1) < 0)
+			return (0);
 		ft_set_pipes(previous, p);
 		ft_env(base);
 	}
@@ -54,12 +56,16 @@ static int	execute_environment_builtins2(t_abs_struct *base,
 		launch_exit_builtin(p->argv[1]);
 	else if (!ft_strcmp(p->argv[0], "echo"))
 	{
+		if (set_redirections(base, p, 1) < 0)
+			return (0);
 		ft_set_pipes(previous, p);
 		ft_echo(base, p);
 		return (1);
 	}
 	else if (!ft_strcmp(p->argv[0], "pwd"))
 	{
+		if (set_redirections(base, p, 1) < 0)
+			return (0);
 		ft_set_pipes(previous, p);
 		ft_pwd();
 		return (1);
@@ -98,6 +104,8 @@ static int	execute_environment_builtins3(t_process *previous, t_process *p,
 int	ft_execute_builtin(t_abs_struct *base, t_process *previous,
 	t_process *p)
 {
+	int		executed;
+
 	ft_putstr("\e[0m");
 	if (!p->argv || !*p->argv)
 	{
@@ -107,11 +115,11 @@ int	ft_execute_builtin(t_abs_struct *base, t_process *previous,
 	}
 	base->parse_string = p->argv;
 	base->a = 0;
-	if (execute_environment_builtins(base, previous, p))
-		return (1);
-	if (execute_environment_builtins2(base, previous, p))
-		return (1);
-	if (execute_environment_builtins3(previous, p, base))
-		return (1);
-	return (0);
+	executed = execute_environment_builtins(base, previous, p);
+	if (!executed)
+		executed = execute_environment_builtins2(base, previous, p);
+	if (!executed)
+		executed = execute_environment_builtins3(previous, p, base);
+	restore_std_fds(&base->std_fds);
+	return (executed);
 }
