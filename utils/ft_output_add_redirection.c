@@ -12,14 +12,12 @@
 
 #include "minishell.h"
 
-static int	apply_output_add_redirection(int i_fd, char *right_side,
-				int files_must_exist)
+static int	apply_output_add_redirection(int i_fd, char *right_side)
 {
 	int			o_fd;
 	char		*fd_file;
 	int			flags;
 
-	(void)files_must_exist;
 	fd_file = ft_trim(right_side);
 	if (!fd_file)
 		return (0);
@@ -43,8 +41,7 @@ static int	apply_output_add_redirection(int i_fd, char *right_side,
 	return (1);
 }
 
-int	ft_output_add_redirection(t_abs_struct *base, char *redir, int *redirected
-		, int files_must_exist)
+int	ft_output_add_redirection(t_abs_struct *base, char *redir, int *redirected)
 {
 	char		*fd;
 	int			i_fd;
@@ -63,8 +60,7 @@ int	ft_output_add_redirection(t_abs_struct *base, char *redir, int *redirected
 				base->std_fds.outfile = dup(STDOUT_FILENO);
 				close(STDOUT_FILENO);
 			}
-			*redirected = apply_output_add_redirection(i_fd,
-					redir, files_must_exist);
+			*redirected = apply_output_add_redirection(i_fd, redir);
 		}
 		found_redirection = 1;
 	}

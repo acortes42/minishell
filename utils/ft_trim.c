@@ -74,7 +74,6 @@ static unsigned int	ft_strtrim_end_index(char const *s, char const *set,
 char	*ft_strtrim(char const *s1, char const *set)
 {
 	unsigned int	l;
-	unsigned int	i;
 	unsigned int	s;
 	unsigned int	e;
 	char			*r;
@@ -83,19 +82,16 @@ char	*ft_strtrim(char const *s1, char const *set)
 		return (0);
 	l = ft_strlen(s1);
 	if (l <= 0)
-		return ((char *)s1);
+		return (ft_strdup(""));
 	s = ft_strtrim_start_index(s1, set);
 	e = ft_strtrim_end_index(s1, set, s);
-	l = s == 0 && e == 0 ? 1 : l - s - (l - e - 1);
-	r = malloc((sizeof(char) * l) + 1);
+	if (s == 0 && e == 0)
+		l = 1;
+	else
+		l = l - s - (l - e - 1);
+	r = ft_calloc(l + 1, sizeof(char));
 	if (r == 0)
 		return (0);
-	i = 0;
-	while ((s + i) <= e)
-	{
-		r[i] = s1[s + i];
-		i++;
-	}
-	r[l] = '\0';
+	ft_memcpy(r, s1 + s, l);
 	return (r);
 }

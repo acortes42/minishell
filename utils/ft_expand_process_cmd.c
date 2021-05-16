@@ -12,11 +12,15 @@
 
 #include "minishell.h"
 
-char	give_char(char d)
+static void	ft_expand_char_single_quote(t_expand_dollar *d)
 {
-	if (!d)
-		return ('\'');
-	return (0);
+	if (d->single_quote)
+		d->single_quote = 0;
+	else
+		d->single_quote = '\'';
+	if (d->quote)
+		*(d->expanded + d->pos++) = *d->cmd;
+	d->cmd++;
 }
 
 static void	expand_char(t_expand_dollar *d)
@@ -24,15 +28,7 @@ static void	expand_char(t_expand_dollar *d)
 	if (d->scape)
 		ft_expand_scape(d);
 	else if (*d->cmd == '\'')
-	{
-		if (d->single_quote)
-			d->single_quote = 0;
-		else
-			d->single_quote = give_char(d->single_quote);
-		if (d->quote)
-			*(d->expanded + d->pos++) = *d->cmd;
-		d->cmd++;
-	}
+		ft_expand_char_single_quote(d);
 	else if (*d->cmd == '"' && !d->single_quote && !d->scape)
 		ft_expand_quote(d);
 	else if (!ft_strncmp("$?", d->cmd, 2) && ((!d->single_quote) || d->quote))
