@@ -28,11 +28,12 @@ UTILS 				= utils/ft_putnbr.c utils/ft_putstr.c utils/ft_strchr.c \
 	utils/get_next_line_utils.c utils/load_history_commands.c \
 	utils/process_escape_sequences.c utils/process_csi_sequences.c \
 	utils/ft_print_last_process_status.c utils/syntactic_errors.c \
-	utils/ft_get_first_fd_available_between.c utils/ft_get_redirection_fd.c
+	utils/ft_get_first_fd_available_between.c utils/ft_get_redirection_fd.c \
+	utils/args.c
 
 
 SRCS_WITHOUT_MAIN	=  srcs/ft_exit_minishell.c srcs/clear_screen.c \
-	srcs/ft_execute_ctrl_d.c srcs/echo.c srcs/cd.c \
+	srcs/ft_execute_ctrl_d.c srcs/echo.c srcs/cd.c srcs/cd_utils.c \
 	srcs/history.c srcs/signals.c srcs/pwd.c srcs/env.c srcs/setenv.c \
 	srcs/ft_export.c srcs/ft_getenv.c  srcs/setenv_aux.c\
 	srcs/ft_init_minishell.c srcs/ft_show_prompt.c srcs/ft_expand_env_value.c \

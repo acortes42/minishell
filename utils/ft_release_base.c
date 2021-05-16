@@ -23,6 +23,7 @@ void	ft_release_base(t_abs_struct *base)
 	if (base->last_history_command)
 		free(base->last_history_command);
 	ft_release_jobs(base->first_job);
+	ft_array_release(base->history);
 	base->first_job = 0;
 	return ;
 }
