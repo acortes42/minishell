@@ -6,7 +6,7 @@
 /*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 22:11:09 by visv              #+#    #+#             */
-/*   Updated: 2021/04/01 11:50:03 by acortes-         ###   ########.fr       */
+/*   Updated: 2021/05/16 18:35:50 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,16 @@ char	*ft_trim(char *str)
 	return (trimmed);
 }
 
-static int			ft_char_contained(char c, char const *set)
+static int	ft_char_contained(char c, char const *set)
 {
-	int				i;
+	int	i;
 
 	i = 0;
 	while (set[i] != '\0' && set[i] != c)
 		i++;
-	return (set[i] == c ? 1 : 0);
+	if (set[i] == c)
+		return (1);
+	return (0);
 }
 
 static unsigned int	ft_strtrim_start_index(char const *s, char const *set)
@@ -69,7 +71,7 @@ static unsigned int	ft_strtrim_end_index(char const *s, char const *set,
 	return (i);
 }
 
-char				*ft_strtrim(char const *s1, char const *set)
+char	*ft_strtrim(char const *s1, char const *set)
 {
 	unsigned int	l;
 	unsigned int	i;

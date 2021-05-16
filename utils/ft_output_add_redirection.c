@@ -6,7 +6,7 @@
 /*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 22:53:20 by visv              #+#    #+#             */
-/*   Updated: 2021/04/01 14:16:10 by acortes-         ###   ########.fr       */
+/*   Updated: 2021/05/16 18:37:18 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ int	ft_output_add_redirection(t_abs_struct *base, char *redir, int *redirected
 				base->std_fds.outfile = dup(STDOUT_FILENO);
 				close(STDOUT_FILENO);
 			}
-			*redirected = apply_output_add_redirection(i_fd, redir, files_must_exist);
+			*redirected = apply_output_add_redirection(i_fd,
+					redir, files_must_exist);
 		}
 		found_redirection = 1;
 	}

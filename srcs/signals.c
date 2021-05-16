@@ -6,7 +6,7 @@
 /*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/23 16:04:49 by acortes-          #+#    #+#             */
-/*   Updated: 2021/05/08 20:27:11 by acortes-         ###   ########.fr       */
+/*   Updated: 2021/05/16 18:30:44 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,10 @@ void	forked_process_signal_handler(int sig)
 
 	if (sig == SIGINT || sig == SIGQUIT)
 	{
-		if (sig == SIGINT){
+		if (sig == SIGINT)
 			ft_putstr("\n");
-		}
-		else if (sig == SIGQUIT) {
+		else if (sig == SIGQUIT)
 			ft_putstr("Abandona (`core' generado)\n");
-		}
 		g_base.current_process->status = 128 + sig;
 	}
 }

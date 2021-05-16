@@ -6,7 +6,7 @@
 /*   By: acortes- <acortes-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 22:15:50 by visv              #+#    #+#             */
-/*   Updated: 2021/03/31 12:06:17 by acortes-         ###   ########.fr       */
+/*   Updated: 2021/05/16 18:33:40 by acortes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,10 @@ static int	set_redirection(t_abs_struct *base, char *i, int files_must_exist)
 	if (ft_output_add_redirection(base, i, &redirected, files_must_exist))
 		found_redirection = 1;
 	if (!found_redirection && ft_output_redirection(i, &redirected,
-		files_must_exist))
+			files_must_exist))
 		found_redirection = 1;
-	if (!found_redirection && ft_input_redirection(i, &redirected, files_must_exist))
+	if (!found_redirection && ft_input_redirection(i, &redirected,
+			files_must_exist))
 		found_redirection = 1;
 	if (found_redirection)
 	{
