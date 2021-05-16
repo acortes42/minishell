@@ -24,7 +24,8 @@ static char	*get_first_non_empty_arg(char **args)
 			free (trim);
 			return (*args);
 		}
-		free(trim);
+		if (trim)
+			free(trim);
 		args++;
 	}
 	return (0);
