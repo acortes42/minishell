@@ -39,19 +39,12 @@ static void	print_file_doesnt_exist(char *file)
 	ft_putstr(": File or dir doesn't exist\n");
 }
 
-int	cd_valid_number_of_arguments(int x)
-{
-	if (x > 2)
-		return (0);
-	return (1);
-}
-
 static void	perform_chdir_and_environment_update(t_process *p, char *home)
 {
-	char	*pwd;
-	char	*old_pwd;
-	char	*path;
-	int		changed_dir;
+	char				*pwd;
+	char				*old_pwd;
+	char				*path;
+	int					changed_dir;
 	extern t_abs_struct	g_base;
 
 	pwd = 0;
@@ -85,13 +78,6 @@ static void	perform_chdir_and_environment_update(t_process *p, char *home)
 		free(pwd);
 	if (old_pwd)
 		free(old_pwd);
-}
-
-int	check_if_home(char *home, int aux)
-{
-	if (home)
-		return (0);
-	return (aux);
 }
 
 int	cd(t_process *p)

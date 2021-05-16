@@ -31,7 +31,6 @@
 # include <signal.h>
 # include <limits.h>
 
-
 # define REDIRECTIONS_MINIMUM_FD	11
 # define MAX_FD						4096
 # define TAB_SPACES					4
