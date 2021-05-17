@@ -19,7 +19,7 @@ int	go_home(t_process *p)
 	home = ft_getenv(g_base.env, "HOME");
 	if (!home)
 	{
-		ft_putstr("\e[0mcd: HOME not defined\n");
+		ft_putstr_fd("\e[0mcd: HOME not defined\n", STDERR_FILENO);
 		p->status = 127;
 		return (1);
 	}
@@ -37,7 +37,7 @@ int	go_oldpwd(t_process *p)
 	oldpwd = ft_getenv(g_base.env, "OLDPWD");
 	if (!oldpwd)
 	{
-		ft_putstr("\e[0mcd: OLDPWD no está establecido\n");
+		ft_putstr_fd("\e[0mcd: OLDPWD no está establecido\n", STDERR_FILENO);
 		p->status = 127;
 		return (1);
 	}
@@ -89,7 +89,7 @@ int	cd(t_process *p)
 	args = ft_non_empty_args(p->argv);
 	if (args > 2)
 	{
-		ft_putstr("\e[0mcd: demasiados argumentos\n");
+		ft_putstr_fd("\e[0mcd: demasiados argumentos\n", STDERR_FILENO);
 		p->status = 127;
 		return (1);
 	}

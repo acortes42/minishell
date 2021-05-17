@@ -25,10 +25,10 @@ static void	perform_environment_update(t_env_update *info)
 
 static void	print_file_doesnt_exist(char *file)
 {
-	ft_putstr("\e[0mcd: ");
+	ft_putstr_fd("\e[0mcd: ", STDERR_FILENO);
 	if (file)
-		ft_putstr(file);
-	ft_putstr(": File or dir doesn't exist\n");
+		ft_putstr_fd(file, STDERR_FILENO);
+	ft_putstr_fd(": File or dir doesn't exist\n", STDERR_FILENO);
 }
 
 void	perform_chdir_and_environment_update(t_process *p, char *home)
@@ -47,8 +47,8 @@ void	perform_chdir_and_environment_update(t_process *p, char *home)
 	info.pwd = getcwd(0, 0);
 	if (!info.pwd)
 	{
-		ft_putstr(strerror(errno));
-		ft_putstr("\n");
+		ft_putstr_fd(strerror(errno), STDERR_FILENO);
+		ft_putstr_fd("\n", STDERR_FILENO);
 	}
 	info.home = home;
 	info.p = p;

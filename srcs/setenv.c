@@ -127,7 +127,7 @@ int	ft_setenv(t_abs_struct *base, t_process *p)
 		tri = ft_prepare_export(key_value[0], key_value[1]);
 		ret = ft_add_line(&base->env, &base->lines_envp, tri);
 		if (!tri || !(ret))
-			ft_putstr("\e[0mNo se añadió el argumento\n");
+			ft_putstr_fd("\e[0mNo se añadió el argumento\n", STDERR_FILENO);
 		ft_array_release(key_value);
 		if (tri)
 			free(tri);
@@ -135,7 +135,7 @@ int	ft_setenv(t_abs_struct *base, t_process *p)
 	}
 	if (key_value)
 		ft_array_release(key_value);
-	ft_putstr("\e[0mError en los argumentos\n");
+	ft_putstr_fd("\e[0mError en los argumentos\n", STDERR_FILENO);
 	base->error = 0;
 	return (0);
 }

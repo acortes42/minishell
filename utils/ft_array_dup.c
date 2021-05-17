@@ -44,10 +44,7 @@ char	**ft_array_dup_without(char **env, size_t len_env, char *not_dup)
 
 	it_new = malloc(sizeof(char *) * len_env);
 	if (!(it_new))
-	{
-		ft_putstr("\e[0mError de memoria\n");
-		return (0);
-	}
+		ft_exit_minishell(1);
 	i = 0;
 	j = 0;
 	while (env && *(env + i))

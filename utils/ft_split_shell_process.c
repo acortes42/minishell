@@ -64,24 +64,34 @@ static char	*ft_extract_split(char **str, char *ptr, char *separator)
 	return (splitted);
 }
 
+static void	skip_redirs_at_start(char **str)
+{
+	if (**str == '<')
+		(*str)++;
+	else if (**str == '>')
+	{
+		while (**str == '>')
+			(*str)++;
+	}
+}
+
 char	*ft_split_shell_process(char **str)
 {
 	char		*ptr;
 	char		*chars;
+	int			only_digits_found;
 
 	if (!str || !*str || !(**str))
 		return (0);
 	chars = " <>";
 	ptr = *str;
-	if (*ptr == '<')
-		ptr++;
-	else if (*ptr == '>')
+	skip_redirs_at_start(&ptr);
+	only_digits_found = 1;
+	while (*ptr && *ptr != '\0' && (!ft_strchr(chars, *ptr)
+			|| only_digits_found))
 	{
-		while (*ptr == '>')
-			ptr++;
-	}
-	while (*ptr && *ptr != '\0' && !ft_strchr(chars, *ptr))
-	{
+		if (ft_strchr(chars, *ptr) || !ft_isdigit(*ptr))
+			only_digits_found = 0;
 		if (*ptr == '\'')
 			ptr = find_next_single_quote(ptr + 1);
 		if (*ptr == '"')
