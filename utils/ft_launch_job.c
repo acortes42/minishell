@@ -75,6 +75,7 @@ void	ft_launch_job(t_abs_struct *base, t_job *j)
 		else
 			current->completed = 1;
 		base->error = current->status;
+		restore_std_fds(&base->std_fds);
 		ft_close_pipes(previous, current);
 		previous = current;
 		current = current->next;

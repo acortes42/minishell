@@ -59,3 +59,9 @@ int	set_redirections(t_abs_struct *base, t_process *p)
 	}
 	return (redirected);
 }
+
+int	field_contains_redirs(char *field)
+{
+	return (ft_strstr(field, "<") || ft_strstr(field, ">>")
+		|| ft_strstr(field, ">"));
+}

@@ -118,6 +118,5 @@ int	ft_execute_builtin(t_abs_struct *base, t_process *previous,
 		executed = execute_environment_builtins2(base, previous, p);
 	if (!executed)
 		executed = execute_environment_builtins3(previous, p, base);
-	restore_std_fds(&base->std_fds);
 	return (executed);
 }

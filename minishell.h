@@ -234,6 +234,7 @@ size_t			ft_strnlen(const char *s, size_t max);
 int				ft_memcmp(const void *s1, const void *s2, size_t n);
 void			*ft_memcpy(void *dest, const void *src, size_t n);
 int				ft_array_add(char ***array, int *array_len, char *value);
+int				field_contains_redirs(char *field);
 int				ft_array_update(char ***array, int *array_len, char *key,
 					char *value);
 char			**ft_array_dup(char **envp);
