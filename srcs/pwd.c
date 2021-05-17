@@ -31,7 +31,7 @@ int	ft_pwd(void)
 int	ft_help(void)
 {
 	ft_putstr("\e[0mLos comandos disponibles són los siguientes:\n\n");
-	ft_putstr("exit\necho\npwd\ncd\nhistory\nhelp\nenv\nunset\n");
+	ft_putstr("exit\necho\npwd\ncd\nhelp\nenv\nunset\n");
 	ft_putstr("clear\nexport\n");
 	return (1);
 }

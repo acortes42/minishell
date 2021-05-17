@@ -41,7 +41,7 @@ void	forked_process_signal_handler(int sig)
 		if (sig == SIGINT)
 			ft_putstr("\n");
 		else if (sig == SIGQUIT)
-			ft_putstr("Abandona (`core' generado)\n");
+			ft_putstr_fd("Abandona (`core' generado)\n", STDERR_FILENO);
 		g_base.current_process->status = 128 + sig;
 	}
 }

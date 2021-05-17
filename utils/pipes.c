@@ -50,13 +50,17 @@ void	ft_set_pipes(t_process *previous, t_process *current)
 	if (previous && previous->pipe[STDIN_FILENO] > -1)
 	{
 		if (g_base.std_fds.infile < 0)
+		{
 			g_base.std_fds.infile = dup(STDIN_FILENO);
-		dup2(previous->pipe[STDIN_FILENO], STDIN_FILENO);
+			dup2(previous->pipe[STDIN_FILENO], STDIN_FILENO);
+		}
 	}
 	if (current->pipe[STDOUT_FILENO] > -1)
 	{
 		if (g_base.std_fds.outfile < 0)
+		{
 			g_base.std_fds.outfile = dup(STDOUT_FILENO);
-		dup2(current->pipe[STDOUT_FILENO], STDOUT_FILENO);
+			dup2(current->pipe[STDOUT_FILENO], STDOUT_FILENO);
+		}
 	}
 }

@@ -53,37 +53,15 @@ int	obtain_full_line(void)
 	return (0);
 }
 
-static int	exist_syntax_errors_in_jobs(t_job *jobs)
-{
-	int			empty_processes;
-	t_process	*p;
-
-	while (jobs)
-	{
-		empty_processes = 0;
-		p = jobs->first_process;
-		while (p)
-		{
-			if (!p->argv)
-				empty_processes++;
-			p = p->next;
-		}
-		if (empty_processes >= 3)
-			return (1);
-		jobs = jobs->next;
-	}
-	return (0);
-}
-
 static void	execute_command_read(t_abs_struct *base)
 {
 	if (!ft_setlflag(STDIN_FILENO, 1, g_base.c_lflag))
 		ft_exit_minishell(1);
-	base->first_job = ft_build_jobs(base->input);
-	if (exist_syntax_errors_in_jobs(base->first_job))
-		ft_putstr("Error sintáctico en el comando\n");
+	if (check_base_syntatic_errors(base->input))
+		ft_putstr_fd("Error sintáctico en el comando\n", STDERR_FILENO);
 	else
 	{
+		base->first_job = ft_build_jobs(base->input);
 		while (base->first_job)
 		{
 			ft_launch_job(base, base->first_job);

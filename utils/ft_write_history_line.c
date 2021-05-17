@@ -28,6 +28,7 @@ void	ft_write_history_line(t_abs_struct *base)
 		return ;
 	write(fd, base->input, ft_strlen(base->input));
 	close(fd);
-	base->history_lines++;
+	ft_array_add(&base->history, &base->history_lines,
+		ft_strdup(base->last_history_command));
 	base->current_history_line = base->history_lines;
 }

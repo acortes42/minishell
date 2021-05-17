@@ -16,7 +16,7 @@ UTILS 				= utils/ft_putnbr.c utils/ft_putstr.c utils/ft_strchr.c \
 	utils/ft_split_shell.c utils/ft_release_process.c utils/ft_array_add.c \
 	utils/ft_array_update.c utils/redirections.c utils/ft_array_slide_left.c \
 	utils/ft_set_default_signals.c utils/ft_isinteger.c utils/std_fds.c	\
-	utils/ft_extract_redirections_from_argv.c \
+	utils/ft_extract_redirections_from_argv.c utils/ft_split_shell_process.c \
 	utils/ft_count_words_until_separator.c utils/ft_expand_process_cmd.c \
 	utils/pipes.c utils/ft_remove_quotes.c \
 	utils/ft_expand_process_cmd_utils.c utils/ft_expand_process_cmd_utils_2.c \
@@ -27,11 +27,13 @@ UTILS 				= utils/ft_putnbr.c utils/ft_putstr.c utils/ft_strchr.c \
 	utils/ft_clear_input.c utils/ft_write_history_line.c \
 	utils/get_next_line_utils.c utils/load_history_commands.c \
 	utils/process_escape_sequences.c utils/process_csi_sequences.c \
-	utils/ft_print_last_process_status.c \
-	utils/ft_get_first_fd_available_between.c utils/ft_get_redirection_fd.c
+	utils/ft_print_last_process_status.c utils/syntactic_errors.c \
+	utils/ft_get_first_fd_available_between.c utils/ft_get_redirection_fd.c \
+	utils/args.c
+
 
 SRCS_WITHOUT_MAIN	=  srcs/ft_exit_minishell.c srcs/clear_screen.c \
-	srcs/ft_execute_ctrl_d.c srcs/echo.c srcs/cd.c \
+	srcs/ft_execute_ctrl_d.c srcs/echo.c srcs/cd.c srcs/cd_utils.c \
 	srcs/history.c srcs/signals.c srcs/pwd.c srcs/env.c srcs/setenv.c \
 	srcs/ft_export.c srcs/ft_getenv.c  srcs/setenv_aux.c\
 	srcs/ft_init_minishell.c srcs/ft_show_prompt.c srcs/ft_expand_env_value.c \

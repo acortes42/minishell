@@ -55,7 +55,7 @@ int	ft_output_add_redirection(t_abs_struct *base, char *redir, int *redirected)
 		i_fd = ft_get_fd(fd, STDOUT_FILENO);
 		if (i_fd >= 0)
 		{
-			if (i_fd == STDOUT_FILENO)
+			if (i_fd == STDOUT_FILENO && base->std_fds.outfile < 0)
 			{
 				base->std_fds.outfile = dup(STDOUT_FILENO);
 				close(STDOUT_FILENO);

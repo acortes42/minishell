@@ -26,3 +26,23 @@ char	*ft_strchr(const char *s, int c)
 		return ((char *)s);
 	return (0);
 }
+
+char	*ft_strstr(const char *s, char *tgt)
+{
+	char	*tgt_it;
+
+	if (!tgt || !s)
+		return (0);
+	tgt_it = tgt;
+	while (*s && *tgt_it)
+	{
+		if (*s == *tgt_it)
+			tgt_it++;
+		else
+			tgt_it = tgt;
+		s++;
+	}
+	if (!(*tgt_it))
+		return ((char *)s);
+	return (0);
+}

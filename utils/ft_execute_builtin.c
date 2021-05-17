@@ -26,8 +26,6 @@ static int	execute_environment_builtins(t_abs_struct *base,
 		ft_set_pipes(previous, p);
 		ft_env(base);
 	}
-	else if (!ft_strcmp(p->argv[0], "setenv"))
-		ft_setenv(base, p);
 	else if (!ft_strcmp(p->argv[0], "unset"))
 		ft_unset(base, p);
 	else if (!ft_strcmp(p->argv[0], "export"))
@@ -67,13 +65,14 @@ static int	execute_environment_builtins2(t_abs_struct *base,
 		if (set_redirections(base, p) < 0)
 			return (0);
 		ft_set_pipes(previous, p);
-		ft_pwd();
-		return (1);
+		return (ft_pwd());
 	}
 	else if (!ft_strcmp(p->argv[0], "cd"))
 	{
-		cd(p);
-		return (1);
+		if (set_redirections(base, p) < 0)
+			return (0);
+		ft_set_pipes(previous, p);
+		return (!cd(p));
 	}
 	return (0);
 }
@@ -120,6 +119,5 @@ int	ft_execute_builtin(t_abs_struct *base, t_process *previous,
 		executed = execute_environment_builtins2(base, previous, p);
 	if (!executed)
 		executed = execute_environment_builtins3(previous, p, base);
-	restore_std_fds(&base->std_fds);
 	return (executed);
 }

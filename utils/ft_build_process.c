@@ -12,29 +12,76 @@
 
 #include "minishell.h"
 
+static int	ft_extract_redirs_from_field(char *field_to_split, char ***argv,
+				int *fields)
+{
+	char	*field;
+	char	*field_to_split_iterator;
+
+	field_to_split_iterator = field_to_split;
+	field = ft_split_shell_process(&field_to_split_iterator);
+	while (field)
+	{
+		if (*field == '\n')
+			free(field);
+		else
+		{
+			if (!ft_array_add(argv, fields, field))
+			{
+				free(field);
+				free(field_to_split);
+				return (-1);
+			}
+		}
+		field = ft_split_shell_process(&field_to_split_iterator);
+	}
+	free(field_to_split);
+	return (1);
+}
+
+static int	append_field_to_argv(char *field_to_append, char ***argv,
+				int *fields)
+{
+	char	*tmp;
+
+	if (!field_to_append)
+		return (1);
+	tmp = ft_trim(field_to_append);
+	if (!tmp)
+		free(field_to_append);
+	else
+	{
+		free(field_to_append);
+		if (!ft_array_add(argv, fields, tmp))
+			return (-1);
+	}
+	return (1);
+}
+
 static int	ft_extract_fields(char *cmd, char ***argv)
 {
 	int				fields;
 	char			*field;
-	char			*tmp;
 
 	fields = 0;
 	field = ft_split_shell_by(&cmd, " ");
 	while (field)
 	{
-		if (*field != '\n')
+		if (*field == '\n')
+			free(field);
+		else
 		{
-			tmp = ft_trim(field);
-			if (tmp)
+			if (field_contains_redirs(field))
 			{
-				if (!ft_array_add(argv, &fields, tmp))
-				{
-					free(field);
+				if (ft_extract_redirs_from_field(field, argv, &fields) < 0)
 					return (-1);
-				}
+			}
+			else
+			{
+				if (append_field_to_argv(field, argv, &fields) < 0)
+					return (-1);
 			}
 		}
-		free(field);
 		field = ft_split_shell_by(&cmd, " ");
 	}
 	return (fields);
