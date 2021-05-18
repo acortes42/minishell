@@ -61,7 +61,7 @@ static void	process_tilde_expansion(t_expand_dollar *d)
 	}
 }
 
-static char	*expand(t_abs_struct *base, char *cmd)
+char	*expand(t_abs_struct *base, char *cmd)
 {
 	t_expand_dollar	d;
 

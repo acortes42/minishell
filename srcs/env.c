@@ -36,41 +36,40 @@ int	ft_env(t_abs_struct *base)
 	return (1);
 }
 
-static char	*ft_get_env_to_unset(t_abs_struct *base, t_process *p)
-{
-	char	*env;
-	char	**key_value;
-
-	if (!base->env || !p || !p->argv || !p->argv[0] || !p->argv[1])
-		return (0);
-	key_value = ft_split(p->argv[1], '=');
-	env = ft_getenv(base->env, key_value[0]);
-	if (!key_value || !(env))
-	{
-		ft_array_release(key_value);
-		return (0);
-	}
-	ft_array_release(key_value);
-	return (env);
-}
-
 int	ft_unset(t_abs_struct *base, t_process *p)
 {
-	char	**it_new;
-	char	*env;
+	char	**argv;
+	int		keypos;
 
-	env = ft_get_env_to_unset(base, p);
-	if (!(env))
+	if (ft_array_len(p->argv) == 1)
 		return (1);
-	it_new = ft_array_dup_without(base->env, base->lines_envp, env);
-	if (it_new)
+	argv = p->argv + 1;
+	while (argv && *argv)
 	{
-		free(base->env);
-		base->env = it_new;
-		base->lines_envp--;
+		if (!is_env_valid_argument(*argv))
+		{
+			ft_putstr_fd("Identificador no válido\n", STDERR_FILENO);
+			p->status = 1;
+			return (1);
+		}
+		else if (ft_strlen(*argv))
+		{
+			keypos = ft_search_env(base->env, *argv);
+			if (keypos >= 0
+				&& !ft_array_delete_pos(&base->env, &base->lines_envp, keypos))
+				ft_exit_minishell(1);
+		}
+		argv++;
 	}
-	free(env);
-	if (it_new)
-		return (1);
-	return (0);
+	return (1);
+}
+
+void	ft_delete_existing_key(t_abs_struct *base, char *key)
+{
+	int	key_pos;
+
+	key_pos = ft_search_env(base->env, key);
+	if (key_pos >= 0
+		&& !ft_array_delete_pos(&base->env, &base->lines_envp, key_pos))
+		ft_exit_minishell(1);
 }

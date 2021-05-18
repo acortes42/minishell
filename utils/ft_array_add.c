@@ -12,6 +12,20 @@
 
 #include "minishell.h"
 
+int	ft_array_delete_pos(char ***array, int *array_len, int pos)
+{
+	char	**array_dup;
+
+	if (!array || !(*array))
+		return (0);
+	array_dup = ft_array_dup_without(*array, *array_len, *(*array + pos));
+	free(*(*array + pos));
+	free(*array);
+	*array = array_dup;
+	(*array_len)--;
+	return (1);
+}
+
 int	ft_array_add(char ***array, int *array_len, char *value)
 {
 	char		**aux;
