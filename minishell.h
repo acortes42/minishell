@@ -299,6 +299,7 @@ int				ft_get_first_fd_available_between(int minimum, int maximum);
 char			*ft_strtrim(char const *s1, char const *set);
 void			ft_delete_existing_key(t_abs_struct *base, char *key);
 char			*expand(t_abs_struct *base, char *cmd);
-t_abs_struct	g_base;
+int				exists_non_digits_chars(char *exit_code);
 
+t_abs_struct	g_base;
 #endif

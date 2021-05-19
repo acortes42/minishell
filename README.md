@@ -29,6 +29,7 @@ https://en.m.wikipedia.org/wiki/C0_and_C1_control_codes
 #### Exit builtin
 https://www.gnu.org/software/bash/manual/html_node/Exit-Status.html#Exit-Status -> interesting exit codes to check
 https://man.cx/exit
+tldp.org/LDP/abs/html/exitcodes.html -> si salimos con un código de error por encima de 255 hacemos un módulo de 256
 #### Launching jobs
 https://www.gnu.org/software/libc/manual/html_node/Launching-Jobs.html
 ##### Problems

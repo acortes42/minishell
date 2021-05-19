@@ -12,6 +12,49 @@
 
 #include "minishell.h"
 
+static int	check_sign(char **exit_code)
+{
+	while (**exit_code)
+	{
+		if (!ft_strchr("+-", **exit_code))
+		{
+			if (!ft_isdigit(**exit_code))
+				return (0);
+			break ;
+		}
+		(*exit_code)++;
+	}
+	return (1);
+}
+
+int	exists_non_digits_chars(char *exit_code)
+{
+	char	*trim;
+	char	*tmp;
+
+	trim = ft_trim(exit_code);
+	if (!trim)
+		return (0);
+	tmp = trim;
+	if (!check_sign(&tmp))
+	{
+		free(trim);
+		return (1);
+	}
+	while (*tmp)
+	{
+		if (ft_isdigit(*tmp))
+			tmp++;
+		else
+		{
+			free(trim);
+			return (1);
+		}
+	}
+	free(trim);
+	return (0);
+}
+
 static int	ft_get_sign(const char *nptr, size_t *i)
 {
 	int			sign;
