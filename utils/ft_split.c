@@ -47,6 +47,34 @@ int	len_of_word(const char *str, char c)
 	return (word);
 }
 
+char	**ft_split_key_value_pair(char const *s, char c)
+{
+	char	**key_value;
+	int		len;
+
+	if (!s || !ft_strchr(s, c))
+		return (0);
+	key_value = ft_calloc(3, sizeof(char *));
+	if (!key_value)
+		return (0);
+	len = ft_strchr(s, c) - s;
+	*key_value = ft_calloc(len + 1, sizeof(char));
+	if (!(*key_value))
+	{
+		ft_array_release(key_value);
+		return (0);
+	}
+	*(key_value + 1) = ft_calloc(ft_strlen(s) - len, sizeof(char));
+	if (!*(key_value + 1))
+	{
+		ft_array_release(key_value);
+		return (0);
+	}
+	ft_memcpy(*key_value, s, len);
+	ft_memcpy(*(key_value + 1), s + len + 1, ft_strlen(s) - len - 1);
+	return (key_value);
+}
+
 char	**ft_split(char const *s, char c)
 {
 	char	**str;

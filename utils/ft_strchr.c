@@ -46,3 +46,16 @@ char	*ft_strstr(const char *s, char *tgt)
 		return ((char *)s);
 	return (0);
 }
+
+char	**ft_strstr_in_array(const char **array, char *tgt)
+{
+	if (!array)
+		return (0);
+	while (*array)
+	{
+		if (ft_strstr(*array, tgt))
+			return ((char **)array);
+		array ++;
+	}
+	return (0);
+}

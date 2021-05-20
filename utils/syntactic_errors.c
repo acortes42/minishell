@@ -31,7 +31,7 @@ int	check_base_syntatic_errors(char *cmd)
 	if (!ft_strcmp(cmd_trim, ";") || !ft_strcmp(cmd_trim, "|")
 		|| !ft_strcmp(cmd_trim, "||") || found_consecutive_chars(cmd, ';', 2)
 		|| found_consecutive_chars(cmd, '|', 3) || ft_strstr(cmd_trim, "2>>"))
-		ret = 1;
+		ret = 258;
 	else
 		ret = 0;
 	free(cmd_trim);

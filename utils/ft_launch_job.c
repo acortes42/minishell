@@ -36,10 +36,8 @@ static void	execute_child(t_abs_struct *base, t_process *previous,
 static void	ft_fork_child(t_abs_struct *base, t_process *previous,
 	t_process *current)
 {
-	pid_t		pid;
+	pid_t	pid;
 
-	signal(SIGINT, forked_process_signal_handler);
-	signal(SIGQUIT, forked_process_signal_handler);
 	pid = fork();
 	if (pid == 0)
 	{
@@ -50,11 +48,6 @@ static void	ft_fork_child(t_abs_struct *base, t_process *previous,
 	else
 	{
 		current->pid = pid;
-		wait(&current->status);
-		current->status /= 256;
-		base->error = current->status;
-		signal(SIGINT, signal_handler);
-		signal(SIGQUIT, signal_handler);
 	}
 }
 
@@ -63,6 +56,8 @@ void	ft_launch_job(t_abs_struct *base, t_job *j)
 	t_process	*current;
 	t_process	*previous;
 
+	signal(SIGINT, forked_process_signal_handler);
+	signal(SIGQUIT, forked_process_signal_handler);
 	previous = 0;
 	current = j->first_process;
 	while (current)
@@ -75,9 +70,11 @@ void	ft_launch_job(t_abs_struct *base, t_job *j)
 		else
 			current->completed = 1;
 		base->error = current->status;
-		restore_std_fds(&base->std_fds);
-		ft_close_pipes(previous, current);
 		previous = current;
 		current = current->next;
 	}
+	ft_wait_for_childs(j);
+	restore_std_fds(&base->std_fds);
+	signal(SIGINT, signal_handler);
+	signal(SIGQUIT, signal_handler);
 }

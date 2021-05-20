@@ -151,6 +151,7 @@ int				assign_to_fd_helper(char c);
 void			redirect_to_exit(int o_fd, int i_fd);
 char			*ft_strdup(const char *s1);
 char			*ft_strchr(const char *s, int c);
+char			**ft_strstr_in_array(const char **array, char *tgt);
 char			*ft_strstr(const char *s, char *tgt);
 char			*ft_strcdup(const char *s1, int c);
 int				get_next_line(int fd, char **line, t_abs_struct *base);
@@ -159,6 +160,7 @@ void			ft_shift_left(char *bf);
 void			ft_shift_left_bytes(char *bf, int bytes);
 char			*ft_strjoin(char const *s1, char const *s2);
 char			**ft_split(char const *s, char c);
+char			**ft_split_key_value_pair(char const *s, char c);
 void			ft_putstr(char *s);
 void			ft_putnstr(char *s, size_t len);
 void			ft_putnbr(int n);
@@ -177,10 +179,10 @@ void			load_previous_history_command(t_abs_struct *base, char **line,
 void			load_next_history_command(t_abs_struct *base, char **line,
 					char *bf);
 int				ft_pwd(void);
-int				ft_export(t_abs_struct *base, t_process *p);
+void			ft_export(t_abs_struct *base, t_process *p);
 int				ft_copy_env(t_abs_struct *base, char **envp);
 int				ft_env(t_abs_struct *base);
-int				ft_setenv(t_abs_struct *base, t_process *p);
+int				ft_setenv(t_abs_struct *base, char *arg);
 void			ft_exit_minishell(int exit_code);
 int				ft_unset(t_abs_struct *base, t_process *p);
 int				ft_help(void);
@@ -234,6 +236,7 @@ size_t			ft_strnlen(const char *s, size_t max);
 int				ft_memcmp(const void *s1, const void *s2, size_t n);
 void			*ft_memcpy(void *dest, const void *src, size_t n);
 int				ft_array_add(char ***array, int *array_len, char *value);
+int				ft_array_delete_pos(char ***array, int *array_len, int pos);
 int				field_contains_redirs(char *field);
 int				ft_array_update(char ***array, int *array_len, char *key,
 					char *value);
@@ -243,7 +246,9 @@ char			**ft_array_dup_without(char **env, size_t len_env,
 void			ft_array_release(char **envp);
 size_t			ft_array_len(char **envp);
 void			ft_array_slide_left(char **array);
+int				is_env_valid_argument(char *arg);
 char			*ft_getenv(char **env, char *key);
+int				ft_search_env(char **env, char *key);
 char			*expand_env_value(char **envp, char *env_value);
 size_t			ft_strlen(const char *s);
 int				ft_strncmp(const char *s1, const char *s2, size_t n);
@@ -261,6 +266,7 @@ char			*ft_split_shell_by(char **str, char *separator);
 char			*ft_split_shell_process(char **str);
 int				check_base_syntatic_errors(char *cmd);
 char			*get_first_non_empty_arg(char **args);
+char			**get_first_non_empty_arg_pos(char **args);
 int				ft_isinteger(char *str);
 int				ft_count_until_separator(char **str, int actual_arg);
 void			ft_remove_quotes(char *field);
@@ -291,7 +297,10 @@ int				process_csi_escape_sequence(char *bf, char **line,
 void			ft_update_environment_pwds(char *old_pwd, char *pwd);
 int				ft_get_first_fd_available_between(int minimum, int maximum);
 char			*ft_strtrim(char const *s1, char const *set);
+void			ft_delete_existing_key(t_abs_struct *base, char *key);
+char			*expand(t_abs_struct *base, char *cmd);
+int				exists_non_digits_chars(char *exit_code);
+void			ft_wait_for_childs(t_job *j);
 
 t_abs_struct	g_base;
-
 #endif

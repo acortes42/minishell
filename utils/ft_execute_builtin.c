@@ -39,11 +39,23 @@ static void	launch_exit_builtin(char *exit_code)
 {
 	int	exit;
 
-	ft_putstr("exit\n");
+	ft_putstr_fd("exit\n", STDERR_FILENO);
 	if (exit_code)
-		exit = ft_atoi(exit_code);
+	{
+		if (exists_non_digits_chars(exit_code))
+		{
+			ft_putstr_fd("Numeric argument required\n", STDERR_FILENO);
+			exit = 255;
+		}
+		else
+			exit = ft_atoi(exit_code);
+	}
 	else
 		exit = 0;
+	if (exit >= 0)
+		exit = exit % 256;
+	else
+		exit = 256 + (exit % 256);
 	ft_exit_minishell(exit);
 }
 

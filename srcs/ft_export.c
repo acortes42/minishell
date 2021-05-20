@@ -45,10 +45,27 @@ static int	ft_print_declares(t_abs_struct *base)
 	return (1);
 }
 
-int	ft_export(t_abs_struct *base, t_process *p)
+void	ft_export(t_abs_struct *base, t_process *p)
 {
-	if (!p->argv[1])
-		return (ft_print_declares(base));
+	char	*first_non_empty;
+	char	**args;
+
+	p->status = 0;
+	first_non_empty = get_first_non_empty_arg(p->argv + 1);
+	if (!first_non_empty)
+		ft_print_declares(base);
 	else
-		return (ft_setenv(base, p));
+	{
+		args = p->argv + 1;
+		while (args && *args)
+		{
+			if (!ft_setenv(base, *args))
+			{
+				p->status = 1;
+				ft_putstr_fd("Identificador no válido\n", STDERR_FILENO);
+				break ;
+			}
+			args++;
+		}
+	}
 }

@@ -29,7 +29,7 @@ UTILS 				= utils/ft_putnbr.c utils/ft_putstr.c utils/ft_strchr.c \
 	utils/process_escape_sequences.c utils/process_csi_sequences.c \
 	utils/ft_print_last_process_status.c utils/syntactic_errors.c \
 	utils/ft_get_first_fd_available_between.c utils/ft_get_redirection_fd.c \
-	utils/args.c
+	utils/args.c utils/ft_wait_for_childs.c
 
 
 SRCS_WITHOUT_MAIN	=  srcs/ft_exit_minishell.c srcs/clear_screen.c \

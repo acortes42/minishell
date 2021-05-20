@@ -12,35 +12,7 @@
 
 #include "minishell.h"
 
-static int	ft_add_line(char ***envp, int *elems, char *env_value)
-{
-	char		*expanded_value;
-	char		**aux;
-	int			x;
-
-	expanded_value = expand_env_value(*envp, env_value);
-	if (!expanded_value)
-		return (1);
-	x = 0;
-	aux = malloc(sizeof(char *) * (*elems + 2));
-	if (!(aux))
-		return (0);
-	while (x < *elems)
-	{
-		*(aux + x) = *((*envp) + x);
-		*((*envp) + x) = 0;
-		x++;
-	}
-	*(aux + x) = expanded_value;
-	(*elems)++;
-	aux[*elems] = NULL;
-	if (*envp)
-		free(*envp);
-	*envp = aux;
-	return (1);
-}
-
-static int	ft_search_env(char **env, char *key)
+int	ft_search_env(char **env, char *key)
 {
 	int			pos;
 	char		**tmp;
@@ -57,7 +29,7 @@ static int	ft_search_env(char **env, char *key)
 		tmp++;
 		pos++;
 	}
-	return (0);
+	return (-1);
 }
 
 static char	*ft_prepare_export_value(char *value)
@@ -112,30 +84,48 @@ static char	*ft_prepare_export(char *key, char *value)
 	return (adj);
 }
 
-int	ft_setenv(t_abs_struct *base, t_process *p)
+int	is_env_valid_argument(char *arg)
 {
-	int			ret;
-	char		**key_value;
-	char		*tri;
-
-	ret = 0;
-	key_value = ft_split(p->argv[1], '=');
-	if (key_value && *key_value)
+	if (*arg == '$' && *(arg + 1))
+		return (1);
+	if (!ft_strlen(arg))
+		return (1);
+	if (ft_isdigit(*arg))
+		return (0);
+	while (*arg)
 	{
-		if (ft_search_env(base->env, key_value[0]))
-			ft_unset(base, p);
-		tri = ft_prepare_export(key_value[0], key_value[1]);
-		ret = ft_add_line(&base->env, &base->lines_envp, tri);
-		if (!tri || !(ret))
-			ft_putstr_fd("\e[0mNo se añadió el argumento\n", STDERR_FILENO);
-		ft_array_release(key_value);
-		if (tri)
-			free(tri);
-		return (ret);
+		if (ft_strchr("¡'=?¿!\"$%&/().:,;'\"{}+][*><", *arg))
+			return (0);
+		arg++;
 	}
-	if (key_value)
-		ft_array_release(key_value);
-	ft_putstr_fd("\e[0mError en los argumentos\n", STDERR_FILENO);
-	base->error = 0;
-	return (0);
+	return (1);
+}
+
+int	ft_setenv(t_abs_struct *base, char *arg)
+{
+	char	**key_value;
+	char	*tri;
+	int		key_pos;
+	char	*expanded_value;
+
+	if (!arg)
+		return (0);
+	key_value = ft_split_key_value_pair(arg, '=');
+	if (!key_value)
+		return (is_env_valid_argument(arg));
+	else if (**key_value == '$' && *(*key_value + 1))
+		return (1);
+	ft_delete_existing_key(base, key_value[0]);
+	tri = ft_prepare_export(key_value[0], key_value[1]);
+	expanded_value = expand_env_value(base->env, tri);
+	key_pos = ft_array_add(&base->env, &base->lines_envp, expanded_value);
+	if (!tri || !(key_pos))
+	{
+		free(expanded_value);
+		ft_putstr_fd("\e[0mNo se añadió el argumento\n", STDERR_FILENO);
+	}
+	ft_array_release(key_value);
+	if (tri)
+		free(tri);
+	return (1);
 }
