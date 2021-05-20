@@ -24,7 +24,7 @@ static int	execute_environment_builtins(t_abs_struct *base,
 		if (set_redirections(base, p) < 0)
 			return (0);
 		ft_set_pipes(previous, p);
-		ft_env(base);
+		ft_env(base, p);
 	}
 	else if (!ft_strcmp(p->argv[0], "unset"))
 		ft_unset(base, p);

@@ -181,7 +181,7 @@ void			load_next_history_command(t_abs_struct *base, char **line,
 int				ft_pwd(void);
 void			ft_export(t_abs_struct *base, t_process *p);
 int				ft_copy_env(t_abs_struct *base, char **envp);
-int				ft_env(t_abs_struct *base);
+int				ft_env(t_abs_struct *base, t_process *p);
 int				ft_setenv(t_abs_struct *base, char *arg);
 void			ft_exit_minishell(int exit_code);
 int				ft_unset(t_abs_struct *base, t_process *p);

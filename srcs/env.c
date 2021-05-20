@@ -21,10 +21,21 @@ int	ft_copy_env(t_abs_struct *base, char **envp)
 	return (1);
 }
 
-int	ft_env(t_abs_struct *base)
+int	ft_env(t_abs_struct *base, t_process *p)
 {
 	char	**envp;
+	char	*arg;
 
+	arg = get_first_non_empty_arg(p->argv + 1);
+	if (arg)
+	{
+		ft_putstr_fd(arg, STDERR_FILENO);
+		ft_putstr_fd(": No se encontró el fichero o directorio\n",
+			STDERR_FILENO);
+		p->status = 127;
+		base->error = p->status;
+		return (0);
+	}
 	envp = base->env;
 	while (envp && *envp)
 	{
