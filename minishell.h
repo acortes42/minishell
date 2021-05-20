@@ -301,6 +301,7 @@ void			ft_delete_existing_key(t_abs_struct *base, char *key);
 char			*expand(t_abs_struct *base, char *cmd);
 int				exists_non_digits_chars(char *exit_code);
 void			ft_wait_for_childs(t_job *j);
+int				ft_adjust_exit_value(int exit_code);
 
 t_abs_struct	g_base;
 #endif

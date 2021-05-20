@@ -52,10 +52,7 @@ static void	launch_exit_builtin(char *exit_code)
 	}
 	else
 		exit = 0;
-	if (exit >= 0)
-		exit = exit % 256;
-	else
-		exit = 256 + (exit % 256);
+	exit = ft_adjust_exit_value(exit);
 	ft_exit_minishell(exit);
 }
 

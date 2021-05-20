@@ -12,6 +12,17 @@
 
 #include "minishell.h"
 
+int	ft_adjust_exit_value(int exit_code)
+{
+	int	exit;
+
+	if (exit_code >= 0)
+		exit = exit_code % 256;
+	else
+		exit = 256 + (exit_code % 256);
+	return (exit);
+}
+
 void	ft_exit_minishell(int exit_code)
 {
 	extern t_abs_struct	g_base;
