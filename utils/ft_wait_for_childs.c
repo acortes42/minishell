@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-static void	look_for_first_process_not_complete(t_job *j, t_process **prev,
+static void	look_for_first_process_not_completed(t_job *j, t_process **prev,
 				t_process **curr)
 {
 	t_process	*tmp_prev;

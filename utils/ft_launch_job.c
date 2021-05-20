@@ -73,7 +73,7 @@ void	ft_launch_job(t_abs_struct *base, t_job *j)
 		previous = current;
 		current = current->next;
 	}
-	wait_for_childs(j);
+	ft_wait_for_childs(j);
 	restore_std_fds(&base->std_fds);
 	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, signal_handler);
