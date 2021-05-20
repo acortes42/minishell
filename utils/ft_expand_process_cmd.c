@@ -32,7 +32,11 @@ static void	expand_char(t_expand_dollar *d)
 	else if (*d->cmd == '"' && !d->single_quote && !d->scape)
 		ft_expand_quote(d);
 	else if (!ft_strncmp("$?", d->cmd, 2) && ((!d->single_quote) || d->quote))
+	{
+		while (!d->proc->prev->completed)
+			ft_wait_for_process(d->proc->prev);
 		ft_print_last_process_status(d);
+	}
 	else if (!ft_strncmp("$", d->cmd, 1) && (!d->single_quote || d->quote))
 		ft_expand_dollar(d);
 	else if (*d->cmd == '\\' && !d->single_quote)
@@ -61,13 +65,14 @@ static void	process_tilde_expansion(t_expand_dollar *d)
 	}
 }
 
-char	*expand(t_abs_struct *base, char *cmd)
+char	*expand(t_abs_struct *base, t_process *p, char *cmd)
 {
 	t_expand_dollar	d;
 
 	ft_memset(&d, 0, sizeof(t_expand_dollar));
 	d.cmd = cmd;
 	d.base = base;
+	d.proc = p;
 	if (!cmd)
 		d.expanded_len = 0;
 	else
@@ -93,7 +98,7 @@ int	ft_expand_process_cmd(t_abs_struct *base, t_process *p)
 	to_expand = p->argv;
 	while (to_expand && *to_expand)
 	{
-		expanded_slice = expand(base, *to_expand);
+		expanded_slice = expand(base, p, *to_expand);
 		if (!(expanded_slice))
 			return (0);
 		free(*to_expand);

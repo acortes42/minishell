@@ -38,32 +38,25 @@ static void	ft_close_job(t_job *j, int kill_childs)
 	}
 }
 
-static void	ft_wait_for_process(t_process *curr, int *kill_childs)
+void	ft_wait_for_process(t_process *curr)
 {
 	extern t_abs_struct	g_base;
 
+	if (!curr->pid || curr->completed)
+		return ;
 	curr->completed = waitpid(curr->pid, &curr->status, WNOHANG);
 	if (curr->completed && WIFEXITED(curr->status))
 	{
-		if (WEXITSTATUS(curr->status))
-		{
-			curr->status = ft_adjust_exit_value(WEXITSTATUS(curr->status));
-			g_base.error = curr->status;
-			*kill_childs = 1;
-			return ;
-		}
-		curr->status = ft_adjust_exit_value(curr->status);
+		curr->status = ft_adjust_exit_value(WEXITSTATUS(curr->status));
 		g_base.error = curr->status;
 	}
 }
 
 void	ft_wait_for_childs(t_job *j)
 {
-	int				kill_childs;
 	t_process		*curr;
 	t_process		*prev;
 
-	kill_childs = 0;
 	prev = 0;
 	curr = j->first_process;
 	while (true)
@@ -74,11 +67,11 @@ void	ft_wait_for_childs(t_job *j)
 			if (!curr)
 				break ;
 		}
-		ft_wait_for_process(curr, &kill_childs);
-		if (kill_childs)
+		ft_wait_for_process(curr);
+		if (curr->completed && curr->status != 0)
 			break ;
 		prev = curr;
 		curr = curr->next;
 	}
-	ft_close_job(j, kill_childs);
+	ft_close_job(j, curr && curr->status != 0);
 }

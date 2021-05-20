@@ -6,7 +6,7 @@ void	ft_print_last_process_status(t_expand_dollar *d)
 	char			*status;
 	int				len;
 
-	status = ft_itoa(d->base->error);
+	status = ft_itoa(d->proc->prev->status);
 	if (!(status))
 		ft_exit_minishell(1);
 	len = ft_strlen(status);
@@ -25,5 +25,6 @@ void	ft_print_last_process_status(t_expand_dollar *d)
 		ft_memcpy(d->expanded + d->pos, status, len);
 	d->pos += len;
 	d->cmd += 2;
-	free(status);
+	if (status)
+		free(status);
 }

@@ -34,7 +34,7 @@ void	signal_handler(int sig)
 
 void	forked_process_signal_handler(int sig)
 {
-	extern t_abs_struct	g_base;
+	extern t_abs_struct		g_base;
 
 	if (sig == SIGINT || sig == SIGQUIT)
 	{
