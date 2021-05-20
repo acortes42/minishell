@@ -47,7 +47,7 @@ static void	ft_wait_for_process(t_process *curr, int *kill_childs)
 	{
 		if (WEXITSTATUS(curr->status))
 		{
-			curr->status = ft_adjust_exit_value(curr->status);
+			curr->status = ft_adjust_exit_value(WEXITSTATUS(curr->status));
 			g_base.error = curr->status;
 			*kill_childs = 1;
 			return ;
