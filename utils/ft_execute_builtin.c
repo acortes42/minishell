@@ -12,20 +12,14 @@
 
 #include "minishell.h"
 
-static int	execute_environment_builtins(t_abs_struct *base,
-				 t_process *previous, t_process *p)
+static int	execute_environment_builtins(t_abs_struct *base, t_process *p)
 {
 	int	executed;
 
 	executed = 1;
 	base->parse_string = p->argv;
 	if (!ft_strcmp(p->argv[0], "env"))
-	{
-		if (set_redirections(base, p) < 0)
-			return (0);
-		ft_set_pipes(previous, p);
 		ft_env(base, p);
-	}
 	else if (!ft_strcmp(p->argv[0], "unset"))
 		ft_unset(base, p);
 	else if (!ft_strcmp(p->argv[0], "export"))
@@ -56,48 +50,31 @@ static void	launch_exit_builtin(char *exit_code)
 	ft_exit_minishell(exit);
 }
 
-static int	execute_environment_builtins2(t_abs_struct *base,
-	t_process *previous, t_process *p)
+static int	execute_environment_builtins2(t_process *p)
 {
 	if (!ft_strcmp(p->argv[0], "exit"))
 		launch_exit_builtin(p->argv[1]);
 	else if (!ft_strcmp(p->argv[0], "echo"))
 	{
-		if (set_redirections(base, p) < 0)
-			return (0);
-		ft_set_pipes(previous, p);
-		ft_echo(base, p);
+		ft_echo(p);
 		return (1);
 	}
 	else if (!ft_strcmp(p->argv[0], "pwd"))
-	{
-		if (set_redirections(base, p) < 0)
-			return (0);
-		ft_set_pipes(previous, p);
 		return (ft_pwd());
-	}
 	else if (!ft_strcmp(p->argv[0], "cd"))
-	{
-		if (set_redirections(base, p) < 0)
-			return (0);
-		ft_set_pipes(previous, p);
 		return (!cd(p));
-	}
 	return (0);
 }
 
-static int	execute_environment_builtins3(t_process *previous, t_process *p,
-	t_abs_struct *base)
+static int	execute_environment_builtins3(t_process *p, t_abs_struct *base)
 {
 	if (!ft_strcmp(p->argv[0], "history"))
 	{
-		ft_set_pipes(previous, p);
 		ft_history(base);
 		return (1);
 	}
 	else if (!ft_strcmp(p->argv[0], "help"))
 	{
-		ft_set_pipes(previous, p);
 		ft_help();
 		return (1);
 	}
@@ -109,8 +86,7 @@ static int	execute_environment_builtins3(t_process *previous, t_process *p,
 	return (0);
 }
 
-int	ft_execute_builtin(t_abs_struct *base, t_process *previous,
-	t_process *p)
+int	ft_execute_builtin(t_abs_struct *base, t_process *p)
 {
 	int		executed;
 
@@ -123,10 +99,10 @@ int	ft_execute_builtin(t_abs_struct *base, t_process *previous,
 	}
 	base->parse_string = p->argv;
 	base->a = 0;
-	executed = execute_environment_builtins(base, previous, p);
+	executed = execute_environment_builtins(base, p);
 	if (!executed)
-		executed = execute_environment_builtins2(base, previous, p);
+		executed = execute_environment_builtins2(p);
 	if (!executed)
-		executed = execute_environment_builtins3(previous, p, base);
+		executed = execute_environment_builtins3(p, base);
 	return (executed);
 }

@@ -12,35 +12,22 @@
 
 #include "minishell.h"
 
-void	ft_configure_pipes(t_process *current)
+int	ft_configure_pipes(t_process *current)
 {
 	if (current->next)
 	{
 		if (pipe(current->pipe) < 0)
-			ft_exit_minishell(errno);
+		{
+			ft_putstr_fd(strerror(errno), STDERR_FILENO);
+			return (0);
+		}
 	}
 	else
 	{
 		current->pipe[STDIN_FILENO] = -1;
 		current->pipe[STDOUT_FILENO] = -1;
 	}
-}
-
-void	ft_close_pipes(t_process *previous, t_process *current)
-{
-	if (previous)
-	{
-		if (previous->pipe[STDIN_FILENO] > -1)
-		{
-			close(previous->pipe[STDIN_FILENO]);
-			previous->pipe[STDIN_FILENO] = -1;
-		}
-	}
-	if (current->pipe[STDOUT_FILENO] > -1)
-	{
-		close(current->pipe[STDOUT_FILENO]);
-		current->pipe[STDOUT_FILENO] = -1;
-	}
+	return (1);
 }
 
 void	ft_set_pipes(t_process *previous, t_process *current)

@@ -12,16 +12,20 @@
 
 #include "minishell.h"
 
-static void	execute_child(t_abs_struct *base, t_process *previous,
-	t_process *current)
+static void	execute_child(t_abs_struct *base, t_process *current)
 {
-	if (set_redirections(base, current) < 0)
+	if (current->next)
 	{
-		current->status = 1;
-		restore_std_fds(&base->std_fds);
-		exit(current->status);
+		dup2(current->pipe[STDOUT_FILENO], STDOUT_FILENO);
+		close(current->pipe[STDIN_FILENO]);
+		close(current->pipe[STDOUT_FILENO]);
 	}
-	ft_set_pipes(previous, current);
+	if (current->prev)
+	{
+		dup2(current->prev->pipe[STDIN_FILENO], STDIN_FILENO);
+		close(current->prev->pipe[STDIN_FILENO]);
+		close(current->prev->pipe[STDOUT_FILENO]);
+	}
 	ft_launch_process(base, current);
 	exit(current->status);
 }
@@ -33,49 +37,64 @@ static void	execute_child(t_abs_struct *base, t_process *previous,
 // signals at forked child, they will be reset to parent signals in
 // execve
 //
-static void	ft_fork_child(t_abs_struct *base, t_process *previous,
-	t_process *current)
+static void	ft_fork_child(t_abs_struct *base, t_process *current)
 {
 	pid_t	pid;
 
 	pid = fork();
-	if (pid == 0)
-	{
-		execute_child(base, previous, current);
-	}
-	else if (pid < 0)
+	if (pid < 0)
 		ft_exit_minishell(1);
+	else if (!pid)
+		execute_child(base, current);
 	else
-	{
 		current->pid = pid;
-		ft_wait_for_process(current);
+}
+
+static int	prepare_current_process_to_execute(t_process *current)
+{
+	extern t_abs_struct	g_base;
+
+	g_base.current_process = current;
+	ft_expand_process_cmd(&g_base, current);
+	if (!ft_configure_pipes(current)
+		|| set_redirections(&g_base, current) < 0)
+	{
+		current->status = 1;
+		current->completed = 1;
+		return (0);
+	}
+	return (1);
+}
+
+static void	ft_close_dupped_pipes(t_process *p)
+{
+	while (p)
+	{
+		if (p->next)
+		{
+			close(p->pipe[STDIN_FILENO]);
+			close(p->pipe[STDOUT_FILENO]);
+		}
+		p = p->next;
 	}
 }
 
 void	ft_launch_job(t_abs_struct *base, t_job *j)
 {
 	t_process	*current;
-	t_process	*previous;
 
-	signal(SIGINT, forked_process_signal_handler);
-	signal(SIGQUIT, forked_process_signal_handler);
-	previous = 0;
 	current = j->first_process;
 	while (current)
 	{
-		base->current_process = current;
-		ft_expand_process_cmd(base, current);
-		ft_configure_pipes(current);
-		if (!ft_execute_builtin(base, previous, current))
-			ft_fork_child(base, previous, current);
-		else
-			current->completed = 1;
-		base->error = current->status;
-		previous = current;
+		if (prepare_current_process_to_execute(current))
+		{
+			if (current->next || !ft_isbuiltin(current))
+				ft_fork_child(base, current);
+			else
+				current->completed = ft_execute_builtin(base, current);
+		}
 		current = current->next;
 	}
+	ft_close_dupped_pipes(j->first_process);
 	ft_wait_for_childs(j);
-	restore_std_fds(&base->std_fds);
-	signal(SIGINT, signal_handler);
-	signal(SIGQUIT, signal_handler);
 }

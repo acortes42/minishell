@@ -33,7 +33,6 @@ int	ft_env(t_abs_struct *base, t_process *p)
 		ft_putstr_fd(": No se encontró el fichero o directorio\n",
 			STDERR_FILENO);
 		p->status = 127;
-		base->error = p->status;
 		return (0);
 	}
 	envp = base->env;
@@ -41,7 +40,6 @@ int	ft_env(t_abs_struct *base, t_process *p)
 	{
 		ft_putstr(*envp);
 		ft_putstr("\n");
-		base->error = 0;
 		envp++;
 	}
 	return (1);

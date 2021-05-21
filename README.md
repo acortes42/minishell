@@ -34,7 +34,7 @@ tldp.org/LDP/abs/html/exitcodes.html -> si salimos con un código de error por e
 https://www.gnu.org/software/libc/manual/html_node/Launching-Jobs.html
 ##### Problems
 ###### wait
-* Not child processes: https://stackoverflow.com/questions/1608017/no-child-process-error-from-waitpid-when-waiting-for-process-group
+* No child processes: https://stackoverflow.com/questions/1608017/no-child-process-error-from-waitpid-when-waiting-for-process-group
 ###### Core dump files
 check man 5 core. Also check /proc/sys/kernel/core_pattern file.
 
@@ -44,3 +44,7 @@ Debug child thread of a fork. Set follow-fork-mode to child in the Debug console
 * -exec set follow-fork-mode child
 Debug main thread of a fork
 * -exec set follow-fork-mode parent
+#### Comandos útiles para confirmar cómo funciona
+* Determinar archivos abiertos perdidos
+lsof -u {username} | wc -l
+8829
