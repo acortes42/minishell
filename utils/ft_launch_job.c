@@ -48,6 +48,7 @@ static void	ft_fork_child(t_abs_struct *base, t_process *previous,
 	else
 	{
 		current->pid = pid;
+		ft_wait_for_process(current);
 	}
 }
 

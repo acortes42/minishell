@@ -24,7 +24,7 @@ static int	execute_environment_builtins(t_abs_struct *base,
 		if (set_redirections(base, p) < 0)
 			return (0);
 		ft_set_pipes(previous, p);
-		ft_env(base);
+		ft_env(base, p);
 	}
 	else if (!ft_strcmp(p->argv[0], "unset"))
 		ft_unset(base, p);
@@ -52,10 +52,7 @@ static void	launch_exit_builtin(char *exit_code)
 	}
 	else
 		exit = 0;
-	if (exit >= 0)
-		exit = exit % 256;
-	else
-		exit = 256 + (exit % 256);
+	exit = ft_adjust_exit_value(exit);
 	ft_exit_minishell(exit);
 }
 

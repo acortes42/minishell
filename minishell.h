@@ -66,6 +66,7 @@ typedef struct s_files_fd
 
 typedef struct s_process
 {
+	struct s_process		*prev;
 	struct s_process		*next;
 	char					**argv;
 	char					**redirs;
@@ -123,6 +124,7 @@ typedef struct s_abs_struct
 typedef struct s_expand_dollar
 {
 	t_abs_struct			*base;
+	t_process				*proc;
 	char					*expanded;
 	size_t					expanded_len;
 	size_t					pos;
@@ -181,7 +183,7 @@ void			load_next_history_command(t_abs_struct *base, char **line,
 int				ft_pwd(void);
 void			ft_export(t_abs_struct *base, t_process *p);
 int				ft_copy_env(t_abs_struct *base, char **envp);
-int				ft_env(t_abs_struct *base);
+int				ft_env(t_abs_struct *base, t_process *p);
 int				ft_setenv(t_abs_struct *base, char *arg);
 void			ft_exit_minishell(int exit_code);
 int				ft_unset(t_abs_struct *base, t_process *p);
@@ -213,7 +215,7 @@ int				ft_input_redirection(char *redir, int *redirected);
 void			ft_set_pipes(t_process *previous, t_process *current);
 void			ft_close_pipes(t_process *previous, t_process *current);
 void			ft_configure_pipes(t_process *current);
-int				ft_expand_process_cmd(t_abs_struct *base, t_process *p);
+int				ft_expand_process_cmd(t_abs_struct *base, t_process *curr);
 void			ft_expand_tilde(t_expand_dollar *d);
 
 void			ft_launch_job(t_abs_struct *base, t_job *j);
@@ -298,9 +300,12 @@ void			ft_update_environment_pwds(char *old_pwd, char *pwd);
 int				ft_get_first_fd_available_between(int minimum, int maximum);
 char			*ft_strtrim(char const *s1, char const *set);
 void			ft_delete_existing_key(t_abs_struct *base, char *key);
-char			*expand(t_abs_struct *base, char *cmd);
+char			*expand(t_abs_struct *base, t_process *curr,
+					char *cmd);
 int				exists_non_digits_chars(char *exit_code);
 void			ft_wait_for_childs(t_job *j);
+int				ft_adjust_exit_value(int exit_code);
+void			ft_wait_for_process(t_process *curr);
 
 t_abs_struct	g_base;
 #endif

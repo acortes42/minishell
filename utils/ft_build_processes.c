@@ -31,6 +31,7 @@ t_process	*ft_build_processes(char *cmd)
 		else
 		{
 			last_proc->next = ft_build_process(proc_cmd);
+			last_proc->next->prev = last_proc;
 			last_proc = last_proc->next;
 		}
 		free(proc_cmd);
