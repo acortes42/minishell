@@ -37,18 +37,24 @@ static char	*ft_get_path_to_execute(char *paths, char *cmd)
 
 static void	ft_process_not_found_command(t_process *p)
 {
+	extern t_abs_struct	g_base;
+
 	ft_putstr_fd(*p->argv, STDERR_FILENO);
 	ft_putstr_fd(": not found command\n", STDERR_FILENO);
 	p->completed = 1;
 	p->status = 127;
+	g_base.last_status = p->status;
 }
 
 static void	ft_process_is_a_directory_command(t_process *p)
 {
+	extern t_abs_struct	g_base;
+
 	ft_putstr_fd(*p->argv, STDERR_FILENO);
 	ft_putstr_fd(": is a directory\n", STDERR_FILENO);
 	p->completed = 1;
 	p->status = 126;
+	g_base.last_status = p->status;
 }
 
 static void	ft_execute_shell_command_using_path(t_abs_struct *base,
@@ -79,9 +85,6 @@ static void	ft_execute_shell_command_using_path(t_abs_struct *base,
 
 void	ft_launch_process(t_abs_struct *base, t_process *current)
 {
-	current->status = ft_set_default_signals();
-	if (current->status)
-		return ;
 	if (*current->argv[0] == '/' || !ft_strncmp(current->argv[0], "./", 2)
 		|| !ft_strncmp(current->argv[0], "../", 3))
 		ft_execute_absolute_shell_command(base, current->argv[0], current);

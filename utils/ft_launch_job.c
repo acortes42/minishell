@@ -47,7 +47,10 @@ static void	ft_fork_child(t_abs_struct *base, t_process *current)
 	else if (!pid)
 		execute_child(base, current);
 	else
+	{
 		current->pid = pid;
+		ft_wait_for_process(current);
+	}
 }
 
 static int	prepare_current_process_to_execute(t_process *current)
@@ -61,6 +64,7 @@ static int	prepare_current_process_to_execute(t_process *current)
 	{
 		current->status = 1;
 		current->completed = 1;
+		g_base.last_status = current->status;
 		return (0);
 	}
 	return (1);

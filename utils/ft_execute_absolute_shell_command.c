@@ -36,6 +36,7 @@ void	ft_execute_absolute_shell_command(t_abs_struct *base,
 	else if (errno == EACCES)
 		p->status = 126;
 	p->completed = 1;
+	base->last_status = p->status;
 	ft_putstr_fd(strerror(errno), STDERR_FILENO);
 	ft_putstr_fd("\n", STDERR_FILENO);
 }

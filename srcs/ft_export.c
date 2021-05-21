@@ -62,6 +62,7 @@ void	ft_export(t_abs_struct *base, t_process *p)
 			if (!ft_setenv(base, *args))
 			{
 				p->status = 1;
+				base->last_status = p->status;
 				ft_putstr_fd("Identificador no válido\n", STDERR_FILENO);
 				break ;
 			}

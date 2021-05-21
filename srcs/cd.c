@@ -14,13 +14,15 @@
 
 int	go_home(t_process *p)
 {
-	char	*home;
+	extern t_abs_struct	g_base;
+	char				*home;
 
 	home = ft_getenv(g_base.env, "HOME");
 	if (!home)
 	{
 		ft_putstr_fd("\e[0mcd: HOME not defined\n", STDERR_FILENO);
 		p->status = 127;
+		g_base.last_status = p->status;
 		return (1);
 	}
 	home = ft_strdup(home + 5);
@@ -32,13 +34,15 @@ int	go_home(t_process *p)
 
 int	go_oldpwd(t_process *p)
 {
-	char	*oldpwd;
+	extern t_abs_struct	g_base;
+	char				*oldpwd;
 
 	oldpwd = ft_getenv(g_base.env, "OLDPWD");
 	if (!oldpwd)
 	{
 		ft_putstr_fd("\e[0mcd: OLDPWD no está establecido\n", STDERR_FILENO);
 		p->status = 127;
+		g_base.last_status = p->status;
 		return (1);
 	}
 	oldpwd = ft_strdup(oldpwd + 7);
@@ -81,6 +85,7 @@ static int	ft_non_empty_args(char **argv)
 
 int	cd(t_process *p)
 {
+	extern t_abs_struct	g_base;
 	int					args;
 
 	p->status = 0;
@@ -91,6 +96,7 @@ int	cd(t_process *p)
 	{
 		ft_putstr_fd("\e[0mcd: demasiados argumentos\n", STDERR_FILENO);
 		p->status = 127;
+		g_base.last_status = p->status;
 		return (1);
 	}
 	else if (args == 2)

@@ -31,7 +31,9 @@ static void	ft_close_job(t_job *j, int kill_childs)
 
 void	ft_wait_for_process(t_process *curr)
 {
-	pid_t	pid;
+	extern t_abs_struct	g_base;
+	pid_t				pid;
+
 
 	if (!curr->pid || curr->completed)
 		return ;
@@ -40,6 +42,7 @@ void	ft_wait_for_process(t_process *curr)
 	{
 		curr->completed = 1;
 		curr->status = ft_adjust_exit_value(WEXITSTATUS(curr->status));
+		g_base.last_status = curr->status;
 	}
 }
 

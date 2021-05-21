@@ -7,6 +7,7 @@ static void	perform_environment_update(t_env_update *info)
 	if (!info->changed_dir)
 	{
 		info->p->status = 127;
+		g_base.last_status = info->p->status;
 		if (info->old_pwd)
 			free(info->old_pwd);
 		info->old_pwd = ft_strdup(ft_getenv(g_base.env, "PWD") + 4);
@@ -15,6 +16,7 @@ static void	perform_environment_update(t_env_update *info)
 	else
 	{
 		info->p->status = 0;
+		g_base.last_status = info->p->status;
 		ft_update_environment_pwds(info->old_pwd, info->pwd);
 	}
 	if (info->pwd)

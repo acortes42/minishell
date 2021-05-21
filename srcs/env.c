@@ -33,6 +33,7 @@ int	ft_env(t_abs_struct *base, t_process *p)
 		ft_putstr_fd(": No se encontró el fichero o directorio\n",
 			STDERR_FILENO);
 		p->status = 127;
+		base->last_status = p->status;
 		return (0);
 	}
 	envp = base->env;
@@ -59,6 +60,7 @@ int	ft_unset(t_abs_struct *base, t_process *p)
 		{
 			ft_putstr_fd("Identificador no válido\n", STDERR_FILENO);
 			p->status = 1;
+			base->last_status = p->status;
 			return (1);
 		}
 		else if (ft_strlen(*argv))
