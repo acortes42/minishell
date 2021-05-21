@@ -34,7 +34,6 @@ void	ft_wait_for_process(t_process *curr)
 	extern t_abs_struct	g_base;
 	pid_t				pid;
 
-
 	if (!curr->pid || curr->completed)
 		return ;
 	pid = waitpid(curr->pid, &curr->status, WNOHANG);

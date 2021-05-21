@@ -29,7 +29,8 @@ void	signal_handler(int sig)
 	else if (sig == SIGQUIT)
 	{
 		g_base.last_status = 0;
-	}}
+	}
+}
 
 void	forked_process_signal_handler(int sig)
 {
