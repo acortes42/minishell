@@ -66,6 +66,12 @@ TESTS_IT			:= check_it
 
 all: ${NAME}
 
+clear_pipes_top:
+	${RM} pipes_top
+
+pipes_top: clear_pipes_top
+	${CC} -o pipes_top ${CFLAGS} tests/test_pipes_top.c
+
 keyboard: fclean
 	${CC} -o test_keyboard ${CFLAGS} tests/keyboard.c
 
