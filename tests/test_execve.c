@@ -45,5 +45,5 @@ int main(int argc, char **argv, char **envp)
 		argv2[0] = "grep";
 		argv2[1] = 0;
 		// top
-		execve("/bin/grep", argv2, envp);
+		execve("/usr/bin/grep", argv2, envp);
 }
