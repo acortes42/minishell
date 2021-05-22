@@ -24,7 +24,7 @@ void	signal_handler(int sig)
 			free(g_base.input);
 		g_base.last_status = 1;
 		g_base.input = 0;
-		ft_putstr("^C\n");
+		ft_putstr("\n");
 		ft_show_prompt(&g_base);
 	}
 	else if (sig == SIGQUIT)
