@@ -26,7 +26,7 @@ static void	echo_args(char **argv)
 	}
 }
 
-int	ft_echo(t_abs_struct *base, t_process *p)
+int	ft_echo(t_process *p)
 {
 	int		i;
 	int		flag;
@@ -51,6 +51,5 @@ int	ft_echo(t_abs_struct *base, t_process *p)
 	echo_args(p->argv + i);
 	if (!flag)
 		ft_putstr("\n");
-	base->error = 0;
 	return (1);
 }

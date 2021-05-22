@@ -3,10 +3,10 @@
         {
 
             "type": "shell",
-            "label": "keyboardTestBuild",
+            "label": "testBuild",
             "command": "make",
             "args": [
-                "keyboard"
+                "pipes_top"
             ],
             "options": {
                 "cwd": "${workspaceFolder}"

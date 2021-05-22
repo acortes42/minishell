@@ -6,7 +6,7 @@ void	ft_print_last_process_status(t_expand_dollar *d)
 	char			*status;
 	int				len;
 
-	status = ft_itoa(d->proc->prev->status);
+	status = ft_itoa(d->base->last_status);
 	if (!(status))
 		ft_exit_minishell(1);
 	len = ft_strlen(status);

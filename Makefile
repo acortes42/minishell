@@ -29,7 +29,7 @@ UTILS 				= utils/ft_putnbr.c utils/ft_putstr.c utils/ft_strchr.c \
 	utils/process_escape_sequences.c utils/process_csi_sequences.c \
 	utils/ft_print_last_process_status.c utils/syntactic_errors.c \
 	utils/ft_get_first_fd_available_between.c utils/ft_get_redirection_fd.c \
-	utils/args.c utils/ft_wait_for_childs.c
+	utils/args.c utils/ft_wait_for_childs.c utils/ft_isbuiltin.c
 
 
 SRCS_WITHOUT_MAIN	=  srcs/ft_exit_minishell.c srcs/clear_screen.c \
@@ -70,7 +70,7 @@ clear_pipes_top:
 	${RM} pipes_top
 
 pipes_top: clear_pipes_top
-	${CC} -o pipes_top ${CFLAGS} tests/test_pipes_top.c
+	${CC} -o pipes_top ${CFLAGS} tests/test_pipes_top2.c
 
 keyboard: fclean
 	${CC} -o test_keyboard ${CFLAGS} tests/keyboard.c

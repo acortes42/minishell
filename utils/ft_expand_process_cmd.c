@@ -32,11 +32,7 @@ static void	expand_char(t_expand_dollar *d)
 	else if (*d->cmd == '"' && !d->single_quote && !d->scape)
 		ft_expand_quote(d);
 	else if (!ft_strncmp("$?", d->cmd, 2) && ((!d->single_quote) || d->quote))
-	{
-		while (!d->proc->prev->completed)
-			ft_wait_for_process(d->proc->prev);
 		ft_print_last_process_status(d);
-	}
 	else if (!ft_strncmp("$", d->cmd, 1) && (!d->single_quote || d->quote))
 		ft_expand_dollar(d);
 	else if (*d->cmd == '\\' && !d->single_quote)

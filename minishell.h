@@ -13,14 +13,14 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <sys/wait.h>
 # include <sys/types.h>
 # include <sys/stat.h>
+# include <sys/wait.h>
+# include <fcntl.h>
 # include <stdio.h>
 # include <termios.h>
 # include <curses.h>
 # include <term.h>
-# include <fcntl.h>
 # include <stddef.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -105,13 +105,13 @@ typedef struct s_abs_struct
 	char					input_bf[BUFFER_SIZE];
 	char					**parse_string;
 	int						a;
-	int						error;
 	int						flag;
 	int						ctrl_d_times;
 	char					*arrow_up;
 	char					*arrow_down;
 	t_job					*first_job;
 	t_process				*current_process;
+	int						last_status;
 	unsigned int			c_lflag;
 	int						counter;
 	char					**history;
@@ -172,7 +172,7 @@ int				go_home(t_process *p);
 int				go_oldpwd(t_process *p);
 void			perform_chdir_and_environment_update(t_process *p, char *home);
 char			*ft_get_absolute_path(t_abs_struct *base, char *path);
-int				ft_echo(t_abs_struct *base, t_process *p);
+int				ft_echo(t_process *p);
 int				ft_history(t_abs_struct *base);
 int				ft_open_history(t_abs_struct *base, int mode);
 void			ft_write_history_line(t_abs_struct *base);
@@ -214,14 +214,13 @@ int				ft_output_redirection(char *redir, int *redirected);
 int				ft_input_redirection(char *redir, int *redirected);
 void			ft_set_pipes(t_process *previous, t_process *current);
 void			ft_close_pipes(t_process *previous, t_process *current);
-void			ft_configure_pipes(t_process *current);
+int				ft_configure_pipes(t_process *current);
 int				ft_expand_process_cmd(t_abs_struct *base, t_process *curr);
 void			ft_expand_tilde(t_expand_dollar *d);
 
 void			ft_launch_job(t_abs_struct *base, t_job *j);
 void			ft_launch_process(t_abs_struct *base, t_process *p);
-int				ft_execute_builtin(t_abs_struct *base, t_process *previous, \
-				t_process *current);
+int				ft_execute_builtin(t_abs_struct *base, t_process *current);
 
 void			ft_release_base(t_abs_struct *base);
 void			ft_release_jobs(t_job *job);
@@ -306,6 +305,7 @@ int				exists_non_digits_chars(char *exit_code);
 void			ft_wait_for_childs(t_job *j);
 int				ft_adjust_exit_value(int exit_code);
 void			ft_wait_for_process(t_process *curr);
+int				ft_isbuiltin(t_process *p);
 
 t_abs_struct	g_base;
 #endif

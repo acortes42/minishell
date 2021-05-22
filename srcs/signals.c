@@ -16,19 +16,20 @@ void	signal_handler(int sig)
 {
 	extern t_abs_struct	g_base;
 
-	g_base.error = 128 + sig;
+	g_base.last_status = 128 + sig;
 	if (sig == SIGINT)
 	{
 		ft_memset(g_base.input_bf, 0, BUFFER_SIZE);
 		if (g_base.input)
 			free(g_base.input);
+		g_base.last_status = 1;
 		g_base.input = 0;
-		ft_putstr("^C\n");
+		ft_putstr("\n");
 		ft_show_prompt(&g_base);
 	}
 	else if (sig == SIGQUIT)
 	{
-		g_base.error = 0;
+		g_base.last_status = 0;
 	}
 }
 
@@ -38,10 +39,16 @@ void	forked_process_signal_handler(int sig)
 
 	if (sig == SIGINT || sig == SIGQUIT)
 	{
+		g_base.last_status = 128 + sig;
 		if (sig == SIGINT)
+		{
 			ft_putstr("\n");
+			g_base.last_status = 1;
+		}
 		else if (sig == SIGQUIT)
+		{
 			ft_putstr_fd("Abandona (`core' generado)\n", STDERR_FILENO);
-		g_base.current_process->status = 128 + sig;
+			g_base.last_status = 0;
+		}
 	}
 }

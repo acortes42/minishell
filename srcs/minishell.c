@@ -64,8 +64,14 @@ static void	execute_command_read(t_abs_struct *base)
 		base->first_job = ft_build_jobs(base->input);
 		while (base->first_job)
 		{
+			signal(SIGINT, forked_process_signal_handler);
+			signal(SIGQUIT, forked_process_signal_handler);
+			dup_std_fds(&base->std_fds);
 			ft_launch_job(base, base->first_job);
 			base->first_job = ft_release_job(base->first_job);
+			restore_std_fds(&base->std_fds);
+			signal(SIGINT, signal_handler);
+			signal(SIGQUIT, signal_handler);
 		}
 	}
 	if (!ft_setlflag(STDIN_FILENO, 0, ICANON | ECHO | IEXTEN))
