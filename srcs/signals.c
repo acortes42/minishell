@@ -19,8 +19,7 @@ void	signal_handler(int sig)
 	g_base.last_status = 128 + sig;
 	if (sig == SIGINT)
 	{
-		if (!g_base.current_process)
-			g_base.last_status = 1;
+		g_base.last_status = 1;
 		ft_memset(g_base.input_bf, 0, BUFFER_SIZE);
 		if (g_base.input)
 			free(g_base.input);
