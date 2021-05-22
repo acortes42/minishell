@@ -36,13 +36,9 @@ void	ft_wait_for_process(t_process *curr)
 
 	if (!curr->pid || curr->completed)
 		return ;
-	pid = waitpid(curr->pid, &curr->status, WNOHANG || WUNTRACED);
+	pid = waitpid(curr->pid, &curr->status, WNOHANG | WUNTRACED);
 	if (pid > 0)
 	{
-		ft_putstr_fd("waited ", STDERR_FILENO);
-		ft_putstr_fd(*curr->argv, STDERR_FILENO);
-		ft_putstr_fd("\n", STDERR_FILENO);
-
 		curr->completed = 1;
 		if (WIFEXITED(curr->status))
 			curr->status = ft_adjust_exit_value(WEXITSTATUS(curr->status));
