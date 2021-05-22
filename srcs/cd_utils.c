@@ -6,7 +6,7 @@ static void	perform_environment_update(t_env_update *info)
 
 	if (!info->changed_dir)
 	{
-		info->p->status = 127;
+		info->p->status = 1;
 		g_base.last_status = info->p->status;
 		if (info->old_pwd)
 			free(info->old_pwd);

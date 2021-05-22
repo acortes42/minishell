@@ -32,7 +32,7 @@ int	ft_env(t_abs_struct *base, t_process *p)
 		ft_putstr_fd(arg, STDERR_FILENO);
 		ft_putstr_fd(": No se encontró el fichero o directorio\n",
 			STDERR_FILENO);
-		p->status = 127;
+		p->status = 1;
 		base->last_status = p->status;
 		return (0);
 	}

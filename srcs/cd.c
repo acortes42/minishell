@@ -21,7 +21,7 @@ int	go_home(t_process *p)
 	if (!home)
 	{
 		ft_putstr_fd("\e[0mcd: HOME not defined\n", STDERR_FILENO);
-		p->status = 127;
+		p->status = 1;
 		g_base.last_status = p->status;
 		return (1);
 	}
@@ -41,7 +41,7 @@ int	go_oldpwd(t_process *p)
 	if (!oldpwd)
 	{
 		ft_putstr_fd("\e[0mcd: OLDPWD no está establecido\n", STDERR_FILENO);
-		p->status = 127;
+		p->status = 1;
 		g_base.last_status = p->status;
 		return (1);
 	}
@@ -52,11 +52,11 @@ int	go_oldpwd(t_process *p)
 	return (0);
 }
 
-static int	go_argv(t_process *p)
+static int	go_argv(t_process *p, char *path)
 {
 	char	*home;
 
-	home = ft_strdup(*(p->argv + 1));
+	home = ft_strdup(path);
 	if (!home)
 		ft_exit_minishell(1);
 	perform_chdir_and_environment_update(p, home);
@@ -87,24 +87,19 @@ int	cd(t_process *p)
 {
 	extern t_abs_struct	g_base;
 	int					args;
+	char				*arg;
 
 	p->status = 0;
 	if (!p || !p->argv || !(*p->argv))
 		ft_exit_minishell(1);
 	args = ft_non_empty_args(p->argv);
-	if (args > 2)
+	if (args >= 2)
 	{
-		ft_putstr_fd("\e[0mcd: demasiados argumentos\n", STDERR_FILENO);
-		p->status = 127;
-		g_base.last_status = p->status;
-		return (1);
-	}
-	else if (args == 2)
-	{
-		if (!ft_strcmp(*(p->argv + 1), "-"))
+		arg = get_first_non_empty_arg(p->argv + 1);
+		if (!ft_strcmp(arg, "-"))
 			return (go_oldpwd(p));
 		else
-			return (go_argv(p));
+			return (go_argv(p, arg));
 	}
 	else
 		return (go_home(p));
