@@ -43,7 +43,7 @@ static void	parse_n_flag(char ***args, int *active)
 			else
 			{
 				*active = 1;
-				(*args) ++;
+				(*args)++;
 			}
 		}
 	}
