@@ -92,7 +92,7 @@ void	ft_launch_job(t_abs_struct *base, t_job *j)
 	{
 		if (prepare_current_process_to_execute(current))
 		{
-			if (current->next || !ft_isbuiltin(current))
+			if (current->next || current->prev || !ft_isbuiltin(current))
 				ft_fork_child(base, current);
 			else
 				current->completed = ft_execute_builtin(base, current);
