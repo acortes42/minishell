@@ -43,7 +43,7 @@ void	ft_wait_for_process(t_process *curr)
 		if (WIFEXITED(curr->status))
 			curr->status = ft_adjust_exit_value(WEXITSTATUS(curr->status));
 		else if (WIFSIGNALED(curr->status) || WIFSTOPPED(curr->status))
-			curr->status = 1;
+			curr->status = 0;
 		else
 			curr->status = 0;
 		g_base.last_status = curr->status;

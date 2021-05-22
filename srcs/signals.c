@@ -15,6 +15,13 @@
 void	signal_handler(int sig)
 {
 	extern t_abs_struct	g_base;
+	char *a;
+
+	a = ft_itoa(sig);
+	ft_putstr_fd("Signal ", STDERR_FILENO);
+	ft_putstr_fd(a, STDERR_FILENO);
+	ft_putstr_fd("\n", STDERR_FILENO);
+	free(a);
 
 	g_base.last_status = 128 + sig;
 	if (sig == SIGINT)
@@ -43,5 +50,12 @@ void	forked_process_signal_handler(int sig)
 		else if (sig == SIGQUIT)
 			ft_putstr_fd("Abandona (`core' generado)\n", STDERR_FILENO);
 		g_base.last_status = 128 + sig;
+		char *a;
+
+		a = ft_itoa(sig);
+		ft_putstr_fd("Signal ", STDERR_FILENO);
+		ft_putstr_fd(a, STDERR_FILENO);
+		ft_putstr_fd("\n", STDERR_FILENO);
+		free(a);
 	}
 }
