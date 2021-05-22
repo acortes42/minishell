@@ -34,6 +34,9 @@ static void	execute_child(t_abs_struct *base, t_process *current)
 		ft_execute_builtin(base, current);
 	else
 		ft_launch_process(base, current);
+
+	ft_putstr_fd("Fin forked execution\n", STDERR_FILENO);
+
 	exit(current->status);
 }
 
