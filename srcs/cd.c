@@ -21,7 +21,7 @@ int	go_home(t_process *p)
 	if (!home)
 	{
 		ft_putstr_fd("\e[0mcd: HOME not defined\n", STDERR_FILENO);
-		p->status = 127;
+		p->status = 1;
 		g_base.last_status = p->status;
 		return (1);
 	}
@@ -41,7 +41,7 @@ int	go_oldpwd(t_process *p)
 	if (!oldpwd)
 	{
 		ft_putstr_fd("\e[0mcd: OLDPWD no está establecido\n", STDERR_FILENO);
-		p->status = 127;
+		p->status = 1;
 		g_base.last_status = p->status;
 		return (1);
 	}
