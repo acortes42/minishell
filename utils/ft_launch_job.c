@@ -14,6 +14,10 @@
 
 static void	execute_child(t_abs_struct *base, t_process *current)
 {
+	ft_putstr_fd("Forked execution: ", STDERR_FILENO);
+	ft_putstr_fd(*current->argv, STDERR_FILENO);
+	ft_putstr_fd("\n", STDERR_FILENO);
+
 	if (current->next)
 	{
 		dup2(current->pipe[STDOUT_FILENO], STDOUT_FILENO);
@@ -26,7 +30,10 @@ static void	execute_child(t_abs_struct *base, t_process *current)
 		close(current->prev->pipe[STDIN_FILENO]);
 		close(current->prev->pipe[STDOUT_FILENO]);
 	}
-	ft_launch_process(base, current);
+	if (ft_isbuiltin(current))
+		ft_execute_builtin(base, current);
+	else
+		ft_launch_process(base, current);
 	exit(current->status);
 }
 
