@@ -25,6 +25,7 @@ static void	execute_child(t_abs_struct *base, t_process *current)
 		dup2(current->prev->pipe[STDIN_FILENO], STDIN_FILENO);
 		close(current->prev->pipe[STDIN_FILENO]);
 		close(current->prev->pipe[STDOUT_FILENO]);
+		ft_close_dupped_pipes(current->prev->prev, 0);
 	}
 	if (ft_isbuiltin(current))
 		ft_execute_builtin(base, current);
@@ -73,16 +74,23 @@ static int	prepare_current_process_to_execute(t_process *current)
 	return (1);
 }
 
-static void	ft_close_dupped_pipes(t_process *p)
+void	ft_close_dupped_pipes(t_process *p, int forward)
 {
 	while (p)
 	{
-		if (p->next)
+		if ((forward && p->next) || !forward)
 		{
-			close(p->pipe[STDIN_FILENO]);
-			close(p->pipe[STDOUT_FILENO]);
+			if (p->pipe[STDIN_FILENO] > -1)
+				close(p->pipe[STDIN_FILENO]);
+			if (p->pipe[STDOUT_FILENO] > -1)
+				close(p->pipe[STDOUT_FILENO]);
+			p->pipe[STDIN_FILENO] = -1;
+			p->pipe[STDOUT_FILENO] = -1;
 		}
-		p = p->next;
+		if (forward)
+			p = p->next;
+		else
+			p = p->prev;
 	}
 }
 
@@ -102,6 +110,6 @@ void	ft_launch_job(t_abs_struct *base, t_job *j)
 		}
 		current = current->next;
 	}
-	ft_close_dupped_pipes(j->first_process);
+	ft_close_dupped_pipes(j->first_process, 1);
 	ft_wait_for_childs(j);
 }

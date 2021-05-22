@@ -306,6 +306,7 @@ void			ft_wait_for_childs(t_job *j);
 int				ft_adjust_exit_value(int exit_code);
 void			ft_wait_for_process(t_process *curr);
 int				ft_isbuiltin(t_process *p);
+void			ft_close_dupped_pipes(t_process *p, int forward);
 
 t_abs_struct	g_base;
 #endif

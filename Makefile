@@ -70,7 +70,7 @@ clear_pipes_top:
 	${RM} pipes_top
 
 pipes_top: clear_pipes_top
-	${CC} -o pipes_top ${CFLAGS} tests/test_pipes_top2.c
+	${CC} -o pipes_top ${CFLAGS} tests/test_pipes_top.c
 
 keyboard: fclean
 	${CC} -o test_keyboard ${CFLAGS} tests/keyboard.c
