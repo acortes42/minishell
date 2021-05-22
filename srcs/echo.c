@@ -26,10 +26,34 @@ static void	echo_args(char **argv)
 	}
 }
 
+static void	parse_n_flag(char ***args, int *active)
+{
+	if (!args)
+		return ;
+	*active = 0;
+	while (*args)
+	{
+		*args = get_first_non_empty_arg_pos(*args);
+		if (!(*args))
+			return ;
+		else
+		{
+			if (ft_strcmp(**args, "-n"))
+				return ;
+			else
+			{
+				*active = 1;
+				(*args) ++;
+			}
+		}
+	}
+}
+
 int	ft_echo(t_process *p)
 {
 	int		i;
 	int		flag;
+	char	**args;
 
 	i = 1;
 	if (!p->argv[i])
@@ -37,18 +61,16 @@ int	ft_echo(t_process *p)
 		ft_putstr("\n");
 		return (1);
 	}
-	flag = 1;
-	if (ft_strcmp(p->argv[i], "-n"))
-		flag = 0;
-	if (flag)
-		i++;
-	if (!p->argv[i])
+	flag = 0;
+	args = p->argv + 1;
+	parse_n_flag(&args, &flag);
+	if (!args)
 	{
 		if (!flag)
 			ft_putstr("\n");
 		return (1);
 	}
-	echo_args(p->argv + i);
+	echo_args(args);
 	if (!flag)
 		ft_putstr("\n");
 	return (1);
