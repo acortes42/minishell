@@ -31,7 +31,12 @@ void	ft_execute_absolute_shell_command(t_abs_struct *base,
 	if (!check_command_syntax(p->argv))
 		return ;
 	execve(cmd, p->argv, base->env);
-	p->status = 1;
+	if (errno == EACCES)
+		p->status = 126;
+	else if (errno == ENOENT || errno == ENOEXEC)
+		p->status = 127;
+	else
+		p->status = 1;
 	p->completed = 1;
 	base->last_status = p->status;
 	ft_putstr_fd(strerror(errno), STDERR_FILENO);
