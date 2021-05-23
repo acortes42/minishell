@@ -27,6 +27,11 @@ static int	apply_input_redirection(int i_fd, char *right_side)
 		return (1);
 	}
 	o_fd = ft_get_redirection_fd(fd_file, O_RDONLY, 0666, -1);
+	if (o_fd < 0)
+	{
+		ft_putstr_fd(strerror(errno), STDERR_FILENO);
+		ft_putstr_fd("\n", STDERR_FILENO);
+	}
 	dup2(o_fd, i_fd);
 	if (*fd_file != '&' && o_fd >= 0)
 		close(o_fd);

@@ -32,11 +32,18 @@ static void	ft_configure_process_pipes(t_process *current)
 static void	execute_child(t_abs_struct *base, t_process *current)
 {
 	ft_configure_process_pipes(current);
-	set_redirections(&g_base, current);
-	if (ft_isbuiltin(current))
-		ft_execute_builtin(base, current);
+	if (set_redirections(&g_base, current) <= 0)
+	{
+		current->completed = 1;
+		current->status = 1;
+	}
 	else
-		ft_launch_process(base, current);
+	{
+		if (ft_isbuiltin(current))
+			ft_execute_builtin(base, current);
+		else
+			ft_launch_process(base, current);
+	}
 	exit(current->status);
 }
 
