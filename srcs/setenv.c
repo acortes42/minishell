@@ -107,14 +107,10 @@ int	ft_setenv(t_abs_struct *base, char *arg)
 	char	*tri;
 	int		key_pos;
 	char	*expanded_value;
+	int		return_value;
 
-	if (!arg)
-		return (0);
-	key_value = ft_split_key_value_pair(arg, '=');
-	if (!key_value)
-		return (is_env_valid_argument(arg));
-	else if (**key_value == '$' && *(*key_value + 1))
-		return (1);
+	if (extract_key_value(arg, &key_value, &return_value))
+		return (return_value);
 	ft_delete_existing_key(base, key_value[0]);
 	tri = ft_prepare_export(key_value[0], key_value[1]);
 	expanded_value = expand_env_value(base->env, tri);

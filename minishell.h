@@ -186,7 +186,7 @@ int				ft_copy_env(t_abs_struct *base, char **envp);
 int				ft_env(t_abs_struct *base, t_process *p);
 int				ft_setenv(t_abs_struct *base, char *arg);
 void			ft_exit_minishell(int exit_code);
-int				ft_unset(t_abs_struct *base, t_process *p);
+void			ft_unset(t_abs_struct *base, t_process *p);
 int				ft_help(void);
 void			signal_handler(int sig);
 int				ft_execute_command(t_abs_struct *base);
@@ -307,6 +307,9 @@ int				ft_adjust_exit_value(int exit_code);
 void			ft_wait_for_process(t_process *curr);
 int				ft_isbuiltin(t_process *p);
 void			ft_close_dupped_pipes(t_process *p, int forward);
+int				extract_key_value(char *args, char	***key_value,
+					int *value_to_add);
 
 t_abs_struct	g_base;
+
 #endif
