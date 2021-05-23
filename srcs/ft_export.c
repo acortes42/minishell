@@ -91,7 +91,7 @@ void	ft_export(t_abs_struct *base, t_process *p)
 				base->last_status = p->status;
 				ft_putstr_fd("export: `", STDERR_FILENO);
 				ft_putstr_fd(*args, STDERR_FILENO);
-				ft_putstr_fd("': Identificador no válido\n", STDERR_FILENO);
+				ft_putstr_fd("': Invalid identifier\n", STDERR_FILENO);
 			}
 			args++;
 		}
