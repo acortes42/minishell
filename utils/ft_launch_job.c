@@ -14,8 +14,6 @@
 
 static void	ft_configure_process_pipes(t_process *current)
 {
-	//extern t_abs_struct	g_base;
-
 	if (current->prev)
 	{
 		close(current->prev->pipe[STDOUT_FILENO]);
@@ -60,10 +58,7 @@ static void	ft_fork_child(t_abs_struct *base, t_process *current)
 	else if (!pid)
 		execute_child(base, current);
 	else
-	{
 		current->pid = pid;
-		//ft_wait_for_process(current);
-	}
 }
 
 static int	prepare_current_process_to_execute(t_process *current)
