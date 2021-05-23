@@ -46,7 +46,7 @@ int	ft_env(t_abs_struct *base, t_process *p)
 	return (1);
 }
 
-static void	handler_unset_invalid_argument(t_abs_struct *base, t_process *p,
+static void	handle_unset_invalid_argument(t_abs_struct *base, t_process *p,
 				char *argv)
 {
 	ft_putstr_fd("unset: `", STDERR_FILENO);
