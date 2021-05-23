@@ -31,7 +31,7 @@ void	ft_execute_absolute_shell_command(t_abs_struct *base,
 	if (!check_command_syntax(p->argv))
 		return ;
 	execve(cmd, p->argv, base->env);
-	if (errno == EACCES)
+	if (errno == EACCES || errno == ENOEXEC)
 		p->status = 126;
 	else if (errno == ENOENT || errno == ENOEXEC)
 		p->status = 127;

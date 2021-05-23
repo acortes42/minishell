@@ -38,26 +38,19 @@ static int	set_redirection(t_abs_struct *base, char *i)
 int	set_redirections(t_abs_struct *base, t_process *p)
 {
 	char	**i;
-	int		redirected;
 	int		redirOk;
 
 	if (!p || !p->argv || !ft_extract_redirections_from_argv(p))
 		return (1);
 	i = p->redirs;
-	redirected = 0;
 	while (i && *i)
 	{
 		redirOk = set_redirection(base, *i);
 		if (redirOk < 0)
-		{
-			ft_putstr("Error en la redirección\n");
-			return (-1);
-		}
-		else if (redirOk > 0)
-			redirected = 1;
+			return (0);
 		i++;
 	}
-	return (redirected);
+	return (1);
 }
 
 int	field_contains_redirs(char *field)

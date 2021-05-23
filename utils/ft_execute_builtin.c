@@ -90,7 +90,6 @@ int	ft_execute_builtin(t_abs_struct *base, t_process *p)
 {
 	int		executed;
 
-	ft_putstr("\e[0m");
 	if (!p->argv || !*p->argv)
 	{
 		if (p->ctrl_d)

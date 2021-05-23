@@ -12,6 +12,12 @@
 
 #include "minishell.h"
 
+static void	ft_print_errno(void)
+{
+	ft_putstr_fd(strerror(errno), STDERR_FILENO);
+	ft_putstr_fd("\n", STDERR_FILENO);
+}
+
 static int	apply_output_add_redirection(int i_fd, char *right_side)
 {
 	int			o_fd;
@@ -30,11 +36,9 @@ static int	apply_output_add_redirection(int i_fd, char *right_side)
 	flags = O_APPEND | O_CREAT | O_WRONLY;
 	o_fd = ft_get_redirection_fd(fd_file, flags, 0666, -1);
 	if (o_fd < 0)
-	{
-		free(fd_file);
-		return (0);
-	}
-	redirect_to_exit(o_fd, i_fd);
+		ft_print_errno();
+	else
+		dup2(o_fd, i_fd);
 	if (*fd_file != '&')
 		close(o_fd);
 	free(fd_file);

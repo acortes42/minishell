@@ -85,14 +85,29 @@ static void	ft_execute_shell_command_using_path(t_abs_struct *base,
 
 void	ft_launch_process(t_abs_struct *base, t_process *current)
 {
+	char	*cmd;
+
 	if (!current->argv)
 	{
 		current->completed = 1;
 		return ;
 	}
-	else if (*current->argv[0] == '/' || !ft_strncmp(current->argv[0], "./", 2)
+	if (*current->argv[0] == '/' || !ft_strncmp(current->argv[0], "./", 2)
 		|| !ft_strncmp(current->argv[0], "../", 3))
 		ft_execute_absolute_shell_command(base, current->argv[0], current);
 	else
+	{
+		if (ft_strchr(current->argv[0], '/')
+			|| ft_strchr(current->argv[0], '\\'))
+		{
+			cmd = ft_strjoin("./", current->argv[0]);
+			if (cmd)
+			{
+				ft_execute_absolute_shell_command(base, cmd, current);
+				free(cmd);
+				return ;
+			}
+		}
 		ft_execute_shell_command_using_path(base, current);
+	}
 }

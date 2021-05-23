@@ -46,24 +46,32 @@ int	ft_env(t_abs_struct *base, t_process *p)
 	return (1);
 }
 
-int	ft_unset(t_abs_struct *base, t_process *p)
+static void	handle_unset_invalid_argument(t_abs_struct *base, t_process *p,
+				char *argv)
+{
+	ft_putstr_fd("unset: `", STDERR_FILENO);
+	ft_putstr_fd(argv, STDERR_FILENO);
+	ft_putstr_fd("': Identificador no válido\n", STDERR_FILENO);
+	p->status = 1;
+	base->last_status = p->status;
+}
+
+void	ft_unset(t_abs_struct *base, t_process *p)
 {
 	char	**argv;
 	int		keypos;
 
-	if (ft_array_len(p->argv) == 1)
-		return (1);
+	if (!p || ft_array_len(p->argv) <= 1)
+		return ;
 	argv = p->argv + 1;
 	while (argv && *argv)
 	{
+		argv = get_first_non_empty_arg_pos(argv);
+		if (!argv)
+			break ;
 		if (!is_env_valid_argument(*argv))
-		{
-			ft_putstr_fd("Identificador no válido\n", STDERR_FILENO);
-			p->status = 1;
-			base->last_status = p->status;
-			return (1);
-		}
-		else if (ft_strlen(*argv))
+			handle_unset_invalid_argument(base, p, *argv);
+		else
 		{
 			keypos = ft_search_env(base->env, *argv);
 			if (keypos >= 0
@@ -72,7 +80,6 @@ int	ft_unset(t_abs_struct *base, t_process *p)
 		}
 		argv++;
 	}
-	return (1);
 }
 
 void	ft_delete_existing_key(t_abs_struct *base, char *key)

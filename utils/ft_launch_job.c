@@ -12,21 +12,36 @@
 
 #include "minishell.h"
 
-static void	execute_child(t_abs_struct *base, t_process *current)
+static void	ft_configure_process_pipes(t_process *current)
 {
+	extern t_abs_struct	g_base;
+
 	if (current->next)
 	{
-		dup2(current->pipe[STDOUT_FILENO], STDOUT_FILENO);
+		if (g_base.std_fds.outfile < 0)
+		{
+			dup2(current->pipe[STDOUT_FILENO], STDOUT_FILENO);
+			close(current->pipe[STDOUT_FILENO]);
+		}
 		close(current->pipe[STDIN_FILENO]);
-		close(current->pipe[STDOUT_FILENO]);
 	}
 	if (current->prev)
 	{
-		dup2(current->prev->pipe[STDIN_FILENO], STDIN_FILENO);
-		close(current->prev->pipe[STDIN_FILENO]);
+		if (g_base.std_fds.infile < 0)
+		{
+			dup2(current->prev->pipe[STDIN_FILENO], STDIN_FILENO);
+			close(current->prev->pipe[STDIN_FILENO]);
+		}
 		close(current->prev->pipe[STDOUT_FILENO]);
 		ft_close_dupped_pipes(current->prev->prev, 0);
 	}
+}
+
+static void	execute_child(t_abs_struct *base, t_process *current)
+{
+	if (set_redirections(&g_base, current) < 0)
+		exit(1);
+	ft_configure_process_pipes(current);
 	if (ft_isbuiltin(current))
 		ft_execute_builtin(base, current);
 	else
@@ -38,7 +53,7 @@ static void	execute_child(t_abs_struct *base, t_process *current)
 // Why signal hanlder is stablished before fork? (source: man 7 signal)
 // Forked process receives a copy of it's parents signals.
 // And execve executions will reset signal to it's defaults, so if we set
-// signals at forked child, they will be reset to parent signals in
+// signals ast forked child, they will be reset to parent signals in
 // execve
 //
 static void	ft_fork_child(t_abs_struct *base, t_process *current)
@@ -63,8 +78,7 @@ static int	prepare_current_process_to_execute(t_process *current)
 
 	g_base.current_process = current;
 	ft_expand_process_cmd(&g_base, current);
-	if (!ft_configure_pipes(current)
-		|| set_redirections(&g_base, current) < 0)
+	if (!ft_configure_pipes(current))
 	{
 		current->status = 1;
 		current->completed = 1;
@@ -72,26 +86,6 @@ static int	prepare_current_process_to_execute(t_process *current)
 		return (0);
 	}
 	return (1);
-}
-
-void	ft_close_dupped_pipes(t_process *p, int forward)
-{
-	while (p)
-	{
-		if ((forward && p->next) || !forward)
-		{
-			if (p->pipe[STDIN_FILENO] > -1)
-				close(p->pipe[STDIN_FILENO]);
-			if (p->pipe[STDOUT_FILENO] > -1)
-				close(p->pipe[STDOUT_FILENO]);
-			p->pipe[STDIN_FILENO] = -1;
-			p->pipe[STDOUT_FILENO] = -1;
-		}
-		if (forward)
-			p = p->next;
-		else
-			p = p->prev;
-	}
 }
 
 void	ft_launch_job(t_abs_struct *base, t_job *j)
@@ -106,7 +100,14 @@ void	ft_launch_job(t_abs_struct *base, t_job *j)
 			if (current->next || current->prev || !ft_isbuiltin(current))
 				ft_fork_child(base, current);
 			else
-				current->completed = ft_execute_builtin(base, current);
+			{
+				dup_std_fds(&base->std_fds);
+				if (set_redirections(&g_base, current) > 0)
+					current->completed = ft_execute_builtin(base, current);
+				else
+					current->completed = 1;
+				restore_std_fds(&base->std_fds);
+			}
 		}
 		current = current->next;
 	}
