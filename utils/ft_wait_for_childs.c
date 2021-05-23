@@ -66,8 +66,6 @@ void	ft_wait_for_childs(t_job *j)
 				break ;
 		}
 		ft_wait_for_process(curr);
-		if (curr->completed && curr->status != 0)
-			break ;
 		curr = curr->next;
 	}
 	ft_close_job(j, curr && curr->status != 0);

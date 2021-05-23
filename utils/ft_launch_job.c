@@ -14,26 +14,18 @@
 
 static void	ft_configure_process_pipes(t_process *current)
 {
-	extern t_abs_struct	g_base;
-
-	if (current->next)
-	{
-		if (g_base.std_fds.outfile < 0)
-		{
-			dup2(current->pipe[STDOUT_FILENO], STDOUT_FILENO);
-			close(current->pipe[STDOUT_FILENO]);
-		}
-		close(current->pipe[STDIN_FILENO]);
-	}
 	if (current->prev)
 	{
-		if (g_base.std_fds.infile < 0)
-		{
-			dup2(current->prev->pipe[STDIN_FILENO], STDIN_FILENO);
-			close(current->prev->pipe[STDIN_FILENO]);
-		}
 		close(current->prev->pipe[STDOUT_FILENO]);
+		dup2(current->prev->pipe[STDIN_FILENO], STDIN_FILENO);
+		close(current->prev->pipe[STDIN_FILENO]);
 		ft_close_dupped_pipes(current->prev->prev, 0);
+	}
+	if (current->next)
+	{
+		close(current->pipe[STDIN_FILENO]);
+		dup2(current->pipe[STDOUT_FILENO], STDOUT_FILENO);
+		close(current->pipe[STDOUT_FILENO]);
 	}
 }
 
@@ -66,10 +58,7 @@ static void	ft_fork_child(t_abs_struct *base, t_process *current)
 	else if (!pid)
 		execute_child(base, current);
 	else
-	{
 		current->pid = pid;
-		ft_wait_for_process(current);
-	}
 }
 
 static int	prepare_current_process_to_execute(t_process *current)
@@ -92,6 +81,7 @@ void	ft_launch_job(t_abs_struct *base, t_job *j)
 {
 	t_process	*current;
 
+	dup_std_fds(&base->std_fds);
 	current = j->first_process;
 	while (current)
 	{
@@ -101,16 +91,15 @@ void	ft_launch_job(t_abs_struct *base, t_job *j)
 				ft_fork_child(base, current);
 			else
 			{
-				dup_std_fds(&base->std_fds);
 				if (set_redirections(&g_base, current) > 0)
 					current->completed = ft_execute_builtin(base, current);
 				else
 					current->completed = 1;
-				restore_std_fds(&base->std_fds);
 			}
 		}
 		current = current->next;
 	}
 	ft_close_dupped_pipes(j->first_process, 1);
 	ft_wait_for_childs(j);
+	restore_std_fds(&base->std_fds);
 }

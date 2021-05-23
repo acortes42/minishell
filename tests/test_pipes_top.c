@@ -59,17 +59,17 @@ void test(char **envp)
 	pid1 = fork();
 	if (!pid1)
 	{
-		write(STDERR_FILENO, "CAT\n", 4);
+		write(STDERR_FILENO, "ls\n", 3);
 		close(fd[STDIN_FILENO]);
 		dup2(fd[STDOUT_FILENO], STDOUT_FILENO);
 		close(fd[STDOUT_FILENO]);
 		char *argv[3];
-		argv[0] = "cat";
-		argv[1] = "author";
+		argv[0] = "ls";
+		argv[1] = "filedoesntexist";
 		argv[2] = 0;
 		// top
-		execve("/bin/cat", argv, envp);
-		write(STDERR_FILENO, "*CAT\n", 5);
+		execve("/bin/ls", argv, envp);
+		write(STDERR_FILENO, "*LS\n", 5);
 		exit(111);
 	}
 
@@ -77,7 +77,7 @@ void test(char **envp)
 	pid2 = fork();
 	if (!pid2)
 	{
-		write(STDERR_FILENO, "SORT\n", 5);
+		write(STDERR_FILENO, "GREP\n", 5);
 
 		close(fd[STDOUT_FILENO]);
 		dup2(fd[STDIN_FILENO], STDIN_FILENO);
@@ -87,11 +87,12 @@ void test(char **envp)
 		dup2(fd23[STDOUT_FILENO], STDOUT_FILENO);
 		close(fd23[STDOUT_FILENO]);
 
-		char *argv[2];
-		argv[0] = "sort";
-		argv[1] = 0;
-		execve("/usr/bin/sort", argv, envp);
-		write(STDERR_FILENO, "*SORT\n", 6);
+		char *argv[3];
+		argv[0] = "grep";
+		argv[1] = "asdf";
+		argv[2] = 0;
+		execve("/usr/bin/grep", argv, envp);
+		write(STDERR_FILENO, "*GREP\n", 6);
 		exit(112);
 	}
 
@@ -108,7 +109,7 @@ void test(char **envp)
 		char *argv[2];
 		argv[0] = "more";
 		argv[1] = 0;
-		execve("/bin/more", argv, envp);
+		execve("/usr/bin/more", argv, envp);
 		write(STDERR_FILENO, "*MORE\n", 6);
 		exit(113);
 	}
