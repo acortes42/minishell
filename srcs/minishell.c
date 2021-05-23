@@ -58,7 +58,7 @@ static void	execute_command_read(t_abs_struct *base)
 	if (!ft_setlflag(STDIN_FILENO, 1, g_base.c_lflag))
 		ft_exit_minishell(1);
 	if (check_base_syntatic_errors(base->input))
-		ft_putstr_fd("Error sintáctico en el comando\n", STDERR_FILENO);
+		ft_putstr_fd("Syntax error\n", STDERR_FILENO);
 	else
 	{
 		base->first_job = ft_build_jobs(base->input);
