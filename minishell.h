@@ -150,7 +150,6 @@ int				ft_get_redirection_fd(char *redirection, int flags,
 					mode_t mode, int default_fd);
 int				ft_get_fd(char *redirection, int default_fd);
 int				assign_to_fd_helper(char c);
-void			redirect_to_exit(int o_fd, int i_fd);
 char			*ft_strdup(const char *s1);
 char			*ft_strchr(const char *s, int c);
 char			**ft_strstr_in_array(const char **array, char *tgt);

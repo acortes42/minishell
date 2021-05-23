@@ -32,7 +32,7 @@ int	ft_get_redirection_fd(char *redirection, int flags,
 	else if (fd >= REDIRECTIONS_MINIMUM_FD)
 		return (fd);
 	i_fd = ft_get_first_fd_available_between(REDIRECTIONS_MINIMUM_FD, MAX_FD);
-	if (i_fd >= REDIRECTIONS_MINIMUM_FD)
+	if (i_fd >= REDIRECTIONS_MINIMUM_FD && fd >= 0)
 		dup2(fd, i_fd);
 	close(fd);
 	return (i_fd);

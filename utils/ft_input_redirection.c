@@ -27,23 +27,18 @@ static int	apply_input_redirection(int i_fd, char *right_side)
 		return (1);
 	}
 	o_fd = ft_get_redirection_fd(fd_file, O_RDONLY, 0666, -1);
-	if (o_fd < 0)
-	{
-		free(fd_file);
-		return (0);
-	}
 	dup2(o_fd, i_fd);
-	if (*fd_file != '&')
+	if (*fd_file != '&' && o_fd >= 0)
 		close(o_fd);
 	free(fd_file);
-	return (1);
+	return (o_fd >= 0);
 }
 
 static void	dup_stdin_and_close_it(int i_fd)
 {
 	extern t_abs_struct	g_base;
 
-	if (i_fd == STDIN_FILENO)
+	if (i_fd == STDIN_FILENO && g_base.std_fds.infile < 0)
 	{
 		g_base.std_fds.infile = dup(STDIN_FILENO);
 		close(STDIN_FILENO);

@@ -30,6 +30,26 @@ int	ft_configure_pipes(t_process *current)
 	return (1);
 }
 
+void	ft_close_dupped_pipes(t_process *p, int forward)
+{
+	while (p)
+	{
+		if ((forward && p->next) || !forward)
+		{
+			if (p->pipe[STDIN_FILENO] > -1)
+				close(p->pipe[STDIN_FILENO]);
+			if (p->pipe[STDOUT_FILENO] > -1)
+				close(p->pipe[STDOUT_FILENO]);
+			p->pipe[STDIN_FILENO] = -1;
+			p->pipe[STDOUT_FILENO] = -1;
+		}
+		if (forward)
+			p = p->next;
+		else
+			p = p->prev;
+	}
+}
+
 void	ft_set_pipes(t_process *previous, t_process *current)
 {
 	extern t_abs_struct	g_base;

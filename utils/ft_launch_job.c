@@ -12,12 +12,13 @@
 
 #include "minishell.h"
 
-static void	execute_child(t_abs_struct *base, t_process *current)
+static void	ft_configure_process_pipes(t_process *current)
 {
-	set_redirections(&g_base, current);
+	extern t_abs_struct	g_base;
+
 	if (current->next)
 	{
-		if (base->std_fds.outfile < 0)
+		if (g_base.std_fds.outfile < 0)
 		{
 			dup2(current->pipe[STDOUT_FILENO], STDOUT_FILENO);
 			close(current->pipe[STDOUT_FILENO]);
@@ -26,7 +27,7 @@ static void	execute_child(t_abs_struct *base, t_process *current)
 	}
 	if (current->prev)
 	{
-		if (base->std_fds.infile < 0)
+		if (g_base.std_fds.infile < 0)
 		{
 			dup2(current->prev->pipe[STDIN_FILENO], STDIN_FILENO);
 			close(current->prev->pipe[STDIN_FILENO]);
@@ -34,6 +35,13 @@ static void	execute_child(t_abs_struct *base, t_process *current)
 		close(current->prev->pipe[STDOUT_FILENO]);
 		ft_close_dupped_pipes(current->prev->prev, 0);
 	}
+}
+
+static void	execute_child(t_abs_struct *base, t_process *current)
+{
+	if (set_redirections(&g_base, current) < 0)
+		exit(1);
+	ft_configure_process_pipes(current);
 	if (ft_isbuiltin(current))
 		ft_execute_builtin(base, current);
 	else
@@ -80,26 +88,6 @@ static int	prepare_current_process_to_execute(t_process *current)
 	return (1);
 }
 
-void	ft_close_dupped_pipes(t_process *p, int forward)
-{
-	while (p)
-	{
-		if ((forward && p->next) || !forward)
-		{
-			if (p->pipe[STDIN_FILENO] > -1)
-				close(p->pipe[STDIN_FILENO]);
-			if (p->pipe[STDOUT_FILENO] > -1)
-				close(p->pipe[STDOUT_FILENO]);
-			p->pipe[STDIN_FILENO] = -1;
-			p->pipe[STDOUT_FILENO] = -1;
-		}
-		if (forward)
-			p = p->next;
-		else
-			p = p->prev;
-	}
-}
-
 void	ft_launch_job(t_abs_struct *base, t_job *j)
 {
 	t_process	*current;
@@ -114,8 +102,10 @@ void	ft_launch_job(t_abs_struct *base, t_job *j)
 			else
 			{
 				dup_std_fds(&base->std_fds);
-				set_redirections(&g_base, current);
-				current->completed = ft_execute_builtin(base, current);
+				if (set_redirections(&g_base, current) > 0)
+					current->completed = ft_execute_builtin(base, current);
+				else
+					current->completed = 1;
 				restore_std_fds(&base->std_fds);
 			}
 		}
