@@ -94,10 +94,7 @@ void	ft_launch_process(t_abs_struct *base, t_process *current)
 	}
 	if (*current->argv[0] == '/' || !ft_strncmp(current->argv[0], "./", 2)
 		|| !ft_strncmp(current->argv[0], "../", 3))
-	{
 		ft_execute_absolute_shell_command(base, current->argv[0], current);
-		return ;
-	}
 	else
 	{
 		if (ft_strchr(current->argv[0], '/')
