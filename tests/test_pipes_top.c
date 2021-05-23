@@ -59,7 +59,7 @@ void test(char **envp)
 	pid1 = fork();
 	if (!pid1)
 	{
-		write(STDERR_FILENO, "ls\n", 4);
+		write(STDERR_FILENO, "ls\n", 3);
 		close(fd[STDIN_FILENO]);
 		dup2(fd[STDOUT_FILENO], STDOUT_FILENO);
 		close(fd[STDOUT_FILENO]);
@@ -75,7 +75,7 @@ void test(char **envp)
 
 	pipe(fd23);
 	pid2 = fork();
-	if (!pid2)-
+	if (!pid2)
 	{
 		write(STDERR_FILENO, "GREP\n", 5);
 
@@ -91,7 +91,7 @@ void test(char **envp)
 		argv[0] = "grep";
 		argv[1] = "asdf";
 		argv[2] = 0;
-		execve("/bin/grep", argv, envp);
+		execve("/usr/bin/grep", argv, envp);
 		write(STDERR_FILENO, "*GREP\n", 6);
 		exit(112);
 	}
@@ -109,7 +109,7 @@ void test(char **envp)
 		char *argv[2];
 		argv[0] = "more";
 		argv[1] = 0;
-		execve("/bin/more", argv, envp);
+		execve("/usr/bin/more", argv, envp);
 		write(STDERR_FILENO, "*MORE\n", 6);
 		exit(113);
 	}
