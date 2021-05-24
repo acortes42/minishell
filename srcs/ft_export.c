@@ -45,29 +45,29 @@ static int	ft_print_declares(t_abs_struct *base)
 	return (1);
 }
 
-int	extract_key_value(char *args, char	***key_value, int *value_to_add)
+int	extract_key_value(char *args, char	***key_value, int *return_value)
 {
 	*key_value = ft_split_key_value_pair(args, '=');
 	if (!(*key_value))
 	{
-		*value_to_add = 0;
-		return (is_env_valid_argument(args));
+		*return_value = is_env_valid_argument(args);
+		return (1);
 	}
 	else if (***key_value == '$' && *((**key_value) + 1))
 	{
 		ft_array_release(*key_value);
 		*key_value = 0;
-		*value_to_add = 0;
+		*return_value = 0;
 		return (1);
 	}
-	else if (!is_env_valid_argument(**key_value))
+	else if (!ft_strlen(**key_value) || !is_env_valid_argument(**key_value))
 	{
 		ft_array_release(*key_value);
 		*key_value = 0;
-		*value_to_add = 0;
+		*return_value = 0;
 		return (1);
 	}
-	*value_to_add = 1;
+	*return_value = 1;
 	return (0);
 }
 

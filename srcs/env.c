@@ -62,7 +62,10 @@ void	ft_unset(t_abs_struct *base, t_process *p)
 	int		keypos;
 
 	if (!p || ft_array_len(p->argv) <= 1)
+	{
+		base->last_status = 0;
 		return ;
+	}
 	argv = p->argv + 1;
 	while (argv && *argv)
 	{
