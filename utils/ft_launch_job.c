@@ -31,13 +31,19 @@ static void	ft_configure_process_pipes(t_process *current)
 
 static void	execute_child(t_abs_struct *base, t_process *current)
 {
-	if (set_redirections(&g_base, current) < 0)
-		exit(1);
 	ft_configure_process_pipes(current);
-	if (ft_isbuiltin(current))
-		ft_execute_builtin(base, current);
+	if (set_redirections(&g_base, current) <= 0)
+	{
+		current->completed = 1;
+		current->status = 1;
+	}
 	else
-		ft_launch_process(base, current);
+	{
+		if (ft_isbuiltin(current))
+			ft_execute_builtin(base, current);
+		else
+			ft_launch_process(base, current);
+	}
 	exit(current->status);
 }
 
@@ -67,6 +73,12 @@ static int	prepare_current_process_to_execute(t_process *current)
 
 	g_base.current_process = current;
 	ft_expand_process_cmd(&g_base, current);
+	if (current->argv && !ft_strcmp(*current->argv, "env")
+		&& get_first_non_empty_arg_pos(current->argv + 1))
+	{
+		free(*current->argv);
+		ft_array_slide_left(current->argv);
+	}
 	if (!ft_configure_pipes(current))
 	{
 		current->status = 1;

@@ -32,7 +32,7 @@ int	ft_env(t_abs_struct *base, t_process *p)
 		ft_putstr_fd(arg, STDERR_FILENO);
 		ft_putstr_fd(": No se encontró el fichero o directorio\n",
 			STDERR_FILENO);
-		p->status = 1;
+		p->status = 127;
 		base->last_status = p->status;
 		return (0);
 	}
@@ -51,7 +51,7 @@ static void	handle_unset_invalid_argument(t_abs_struct *base, t_process *p,
 {
 	ft_putstr_fd("unset: `", STDERR_FILENO);
 	ft_putstr_fd(argv, STDERR_FILENO);
-	ft_putstr_fd("': Identificador no válido\n", STDERR_FILENO);
+	ft_putstr_fd("': Invalid identifier\n", STDERR_FILENO);
 	p->status = 1;
 	base->last_status = p->status;
 }
@@ -62,7 +62,10 @@ void	ft_unset(t_abs_struct *base, t_process *p)
 	int		keypos;
 
 	if (!p || ft_array_len(p->argv) <= 1)
+	{
+		base->last_status = 0;
 		return ;
+	}
 	argv = p->argv + 1;
 	while (argv && *argv)
 	{

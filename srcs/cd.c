@@ -20,7 +20,7 @@ int	go_home(t_process *p)
 	home = ft_getenv(g_base.env, "HOME");
 	if (!home)
 	{
-		ft_putstr_fd("\e[0mcd: HOME not defined\n", STDERR_FILENO);
+		ft_putstr_fd("cd: HOME not defined\n", STDERR_FILENO);
 		p->status = 1;
 		g_base.last_status = p->status;
 		return (1);
@@ -40,10 +40,10 @@ int	go_oldpwd(t_process *p)
 	oldpwd = ft_getenv(g_base.env, "OLDPWD");
 	if (!oldpwd)
 	{
-		ft_putstr_fd("\e[0mcd: OLDPWD no está establecido\n", STDERR_FILENO);
+		ft_putstr_fd("cd: OLDPWD no está establecido\n", STDERR_FILENO);
 		p->status = 1;
 		g_base.last_status = p->status;
-		return (1);
+		return (0);
 	}
 	oldpwd = ft_strdup(oldpwd + 7);
 	perform_chdir_and_environment_update(p, oldpwd);

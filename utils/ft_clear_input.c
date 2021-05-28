@@ -19,9 +19,7 @@ static int	ft_cmdlen(char *line)
 	size = 0;
 	while (line && *line)
 	{
-		if (*line == ESCAPE)
-			line += 2;
-		else
+		if (*line != ESCAPE)
 			size++;
 		line++;
 	}

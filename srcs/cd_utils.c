@@ -27,7 +27,7 @@ static void	perform_environment_update(t_env_update *info)
 
 static void	print_file_doesnt_exist(char *file)
 {
-	ft_putstr_fd("\e[0mcd: ", STDERR_FILENO);
+	ft_putstr_fd("cd: ", STDERR_FILENO);
 	if (file)
 		ft_putstr_fd(file, STDERR_FILENO);
 	ft_putstr_fd(": File or dir doesn't exist\n", STDERR_FILENO);
@@ -35,11 +35,14 @@ static void	print_file_doesnt_exist(char *file)
 
 void	perform_chdir_and_environment_update(t_process *p, char *home)
 {
+	extern t_abs_struct	g_base;
 	t_env_update		info;
 	char				*path;
 
 	info.pwd = 0;
-	info.old_pwd = getcwd(0, 0);
+	info.old_pwd = ft_getenv(g_base.env, "PWD");
+	if (info.old_pwd)
+		info.old_pwd = ft_strdup(info.old_pwd + 4);
 	info.changed_dir = !chdir(home);
 	if (!info.changed_dir)
 	{

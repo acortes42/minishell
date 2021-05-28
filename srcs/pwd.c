@@ -14,17 +14,24 @@
 
 int	ft_pwd(void)
 {
-	char	*cwd;
+	extern t_abs_struct	g_base;
+	char				*cwd;
 
 	cwd = getcwd(0, 0);
-	if (cwd)
+	if (!cwd)
+	{
+		cwd = ft_getenv(g_base.env, "PWD");
+		if (cwd)
+			cwd = ft_strdup(cwd + 4);
+	}
+	if (!cwd)
+		ft_putstr_fd("getcwd() error", STDERR_FILENO);
+	else
 	{
 		ft_putstr(cwd);
 		ft_putstr("\n");
 		free(cwd);
 	}
-	else
-		ft_putstr_fd("getcwd() error", STDERR_FILENO);
 	return (1);
 }
 
